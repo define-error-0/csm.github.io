@@ -22,20 +22,22 @@
     var CONFIG = {"hostname":"example.com","root":"/","scheme":"Pisces","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
   </script>
 
-  <meta name="description" content="这是一篇关于我刚学习C语言和C++的时候留下来的关于字符串、数组、指针的问题 起因12345678910111213141516今天在看python的时候看到一个表达式字符串，这个东西呢，非常奇妙。举个例子python里面的字符串有str1 &#x3D; &quot; csmznbo &quot;str2 &#x3D; &amp;#x27; csmznbo &amp;#x27;可以看到此时的字符串都是有空格，所以下面的那个单引号的明">
+  <meta name="description" content="12这个博客的目的是为了让以后的笔记都变成md格式的，txt笔记确实不好。所以记录一下Typora的用法，方便入门  Typora的使用标题1自然就是先标题，那就是ctrl+数字，1-6从大到小  代码区域1输入&quot;&#96;&#96;&#96;&quot;就是了，连按3次，会变成一个代码区域，可以选择语言  分割线123456&quot;***&quot;&quot;---&quot;&quot;___&amp;quo">
 <meta property="og:type" content="article">
-<meta property="og:title" content="指针和字符串">
-<meta property="og:url" content="http://example.com/2024/03/02/%E6%8C%87%E9%92%88%E5%92%8C%E5%AD%97%E7%AC%A6%E4%B8%B2/index.html">
+<meta property="og:title" content="Typora">
+<meta property="og:url" content="http://example.com/2024/03/03/Typora%E5%85%A5%E9%97%A8/index.html">
 <meta property="og:site_name" content="我要成为嵌入式高手[doge]">
-<meta property="og:description" content="这是一篇关于我刚学习C语言和C++的时候留下来的关于字符串、数组、指针的问题 起因12345678910111213141516今天在看python的时候看到一个表达式字符串，这个东西呢，非常奇妙。举个例子python里面的字符串有str1 &#x3D; &quot; csmznbo &quot;str2 &#x3D; &amp;#x27; csmznbo &amp;#x27;可以看到此时的字符串都是有空格，所以下面的那个单引号的明">
+<meta property="og:description" content="12这个博客的目的是为了让以后的笔记都变成md格式的，txt笔记确实不好。所以记录一下Typora的用法，方便入门  Typora的使用标题1自然就是先标题，那就是ctrl+数字，1-6从大到小  代码区域1输入&quot;&#96;&#96;&#96;&quot;就是了，连按3次，会变成一个代码区域，可以选择语言  分割线123456&quot;***&quot;&quot;---&quot;&quot;___&amp;quo">
 <meta property="og:locale" content="zh_CN">
-<meta property="article:published_time" content="2024-03-02T12:01:08.000Z">
-<meta property="article:modified_time" content="2024-03-02T16:28:37.879Z">
+<meta property="og:image" content="https://pic3.zhimg.com/80/v2-ea45c6141947e07581740058468cefae_1440w.webp">
+<meta property="article:published_time" content="2024-03-03T02:14:21.000Z">
+<meta property="article:modified_time" content="2024-03-05T15:37:51.200Z">
 <meta property="article:author" content="CSM">
-<meta property="article:tag" content="指针 字符串 数组 容器">
+<meta property="article:tag" content="Typora 笔记">
 <meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://pic3.zhimg.com/80/v2-ea45c6141947e07581740058468cefae_1440w.webp">
 
-<link rel="canonical" href="http://example.com/2024/03/02/%E6%8C%87%E9%92%88%E5%92%8C%E5%AD%97%E7%AC%A6%E4%B8%B2/">
+<link rel="canonical" href="http://example.com/2024/03/03/Typora%E5%85%A5%E9%97%A8/">
 
 
 <script id="page-configurations">
@@ -48,7 +50,7 @@
   };
 </script>
 
-  <title>指针和字符串 | 我要成为嵌入式高手[doge]</title>
+  <title>Typora | 我要成为嵌入式高手[doge]</title>
   
 
 
@@ -183,7 +185,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2024/03/02/%E6%8C%87%E9%92%88%E5%92%8C%E5%AD%97%E7%AC%A6%E4%B8%B2/">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2024/03/03/Typora%E5%85%A5%E9%97%A8/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/csm.png">
@@ -196,7 +198,7 @@
     </span>
       <header class="post-header">
         <h1 class="post-title" itemprop="name headline">
-          指针和字符串
+          Typora
         </h1>
 
         <div class="post-meta">
@@ -206,14 +208,14 @@
               </span>
               <span class="post-meta-item-text">发表于</span>
 
-              <time title="创建时间：2024-03-02 20:01:08" itemprop="dateCreated datePublished" datetime="2024-03-02T20:01:08+08:00">2024-03-02</time>
+              <time title="创建时间：2024-03-03 10:14:21" itemprop="dateCreated datePublished" datetime="2024-03-03T10:14:21+08:00">2024-03-03</time>
             </span>
               <span class="post-meta-item">
                 <span class="post-meta-item-icon">
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2024-03-03 00:28:37" itemprop="dateModified" datetime="2024-03-03T00:28:37+08:00">2024-03-03</time>
+                <time title="修改时间：2024-03-05 23:37:51" itemprop="dateModified" datetime="2024-03-05T23:37:51+08:00">2024-03-05</time>
               </span>
 
           
@@ -227,14 +229,28 @@
     <div class="post-body" itemprop="articleBody">
 
       
-        <p>这是一篇关于我刚学习C语言和C++的时候留下来的关于字符串、数组、指针的问题</p>
-<h3 id="起因"><a href="#起因" class="headerlink" title="起因"></a>起因</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">今天在看python的时候看到一个表达式字符串，这个东西呢，非常奇妙。</span><br><span class="line">举个例子python里面的字符串有</span><br><span class="line">str1 = <span class="string">&quot; csmznbo &quot;</span></span><br><span class="line">str2 = <span class="string">&#x27; csmznbo &#x27;</span></span><br><span class="line">可以看到此时的字符串都是有空格，所以下面的那个单引号的明显不对劲，对了。</span><br><span class="line">这个就是shell脚本里面类似的原样输出</span><br><span class="line">特殊字符串。如下例子</span><br><span class="line">bash</span><br><span class="line">str3=<span class="string">&#x27;The time now is `data`&#x27;</span></span><br><span class="line">python</span><br><span class="line">str3=<span class="string">&#x27;The time now is data&#x27;</span>.replace(<span class="string">&#x27;data&#x27;</span>,str(time.localtime(time.time())))</span><br><span class="line">其实python的<span class="string">&quot;&quot;</span>格式的字符串也是可以做到输出像上面的东西的，f<span class="string">&quot;&#123;&#125;&quot;</span>也是可以的</span><br><span class="line">bash的例子只是引出这种字符串的特殊用法原样输出。下面的替换输出，虽然不是同一</span><br><span class="line">功能，但是也能知道遇到这奇奇怪怪的字符串的时候可以联想起来好玩的东西。</span><br><span class="line"></span><br><span class="line">但是这个不是今天的主角。</span><br></pre></td></tr></table></figure>
+        <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">这个博客的目的是为了让以后的笔记都变成md格式的，txt笔记确实不好。所以记录一下</span><br><span class="line">Typora的用法，方便入门</span><br></pre></td></tr></table></figure>
 
-<h3 id="填坑"><a href="#填坑" class="headerlink" title="填坑"></a>填坑</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">这个帖子，主要是为了记录我对指针数组还有字符串的理解。首先呢，我之前总是</span><br><span class="line">不理解为什么字符串是不可写和不可修改现在知道了，因为它存在静态区中。</span><br><span class="line">但是我学了几个月的C语言我才知道了指针不等于字符串，我当时写那些拼接函数，比</span><br><span class="line">较函数，裁剪那些，我都是用数组去实现的。但是学的懵懵懂懂的，我甚至都把数组等于</span><br><span class="line">字符串，字符串又等于指针去了，因为用起来真的差不多。其实是错误的，虽然汇编是一样</span><br><span class="line">当写关于字符串的函数的的时候，传参指针，返回值那些都是天坑。要知道字符串</span><br><span class="line">是不能修改的，所以返回值只能是数组和指针，还有就是指针传参就会导致一些问题</span><br><span class="line">比如不知道数据长度等问题。</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<h4 id="Typora的使用"><a href="#Typora的使用" class="headerlink" title="Typora的使用"></a>Typora的使用</h4><h5 id="标题"><a href="#标题" class="headerlink" title="标题"></a>标题</h5><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">自然就是先标题，那就是ctrl+数字，1-6从大到小</span><br></pre></td></tr></table></figure>
 
-<h3 id="关系"><a href="#关系" class="headerlink" title="关系"></a>关系</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">指针就是指针，指向一个地址，自己指针又有一个属于自己的地址。大小看处理器位数</span><br><span class="line"></span><br><span class="line">数组就是连续地址的元素组成，可以装指针，数组，结构体，函数等等</span><br><span class="line"></span><br><span class="line">C语言中，字符串就是字符串，没别的东西就是全局区的data段中，不可修改的。</span><br><span class="line"></span><br><span class="line">当时第一次学cpp的时候，把String当成字符串了，当时也好奇为什么字符串又可</span><br><span class="line">以删减修改了，其实就是一个容器，不是字符串，你可以认为里面就是一个数组</span><br><span class="line">真正的字符串还是<span class="string">&quot;&quot;</span>这个，这个还是不能修改即便是cpp。</span><br><span class="line">python中字符串也是不能修改的，每一次的修改，都只是新生成一个字符串。</span><br><span class="line">并没有修改原本字符串</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<h5 id="代码区域"><a href="#代码区域" class="headerlink" title="代码区域"></a>代码区域</h5><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">输入<span class="string">&quot;```&quot;</span>就是了，连按3次，会变成一个代码区域，可以选择语言</span><br></pre></td></tr></table></figure>
 
-<h3 id="结语"><a href="#结语" class="headerlink" title="结语"></a>结语</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">这次就是一个知识的填坑和巩固罢了果然基础不牢地动山摇。很多时候都</span><br><span class="line">是简单的东西罢了。拜拜，下次继续</span><br></pre></td></tr></table></figure>
+<h5 id="分割线"><a href="#分割线" class="headerlink" title="分割线"></a>分割线</h5><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">&quot;***&quot;</span><br><span class="line">&quot;---&quot;</span><br><span class="line">&quot;___&quot;</span><br><span class="line">***</span><br><span class="line">---</span><br><span class="line">___</span><br></pre></td></tr></table></figure>
+
+<h5 id="网站跳转超链接"><a href="#网站跳转超链接" class="headerlink" title="网站跳转超链接"></a>网站跳转超链接</h5><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="string">&quot;[百度一下](https://www.baidu.com/)&quot;</span>[百度一下](https://www.baidu.com/)</span><br></pre></td></tr></table></figure>
+
+<h5 id="下标"><a href="#下标" class="headerlink" title="下标"></a>下标</h5><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">~</span><br></pre></td></tr></table></figure>
+
+<h5 id="上标"><a href="#上标" class="headerlink" title="上标"></a>上标</h5><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">^</span><br></pre></td></tr></table></figure>
+
+<h5 id="高亮"><a href="#高亮" class="headerlink" title="高亮"></a>高亮</h5><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="string">&quot;==高亮==&quot;</span></span><br><span class="line">==高亮==</span><br></pre></td></tr></table></figure>
+
+<h5 id="插入图片"><a href="#插入图片" class="headerlink" title="插入图片"></a>插入图片</h5><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">直接右键选择图片插入即可</span><br></pre></td></tr></table></figure>
+
+<h5 id="快捷键"><a href="#快捷键" class="headerlink" title="快捷键"></a>快捷键</h5><p><img src="https://pic3.zhimg.com/80/v2-ea45c6141947e07581740058468cefae_1440w.webp" alt="img"></p>
+<p>以上图片来自(<a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/515945667">https://zhuanlan.zhihu.com/p/515945667</a>)</p>
+<h5 id="结语"><a href="#结语" class="headerlink" title="结语"></a>结语</h5><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">掌握以上主要的几个操作就可以加快编写速度了，我也要去奋斗努力去了，有机会再见</span><br></pre></td></tr></table></figure>
+
 
     </div>
 
@@ -260,7 +276,7 @@
   </li>
   <li class="post-copyright-link">
     <strong>本文链接：</strong>
-    <a href="http://example.com/2024/03/02/%E6%8C%87%E9%92%88%E5%92%8C%E5%AD%97%E7%AC%A6%E4%B8%B2/" title="指针和字符串">http://example.com/2024/03/02/指针和字符串/</a>
+    <a href="http://example.com/2024/03/03/Typora%E5%85%A5%E9%97%A8/" title="Typora">http://example.com/2024/03/03/Typora入门/</a>
   </li>
   <li class="post-copyright-license">
     <strong>版权声明： </strong>本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-CSM/4.0/" rel="noopener" target="_blank"><i class="fab fa-fw fa-creative-commons"></i>BY-CSM</a> 许可协议。转载请注明出处！
@@ -271,7 +287,7 @@
 
       <footer class="post-footer">
           <div class="post-tags">
-              <a href="/tags/%E6%8C%87%E9%92%88-%E5%AD%97%E7%AC%A6%E4%B8%B2-%E6%95%B0%E7%BB%84-%E5%AE%B9%E5%99%A8/" rel="tag"># 指针 字符串 数组 容器</a>
+              <a href="/tags/Typora-%E7%AC%94%E8%AE%B0/" rel="tag"># Typora 笔记</a>
           </div>
 
         
@@ -280,13 +296,10 @@
         
     <div class="post-nav">
       <div class="post-nav-item">
-    <a href="/2024/03/01/FristBlog-STM32%E8%B6%85%E9%A2%91%E8%BF%87%E5%A4%B4%E8%8A%AF%E7%89%87%E9%94%81%E6%AD%BB/" rel="prev" title="frist STM32超频过头芯片锁死">
-      <i class="fa fa-chevron-left"></i> frist STM32超频过头芯片锁死
+    <a href="/2024/03/02/%E6%8C%87%E9%92%88%E5%92%8C%E5%AD%97%E7%AC%A6%E4%B8%B2/" rel="prev" title="指针和字符串">
+      <i class="fa fa-chevron-left"></i> 指针和字符串
     </a></div>
-      <div class="post-nav-item">
-    <a href="/2024/03/03/Typora%E5%85%A5%E9%97%A8/" rel="next" title="Typora">
-      Typora <i class="fa fa-chevron-right"></i>
-    </a></div>
+      <div class="post-nav-item"></div>
     </div>
       </footer>
     
@@ -345,7 +358,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%B5%B7%E5%9B%A0"><span class="nav-number">1.</span> <span class="nav-text">起因</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%A1%AB%E5%9D%91"><span class="nav-number">2.</span> <span class="nav-text">填坑</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%85%B3%E7%B3%BB"><span class="nav-number">3.</span> <span class="nav-text">关系</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%BB%93%E8%AF%AD"><span class="nav-number">4.</span> <span class="nav-text">结语</span></a></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-4"><a class="nav-link" href="#Typora%E7%9A%84%E4%BD%BF%E7%94%A8"><span class="nav-number">1.</span> <span class="nav-text">Typora的使用</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#%E6%A0%87%E9%A2%98"><span class="nav-number">1.1.</span> <span class="nav-text">标题</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E4%BB%A3%E7%A0%81%E5%8C%BA%E5%9F%9F"><span class="nav-number">1.2.</span> <span class="nav-text">代码区域</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E5%88%86%E5%89%B2%E7%BA%BF"><span class="nav-number">1.3.</span> <span class="nav-text">分割线</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E7%BD%91%E7%AB%99%E8%B7%B3%E8%BD%AC%E8%B6%85%E9%93%BE%E6%8E%A5"><span class="nav-number">1.4.</span> <span class="nav-text">网站跳转超链接</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E4%B8%8B%E6%A0%87"><span class="nav-number">1.5.</span> <span class="nav-text">下标</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E4%B8%8A%E6%A0%87"><span class="nav-number">1.6.</span> <span class="nav-text">上标</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E9%AB%98%E4%BA%AE"><span class="nav-number">1.7.</span> <span class="nav-text">高亮</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E6%8F%92%E5%85%A5%E5%9B%BE%E7%89%87"><span class="nav-number">1.8.</span> <span class="nav-text">插入图片</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E5%BF%AB%E6%8D%B7%E9%94%AE"><span class="nav-number">1.9.</span> <span class="nav-text">快捷键</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E7%BB%93%E8%AF%AD"><span class="nav-number">1.10.</span> <span class="nav-text">结语</span></a></li></ol></li></ol></div>
       </div>
       <!--/noindex-->
 
