@@ -179,6 +179,74 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2024/03/28/OS%E7%9A%84%E9%80%89%E6%8B%A9/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/csm.png">
+      <meta itemprop="name" content="CSM">
+      <meta itemprop="description" content="应用是应用，驱动是驱动！你要是偏要应用干驱动，哥们，你怎么不直接薪资翻倍啊！[🦀]">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="我要成为嵌入式高手[doge]">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2024/03/28/OS%E7%9A%84%E9%80%89%E6%8B%A9/" class="post-title-link" itemprop="url">OS的选择</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+              
+
+              <time title="创建时间：2024-03-28 22:25:10 / 修改时间：22:59:30" itemprop="dateCreated datePublished" datetime="2024-03-28T22:25:10+08:00">2024-03-28</time>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h5 id="OS是什么"><a href="#OS是什么" class="headerlink" title="OS是什么"></a>OS是什么</h5><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">OS就是operating system，就是操作系统。系统就是为了资源的充分利用，</span><br><span class="line">虽然系统本身也会消耗资源，但是这是为了更好的分配和高效使用</span><br></pre></td></tr></table></figure>
+
+<h5 id="OS的种类"><a href="#OS的种类" class="headerlink" title="OS的种类"></a>OS的种类</h5><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line">以下是我个人觉得的难易程度进行分类</span><br><span class="line">1.裸机</span><br><span class="line">一般有MCU SOC 那些的裸机的开发，这些只适合简单，单一线程的工作</span><br><span class="line"></span><br><span class="line">2.RTOS</span><br><span class="line">就连cube都支持直接使用freertos一键生成，还有ucos thread-x那些，</span><br><span class="line">本质还是调用API，是rtos接管了很多寄存器和上下文切换的那些中断操作等</span><br><span class="line"></span><br><span class="line">3.rt-thread</span><br><span class="line">这个就有点难度了，它可以像freertos那样简单的就调用api实现</span><br><span class="line">线程，钩子，空间申请等。但是它有它们没有的，第一个就是BSP，第二个ENV</span><br><span class="line">第三个类linux系统</span><br><span class="line">这个BSP还是有点含金量的，很规范，对于移植来说，就是锦上添花的好东西啊。</span><br><span class="line">ENV，这个一下子就让整个编译BSP变得高大上了，还有menucofing呢</span><br><span class="line">类linux驱动开发，因为还有一堆宏操作，就是使用宏来把函数添加到列表中的操作等，</span><br><span class="line">对于没有接触过驱动开发的人来说，甚至没看懂这些宏定义为什么可以把函数添加</span><br><span class="line">进入模块。还有那些文件操作集那些。</span><br><span class="line"></span><br><span class="line">4.linux 主板OS(电脑主板，识别设备，调度起来)  树莓派</span><br><span class="line">这个难度就非常吓人了，在rtt的基础上面还得学习设备树，字符设备，</span><br><span class="line">平台设备，混杂设备，主设备号，次设备号。而且你会发现一件事，rtt是没人写驱动</span><br><span class="line">因为驱动cube已经生成了，写好kconfig文件就可以了。但是linux不一样了，驱动</span><br><span class="line">得人来写才行得。而且还有应用驱动，这也是rtt没有的。</span><br><span class="line"></span><br><span class="line">5.IOS 安卓 鸿蒙 CUDE(GPU的那个系统)</span><br><span class="line">可没说让你去搞应用开发，是去理解和写驱动那些，不同机型，底层得io，设备啥的</span><br><span class="line">都是不一样的，这个一般都是芯片厂商写的，如果以后进了芯片厂，这些就得要掌握了</span><br><span class="line"></span><br><span class="line">6.windows  Mac  Ubuntu等</span><br><span class="line">这个别想了，多年高强度迭代、一个人不可能掌握，能熟练使用就非常了不起了，而且</span><br><span class="line">还有好多没开源，开源学习成本太高了，回报基本为0.</span><br></pre></td></tr></table></figure>
+
+<h5 id="OS的选择"><a href="#OS的选择" class="headerlink" title="OS的选择"></a>OS的选择</h5><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line">一定要明白一点，OS没有高低贵贱之分，在嵌入式里面没有优越，只有适合，只有满足即可，</span><br><span class="line">一切为了需求，一切够用即可。</span><br><span class="line">MCU不是一定要上系统，难道只有几个功能，还要几个任务相互抢？浪费空间，这个</span><br><span class="line">适合都可以上51了。</span><br><span class="line"></span><br><span class="line">就算是SOC，去看厂商给的代码，大概率都是有一个rtos的demo，为什么？因为不见得</span><br><span class="line">一定要上类linux1或者linux那些系统啊，rtos就够用了啊。</span><br><span class="line"></span><br><span class="line">至于那些复杂，多应用的，这个时候就要利用mmu，来给空间进行更多操作，底层全部</span><br><span class="line">丢给系统，这样上层才可以随心所欲实现应用切换，应用下载的功能。虽然mcu也是可以</span><br><span class="line">实现动态加载模组(就是写一个可以控制sram的程序，把app下载到flash，使用的时候</span><br><span class="line">，把代码拷贝到空余的sram空间，这就想手机一样，可以使用空间，可以释放空间，而且</span><br><span class="line">平时不占据sram，sram只有一个sram控制系统),但是，太复杂了，而且引脚躲起来了</span><br><span class="line">，完全就不是开发了，这点厂商也想到了。</span><br><span class="line"></span><br><span class="line">再高级一点的设备就上安卓，鸿蒙了，澎湃OS等了。</span><br><span class="line"></span><br><span class="line">再高级一点就是主机和pc端了啊，上linux，上windows等</span><br><span class="line"></span><br><span class="line">然后就是服务器了，这个不用考虑了，只能是linux系统了，可以Ubuntu，kail等</span><br></pre></td></tr></table></figure>
+
+<h5 id="结语"><a href="#结语" class="headerlink" title="结语"></a>结语</h5><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">千万不要神话系统，觉得越高级系统就越神圣，其实不是的，我们一切都是为了需求，</span><br><span class="line">没有任何一个系统是完美的，都是在自己所在领域非常好用，作为嵌入式开发人员，这</span><br><span class="line">一点就要牢牢铭记</span><br></pre></td></tr></table></figure>
+
+
+      
+    </div>
+
+    
+    
+    
+
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
     <link itemprop="mainEntityOfPage" href="http://example.com/2024/03/27/github%E7%AE%A1%E7%90%86/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -202,10 +270,16 @@
                 <i class="far fa-calendar"></i>
               </span>
               <span class="post-meta-item-text">发表于</span>
-              
 
-              <time title="创建时间：2024-03-27 20:40:37 / 修改时间：21:20:50" itemprop="dateCreated datePublished" datetime="2024-03-27T20:40:37+08:00">2024-03-27</time>
+              <time title="创建时间：2024-03-27 20:40:37" itemprop="dateCreated datePublished" datetime="2024-03-27T20:40:37+08:00">2024-03-27</time>
             </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2024-03-28 22:23:45" itemprop="dateModified" datetime="2024-03-28T22:23:45+08:00">2024-03-28</time>
+              </span>
 
           
 
@@ -222,11 +296,11 @@
 
 <h5 id="git-ssh"><a href="#git-ssh" class="headerlink" title="git ssh"></a>git ssh</h5><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">ssh就是建立一个安全的下载链接罢了，但是如果是下载私有仓库，那还是得进</span><br><span class="line">行github登录才能实现下载，不是说有ssh就可以直接下载了</span><br></pre></td></tr></table></figure>
 
-<h5 id="git-fork"><a href="#git-fork" class="headerlink" title="git fork"></a>git fork</h5><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line">我们经常可以看到github上面好多代码贡献的，比如linux，这个提交量</span><br><span class="line">非常大，而且fork数量也非常多。</span><br><span class="line">fork不等于clone，更不等于zip下载。</span><br><span class="line"></span><br><span class="line">zip下载就是下载一个版本或者当前版本，常见就是Tag进行版本管理，这些是没有.git。</span><br><span class="line"></span><br><span class="line">clone和ssh就是把整个开发的过程的git都下载过来，这个，就是直接把开源库</span><br><span class="line">复制一份到自己的分布式主机上面。此时是无法通过push提交到原仓库的。那为</span><br><span class="line">什么gitee那些又可以拉人，又可以下载和提交呢，那是因为所有clone都是默</span><br><span class="line">认为不可push，只有管理员去修改我的访问和提交权限，我才能提交和修改。</span><br><span class="line"></span><br><span class="line">fork 这个就是不一样了，是自己生成一个仓库副本，就是在github上面直接生</span><br><span class="line">成这个这个仓库，此时，就要切换为一个新分支，然后，正常提交，然后push给</span><br><span class="line">新分支，然后选择pr就可以提交到原仓库中，然后等待原仓库管理员去解决冲突</span><br><span class="line">和选择、审批等。如下操作：</span><br><span class="line">1.首先打开一个项目，然后直接fork，点击创造fork。这样就会在我的账户下面生成一个fork副本。</span><br><span class="line">2.此时可以使用git clone 或者ssh来下载。</span><br><span class="line">3.git remote add upstream https://github.com/original-author/project-name.git</span><br><span class="line">4.新建分支 git checkout -b feature-or-bugfix</span><br><span class="line">5.修改和提交代码</span><br><span class="line">6.推送分支 git push -u origin feature-or-bugfix</span><br><span class="line">7.创建Pull Request (PR)  跟提交分支一样的操作是</span><br><span class="line">8.等待原仓库管理人进行处理</span><br></pre></td></tr></table></figure>
+<h5 id="git-fork"><a href="#git-fork" class="headerlink" title="git fork"></a>git fork</h5><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line">我们经常可以看到github上面好多代码贡献的，比如linux，这个提交量</span><br><span class="line">非常大，而且fork数量也非常多。</span><br><span class="line">fork不等于clone，更不等于zip下载。</span><br><span class="line"></span><br><span class="line">zip下载就是下载一个版本或者当前版本，常见就是Tag进行版本管理，这些是没有.git。</span><br><span class="line"></span><br><span class="line">clone和ssh就是把整个开发的过程的git都下载过来，这个，就是直接把开源库</span><br><span class="line">复制一份到自己的分布式主机上面。此时是无法通过push提交到原仓库的。那为</span><br><span class="line">什么gitee那些又可以拉人，又可以下载和提交呢，那是因为所有clone都是默</span><br><span class="line">认为不可push，只有管理员去修改我的访问和提交权限，我才能提交和修改。</span><br><span class="line"></span><br><span class="line">fork 这个就是不一样了，是自己生成一个仓库副本，就是在github上面直接生</span><br><span class="line">成这个这个仓库，此时，就要切换为一个新分支，然后，正常提交，然后push给</span><br><span class="line">新分支，然后选择pr就可以提交到原仓库中，然后等待原仓库管理员去解决冲突</span><br><span class="line">和选择、审批等。如下操作：</span><br><span class="line">1.首先打开一个项目，然后直接fork，点击创造fork。这样就会在我的账户下面生成一个fork副本。</span><br><span class="line">2.此时可以使用git clone 或者ssh来下载。</span><br><span class="line">3.git remote add upstream https://github.com/original-author/project-name.git</span><br><span class="line">4.新建分支 git checkout -b feature-or-bugfix</span><br><span class="line">5.修改和提交代码</span><br><span class="line">6.推送分支 git push -u origin feature-or-bugfix</span><br><span class="line">7.创建Pull Request (PR)  跟提交分支一样的操作是</span><br><span class="line">8.等待原仓库管理人进行处理</span><br><span class="line"></span><br><span class="line">如果不想要fork，就进入到fork仓库，点击settings中的delete仓库，对，就是删库就好了。</span><br></pre></td></tr></table></figure>
 
 <h5 id="git-branch保护"><a href="#git-branch保护" class="headerlink" title="git branch保护"></a>git branch保护</h5><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">为什么要分支保护啊？我们在看gitee一些项目，可以看到main分支上面有</span><br><span class="line">一把锁，这个时候就是管理员把main分支进行上锁，就是变为可读模式，此时</span><br><span class="line">就是无法修改。使用的是Lock branch这个一般是短期无需修改才会选择这</span><br><span class="line">个状态，这个是管理员随时可以修改得状态。</span><br><span class="line"></span><br><span class="line">一般常用就是Require a pull request before merging，就是只能通</span><br><span class="line">过pr合并来实现main分支的更新，不允许直接push提交，这样就可以让整个</span><br><span class="line">结构和流程更加简洁和方便管理，防止胡乱提交导致版本错误等诸多问题。</span><br><span class="line"></span><br><span class="line">此时还可以Require approvals，这个就是添加审核人，审核人必须发言和评价才能合并。</span><br><span class="line"></span><br><span class="line">使用Do not allow bypassing the above settings就是管理员和</span><br><span class="line">用户一视同仁，这个不建议勾选，因为管理员就是为了快速方便管理分支和</span><br><span class="line">仓库，只要管理员认真点，仔细点就行了，只要分支保护做的好，都是ok的</span><br></pre></td></tr></table></figure>
 
-<h5 id="git-令牌-git-小组"><a href="#git-令牌-git-小组" class="headerlink" title="git 令牌  &amp; git 小组"></a>git 令牌  &amp; git 小组</h5><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">git 令牌</span><br><span class="line">这个就是把我的私有仓库通过令牌的方式，给与他人使用权限。</span><br><span class="line">这个就是在个人然后点击settings，然后点击Developer settings，</span><br><span class="line">然后选择token，两个都可以new和classic，无脑选择new就行了，然后</span><br><span class="line">就是权限限制读写操作，然后就仓库限制，时间天数限制。然后点击确认就</span><br><span class="line">是生成令牌。使用git 令牌下载只能使用https下载不能使用ssh下载。</span><br><span class="line">下载的时候，直接git clone 仓库，然后写上我的名字，然后就输入这</span><br><span class="line">个生成的token就可以下载，分享啦。</span><br><span class="line"></span><br><span class="line">git 小组</span><br><span class="line">就是拉人到自己的仓库，一起创作</span><br><span class="line">进入仓库，点击settings，然后点击collaborators，添加用户的邮箱</span><br><span class="line">，然后进入即可，然后就是小组啦自然还有那些企业版啥的，我目前还没用</span><br><span class="line">过，我感觉大差不差应该都是这个原理，企业版就是，可以把所有人拉到一</span><br><span class="line">个开发组，然后方便拉近仓库和管理。</span><br></pre></td></tr></table></figure>
+<h5 id="git-令牌-git-小组"><a href="#git-令牌-git-小组" class="headerlink" title="git 令牌  &amp; git 小组"></a>git 令牌  &amp; git 小组</h5><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line">git 令牌</span><br><span class="line">这个就是把我的私有仓库通过令牌的方式，给与他人使用权限。</span><br><span class="line">这个就是在个人然后点击settings，然后点击Developer settings，</span><br><span class="line">然后选择token，两个都可以new和classic，无脑选择new就行了，然后</span><br><span class="line">就是权限限制读写操作，然后就仓库限制，时间天数限制。然后点击确认就</span><br><span class="line">是生成令牌。使用git 令牌下载只能使用https下载不能使用ssh下载。</span><br><span class="line">下载的时候，直接git clone 仓库，然后写上我的名字，然后就输入这</span><br><span class="line">个生成的token就可以下载，分享啦。</span><br><span class="line"></span><br><span class="line">git 小组</span><br><span class="line">就是拉人到自己的仓库，一起创作</span><br><span class="line">进入仓库，点击settings，然后点击collaborators，添加用户的邮箱</span><br><span class="line">，然后进入即可，然后就是小组啦自然还有那些企业版啥的，我目前还没用</span><br><span class="line">过，我感觉大差不差应该都是这个原理，企业版就是，可以把所有人拉到一</span><br><span class="line">个开发组，然后方便拉近仓库和管理。</span><br><span class="line"></span><br><span class="line">git 小组踢人</span><br><span class="line">就是在collaborators中，点击删除就好了</span><br><span class="line"></span><br><span class="line">git 小组主动退出</span><br><span class="line">点击右上角的头像，点击setting，点击仓库，就可以看到共同工作的仓库，里面有leave按键，然后确认就好了</span><br></pre></td></tr></table></figure>
 
 <h5 id="git总结"><a href="#git总结" class="headerlink" title="git总结"></a>git总结</h5><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">git一句话分布式管理，这个本质就是为了团队，大家一起工作，小公司可能用</span><br><span class="line">不到git，但是为了项目管理，为了整体发展git的重要性非常高。git只是自己</span><br><span class="line">一个人用，那么就是失去了分布式的意义了，这不就是变成了一个同步了吗？没用的!!!</span><br></pre></td></tr></table></figure>
 
@@ -856,80 +930,6 @@
   
   
 
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2024/03/02/%E6%8C%87%E9%92%88%E5%92%8C%E5%AD%97%E7%AC%A6%E4%B8%B2/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/csm.png">
-      <meta itemprop="name" content="CSM">
-      <meta itemprop="description" content="应用是应用，驱动是驱动！你要是偏要应用干驱动，哥们，你怎么不直接薪资翻倍啊！[🦀]">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="我要成为嵌入式高手[doge]">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2024/03/02/%E6%8C%87%E9%92%88%E5%92%8C%E5%AD%97%E7%AC%A6%E4%B8%B2/" class="post-title-link" itemprop="url">指针和字符串</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              <time title="创建时间：2024-03-02 20:01:08" itemprop="dateCreated datePublished" datetime="2024-03-02T20:01:08+08:00">2024-03-02</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2024-03-03 00:28:37" itemprop="dateModified" datetime="2024-03-03T00:28:37+08:00">2024-03-03</time>
-              </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <p>这是一篇关于我刚学习C语言和C++的时候留下来的关于字符串、数组、指针的问题</p>
-<h3 id="起因"><a href="#起因" class="headerlink" title="起因"></a>起因</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">今天在看python的时候看到一个表达式字符串，这个东西呢，非常奇妙。</span><br><span class="line">举个例子python里面的字符串有</span><br><span class="line">str1 = <span class="string">&quot; csmznbo &quot;</span></span><br><span class="line">str2 = <span class="string">&#x27; csmznbo &#x27;</span></span><br><span class="line">可以看到此时的字符串都是有空格，所以下面的那个单引号的明显不对劲，对了。</span><br><span class="line">这个就是shell脚本里面类似的原样输出</span><br><span class="line">特殊字符串。如下例子</span><br><span class="line">bash</span><br><span class="line">str3=<span class="string">&#x27;The time now is `data`&#x27;</span></span><br><span class="line">python</span><br><span class="line">str3=<span class="string">&#x27;The time now is data&#x27;</span>.replace(<span class="string">&#x27;data&#x27;</span>,str(time.localtime(time.time())))</span><br><span class="line">其实python的<span class="string">&quot;&quot;</span>格式的字符串也是可以做到输出像上面的东西的，f<span class="string">&quot;&#123;&#125;&quot;</span>也是可以的</span><br><span class="line">bash的例子只是引出这种字符串的特殊用法原样输出。下面的替换输出，虽然不是同一</span><br><span class="line">功能，但是也能知道遇到这奇奇怪怪的字符串的时候可以联想起来好玩的东西。</span><br><span class="line"></span><br><span class="line">但是这个不是今天的主角。</span><br></pre></td></tr></table></figure>
-
-<h3 id="填坑"><a href="#填坑" class="headerlink" title="填坑"></a>填坑</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">这个帖子，主要是为了记录我对指针数组还有字符串的理解。首先呢，我之前总是</span><br><span class="line">不理解为什么字符串是不可写和不可修改现在知道了，因为它存在静态区中。</span><br><span class="line">但是我学了几个月的C语言我才知道了指针不等于字符串，我当时写那些拼接函数，比</span><br><span class="line">较函数，裁剪那些，我都是用数组去实现的。但是学的懵懵懂懂的，我甚至都把数组等于</span><br><span class="line">字符串，字符串又等于指针去了，因为用起来真的差不多。其实是错误的，虽然汇编是一样</span><br><span class="line">当写关于字符串的函数的的时候，传参指针，返回值那些都是天坑。要知道字符串</span><br><span class="line">是不能修改的，所以返回值只能是数组和指针，还有就是指针传参就会导致一些问题</span><br><span class="line">比如不知道数据长度等问题。</span><br><span class="line"></span><br></pre></td></tr></table></figure>
-
-<h3 id="关系"><a href="#关系" class="headerlink" title="关系"></a>关系</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">指针就是指针，指向一个地址，自己指针又有一个属于自己的地址。大小看处理器位数</span><br><span class="line"></span><br><span class="line">数组就是连续地址的元素组成，可以装指针，数组，结构体，函数等等</span><br><span class="line"></span><br><span class="line">C语言中，字符串就是字符串，没别的东西就是全局区的data段中，不可修改的。</span><br><span class="line"></span><br><span class="line">当时第一次学cpp的时候，把String当成字符串了，当时也好奇为什么字符串又可</span><br><span class="line">以删减修改了，其实就是一个容器，不是字符串，你可以认为里面就是一个数组</span><br><span class="line">真正的字符串还是<span class="string">&quot;&quot;</span>这个，这个还是不能修改即便是cpp。</span><br><span class="line">python中字符串也是不能修改的，每一次的修改，都只是新生成一个字符串。</span><br><span class="line">并没有修改原本字符串</span><br><span class="line"></span><br></pre></td></tr></table></figure>
-
-<h3 id="结语"><a href="#结语" class="headerlink" title="结语"></a>结语</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">这次就是一个知识的填坑和巩固罢了果然基础不牢地动山摇。很多时候都</span><br><span class="line">是简单的东西罢了。拜拜，下次继续</span><br></pre></td></tr></table></figure>
-
-      
-    </div>
-
-    
-    
-    
-
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
 
   
   <nav class="pagination">
@@ -1001,14 +1001,14 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">12</span>
+          <span class="site-state-item-count">13</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">11</span>
+        <span class="site-state-item-count">12</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>
@@ -1070,7 +1070,7 @@
 
  <div class="theme-info">
   <div class="powered-by"></div>
-  <span class="post-count">博客全站共5.4k字</span>
+  <span class="post-count">博客全站共6.6k字</span>
 </div>
 
         
