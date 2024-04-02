@@ -179,6 +179,76 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2024/04/02/%E7%BA%BF%E7%A8%8B%E4%B8%8E%E8%BF%9B%E7%A8%8B%E7%9A%84%E5%88%9D%E6%AD%A5%E4%BA%86%E8%A7%A3/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/csm.png">
+      <meta itemprop="name" content="CSM">
+      <meta itemprop="description" content="应用是应用，驱动是驱动！你要是偏要应用干驱动，哥们，你怎么不直接薪资翻倍啊！[🦀]">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="我要成为嵌入式高手[doge]">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2024/04/02/%E7%BA%BF%E7%A8%8B%E4%B8%8E%E8%BF%9B%E7%A8%8B%E7%9A%84%E5%88%9D%E6%AD%A5%E4%BA%86%E8%A7%A3/" class="post-title-link" itemprop="url">线程与进程的初步了解</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+              
+
+              <time title="创建时间：2024-04-02 20:40:33 / 修改时间：21:28:43" itemprop="dateCreated datePublished" datetime="2024-04-02T20:40:33+08:00">2024-04-02</time>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h5 id="起因"><a href="#起因" class="headerlink" title="起因"></a>起因</h5><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">今天，我的哥们又在上班摸鱼，他发了一些极性码的博客给我，他真的牛逼，都准备搞5G协议栈了，</span><br><span class="line">当然只是看着玩的，学学思路而已，这东西不是一个人可以搞定的，然后他问我，线程和进程怎么区分啊？</span><br><span class="line">我一时间懵了，因为我之前学linux的时候，就是调用api啊，fork thread就完了。</span><br><span class="line">线程最小单位，进程是一个车间啥的，线程共享资源，进程独立资源，脑子就只有这个概念。</span><br><span class="line">我本来想要回答的，它来一个博客，就是关于线程和进程认识。</span><br><span class="line">举个例子，如果是mcu，那么此时就只有一个进程，那么是不是可以认为，控制程序控制块指针就是控制</span><br><span class="line">一个进程呢？如果我们对rtos上系统，是不是就是多任务(线程)了呢？我跟他说了一下观点。自然</span><br><span class="line">思路是正确，但是实际就复杂多了。</span><br></pre></td></tr></table></figure>
+
+<h5 id="CPU核心数和线程数"><a href="#CPU核心数和线程数" class="headerlink" title="CPU核心数和线程数"></a>CPU核心数和线程数</h5><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">打开电脑的资源管理器就可以看到几内核，多少逻辑处理器(线程)。还有那些云服务器啥的，也写了参数。</span><br><span class="line">比如: 8核16线程 32核32线程</span><br><span class="line">首先，我们所谓的cpu核心数量，不是这样算的，是一个大cpu里面多个小cpu，每个小cpu有单核，双核，多核。</span><br><span class="line">单核就是同时只能执行一个线程或者进程，双核就是两个，以此类推。</span><br><span class="line">所以此时的核心就是   cpu  		       (核心)</span><br><span class="line">此时的线程就是		 cpu * n *几核心     (线程)</span><br></pre></td></tr></table></figure>
+
+<h5 id="进程和线程"><a href="#进程和线程" class="headerlink" title="进程和线程"></a>进程和线程</h5><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">进程这个概念在mcu中是没有的，就一个单片机，搞个鬼的进程，多任务还差不多。所以，我们就来思考</span><br><span class="line">linux的进程和线程，首先，少不了的结构体，就是进程控制块，内部有id、父id、内部数据、线程列表、</span><br><span class="line">内存大小等。然后就得去找mmu要内存，因为每个进程都是独立的。然后线程列表，共用这个进程中的内存</span><br><span class="line">数据，线程id，线程优先级等。自然这些结构体里面还得有信号处理，还有互斥锁，信号量等东西。</span><br><span class="line">cpu的最小运行单位就是线程，那么进程是怎么处理的呢？</span><br><span class="line">我们要知道每次生成一个进程的时候，一定是有一个主线程，就是进程自身。</span><br><span class="line">所以，cpu哪怕是调用进程，也是运行进程中的线程。我们可以这样认为:</span><br><span class="line">运行一个线程的时候就是裸机。</span><br><span class="line">运行一个进程的时候就是一个rtos。</span><br></pre></td></tr></table></figure>
+
+<h5 id="CPU和系统"><a href="#CPU和系统" class="headerlink" title="CPU和系统"></a>CPU和系统</h5><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">我们学linux的时候，发现线程可以申请非常大，甚至百万千万上亿都是可以的，但是进程是受限制的。</span><br><span class="line">我们通过上面的思考，可以知道因为进程还会申请空间，还会做很多进程通信的配置，所以是非常耗资源的，</span><br><span class="line">加上系统自身还有很多守护进程在，所以，这是进程的申请有限，看配置，而且会越来越卡，因为资源终究有限。</span><br><span class="line">可是我的cpu只有8核16线程啊？再怎么样也比不过系统的进程和线程数啊？</span><br><span class="line">这里就要分清楚了os的并发和硬件cpu的并发不一样。</span><br><span class="line">我们用windows来思考，首先就是bios启动开机，此时就得到了cpu的线程数和核心数，然后告诉系统了，系统</span><br><span class="line">就知道了目前可用的设备和处理器有那些了。它内部的线程和进程就全部添加到列表中，linux里面也有状态，</span><br><span class="line">挂起、运行、暂停、就绪、僵尸、死亡。这些一个个对应着列表，就绪状态的，会被系统调度，然后经过系统的算法和处理，分配cpu线程给到此时的线程和进程，就实现了cpu处理了，所以，本来就不是一一对应的关系。</span><br><span class="line">是类似于时间片轮询的操作来实现一个cpu多个线程和进程来使用。</span><br><span class="line"></span><br><span class="line">我们可以使用python来申请特定的核心来作为进程，就可以发现，cpu是可以被单独用来执行特定目标的，所以，</span><br><span class="line">系统只是经过算法然后就调度到可用的cpu来进行操作了。</span><br><span class="line">我们在linux中，比如编译openwrt，此时就需要使用多线程编译，反正都是生成.o文件，所以，彼此之前不怕干扰，编译就完事了，此时就是linux把可用的cpu丢给编译。我们还可以把进程绑定给一个特定的cpu核心上面，和上面一样的操作就可以实现对核心的操作啦。</span><br><span class="line"></span><br><span class="line">当然对于我这个初学者，我是把它当成多个单片机，只不过中间有很多数据总线，地址总线、控制总线等</span><br></pre></td></tr></table></figure>
+
+<h5 id="结语"><a href="#结语" class="headerlink" title="结语"></a>结语</h5><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">这个博客，是我对于os的内部的原理的初步认识、分析和学习，自然实际中的os，不可能那么简单的啊，就连普通的freertos和rtt都没那么简单的，这个博客，等以后我变强了，再回来修改错误和增添内容哦！</span><br></pre></td></tr></table></figure>
+
+
+      
+    </div>
+
+    
+    
+    
+
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
     <link itemprop="mainEntityOfPage" href="http://example.com/2024/04/01/%E5%9B%BA%E4%BB%B6%E7%83%A7%E5%BD%95/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -830,88 +900,6 @@
   
   
 
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2024/03/05/cpp%E4%B8%AD%E7%9A%84const%E4%B8%80%E4%BA%9B%E7%94%A8%E6%B3%95/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/csm.png">
-      <meta itemprop="name" content="CSM">
-      <meta itemprop="description" content="应用是应用，驱动是驱动！你要是偏要应用干驱动，哥们，你怎么不直接薪资翻倍啊！[🦀]">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="我要成为嵌入式高手[doge]">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2024/03/05/cpp%E4%B8%AD%E7%9A%84const%E4%B8%80%E4%BA%9B%E7%94%A8%E6%B3%95/" class="post-title-link" itemprop="url">cpp中的const一些用法</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              <time title="创建时间：2024-03-05 23:43:03" itemprop="dateCreated datePublished" datetime="2024-03-05T23:43:03+08:00">2024-03-05</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2024-03-06 00:02:52" itemprop="dateModified" datetime="2024-03-06T00:02:52+08:00">2024-03-06</time>
-              </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <h4 id="起因"><a href="#起因" class="headerlink" title="起因"></a>起因</h4><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">今天在菜鸟编程中复习cpp的时候，看到了异常处理。就是try catch </span><br><span class="line">throw 三兄弟。python中就是try except else finally raise</span><br><span class="line">两者是很相似的。</span><br></pre></td></tr></table></figure>
-
-<h5 id="异常处理"><a href="#异常处理" class="headerlink" title="异常处理"></a>异常处理</h5><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">就是try尝试运行，错误就到catch，catch中进行</span><br><span class="line">错误捕捉。还有一个就是throw，这个就是运行的时候，直接抛出错误</span><br><span class="line">这个就像人为中断错误，毕竟catch捕捉的东西有限。一旦执行throw</span><br><span class="line">就会立刻停止程序。</span><br></pre></td></tr></table></figure>
-
-<h5 id="Const"><a href="#Const" class="headerlink" title="Const"></a>Const</h5><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">为什么会出现Const呢？首先，</span><br><span class="line">const char* a</span><br><span class="line">char* const b</span><br><span class="line">const char* const c</span><br><span class="line">const void * fun（）</span><br><span class="line">这四个都是见怪不怪的用法了。</span><br><span class="line">但是我看到一个</span><br><span class="line">const void *what（） const throw（）</span><br><span class="line">重写throw的功能。如下代码所示</span><br></pre></td></tr></table></figure>
-
-<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;exception&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> std;</span><br><span class="line"> </span><br><span class="line"><span class="keyword">struct</span> <span class="title class_">MyException</span> : <span class="keyword">public</span> exception</span><br><span class="line">&#123;</span><br><span class="line">  <span class="function"><span class="type">const</span> <span class="type">char</span> * <span class="title">what</span> <span class="params">()</span> <span class="type">const</span> <span class="title">throw</span> <span class="params">()</span></span></span><br><span class="line"><span class="function">  </span>&#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="string">&quot;C++ Exception&quot;</span>;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;;</span><br><span class="line"> </span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">  <span class="keyword">try</span></span><br><span class="line">  &#123;</span><br><span class="line">    <span class="keyword">throw</span> <span class="built_in">MyException</span>();</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="built_in">catch</span>(MyException&amp; e)</span><br><span class="line">  &#123;</span><br><span class="line">    std::cout &lt;&lt; <span class="string">&quot;MyException caught&quot;</span> &lt;&lt; std::endl;</span><br><span class="line">    std::cout &lt;&lt; e.<span class="built_in">what</span>() &lt;&lt; std::endl;</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="built_in">catch</span>(std::exception&amp; e)</span><br><span class="line">  &#123;</span><br><span class="line">    <span class="comment">//其他的错误</span></span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<h5 id="结果如下"><a href="#结果如下" class="headerlink" title="结果如下"></a>结果如下</h5><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">MyException caught</span><br><span class="line">C++ Exception</span><br></pre></td></tr></table></figure>
-
-<h5 id="非常有意思，为什么函数还可以const呢-？const-char-what-const-throw"><a href="#非常有意思，为什么函数还可以const呢-？const-char-what-const-throw" class="headerlink" title="非常有意思，为什么函数还可以const呢 ？const char * what () const throw ()"></a>非常有意思，为什么函数还可以const呢 ？const char * what () const throw ()</h5><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">我去网上和编译实测了一下，发现确实可以的。但是有限制</span><br><span class="line">1.只能是结构体和类里面的成员方法(cpp中类和结构体都可以继承和实现函数的。) </span><br><span class="line">2.只能调用同为const的函数</span><br><span class="line">3.不能修改类里面的成员对象</span><br><span class="line">4.其他函数可以正常嗲用const修饰了的函数</span><br><span class="line">5.只能调用同为const的实例  如  const A a； 此时就能使用a</span><br></pre></td></tr></table></figure>
-
-<h5 id="结语"><a href="#结语" class="headerlink" title="结语"></a>结语</h5><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">大家感兴趣的话，可以去尝试用一下，我个人感觉，这个东西还是有意义，反正内部被修改</span><br><span class="line">可以作用一些，返回当前状态的接口上面如return systemTiem.hour;</span><br></pre></td></tr></table></figure>
-
-
-
-
-      
-    </div>
-
-    
-    
-    
-
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
 
   
   <nav class="pagination">
@@ -983,14 +971,14 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">14</span>
+          <span class="site-state-item-count">15</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">13</span>
+        <span class="site-state-item-count">14</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>
@@ -1052,7 +1040,7 @@
 
  <div class="theme-info">
   <div class="powered-by"></div>
-  <span class="post-count">博客全站共7.8k字</span>
+  <span class="post-count">博客全站共9.1k字</span>
 </div>
 
         

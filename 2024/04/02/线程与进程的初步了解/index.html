@@ -22,20 +22,20 @@
     var CONFIG = {"hostname":"example.com","root":"/","scheme":"Pisces","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
   </script>
 
-  <meta name="description" content="今天，分享一些快速入门linux驱动的路子。 起因123今天上班摸鱼看linux内核，感觉一下子就醒悟了，一下子就通透了，脑子里面终于有一种OS的感觉，资源的分配啊，线程管理，进程管理，内存管理的思路了。  OS1234567891011121314要知道OS是分等级的1&gt;.微内核    	鸿蒙  QNX、Minix2&gt;.宏内核		linux  windows3&gt;.混合内核">
+  <meta name="description" content="起因12345678今天，我的哥们又在上班摸鱼，他发了一些极性码的博客给我，他真的牛逼，都准备搞5G协议栈了，当然只是看着玩的，学学思路而已，这东西不是一个人可以搞定的，然后他问我，线程和进程怎么区分啊？我一时间懵了，因为我之前学linux的时候，就是调用api啊，fork thread就完了。线程最小单位，进程是一个车间啥的，线程共享资源，进程独立资源，脑子就只有这个概念。我本来想要回答的，它来">
 <meta property="og:type" content="article">
-<meta property="og:title" content="RTT 从MCU到linux驱动的入门捷径">
-<meta property="og:url" content="http://example.com/2024/03/06/RTT-%E4%BB%8EMCU%E5%88%B0linux%E9%A9%B1%E5%8A%A8%E7%9A%84%E5%85%A5%E9%97%A8%E6%8D%B7%E5%BE%84/index.html">
+<meta property="og:title" content="线程与进程的初步了解">
+<meta property="og:url" content="http://example.com/2024/04/02/%E7%BA%BF%E7%A8%8B%E4%B8%8E%E8%BF%9B%E7%A8%8B%E7%9A%84%E5%88%9D%E6%AD%A5%E4%BA%86%E8%A7%A3/index.html">
 <meta property="og:site_name" content="我要成为嵌入式高手[doge]">
-<meta property="og:description" content="今天，分享一些快速入门linux驱动的路子。 起因123今天上班摸鱼看linux内核，感觉一下子就醒悟了，一下子就通透了，脑子里面终于有一种OS的感觉，资源的分配啊，线程管理，进程管理，内存管理的思路了。  OS1234567891011121314要知道OS是分等级的1&gt;.微内核    	鸿蒙  QNX、Minix2&gt;.宏内核		linux  windows3&gt;.混合内核">
+<meta property="og:description" content="起因12345678今天，我的哥们又在上班摸鱼，他发了一些极性码的博客给我，他真的牛逼，都准备搞5G协议栈了，当然只是看着玩的，学学思路而已，这东西不是一个人可以搞定的，然后他问我，线程和进程怎么区分啊？我一时间懵了，因为我之前学linux的时候，就是调用api啊，fork thread就完了。线程最小单位，进程是一个车间啥的，线程共享资源，进程独立资源，脑子就只有这个概念。我本来想要回答的，它来">
 <meta property="og:locale" content="zh_CN">
-<meta property="article:published_time" content="2024-03-05T16:08:34.000Z">
-<meta property="article:modified_time" content="2024-03-11T13:46:19.190Z">
+<meta property="article:published_time" content="2024-04-02T12:40:33.000Z">
+<meta property="article:modified_time" content="2024-04-02T13:28:43.473Z">
 <meta property="article:author" content="CSM">
-<meta property="article:tag" content="RTT">
+<meta property="article:tag" content="线程 进程">
 <meta name="twitter:card" content="summary">
 
-<link rel="canonical" href="http://example.com/2024/03/06/RTT-%E4%BB%8EMCU%E5%88%B0linux%E9%A9%B1%E5%8A%A8%E7%9A%84%E5%85%A5%E9%97%A8%E6%8D%B7%E5%BE%84/">
+<link rel="canonical" href="http://example.com/2024/04/02/%E7%BA%BF%E7%A8%8B%E4%B8%8E%E8%BF%9B%E7%A8%8B%E7%9A%84%E5%88%9D%E6%AD%A5%E4%BA%86%E8%A7%A3/">
 
 
 <script id="page-configurations">
@@ -48,7 +48,7 @@
   };
 </script>
 
-  <title>RTT 从MCU到linux驱动的入门捷径 | 我要成为嵌入式高手[doge]</title>
+  <title>线程与进程的初步了解 | 我要成为嵌入式高手[doge]</title>
   
 
 
@@ -183,7 +183,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2024/03/06/RTT-%E4%BB%8EMCU%E5%88%B0linux%E9%A9%B1%E5%8A%A8%E7%9A%84%E5%85%A5%E9%97%A8%E6%8D%B7%E5%BE%84/">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2024/04/02/%E7%BA%BF%E7%A8%8B%E4%B8%8E%E8%BF%9B%E7%A8%8B%E7%9A%84%E5%88%9D%E6%AD%A5%E4%BA%86%E8%A7%A3/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/csm.png">
@@ -196,7 +196,7 @@
     </span>
       <header class="post-header">
         <h1 class="post-title" itemprop="name headline">
-          RTT 从MCU到linux驱动的入门捷径
+          线程与进程的初步了解
         </h1>
 
         <div class="post-meta">
@@ -205,16 +205,10 @@
                 <i class="far fa-calendar"></i>
               </span>
               <span class="post-meta-item-text">发表于</span>
+              
 
-              <time title="创建时间：2024-03-06 00:08:34" itemprop="dateCreated datePublished" datetime="2024-03-06T00:08:34+08:00">2024-03-06</time>
+              <time title="创建时间：2024-04-02 20:40:33 / 修改时间：21:28:43" itemprop="dateCreated datePublished" datetime="2024-04-02T20:40:33+08:00">2024-04-02</time>
             </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2024-03-11 21:46:19" itemprop="dateModified" datetime="2024-03-11T21:46:19+08:00">2024-03-11</time>
-              </span>
 
           
 
@@ -227,16 +221,15 @@
     <div class="post-body" itemprop="articleBody">
 
       
-        <p>今天，分享一些快速入门linux驱动的路子。</p>
-<h5 id="起因"><a href="#起因" class="headerlink" title="起因"></a>起因</h5><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">今天上班摸鱼看linux内核，感觉一下子就醒悟了，一下子就通透了，</span><br><span class="line">脑子里面终于有一种OS的感觉，资源的分配啊，线程管理，进程管理，</span><br><span class="line">内存管理的思路了。</span><br></pre></td></tr></table></figure>
+        <h5 id="起因"><a href="#起因" class="headerlink" title="起因"></a>起因</h5><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">今天，我的哥们又在上班摸鱼，他发了一些极性码的博客给我，他真的牛逼，都准备搞5G协议栈了，</span><br><span class="line">当然只是看着玩的，学学思路而已，这东西不是一个人可以搞定的，然后他问我，线程和进程怎么区分啊？</span><br><span class="line">我一时间懵了，因为我之前学linux的时候，就是调用api啊，fork thread就完了。</span><br><span class="line">线程最小单位，进程是一个车间啥的，线程共享资源，进程独立资源，脑子就只有这个概念。</span><br><span class="line">我本来想要回答的，它来一个博客，就是关于线程和进程认识。</span><br><span class="line">举个例子，如果是mcu，那么此时就只有一个进程，那么是不是可以认为，控制程序控制块指针就是控制</span><br><span class="line">一个进程呢？如果我们对rtos上系统，是不是就是多任务(线程)了呢？我跟他说了一下观点。自然</span><br><span class="line">思路是正确，但是实际就复杂多了。</span><br></pre></td></tr></table></figure>
 
-<h5 id="OS"><a href="#OS" class="headerlink" title="OS"></a>OS</h5><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">要知道OS是分等级的</span><br><span class="line">1&gt;.微内核    	鸿蒙  QNX、Minix</span><br><span class="line">2&gt;.宏内核		linux  windows</span><br><span class="line">3&gt;.混合内核  	windows  XNU内核</span><br><span class="line">4&gt;.rtos		rt-thread  freertos   ucos</span><br><span class="line">5&gt;.裸坤</span><br><span class="line"></span><br><span class="line">而且rtos也是有级别的</span><br><span class="line">POSIX 的RTOS标准</span><br><span class="line">PSE51, PSE52, PSE53, PSE54 共四个级别；</span><br><span class="line">Minimal Real-time System Profile IEEE Std 1003.13 PSE51，基础 RTOS</span><br><span class="line">Real-time Controller Profile IEEE Std 1003.13 PSE52，带有简单的文件系统...等</span><br><span class="line">Dedicated Real-time Profile IEEE Std 1003.13 PSE53，拥有网络功能...等</span><br><span class="line">Multi-Purpose Real-time Profile IEEE Std 1003.13 PSE54，完整的文件系统，带有 Shell 组件...等</span><br></pre></td></tr></table></figure>
+<h5 id="CPU核心数和线程数"><a href="#CPU核心数和线程数" class="headerlink" title="CPU核心数和线程数"></a>CPU核心数和线程数</h5><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">打开电脑的资源管理器就可以看到几内核，多少逻辑处理器(线程)。还有那些云服务器啥的，也写了参数。</span><br><span class="line">比如: 8核16线程 32核32线程</span><br><span class="line">首先，我们所谓的cpu核心数量，不是这样算的，是一个大cpu里面多个小cpu，每个小cpu有单核，双核，多核。</span><br><span class="line">单核就是同时只能执行一个线程或者进程，双核就是两个，以此类推。</span><br><span class="line">所以此时的核心就是   cpu  		       (核心)</span><br><span class="line">此时的线程就是		 cpu * n *几核心     (线程)</span><br></pre></td></tr></table></figure>
 
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">1.最简单就是裸机编程了，就是顺序循环判断走下去就完事了。</span><br><span class="line">2.然后就是freeRTOS和ucos了，这个就上一个台阶的难度，但是就是</span><br><span class="line">几个api用来用去，规划好每个任务的优先级和工作时间，利用好空闲任</span><br><span class="line">务，利用好内存资源，多线程就完事了</span><br><span class="line">3.就是有点难度了，我这边建议学rtt了，因为rtt是仿照linux的，但</span><br><span class="line">是没有设备树这东西。首先呢，纯应用开发的话，和上面的rtos是差不多</span><br><span class="line">的。但是rtt有一个特殊的操作，就是命令行操作。没听错就是命令行，</span><br><span class="line">这个其实是uart串口，而且这些命令行没有linux那些的自带信号，</span><br><span class="line">比如CTRL+C CTRL+Z可能无法打断，需要手动添加接受结束才行，而且</span><br><span class="line">少了驱动开发这一步。</span><br><span class="line">4.linux了，这个就是在上面的基础上面多了一个设备树的东西和驱动</span><br><span class="line">开发，其他的真差不多了，rtt也是有kconfig和menuconfig的。</span><br><span class="line">5.后面那些就非常复杂了，其实学会linux，如果能够如火纯情，天下无敌</span><br></pre></td></tr></table></figure>
+<h5 id="进程和线程"><a href="#进程和线程" class="headerlink" title="进程和线程"></a>进程和线程</h5><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">进程这个概念在mcu中是没有的，就一个单片机，搞个鬼的进程，多任务还差不多。所以，我们就来思考</span><br><span class="line">linux的进程和线程，首先，少不了的结构体，就是进程控制块，内部有id、父id、内部数据、线程列表、</span><br><span class="line">内存大小等。然后就得去找mmu要内存，因为每个进程都是独立的。然后线程列表，共用这个进程中的内存</span><br><span class="line">数据，线程id，线程优先级等。自然这些结构体里面还得有信号处理，还有互斥锁，信号量等东西。</span><br><span class="line">cpu的最小运行单位就是线程，那么进程是怎么处理的呢？</span><br><span class="line">我们要知道每次生成一个进程的时候，一定是有一个主线程，就是进程自身。</span><br><span class="line">所以，cpu哪怕是调用进程，也是运行进程中的线程。我们可以这样认为:</span><br><span class="line">运行一个线程的时候就是裸机。</span><br><span class="line">运行一个进程的时候就是一个rtos。</span><br></pre></td></tr></table></figure>
 
-<h5 id="RTT的驱动开发和BSP"><a href="#RTT的驱动开发和BSP" class="headerlink" title="RTT的驱动开发和BSP"></a>RTT的驱动开发和BSP</h5><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">rtt没有设备树，所以，所有功能实现都要依赖BSP，只有正确的驱动开</span><br><span class="line">发加上Kconfig，才能搞定BSP。一般是结合stm32Cube进行的开发，</span><br><span class="line">所以，实际上难得东西都没了，就是把那些gpio的复用功能再用init、</span><br><span class="line">open、write、read、control、callback、 close这几个函数进</span><br><span class="line">行封装。就是类似于linux的file_operations一样。但是这一步，</span><br><span class="line">你并没干啥，为什么这么说呢？因为代码是cube生成的，很多时候只要</span><br><span class="line">按照官网给的默认配置，进行cube生成代码，rtt就能进行编译，然后</span><br><span class="line">自动链接上去，就是rtt没有给你写这些驱动，他们自己以cube为模板</span><br><span class="line">进行驱动设计。只需要做的就是find设备，open init 调用那几个api</span><br><span class="line">即可，非常人性化。做BSP的就比较麻烦，大家得去gitee上面把rtt下</span><br><span class="line">载下来，里面就有一个BSP代码，然后跟着官方的教程走一遍就可以了，</span><br><span class="line">这里就不多赘述了。</span><br><span class="line">这里只是告诉大家rtt和linux的区别是什么地方</span><br><span class="line">1.没设备树非常需要bsp  2.不用自己写驱动</span><br></pre></td></tr></table></figure>
+<h5 id="CPU和系统"><a href="#CPU和系统" class="headerlink" title="CPU和系统"></a>CPU和系统</h5><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">我们学linux的时候，发现线程可以申请非常大，甚至百万千万上亿都是可以的，但是进程是受限制的。</span><br><span class="line">我们通过上面的思考，可以知道因为进程还会申请空间，还会做很多进程通信的配置，所以是非常耗资源的，</span><br><span class="line">加上系统自身还有很多守护进程在，所以，这是进程的申请有限，看配置，而且会越来越卡，因为资源终究有限。</span><br><span class="line">可是我的cpu只有8核16线程啊？再怎么样也比不过系统的进程和线程数啊？</span><br><span class="line">这里就要分清楚了os的并发和硬件cpu的并发不一样。</span><br><span class="line">我们用windows来思考，首先就是bios启动开机，此时就得到了cpu的线程数和核心数，然后告诉系统了，系统</span><br><span class="line">就知道了目前可用的设备和处理器有那些了。它内部的线程和进程就全部添加到列表中，linux里面也有状态，</span><br><span class="line">挂起、运行、暂停、就绪、僵尸、死亡。这些一个个对应着列表，就绪状态的，会被系统调度，然后经过系统的算法和处理，分配cpu线程给到此时的线程和进程，就实现了cpu处理了，所以，本来就不是一一对应的关系。</span><br><span class="line">是类似于时间片轮询的操作来实现一个cpu多个线程和进程来使用。</span><br><span class="line"></span><br><span class="line">我们可以使用python来申请特定的核心来作为进程，就可以发现，cpu是可以被单独用来执行特定目标的，所以，</span><br><span class="line">系统只是经过算法然后就调度到可用的cpu来进行操作了。</span><br><span class="line">我们在linux中，比如编译openwrt，此时就需要使用多线程编译，反正都是生成.o文件，所以，彼此之前不怕干扰，编译就完事了，此时就是linux把可用的cpu丢给编译。我们还可以把进程绑定给一个特定的cpu核心上面，和上面一样的操作就可以实现对核心的操作啦。</span><br><span class="line"></span><br><span class="line">当然对于我这个初学者，我是把它当成多个单片机，只不过中间有很多数据总线，地址总线、控制总线等</span><br></pre></td></tr></table></figure>
 
-<h5 id="结语"><a href="#结语" class="headerlink" title="结语"></a>结语</h5><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">加油兄弟们，千万不要呆在自己的舒适区中。不要自我感动和欺骗了。</span><br><span class="line">这样只是在加速淘汰自己，他人的堕落，正是推动你向成功的人前进的动力。</span><br></pre></td></tr></table></figure>
+<h5 id="结语"><a href="#结语" class="headerlink" title="结语"></a>结语</h5><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">这个博客，是我对于os的内部的原理的初步认识、分析和学习，自然实际中的os，不可能那么简单的啊，就连普通的freertos和rtt都没那么简单的，这个博客，等以后我变强了，再回来修改错误和增添内容哦！</span><br></pre></td></tr></table></figure>
 
 
     </div>
@@ -263,7 +256,7 @@
   </li>
   <li class="post-copyright-link">
     <strong>本文链接：</strong>
-    <a href="http://example.com/2024/03/06/RTT-%E4%BB%8EMCU%E5%88%B0linux%E9%A9%B1%E5%8A%A8%E7%9A%84%E5%85%A5%E9%97%A8%E6%8D%B7%E5%BE%84/" title="RTT 从MCU到linux驱动的入门捷径">http://example.com/2024/03/06/RTT-从MCU到linux驱动的入门捷径/</a>
+    <a href="http://example.com/2024/04/02/%E7%BA%BF%E7%A8%8B%E4%B8%8E%E8%BF%9B%E7%A8%8B%E7%9A%84%E5%88%9D%E6%AD%A5%E4%BA%86%E8%A7%A3/" title="线程与进程的初步了解">http://example.com/2024/04/02/线程与进程的初步了解/</a>
   </li>
   <li class="post-copyright-license">
     <strong>版权声明： </strong>本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-CSM/4.0/" rel="noopener" target="_blank"><i class="fab fa-fw fa-creative-commons"></i>BY-CSM</a> 许可协议。转载请注明出处！
@@ -274,7 +267,7 @@
 
       <footer class="post-footer">
           <div class="post-tags">
-              <a href="/tags/RTT/" rel="tag"># RTT</a>
+              <a href="/tags/%E7%BA%BF%E7%A8%8B-%E8%BF%9B%E7%A8%8B/" rel="tag"># 线程 进程</a>
           </div>
 
         
@@ -283,13 +276,10 @@
         
     <div class="post-nav">
       <div class="post-nav-item">
-    <a href="/2024/03/05/cpp%E4%B8%AD%E7%9A%84const%E4%B8%80%E4%BA%9B%E7%94%A8%E6%B3%95/" rel="prev" title="cpp中的const一些用法">
-      <i class="fa fa-chevron-left"></i> cpp中的const一些用法
+    <a href="/2024/04/01/%E5%9B%BA%E4%BB%B6%E7%83%A7%E5%BD%95/" rel="prev" title="固件烧录">
+      <i class="fa fa-chevron-left"></i> 固件烧录
     </a></div>
-      <div class="post-nav-item">
-    <a href="/2024/03/12/STM32%E7%BD%91%E7%BB%9C%E6%8E%A5%E5%8F%A3/" rel="next" title="STM32网络接口">
-      STM32网络接口 <i class="fa fa-chevron-right"></i>
-    </a></div>
+      <div class="post-nav-item"></div>
     </div>
       </footer>
     
@@ -348,7 +338,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-5"><a class="nav-link" href="#%E8%B5%B7%E5%9B%A0"><span class="nav-number">1.</span> <span class="nav-text">起因</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#OS"><span class="nav-number">2.</span> <span class="nav-text">OS</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#RTT%E7%9A%84%E9%A9%B1%E5%8A%A8%E5%BC%80%E5%8F%91%E5%92%8CBSP"><span class="nav-number">3.</span> <span class="nav-text">RTT的驱动开发和BSP</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E7%BB%93%E8%AF%AD"><span class="nav-number">4.</span> <span class="nav-text">结语</span></a></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-5"><a class="nav-link" href="#%E8%B5%B7%E5%9B%A0"><span class="nav-number">1.</span> <span class="nav-text">起因</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#CPU%E6%A0%B8%E5%BF%83%E6%95%B0%E5%92%8C%E7%BA%BF%E7%A8%8B%E6%95%B0"><span class="nav-number">2.</span> <span class="nav-text">CPU核心数和线程数</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E8%BF%9B%E7%A8%8B%E5%92%8C%E7%BA%BF%E7%A8%8B"><span class="nav-number">3.</span> <span class="nav-text">进程和线程</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#CPU%E5%92%8C%E7%B3%BB%E7%BB%9F"><span class="nav-number">4.</span> <span class="nav-text">CPU和系统</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E7%BB%93%E8%AF%AD"><span class="nav-number">5.</span> <span class="nav-text">结语</span></a></li></ol></div>
       </div>
       <!--/noindex-->
 
