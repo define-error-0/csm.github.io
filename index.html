@@ -179,6 +179,80 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2024/04/05/%E5%8F%AF%E9%87%8D%E5%85%A5%E4%B8%8E%E4%B8%8D%E5%8F%AF%E9%87%8D%E5%85%A5/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/csm.png">
+      <meta itemprop="name" content="CSM">
+      <meta itemprop="description" content="应用是应用，驱动是驱动！你要是偏要应用干驱动，哥们，你怎么不直接薪资翻倍啊！[🦀]">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="我要成为嵌入式高手[doge]">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2024/04/05/%E5%8F%AF%E9%87%8D%E5%85%A5%E4%B8%8E%E4%B8%8D%E5%8F%AF%E9%87%8D%E5%85%A5/" class="post-title-link" itemprop="url">可重入与不可重入</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+              
+
+              <time title="创建时间：2024-04-05 22:51:55 / 修改时间：23:31:26" itemprop="dateCreated datePublished" datetime="2024-04-05T22:51:55+08:00">2024-04-05</time>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h5 id="起因"><a href="#起因" class="headerlink" title="起因"></a>起因</h5><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">为什么突然想起来这个属性呢，因为最近在看嵌入式系统设计的课程。</span><br><span class="line">看到抢占式不能直接使用不可重入函数，一下子我就茅塞顿开了。</span><br></pre></td></tr></table></figure>
+
+<h5 id="什么是可重入和不可重入"><a href="#什么是可重入和不可重入" class="headerlink" title="什么是可重入和不可重入"></a>什么是可重入和不可重入</h5><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">你可以认为就是该函数是否独立，是否是模块化的！</span><br><span class="line">如下：</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">volatile</span> <span class="type">uint32_t</span> staticData = <span class="number">100</span>;</span><br><span class="line"></span><br><span class="line"><span class="type">uint32_t</span> <span class="title function_">testFun</span><span class="params">()</span></span><br><span class="line">&#123;</span><br><span class="line">	<span class="keyword">if</span>(staticData&gt;=<span class="number">101</span>)</span><br><span class="line">		<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">	</span><br><span class="line">	<span class="keyword">return</span> staticData++;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">由上面函数可以发现，第一次调用的时候是可以正常返回staticData的数据的，但是以后的</span><br><span class="line">调用都是返回0，也就是无效的，因为它使用全局的静态变量，所以它是非独立的。</span><br><span class="line">假如我任务一是低优先级，此时调用这个函数，但是任务二立刻发生了抢占但是也调用了这个函数</span><br><span class="line">那么任务二是正常调用并得到了数据，此时回到任务一调用就得到了0，是无效的，所以，这个时候</span><br><span class="line">彼此之间发生了干扰，这是不合理的！对系统的稳定和安全有大问题，尤其是项目大的时候。</span><br></pre></td></tr></table></figure>
+
+<h5 id="如何分辨是否是可重入"><a href="#如何分辨是否是可重入" class="headerlink" title="如何分辨是否是可重入"></a>如何分辨是否是可重入</h5><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">1.是否调用全局变量，注意了还有类中的static变量也是全局变量</span><br><span class="line">2.是否有内部的static变量</span><br><span class="line">3.是否发生了跳转 如setjmp和longjmp</span><br><span class="line">4.是否有调用了malloc和new的变量</span><br><span class="line">5.是否有标准 I/O 函数</span><br><span class="line"></span><br><span class="line">note:传参导致的函数返回错误值，这不算不可重入函数，这是你因为外部原因导致数据错误</span><br><span class="line">函数只是正常的反馈数据错误，此时是合理正确的。不要搞混了！！！</span><br></pre></td></tr></table></figure>
+
+<h5 id="如何避免或者解决带来的问题"><a href="#如何避免或者解决带来的问题" class="headerlink" title="如何避免或者解决带来的问题"></a>如何避免或者解决带来的问题</h5><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">1.一个不可重入函数，只给一个任务来使用</span><br><span class="line">2.减少不可重入函数的定义，选择使用传参来进行判断和数据处理，这样就可以在任务进行判断，而并非</span><br><span class="line">来自函数来进行判断，这样就减少不可预知的错误</span><br><span class="line">3.多个标志位来做标记，比如上面的任务二使用之后，就在一个自定义的系统属性结构体中进行使用</span><br><span class="line">过的痕迹(标志位)，然后在不可重入函数中进行判断和处理等，非常繁琐，别用。</span><br></pre></td></tr></table></figure>
+
+<h5 id="结语"><a href="#结语" class="headerlink" title="结语"></a>结语</h5><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">OS是非常考验设计师和工程师的水准的，对于每个资源的调度和处理，每一个流程都要了如指掌才行</span><br><span class="line">，得知道这样得代价是什么，很多时候，其实我们都不会犯错误。因为，这些技术和知识，其实就在</span><br><span class="line">我们的日常习惯中，大家都不会乱用goto，都不会乱使用一些繁琐的东西，大家都知道这样不好。</span><br><span class="line">所以很多时候，没出现错误和bug！</span><br><span class="line">但是出现错误了，记得总结为什么出错了，才能真正有效的进步。不要把习惯当成标准！</span><br><span class="line">你只是一时的好习惯拯救了自己，但是你却是在不经意和没有思考之中调用了自己的固有思维罢了。</span><br></pre></td></tr></table></figure>
+
+
+      
+    </div>
+
+    
+    
+    
+
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
     <link itemprop="mainEntityOfPage" href="http://example.com/2024/04/02/%E7%BA%BF%E7%A8%8B%E4%B8%8E%E8%BF%9B%E7%A8%8B%E7%9A%84%E5%88%9D%E6%AD%A5%E4%BA%86%E8%A7%A3/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -342,10 +416,16 @@
                 <i class="far fa-calendar"></i>
               </span>
               <span class="post-meta-item-text">发表于</span>
-              
 
-              <time title="创建时间：2024-03-28 22:25:10 / 修改时间：23:11:27" itemprop="dateCreated datePublished" datetime="2024-03-28T22:25:10+08:00">2024-03-28</time>
+              <time title="创建时间：2024-03-28 22:25:10" itemprop="dateCreated datePublished" datetime="2024-03-28T22:25:10+08:00">2024-03-28</time>
             </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2024-04-05 23:08:47" itemprop="dateModified" datetime="2024-04-05T23:08:47+08:00">2024-04-05</time>
+              </span>
 
           
 
@@ -360,12 +440,15 @@
       
           <h5 id="OS是什么"><a href="#OS是什么" class="headerlink" title="OS是什么"></a>OS是什么</h5><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">OS就是operating system，就是操作系统。系统就是为了资源的充分利用，</span><br><span class="line">虽然系统本身也会消耗资源，但是这是为了更好的分配和高效使用</span><br></pre></td></tr></table></figure>
 
+<h5 id="OS的属性"><a href="#OS的属性" class="headerlink" title="OS的属性"></a>OS的属性</h5><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">OS有可抢占和非可抢占两种，可抢占就是，可以直接打断当前的任务，把状态保持到寄存器中去执行优先级高的任务。</span><br><span class="line">这就是抢占式的OS系统，实际上，大部分的RTOS都是抢占式系统，设置都没有响应优先级，全都是抢占优先级为主。因为实时真的太重要了。</span><br><span class="line"></span><br><span class="line">比如freertos，我们一般都是设为全抢占为主的，但是其实是可以设为响应的，这也有好处，有些任务确实优先级同级，但是不好中断。</span><br><span class="line"></span><br><span class="line">还有FCFS 先来先服务的OS，就是谁先到就绪列表，下一个就运行谁，这是有点前后台的味道了。这个就是开触发顺序来进行的任务排序，作为一些特殊的输入设备来说，可能有用吧。</span><br><span class="line"></span><br><span class="line">短任务有限算法，这个就是提前制定好所有任务的时间消耗，在当前任务运行完毕之后，在就绪列表中，找到耗时最短的任务有限调用。</span><br><span class="line"></span><br><span class="line">时间片调度，这个是作用于同优先级之间的，但是要注意切换中间也是会消耗大量资源的，所有想要权衡调度和时间之间的关系，看都运行都公平，真的值得消耗资源吗？</span><br></pre></td></tr></table></figure>
+
 <h5 id="OS的种类"><a href="#OS的种类" class="headerlink" title="OS的种类"></a>OS的种类</h5><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br></pre></td><td class="code"><pre><span class="line">以下是我个人觉得的难易程度进行分类</span><br><span class="line">1.裸机</span><br><span class="line">一般有MCU SOC 那些的裸机的开发，这些只适合简单，单一线程的工作</span><br><span class="line"></span><br><span class="line">2.RTOS</span><br><span class="line">就连cube都支持直接使用freertos一键生成，还有ucos thread-x那些，</span><br><span class="line">本质还是调用API，是rtos接管了很多寄存器和上下文切换的那些中断操作等</span><br><span class="line"></span><br><span class="line">3.rt-thread</span><br><span class="line">这个就有点难度了，它可以像freertos那样简单的就调用api实现</span><br><span class="line">线程，钩子，空间申请等。但是它有它们没有的，第一个就是BSP，第二个ENV</span><br><span class="line">第三个类linux系统，第四个串口操作</span><br><span class="line">这个BSP还是有点含金量的，很规范，对于移植来说，就是锦上添花的好东西啊。</span><br><span class="line">ENV，这个一下子就让整个编译BSP变得高大上了，还有menucofing呢</span><br><span class="line">类linux驱动开发，因为还有一堆宏操作，就是使用宏来把函数添加到列表中的操作等，</span><br><span class="line">对于没有接触过驱动开发的人来说，甚至没看懂这些宏定义为什么可以把函数添加</span><br><span class="line">进入模块。还有那些文件操作集那些。</span><br><span class="line">不得了，不得了，你使用rtt还能使用命令行操作，就是把上述模块添加之后，</span><br><span class="line">可以在打开特定连接的打印串口，实现串口输入指令来调用模块函数，这真的有操作的</span><br><span class="line"></span><br><span class="line">4.linux 主板OS(电脑主板，识别设备，调度起来)  树莓派</span><br><span class="line">这个难度就非常吓人了，在rtt的基础上面还得学习设备树，字符设备，</span><br><span class="line">平台设备，混杂设备，主设备号，次设备号。而且你会发现一件事，rtt是没人写驱动</span><br><span class="line">因为驱动cube已经生成了，写好kconfig文件就可以了。但是linux不一样了，驱动</span><br><span class="line">得人来写才行得。而且还有应用驱动，这也是rtt没有的。</span><br><span class="line"></span><br><span class="line">5.IOS 安卓 鸿蒙 CUDE(GPU的那个系统)</span><br><span class="line">可没说让你去搞应用开发，是去理解和写驱动那些，不同机型，底层得io，设备啥的</span><br><span class="line">都是不一样的，这个一般都是芯片厂商写的，如果以后进了芯片厂，这些就得要掌握了</span><br><span class="line"></span><br><span class="line">6.windows  Mac  Ubuntu等</span><br><span class="line">这个别想了，多年高强度迭代、一个人不可能掌握，能熟练使用就非常了不起了，而且</span><br><span class="line">还有好多没开源，开源学习成本太高了，回报基本为0.</span><br></pre></td></tr></table></figure>
 
-<h5 id="OS的选择"><a href="#OS的选择" class="headerlink" title="OS的选择"></a>OS的选择</h5><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line">一定要明白一点，OS没有高低贵贱之分，在嵌入式里面没有优越，只有适合，只有满足即可，</span><br><span class="line">一切为了需求，一切够用即可。</span><br><span class="line">MCU不是一定要上系统，难道只有几个功能，还要几个任务相互抢？浪费空间，这个</span><br><span class="line">适合都可以上51了。</span><br><span class="line"></span><br><span class="line">就算是SOC，去看厂商给的代码，大概率都是有一个rtos的demo，为什么？因为不见得</span><br><span class="line">一定要上类linux1或者linux那些系统啊，rtos就够用了啊。</span><br><span class="line"></span><br><span class="line">至于那些复杂，多应用的，这个时候就要利用mmu，来给空间进行更多操作，底层全部</span><br><span class="line">丢给系统，这样上层才可以随心所欲实现应用切换，应用下载的功能。虽然mcu也是可以</span><br><span class="line">实现动态加载模组(就是写一个可以控制sram的程序，把app下载到flash，使用的时候</span><br><span class="line">，把代码拷贝到空余的sram空间，这就想手机一样，可以使用空间，可以释放空间，而且</span><br><span class="line">平时不占据sram，sram只有一个sram控制系统),但是，太复杂了，而且引脚躲起来了</span><br><span class="line">，完全就不是开发了，这点厂商也想到了。</span><br><span class="line"></span><br><span class="line">再高级一点的设备就上安卓，鸿蒙了，澎湃OS等了。</span><br><span class="line"></span><br><span class="line">再高级一点就是主机和pc端了啊，上linux，上windows等</span><br><span class="line"></span><br><span class="line">然后就是服务器了，这个不用考虑了，只能是linux系统了，可以Ubuntu，kail等</span><br></pre></td></tr></table></figure>
+<h5 id="OS的选择"><a href="#OS的选择" class="headerlink" title="OS的选择"></a>OS的选择</h5><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line">一定要明白一点，OS没有高低贵贱之分，在嵌入式里面没有优越，只有适合，只有满足即可，</span><br><span class="line">一切为了需求，一切够用即可。</span><br><span class="line">MCU不是一定要上系统，难道只有几个功能，还要几个任务相互抢？浪费空间，这个</span><br><span class="line">适合都可以上51了。</span><br><span class="line"></span><br><span class="line">就算是SOC，去看厂商给的代码，大概率都是有一个rtos的demo，为什么？因为不见得</span><br><span class="line">一定要上类linux1或者linux那些系统啊，rtos就够用了啊！有的时候，想要的就是快速的</span><br><span class="line">无条件的实时响应！所以适合简单而好用的小设备，大设备因为太多硬件的，光用rtos很难</span><br><span class="line">进行完美的资源控制和调度了，开发也困难。</span><br><span class="line"></span><br><span class="line">至于那些复杂，多应用的，这个时候就要利用mmu，来给空间进行更多操作，底层全部</span><br><span class="line">丢给系统，这样上层才可以随心所欲实现应用切换，应用下载的功能。虽然mcu也是可以</span><br><span class="line">实现动态加载模组(就是写一个可以控制sram的程序，把app下载到flash，使用的时候</span><br><span class="line">，把代码拷贝到空余的sram空间，这就想手机一样，可以使用空间，可以释放空间，而且</span><br><span class="line">平时不占据sram，sram只有一个sram控制系统),但是，太复杂了，而且引脚躲起来了</span><br><span class="line">，完全就不是开发了，这点厂商也想到了。</span><br><span class="line"></span><br><span class="line">再高级一点的设备就上安卓，鸿蒙了，澎湃OS等了。</span><br><span class="line"></span><br><span class="line">再高级一点就是主机和pc端了啊，上linux，上windows等</span><br><span class="line"></span><br><span class="line">然后就是服务器了，这个不用考虑了，只能是linux系统了，可以Ubuntu，kail等</span><br><span class="line"></span><br><span class="line">note：优先级也是有动静态之分的，一般我们使用的rtos最好都是固定好优先级，不想那种linux高级os</span><br><span class="line">可以动态修改优先级，动态释放和调用资源，因为rtos本身就是为了高效、实时和稳定。功能越复杂，</span><br><span class="line">可能的问题就越多，这是无法避免的</span><br></pre></td></tr></table></figure>
 
-<h5 id="结语"><a href="#结语" class="headerlink" title="结语"></a>结语</h5><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">千万不要神话系统，觉得越高级系统就越神圣，其实不是的，我们一切都是为了需求，</span><br><span class="line">没有任何一个系统是完美的，都是在自己所在领域非常好用，作为嵌入式开发人员，这</span><br><span class="line">一点就要牢牢铭记</span><br></pre></td></tr></table></figure>
+<h5 id="结语"><a href="#结语" class="headerlink" title="结语"></a>结语</h5><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">千万不要神话系统和技术，觉得越高级系统就越神圣，其实不是的，我们一切都是为了需求，</span><br><span class="line">没有任何一个系统是完美的，都是在自己所在领域非常好用，作为嵌入式开发人员，也不要</span><br><span class="line">为此而产生过度的优越感，这样可能会让自己止步不前，从而顾此失彼，看不起其他技术。</span><br><span class="line">这一点就要牢牢铭记，沿用一段文章内容。如下</span><br></pre></td></tr></table></figure>
 
+<p><img src="/../Blogas_images/%E6%8A%80%E6%9C%AF%E4%B8%8D%E6%98%AF%E9%AB%98%E4%BA%BA%E4%B8%80%E7%AD%89.jpg"></p>
 
       
     </div>
@@ -823,83 +906,6 @@
   
   
 
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2024/03/06/RTT-%E4%BB%8EMCU%E5%88%B0linux%E9%A9%B1%E5%8A%A8%E7%9A%84%E5%85%A5%E9%97%A8%E6%8D%B7%E5%BE%84/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/csm.png">
-      <meta itemprop="name" content="CSM">
-      <meta itemprop="description" content="应用是应用，驱动是驱动！你要是偏要应用干驱动，哥们，你怎么不直接薪资翻倍啊！[🦀]">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="我要成为嵌入式高手[doge]">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2024/03/06/RTT-%E4%BB%8EMCU%E5%88%B0linux%E9%A9%B1%E5%8A%A8%E7%9A%84%E5%85%A5%E9%97%A8%E6%8D%B7%E5%BE%84/" class="post-title-link" itemprop="url">RTT 从MCU到linux驱动的入门捷径</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              <time title="创建时间：2024-03-06 00:08:34" itemprop="dateCreated datePublished" datetime="2024-03-06T00:08:34+08:00">2024-03-06</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2024-03-11 21:46:19" itemprop="dateModified" datetime="2024-03-11T21:46:19+08:00">2024-03-11</time>
-              </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <p>今天，分享一些快速入门linux驱动的路子。</p>
-<h5 id="起因"><a href="#起因" class="headerlink" title="起因"></a>起因</h5><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">今天上班摸鱼看linux内核，感觉一下子就醒悟了，一下子就通透了，</span><br><span class="line">脑子里面终于有一种OS的感觉，资源的分配啊，线程管理，进程管理，</span><br><span class="line">内存管理的思路了。</span><br></pre></td></tr></table></figure>
-
-<h5 id="OS"><a href="#OS" class="headerlink" title="OS"></a>OS</h5><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">要知道OS是分等级的</span><br><span class="line">1&gt;.微内核    	鸿蒙  QNX、Minix</span><br><span class="line">2&gt;.宏内核		linux  windows</span><br><span class="line">3&gt;.混合内核  	windows  XNU内核</span><br><span class="line">4&gt;.rtos		rt-thread  freertos   ucos</span><br><span class="line">5&gt;.裸坤</span><br><span class="line"></span><br><span class="line">而且rtos也是有级别的</span><br><span class="line">POSIX 的RTOS标准</span><br><span class="line">PSE51, PSE52, PSE53, PSE54 共四个级别；</span><br><span class="line">Minimal Real-time System Profile IEEE Std 1003.13 PSE51，基础 RTOS</span><br><span class="line">Real-time Controller Profile IEEE Std 1003.13 PSE52，带有简单的文件系统...等</span><br><span class="line">Dedicated Real-time Profile IEEE Std 1003.13 PSE53，拥有网络功能...等</span><br><span class="line">Multi-Purpose Real-time Profile IEEE Std 1003.13 PSE54，完整的文件系统，带有 Shell 组件...等</span><br></pre></td></tr></table></figure>
-
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">1.最简单就是裸机编程了，就是顺序循环判断走下去就完事了。</span><br><span class="line">2.然后就是freeRTOS和ucos了，这个就上一个台阶的难度，但是就是</span><br><span class="line">几个api用来用去，规划好每个任务的优先级和工作时间，利用好空闲任</span><br><span class="line">务，利用好内存资源，多线程就完事了</span><br><span class="line">3.就是有点难度了，我这边建议学rtt了，因为rtt是仿照linux的，但</span><br><span class="line">是没有设备树这东西。首先呢，纯应用开发的话，和上面的rtos是差不多</span><br><span class="line">的。但是rtt有一个特殊的操作，就是命令行操作。没听错就是命令行，</span><br><span class="line">这个其实是uart串口，而且这些命令行没有linux那些的自带信号，</span><br><span class="line">比如CTRL+C CTRL+Z可能无法打断，需要手动添加接受结束才行，而且</span><br><span class="line">少了驱动开发这一步。</span><br><span class="line">4.linux了，这个就是在上面的基础上面多了一个设备树的东西和驱动</span><br><span class="line">开发，其他的真差不多了，rtt也是有kconfig和menuconfig的。</span><br><span class="line">5.后面那些就非常复杂了，其实学会linux，如果能够如火纯情，天下无敌</span><br></pre></td></tr></table></figure>
-
-<h5 id="RTT的驱动开发和BSP"><a href="#RTT的驱动开发和BSP" class="headerlink" title="RTT的驱动开发和BSP"></a>RTT的驱动开发和BSP</h5><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">rtt没有设备树，所以，所有功能实现都要依赖BSP，只有正确的驱动开</span><br><span class="line">发加上Kconfig，才能搞定BSP。一般是结合stm32Cube进行的开发，</span><br><span class="line">所以，实际上难得东西都没了，就是把那些gpio的复用功能再用init、</span><br><span class="line">open、write、read、control、callback、 close这几个函数进</span><br><span class="line">行封装。就是类似于linux的file_operations一样。但是这一步，</span><br><span class="line">你并没干啥，为什么这么说呢？因为代码是cube生成的，很多时候只要</span><br><span class="line">按照官网给的默认配置，进行cube生成代码，rtt就能进行编译，然后</span><br><span class="line">自动链接上去，就是rtt没有给你写这些驱动，他们自己以cube为模板</span><br><span class="line">进行驱动设计。只需要做的就是find设备，open init 调用那几个api</span><br><span class="line">即可，非常人性化。做BSP的就比较麻烦，大家得去gitee上面把rtt下</span><br><span class="line">载下来，里面就有一个BSP代码，然后跟着官方的教程走一遍就可以了，</span><br><span class="line">这里就不多赘述了。</span><br><span class="line">这里只是告诉大家rtt和linux的区别是什么地方</span><br><span class="line">1.没设备树非常需要bsp  2.不用自己写驱动</span><br></pre></td></tr></table></figure>
-
-<h5 id="结语"><a href="#结语" class="headerlink" title="结语"></a>结语</h5><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">加油兄弟们，千万不要呆在自己的舒适区中。不要自我感动和欺骗了。</span><br><span class="line">这样只是在加速淘汰自己，他人的堕落，正是推动你向成功的人前进的动力。</span><br></pre></td></tr></table></figure>
-
-
-      
-    </div>
-
-    
-    
-    
-
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
 
   
   <nav class="pagination">
@@ -971,14 +977,14 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">15</span>
+          <span class="site-state-item-count">16</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">14</span>
+        <span class="site-state-item-count">15</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>
@@ -1040,7 +1046,7 @@
 
  <div class="theme-info">
   <div class="powered-by"></div>
-  <span class="post-count">博客全站共9.1k字</span>
+  <span class="post-count">博客全站共10.5k字</span>
 </div>
 
         
