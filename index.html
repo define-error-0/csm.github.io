@@ -134,7 +134,7 @@
   </li>
         <li class="menu-item menu-item-archives">
 
-    <a href="/archives/" rel="section"><i class="archive fa-fw"></i>归档<span class="badge">16</span></a>
+    <a href="/archives/" rel="section"><i class="archive fa-fw"></i>归档<span class="badge">17</span></a>
 
   </li>
         <li class="menu-item menu-item-resources">
@@ -170,6 +170,94 @@
 
           <div class="content index posts-expand">
             
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2024/04/07/%E5%86%85%E8%81%9A%E5%92%8C%E8%80%A6%E5%90%88/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/csm.png">
+      <meta itemprop="name" content="CSM">
+      <meta itemprop="description" content="应用是应用，驱动是驱动！你要是偏要应用干驱动，哥们，你怎么不直接薪资翻倍啊！[🦀]">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="我要成为嵌入式高手[doge]">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2024/04/07/%E5%86%85%E8%81%9A%E5%92%8C%E8%80%A6%E5%90%88/" class="post-title-link" itemprop="url">内聚和耦合</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+              
+
+              <time title="创建时间：2024-04-07 21:00:04 / 修改时间：21:22:58" itemprop="dateCreated datePublished" datetime="2024-04-07T21:00:04+08:00">2024-04-07</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/OS/" itemprop="url" rel="index"><span itemprop="name">OS</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h5 id="起因"><a href="#起因" class="headerlink" title="起因"></a>起因</h5><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">我在想办法写代码的时候，想降低耦合，增加内聚能力。这个口号天天喊，模块化天天说，但是什么是才算内聚</span><br><span class="line">什么才算耦合？平时我们都是经验主义和习惯主义，脑子中没有一个准确的定义和概念。</span><br></pre></td></tr></table></figure>
+
+<h5 id="内聚"><a href="#内聚" class="headerlink" title="内聚"></a>内聚</h5><p>偶然内聚 ：就是一个模板内，所有元素互不干扰独立的</p>
+<p>逻辑内聚 ：就是通过传参来影响模块内部的逻辑功能，就是一般的传参操作 fun(temp);</p>
+<p>时间内聚 ：同时执行的行为和动作组合起来形成的模块，比如一键实现界面登录和打开主页</p>
+<p>过程内聚 ：指一个模块完成多个任务，这些任务必须按指定的过程执行。 例如：先写姓名 → 电话 → 家庭住址</p>
+<p>通信内聚 ： 在逻辑内聚的基础上，通过传数据结构来实现操作，数组、结构体、链表等</p>
+<p>顺序内聚 ： 一个模块内，前一个元素所产生的影响会影响后一个元素的操作</p>
+<p>功能内聚 ：一个模板内，所有元素完成一个功能，缺一个不可</p>
+<p><img src="/../Blogas_images/%E5%86%85%E8%81%9A.png"></p>
+<h5 id="耦合"><a href="#耦合" class="headerlink" title="耦合"></a>耦合</h5><p>无直接耦合 ：就是模块没有联系，就是主模块来调用两个独立模块</p>
+<p>数据耦合 ： 有联系但不多，就是传参一样的操作</p>
+<p>标记耦合 ： 这个就是在上面基础，传数据结构</p>
+<p>控制耦合 ： 这个就不是传参副本了，而是直接修改源数据了。比如传地址</p>
+<p>外部耦合 ： 就是几个模块共用一堆数据区(全局变量)，但是这些数据区是只读不修改的</p>
+<p>公共耦合 ： 多个模块公用一个数据集合，而且可以修改</p>
+<p>内容耦合 ： 这个是最糟糕的耦合了，就是一个模块调用另一模块内部的属性，比如使用另一个模块的static变量，类变量等等</p>
+<p><img src="/../Blogas_images/%E8%80%A6%E5%90%88.png"></p>
+<h5 id="结语"><a href="#结语" class="headerlink" title="结语"></a>结语</h5><p>内聚和耦合是不可避免的，一些耦合度很高的模块，就可以选择合并到一起，或者编译成库等都是可以的<br>我们作为开发人员，就需要尽可能高内聚低耦合，模块化哦！</p>
+
+      
+    </div>
+
+    
+    
+    
+
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
       
   
   
@@ -954,90 +1042,6 @@
   
   
 
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2024/03/12/STM32%E7%BD%91%E7%BB%9C%E6%8E%A5%E5%8F%A3/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/csm.png">
-      <meta itemprop="name" content="CSM">
-      <meta itemprop="description" content="应用是应用，驱动是驱动！你要是偏要应用干驱动，哥们，你怎么不直接薪资翻倍啊！[🦀]">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="我要成为嵌入式高手[doge]">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2024/03/12/STM32%E7%BD%91%E7%BB%9C%E6%8E%A5%E5%8F%A3/" class="post-title-link" itemprop="url">STM32网络接口</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              <time title="创建时间：2024-03-12 23:57:06" itemprop="dateCreated datePublished" datetime="2024-03-12T23:57:06+08:00">2024-03-12</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2024-04-06 14:15:24" itemprop="dateModified" datetime="2024-04-06T14:15:24+08:00">2024-04-06</time>
-              </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/MCU/" itemprop="url" rel="index"><span itemprop="name">MCU</span></a>
-                </span>
-            </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <p>学习mcu的时候，就在想这个板子是怎么联网的，但是当时老师没教，而且我当时学的东西太多了，确实没那么精力去深究，毕竟还没用到</p>
-<h5 id="MAC地址"><a href="#MAC地址" class="headerlink" title="MAC地址"></a>MAC地址</h5><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">MAC，Media Access Control Address的全称叫做媒体访问控制地址。</span><br><span class="line">你可以认为就是硬件地址，这个一般都是集成在cpu中的，少部分是外接的。</span><br><span class="line">我们都知道要联网肯定要ip，其实关于MAC并没有强制性要求的。但是mcu中有要求的。</span><br></pre></td></tr></table></figure>
-
-<h5 id="联网流程"><a href="#联网流程" class="headerlink" title="联网流程"></a>联网流程</h5><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">首先是CPU，然后就是得到MAC地址，然后通过PHY相当于是芯片外设，然后才可以接上RJ。</span><br><span class="line">RJ有RJ11和RJ45，这两个主要是线的数量和速率不同。</span><br></pre></td></tr></table></figure>
-
-<h5 id="配置方法"><a href="#配置方法" class="headerlink" title="配置方法"></a>配置方法</h5><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">打开cubemx，点击ETH，然后设置网口即可，其他的不用配置了。可以设置接收中断。反正就和串口一样使用就好了，</span><br><span class="line">那些电平变化，数据处理都是硬件搞定了，不需要我去管理了，调用给的回调和API即可完成操作</span><br></pre></td></tr></table></figure>
-
-<h5 id="结语"><a href="#结语" class="headerlink" title="结语"></a>结语</h5><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">使用mcu的硬件功能的时候，很多时候都需要配置给一些额外硬件设备。比如硬件iic，就需要外部上拉电阻；</span><br><span class="line">网口就要两个硬件来实现电平变化；can和485都需要差分电平芯片；就连串口ttl都最好加一个电平稳定芯片为好。</span><br></pre></td></tr></table></figure>
-
-
-      
-    </div>
-
-    
-    
-    
-
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
 
   
   <nav class="pagination">
@@ -1109,7 +1113,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">16</span>
+          <span class="site-state-item-count">17</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -1184,7 +1188,7 @@
 
  <div class="theme-info">
   <div class="powered-by"></div>
-  <span class="post-count">博客全站共11.9k字</span>
+  <span class="post-count">博客全站共12.5k字</span>
 </div>
 
         
