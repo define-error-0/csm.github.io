@@ -134,7 +134,7 @@
   </li>
         <li class="menu-item menu-item-archives">
 
-    <a href="/archives/" rel="section"><i class="archive fa-fw"></i>归档<span class="badge">17</span></a>
+    <a href="/archives/" rel="section"><i class="archive fa-fw"></i>归档<span class="badge">18</span></a>
 
   </li>
         <li class="menu-item menu-item-resources">
@@ -170,6 +170,91 @@
 
           <div class="content index posts-expand">
             
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2024/03/12/mircoPython/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/csm.png">
+      <meta itemprop="name" content="CSM">
+      <meta itemprop="description" content="应用是应用，驱动是驱动！你要是偏要应用干驱动，哥们，你怎么不直接薪资翻倍啊！[🦀]">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="我要成为嵌入式高手[doge]">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2024/03/12/mircoPython/" class="post-title-link" itemprop="url">mircoPython</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2024-03-12 23:57:29" itemprop="dateCreated datePublished" datetime="2024-03-12T23:57:29+08:00">2024-03-12</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2024-04-06 14:15:11" itemprop="dateModified" datetime="2024-04-06T14:15:11+08:00">2024-04-06</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Python/" itemprop="url" rel="index"><span itemprop="name">Python</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h5 id="起因"><a href="#起因" class="headerlink" title="起因"></a>起因</h5><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">为什么我要说使用这个来开发，因为我们都知道python开发速度快，这一切都是因为</span><br><span class="line">有人写好了底层和模块，所以开发速度非常惊人。缺点就是非常明显的消耗资源和低效率。</span><br><span class="line">那我为什么还要说这个呢？因为环境变了，大家开始卷嵌入式了，现在已经可以使用高级</span><br><span class="line">语言来开发硬件编码了，那么随着时间的发展，这方面就会边卷，我也是出于学习的态度来</span><br><span class="line">了解它，其实大部分情况下，资源还是够用的，除非真的非常稀缺</span><br></pre></td></tr></table></figure>
+
+<h5 id="mricopython"><a href="#mricopython" class="headerlink" title="mricopython"></a>mricopython</h5><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">这个可以开发什么呢？</span><br><span class="line">第一个就是ESP32</span><br><span class="line">第二个就是arduion</span><br><span class="line">第三个就是openmv的产品等</span><br></pre></td></tr></table></figure>
+
+<h5 id="编译和烧写"><a href="#编译和烧写" class="headerlink" title="编译和烧写"></a>编译和烧写</h5><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">就那arduion和esp32来分析吧，两者在选择好设备和串口之后，就可以直接一键编译，然后</span><br><span class="line">一键下载并debug了，它们是通过usb来进行烧写，使用iap来处理的。</span><br></pre></td></tr></table></figure>
+
+<h5 id="代码编写"><a href="#代码编写" class="headerlink" title="代码编写"></a>代码编写</h5><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">既然有了python的名字，那么肯定就是使用python的语法来编译的，所以，就是调用模块</span><br><span class="line">生成和调用实例，通过实例的成员方法来进行io的控制，中断的处理，外设的功能选择等。</span><br><span class="line">然后就是同mcu一样的操作方法了，去做主控该做的事情。</span><br></pre></td></tr></table></figure>
+
+<h5 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h5><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">mricoPython可以让所有程序员都可以生成产品，这个目标是远大的，也必然导致内卷。</span><br><span class="line">而且它本身的效率也是有问题，虽然python确实是基于c的，但是泛型和容器，那些没有初始化，</span><br><span class="line">那些动态的资源，必然导致会消耗更多资源。作为资深的嵌入式开发者，我们对于资源的处理</span><br><span class="line">和管理应该非常敏感和仔细才行。</span><br></pre></td></tr></table></figure>
+
+
+      
+    </div>
+
+    
+    
+    
+
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
       
   
   
@@ -289,7 +374,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2024-04-06 14:23:43" itemprop="dateModified" datetime="2024-04-06T14:23:43+08:00">2024-04-06</time>
+                <time title="修改时间：2024-04-09 19:58:37" itemprop="dateModified" datetime="2024-04-09T19:58:37+08:00">2024-04-09</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -317,9 +402,9 @@
 
 <h5 id="OS"><a href="#OS" class="headerlink" title="OS"></a>OS</h5><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">要知道OS是分等级的</span><br><span class="line">1&gt;.微内核    	鸿蒙  QNX、Minix</span><br><span class="line">2&gt;.宏内核		linux  windows</span><br><span class="line">3&gt;.混合内核  	windows  XNU内核</span><br><span class="line">4&gt;.rtos		rt-thread  freertos   ucos</span><br><span class="line">5&gt;.裸坤</span><br><span class="line"></span><br><span class="line">而且rtos也是有级别的</span><br><span class="line">POSIX 的RTOS标准</span><br><span class="line">PSE51, PSE52, PSE53, PSE54 共四个级别；</span><br><span class="line">Minimal Real-time System Profile IEEE Std 1003.13 PSE51，基础 RTOS</span><br><span class="line">Real-time Controller Profile IEEE Std 1003.13 PSE52，带有简单的文件系统...等</span><br><span class="line">Dedicated Real-time Profile IEEE Std 1003.13 PSE53，拥有网络功能...等</span><br><span class="line">Multi-Purpose Real-time Profile IEEE Std 1003.13 PSE54，完整的文件系统，带有 Shell 组件...等</span><br></pre></td></tr></table></figure>
 
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">1.最简单就是裸机编程了，就是顺序循环判断走下去就完事了。</span><br><span class="line">2.然后就是freeRTOS和ucos了，这个就上一个台阶的难度，但是就是</span><br><span class="line">几个api用来用去，规划好每个任务的优先级和工作时间，利用好空闲任</span><br><span class="line">务，利用好内存资源，多线程就完事了</span><br><span class="line">3.就是有点难度了，我这边建议学rtt了，因为rtt是仿照linux的，但</span><br><span class="line">是没有设备树这东西。首先呢，纯应用开发的话，和上面的rtos是差不多</span><br><span class="line">的。但是rtt有一个特殊的操作，就是命令行操作。没听错就是命令行，</span><br><span class="line">这个其实是uart串口，而且这些命令行没有linux那些的自带信号，</span><br><span class="line">比如CTRL+C CTRL+Z可能无法打断，需要手动添加接受结束才行，而且</span><br><span class="line">少了驱动开发这一步。</span><br><span class="line">4.linux了，这个就是在上面的基础上面多了一个设备树的东西和驱动</span><br><span class="line">开发，其他的真差不多了，rtt也是有kconfig和menuconfig的。</span><br><span class="line">5.后面那些就非常复杂了，其实学会linux，如果能够如火纯情，天下无敌</span><br></pre></td></tr></table></figure>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">1.最简单就是裸机编程了，就是顺序循环判断走下去就完事了。</span><br><span class="line"></span><br><span class="line">2.然后就是freeRTOS和ucos了，这个就上一个台阶的难度，但是就是</span><br><span class="line">几个api用来用去，规划好每个任务的优先级和工作时间，利用好空闲任</span><br><span class="line">务，利用好内存资源，多线程就完事了</span><br><span class="line"></span><br><span class="line">3.就是有点难度了，我这边建议学rtt了，因为rtt是仿照linux的，但</span><br><span class="line">是没有设备树这东西。首先呢，纯应用开发的话，和上面的rtos是差不多</span><br><span class="line">的。但是rtt有一个特殊的操作，就是命令行操作。没听错就是命令行，</span><br><span class="line">这个其实是uart串口，而且这些命令行没有linux那些的自带信号，</span><br><span class="line">比如CTRL+C CTRL+Z可能无法打断，需要手动添加接受结束才行，而且也是</span><br><span class="line">拥有驱动开发操作的。</span><br><span class="line"></span><br><span class="line">4.linux了，这个就是在上面的基础上面多了一个设备树的东西和平台</span><br><span class="line">开发，其他的真差不多了，rtt也是有kconfig和menuconfig的。</span><br><span class="line"></span><br><span class="line">5.后面那些就非常复杂了，其实学会linux，如果能够如火纯情，天下无敌</span><br></pre></td></tr></table></figure>
 
-<h5 id="RTT的驱动开发和BSP"><a href="#RTT的驱动开发和BSP" class="headerlink" title="RTT的驱动开发和BSP"></a>RTT的驱动开发和BSP</h5><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">rtt没有设备树，所以，所有功能实现都要依赖BSP，只有正确的驱动开</span><br><span class="line">发加上Kconfig，才能搞定BSP。一般是结合stm32Cube进行的开发，</span><br><span class="line">所以，实际上难得东西都没了，就是把那些gpio的复用功能再用init、</span><br><span class="line">open、write、read、control、callback、 close这几个函数进</span><br><span class="line">行封装。就是类似于linux的file_operations一样。但是这一步，</span><br><span class="line">你并没干啥，为什么这么说呢？因为代码是cube生成的，很多时候只要</span><br><span class="line">按照官网给的默认配置，进行cube生成代码，rtt就能进行编译，然后</span><br><span class="line">自动链接上去，就是rtt没有给你写这些驱动，他们自己以cube为模板</span><br><span class="line">进行驱动设计。只需要做的就是find设备，open init 调用那几个api</span><br><span class="line">即可，非常人性化。做BSP的就比较麻烦，大家得去gitee上面把rtt下</span><br><span class="line">载下来，里面就有一个BSP代码，然后跟着官方的教程走一遍就可以了，</span><br><span class="line">这里就不多赘述了。</span><br><span class="line">这里只是告诉大家rtt和linux的区别是什么地方</span><br><span class="line">1.没设备树非常需要bsp  2.不用自己写驱动</span><br></pre></td></tr></table></figure>
+<h5 id="RTT的驱动开发和BSP"><a href="#RTT的驱动开发和BSP" class="headerlink" title="RTT的驱动开发和BSP"></a>RTT的驱动开发和BSP</h5><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line">rtt没有设备树，所以，所有功能实现都要依赖BSP，只有正确的驱动开</span><br><span class="line">发加上Kconfig，才能搞定BSP。</span><br><span class="line">搞stm32开发的时候一般是结合stm32Cube进行的开发，</span><br><span class="line">所以，实际上难的东西都没了，就是把那些gpio的复用功能再用init、</span><br><span class="line">open、write、read、control、callback、 close这几个函数进</span><br><span class="line">行封装。就是类似于linux的file_operations一样。</span><br><span class="line">但是这一步，你并没干啥，为什么这么说呢？因为代码是cube生成的，</span><br><span class="line">很多时候只要按照官网给的默认配置，进行cube生成代码，rtt就能进</span><br><span class="line">行编译，然后自动链接上去，就是rtt没有给你写这些驱动，他们自己以</span><br><span class="line">cube为模板进行驱动设计。只需要做的就是find设备，open init </span><br><span class="line">调用那几个api即可，非常人性化。做BSP的就比较麻烦，大家得去</span><br><span class="line">gitee上面把rtt下载下来，里面就有一个BSP代码，然后跟着官方的</span><br><span class="line">教程走一遍就可以了，这里就不多赘述了。</span><br><span class="line"></span><br><span class="line">这上面是硬件驱动，就是很底层基础，但明显不是我们想要的。比如我想要</span><br><span class="line">一个独立的led自定义驱动功能。</span><br><span class="line">首先，思路，使用了led，那么肯定就是占用一个gpio，那么就要产生依赖和绑定</span><br><span class="line">就是menuconfig中一定要有绑定关系。就需要在kconfig中设置一下关系。</span><br><span class="line">然后就是编写驱动程序，首先就申请设备，操作集，添加注册。使用的时候，就是</span><br><span class="line">find，open ，close，control就够了。编写一个驱动程序即可，使用时候遵循</span><br><span class="line">驱动指定的cmd指令就可以实现了</span><br></pre></td></tr></table></figure>
 
 <h5 id="结语"><a href="#结语" class="headerlink" title="结语"></a>结语</h5><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">加油兄弟们，千万不要呆在自己的舒适区中。不要自我感动和欺骗了。</span><br><span class="line">这样只是在加速淘汰自己，他人的堕落，正是推动你向成功的人前进的动力。</span><br></pre></td></tr></table></figure>
 
@@ -855,7 +940,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">17</span>
+          <span class="site-state-item-count">18</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -930,7 +1015,7 @@
 
  <div class="theme-info">
   <div class="powered-by"></div>
-  <span class="post-count">博客全站共12.9k字</span>
+  <span class="post-count">博客全站共14.1k字</span>
 </div>
 
         

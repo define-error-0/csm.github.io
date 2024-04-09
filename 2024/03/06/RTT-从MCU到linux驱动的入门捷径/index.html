@@ -30,7 +30,7 @@
 <meta property="og:description" content="今天，分享一些快速入门linux驱动的路子。 起因123今天上班摸鱼看linux内核，感觉一下子就醒悟了，一下子就通透了，脑子里面终于有一种OS的感觉，资源的分配啊，线程管理，进程管理，内存管理的思路了。  OS1234567891011121314要知道OS是分等级的1&gt;.微内核    	鸿蒙  QNX、Minix2&gt;.宏内核		linux  windows3&gt;.混合内核">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2024-03-05T16:08:34.000Z">
-<meta property="article:modified_time" content="2024-04-06T06:23:43.018Z">
+<meta property="article:modified_time" content="2024-04-09T11:58:37.362Z">
 <meta property="article:author" content="CSM">
 <meta property="article:tag" content="RTT">
 <meta name="twitter:card" content="summary">
@@ -137,7 +137,7 @@
   </li>
         <li class="menu-item menu-item-archives">
 
-    <a href="/archives/" rel="section"><i class="archive fa-fw"></i>归档<span class="badge">17</span></a>
+    <a href="/archives/" rel="section"><i class="archive fa-fw"></i>归档<span class="badge">18</span></a>
 
   </li>
         <li class="menu-item menu-item-resources">
@@ -208,7 +208,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2024-04-06 14:23:43" itemprop="dateModified" datetime="2024-04-06T14:23:43+08:00">2024-04-06</time>
+                <time title="修改时间：2024-04-09 19:58:37" itemprop="dateModified" datetime="2024-04-09T19:58:37+08:00">2024-04-09</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -236,9 +236,9 @@
 
 <h5 id="OS"><a href="#OS" class="headerlink" title="OS"></a>OS</h5><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">要知道OS是分等级的</span><br><span class="line">1&gt;.微内核    	鸿蒙  QNX、Minix</span><br><span class="line">2&gt;.宏内核		linux  windows</span><br><span class="line">3&gt;.混合内核  	windows  XNU内核</span><br><span class="line">4&gt;.rtos		rt-thread  freertos   ucos</span><br><span class="line">5&gt;.裸坤</span><br><span class="line"></span><br><span class="line">而且rtos也是有级别的</span><br><span class="line">POSIX 的RTOS标准</span><br><span class="line">PSE51, PSE52, PSE53, PSE54 共四个级别；</span><br><span class="line">Minimal Real-time System Profile IEEE Std 1003.13 PSE51，基础 RTOS</span><br><span class="line">Real-time Controller Profile IEEE Std 1003.13 PSE52，带有简单的文件系统...等</span><br><span class="line">Dedicated Real-time Profile IEEE Std 1003.13 PSE53，拥有网络功能...等</span><br><span class="line">Multi-Purpose Real-time Profile IEEE Std 1003.13 PSE54，完整的文件系统，带有 Shell 组件...等</span><br></pre></td></tr></table></figure>
 
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">1.最简单就是裸机编程了，就是顺序循环判断走下去就完事了。</span><br><span class="line">2.然后就是freeRTOS和ucos了，这个就上一个台阶的难度，但是就是</span><br><span class="line">几个api用来用去，规划好每个任务的优先级和工作时间，利用好空闲任</span><br><span class="line">务，利用好内存资源，多线程就完事了</span><br><span class="line">3.就是有点难度了，我这边建议学rtt了，因为rtt是仿照linux的，但</span><br><span class="line">是没有设备树这东西。首先呢，纯应用开发的话，和上面的rtos是差不多</span><br><span class="line">的。但是rtt有一个特殊的操作，就是命令行操作。没听错就是命令行，</span><br><span class="line">这个其实是uart串口，而且这些命令行没有linux那些的自带信号，</span><br><span class="line">比如CTRL+C CTRL+Z可能无法打断，需要手动添加接受结束才行，而且</span><br><span class="line">少了驱动开发这一步。</span><br><span class="line">4.linux了，这个就是在上面的基础上面多了一个设备树的东西和驱动</span><br><span class="line">开发，其他的真差不多了，rtt也是有kconfig和menuconfig的。</span><br><span class="line">5.后面那些就非常复杂了，其实学会linux，如果能够如火纯情，天下无敌</span><br></pre></td></tr></table></figure>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">1.最简单就是裸机编程了，就是顺序循环判断走下去就完事了。</span><br><span class="line"></span><br><span class="line">2.然后就是freeRTOS和ucos了，这个就上一个台阶的难度，但是就是</span><br><span class="line">几个api用来用去，规划好每个任务的优先级和工作时间，利用好空闲任</span><br><span class="line">务，利用好内存资源，多线程就完事了</span><br><span class="line"></span><br><span class="line">3.就是有点难度了，我这边建议学rtt了，因为rtt是仿照linux的，但</span><br><span class="line">是没有设备树这东西。首先呢，纯应用开发的话，和上面的rtos是差不多</span><br><span class="line">的。但是rtt有一个特殊的操作，就是命令行操作。没听错就是命令行，</span><br><span class="line">这个其实是uart串口，而且这些命令行没有linux那些的自带信号，</span><br><span class="line">比如CTRL+C CTRL+Z可能无法打断，需要手动添加接受结束才行，而且也是</span><br><span class="line">拥有驱动开发操作的。</span><br><span class="line"></span><br><span class="line">4.linux了，这个就是在上面的基础上面多了一个设备树的东西和平台</span><br><span class="line">开发，其他的真差不多了，rtt也是有kconfig和menuconfig的。</span><br><span class="line"></span><br><span class="line">5.后面那些就非常复杂了，其实学会linux，如果能够如火纯情，天下无敌</span><br></pre></td></tr></table></figure>
 
-<h5 id="RTT的驱动开发和BSP"><a href="#RTT的驱动开发和BSP" class="headerlink" title="RTT的驱动开发和BSP"></a>RTT的驱动开发和BSP</h5><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">rtt没有设备树，所以，所有功能实现都要依赖BSP，只有正确的驱动开</span><br><span class="line">发加上Kconfig，才能搞定BSP。一般是结合stm32Cube进行的开发，</span><br><span class="line">所以，实际上难得东西都没了，就是把那些gpio的复用功能再用init、</span><br><span class="line">open、write、read、control、callback、 close这几个函数进</span><br><span class="line">行封装。就是类似于linux的file_operations一样。但是这一步，</span><br><span class="line">你并没干啥，为什么这么说呢？因为代码是cube生成的，很多时候只要</span><br><span class="line">按照官网给的默认配置，进行cube生成代码，rtt就能进行编译，然后</span><br><span class="line">自动链接上去，就是rtt没有给你写这些驱动，他们自己以cube为模板</span><br><span class="line">进行驱动设计。只需要做的就是find设备，open init 调用那几个api</span><br><span class="line">即可，非常人性化。做BSP的就比较麻烦，大家得去gitee上面把rtt下</span><br><span class="line">载下来，里面就有一个BSP代码，然后跟着官方的教程走一遍就可以了，</span><br><span class="line">这里就不多赘述了。</span><br><span class="line">这里只是告诉大家rtt和linux的区别是什么地方</span><br><span class="line">1.没设备树非常需要bsp  2.不用自己写驱动</span><br></pre></td></tr></table></figure>
+<h5 id="RTT的驱动开发和BSP"><a href="#RTT的驱动开发和BSP" class="headerlink" title="RTT的驱动开发和BSP"></a>RTT的驱动开发和BSP</h5><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line">rtt没有设备树，所以，所有功能实现都要依赖BSP，只有正确的驱动开</span><br><span class="line">发加上Kconfig，才能搞定BSP。</span><br><span class="line">搞stm32开发的时候一般是结合stm32Cube进行的开发，</span><br><span class="line">所以，实际上难的东西都没了，就是把那些gpio的复用功能再用init、</span><br><span class="line">open、write、read、control、callback、 close这几个函数进</span><br><span class="line">行封装。就是类似于linux的file_operations一样。</span><br><span class="line">但是这一步，你并没干啥，为什么这么说呢？因为代码是cube生成的，</span><br><span class="line">很多时候只要按照官网给的默认配置，进行cube生成代码，rtt就能进</span><br><span class="line">行编译，然后自动链接上去，就是rtt没有给你写这些驱动，他们自己以</span><br><span class="line">cube为模板进行驱动设计。只需要做的就是find设备，open init </span><br><span class="line">调用那几个api即可，非常人性化。做BSP的就比较麻烦，大家得去</span><br><span class="line">gitee上面把rtt下载下来，里面就有一个BSP代码，然后跟着官方的</span><br><span class="line">教程走一遍就可以了，这里就不多赘述了。</span><br><span class="line"></span><br><span class="line">这上面是硬件驱动，就是很底层基础，但明显不是我们想要的。比如我想要</span><br><span class="line">一个独立的led自定义驱动功能。</span><br><span class="line">首先，思路，使用了led，那么肯定就是占用一个gpio，那么就要产生依赖和绑定</span><br><span class="line">就是menuconfig中一定要有绑定关系。就需要在kconfig中设置一下关系。</span><br><span class="line">然后就是编写驱动程序，首先就申请设备，操作集，添加注册。使用的时候，就是</span><br><span class="line">find，open ，close，control就够了。编写一个驱动程序即可，使用时候遵循</span><br><span class="line">驱动指定的cmd指令就可以实现了</span><br></pre></td></tr></table></figure>
 
 <h5 id="结语"><a href="#结语" class="headerlink" title="结语"></a>结语</h5><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">加油兄弟们，千万不要呆在自己的舒适区中。不要自我感动和欺骗了。</span><br><span class="line">这样只是在加速淘汰自己，他人的堕落，正是推动你向成功的人前进的动力。</span><br></pre></td></tr></table></figure>
 
@@ -368,7 +368,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">17</span>
+          <span class="site-state-item-count">18</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -443,7 +443,7 @@
 
  <div class="theme-info">
   <div class="powered-by"></div>
-  <span class="post-count">博客全站共12.9k字</span>
+  <span class="post-count">博客全站共14.1k字</span>
 </div>
 
         

@@ -22,20 +22,20 @@
     var CONFIG = {"hostname":"example.com","root":"/","scheme":"Pisces","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
   </script>
 
-  <meta name="description" content="学习mcu的时候，就在想这个板子是怎么联网的，但是当时老师没教，而且我当时学的东西太多了，确实没那么精力去深究，毕竟还没用到 MAC地址123MAC，Media Access Control Address的全称叫做媒体访问控制地址。你可以认为就是硬件地址，这个一般都是集成在cpu中的，少部分是外接的。我们都知道要联网肯定要ip，其实关于MAC并没有强制性要求的。但是mcu中有要求的。  联网流程">
+  <meta name="description" content="起因12今天再看rtt手册的时候看到一个smp方案，就是多核操作调度，其实想想也是，mcu只是普遍是单核，也不能这样说，esp32就是RISC-v双核MCU呢。  SMP1234567	这个是多核，注意了，这个多核，指的是全部架构和功能一样的多核，就像cpu多核一样那种，此时整个系统都是一个rtos，就是一个rtos控制所有核心，每一个核心都可以运行一个任务和中断等操作。此时，就得注意了，高优先级">
 <meta property="og:type" content="article">
-<meta property="og:title" content="STM32网络接口">
-<meta property="og:url" content="http://example.com/2024/03/12/STM32%E7%BD%91%E7%BB%9C%E6%8E%A5%E5%8F%A3/index.html">
+<meta property="og:title" content="RTOS的多核心方案">
+<meta property="og:url" content="http://example.com/2024/04/09/RTOS%E7%9A%84%E5%A4%9A%E6%A0%B8%E5%BF%83%E6%96%B9%E6%A1%88/index.html">
 <meta property="og:site_name" content="我要成为嵌入式高手[doge]">
-<meta property="og:description" content="学习mcu的时候，就在想这个板子是怎么联网的，但是当时老师没教，而且我当时学的东西太多了，确实没那么精力去深究，毕竟还没用到 MAC地址123MAC，Media Access Control Address的全称叫做媒体访问控制地址。你可以认为就是硬件地址，这个一般都是集成在cpu中的，少部分是外接的。我们都知道要联网肯定要ip，其实关于MAC并没有强制性要求的。但是mcu中有要求的。  联网流程">
+<meta property="og:description" content="起因12今天再看rtt手册的时候看到一个smp方案，就是多核操作调度，其实想想也是，mcu只是普遍是单核，也不能这样说，esp32就是RISC-v双核MCU呢。  SMP1234567	这个是多核，注意了，这个多核，指的是全部架构和功能一样的多核，就像cpu多核一样那种，此时整个系统都是一个rtos，就是一个rtos控制所有核心，每一个核心都可以运行一个任务和中断等操作。此时，就得注意了，高优先级">
 <meta property="og:locale" content="zh_CN">
-<meta property="article:published_time" content="2024-03-12T15:57:06.000Z">
-<meta property="article:modified_time" content="2024-04-06T06:15:24.671Z">
+<meta property="article:published_time" content="2024-04-09T11:53:03.000Z">
+<meta property="article:modified_time" content="2024-04-09T12:34:56.666Z">
 <meta property="article:author" content="CSM">
-<meta property="article:tag" content="RJ45">
+<meta property="article:tag" content="OS">
 <meta name="twitter:card" content="summary">
 
-<link rel="canonical" href="http://example.com/2024/03/12/STM32%E7%BD%91%E7%BB%9C%E6%8E%A5%E5%8F%A3/">
+<link rel="canonical" href="http://example.com/2024/04/09/RTOS%E7%9A%84%E5%A4%9A%E6%A0%B8%E5%BF%83%E6%96%B9%E6%A1%88/">
 
 
 <script id="page-configurations">
@@ -48,7 +48,7 @@
   };
 </script>
 
-  <title>STM32网络接口 | 我要成为嵌入式高手[doge]</title>
+  <title>RTOS的多核心方案 | 我要成为嵌入式高手[doge]</title>
   
 
 
@@ -178,7 +178,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2024/03/12/STM32%E7%BD%91%E7%BB%9C%E6%8E%A5%E5%8F%A3/">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2024/04/09/RTOS%E7%9A%84%E5%A4%9A%E6%A0%B8%E5%BF%83%E6%96%B9%E6%A1%88/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/csm.png">
@@ -191,7 +191,7 @@
     </span>
       <header class="post-header">
         <h1 class="post-title" itemprop="name headline">
-          STM32网络接口
+          RTOS的多核心方案
         </h1>
 
         <div class="post-meta">
@@ -200,23 +200,17 @@
                 <i class="far fa-calendar"></i>
               </span>
               <span class="post-meta-item-text">发表于</span>
+              
 
-              <time title="创建时间：2024-03-12 23:57:06" itemprop="dateCreated datePublished" datetime="2024-03-12T23:57:06+08:00">2024-03-12</time>
+              <time title="创建时间：2024-04-09 19:53:03 / 修改时间：20:34:56" itemprop="dateCreated datePublished" datetime="2024-04-09T19:53:03+08:00">2024-04-09</time>
             </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2024-04-06 14:15:24" itemprop="dateModified" datetime="2024-04-06T14:15:24+08:00">2024-04-06</time>
-              </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
                 <i class="far fa-folder"></i>
               </span>
               <span class="post-meta-item-text">分类于</span>
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/MCU/" itemprop="url" rel="index"><span itemprop="name">MCU</span></a>
+                  <a href="/categories/OS/" itemprop="url" rel="index"><span itemprop="name">OS</span></a>
                 </span>
             </span>
 
@@ -231,14 +225,15 @@
     <div class="post-body" itemprop="articleBody">
 
       
-        <p>学习mcu的时候，就在想这个板子是怎么联网的，但是当时老师没教，而且我当时学的东西太多了，确实没那么精力去深究，毕竟还没用到</p>
-<h5 id="MAC地址"><a href="#MAC地址" class="headerlink" title="MAC地址"></a>MAC地址</h5><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">MAC，Media Access Control Address的全称叫做媒体访问控制地址。</span><br><span class="line">你可以认为就是硬件地址，这个一般都是集成在cpu中的，少部分是外接的。</span><br><span class="line">我们都知道要联网肯定要ip，其实关于MAC并没有强制性要求的。但是mcu中有要求的。</span><br></pre></td></tr></table></figure>
+        <h5 id="起因"><a href="#起因" class="headerlink" title="起因"></a>起因</h5><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">今天再看rtt手册的时候看到一个smp方案，就是多核操作调度，其实想想也是，mcu只是</span><br><span class="line">普遍是单核，也不能这样说，esp32就是RISC-v双核MCU呢。</span><br></pre></td></tr></table></figure>
 
-<h5 id="联网流程"><a href="#联网流程" class="headerlink" title="联网流程"></a>联网流程</h5><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">首先是CPU，然后就是得到MAC地址，然后通过PHY相当于是芯片外设，然后才可以接上RJ。</span><br><span class="line">RJ有RJ11和RJ45，这两个主要是线的数量和速率不同。</span><br></pre></td></tr></table></figure>
+<h5 id="SMP"><a href="#SMP" class="headerlink" title="SMP"></a>SMP</h5><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">	这个是多核，注意了，这个多核，指的是全部架构和功能一样的多核，就像cpu多核一样那种，</span><br><span class="line">此时整个系统都是一个rtos，就是一个rtos控制所有核心，每一个核心都可以运行一个任务和中断</span><br><span class="line">等操作。此时，就得注意了，高优先级和低优先级就能一起触发运行了。因为此时是一个cpu干一件事</span><br><span class="line">这件事包括时间片，所以，如果有就绪列表中有任务的话同优先级的任务就会运行在同一个核心上面，</span><br><span class="line">经过时间片调度，一起运行。此时优先级低的任务就可以分到一个cpu来处理同优先级的任务了。这点</span><br><span class="line">是要注意的。至于实现就是比较复杂了，根据官方的操作去移植吧，这里篇幅不够。</span><br><span class="line">	反正注意是一个系统控制所有资源和核心，有点linux的味道了，但是linux还有mmu等诸多资源管理。</span><br></pre></td></tr></table></figure>
 
-<h5 id="配置方法"><a href="#配置方法" class="headerlink" title="配置方法"></a>配置方法</h5><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">打开cubemx，点击ETH，然后设置网口即可，其他的不用配置了。可以设置接收中断。反正就和串口一样使用就好了，</span><br><span class="line">那些电平变化，数据处理都是硬件搞定了，不需要我去管理了，调用给的回调和API即可完成操作</span><br></pre></td></tr></table></figure>
+<h5 id="AMP"><a href="#AMP" class="headerlink" title="AMP"></a>AMP</h5><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">	怎么可能总是一样的架构芯片？随便拿一个手机芯片，你看有多少个大核，小核。arm开发板也是一</span><br><span class="line">样的啊 STM32H745I就是M4和M7双核。所以一个arm-A系列，也常常有A53和A7混合啊。这明显就是非对称核</span><br><span class="line">心了。那么此时怎么办？rt-thread的文档没有给方案！</span><br><span class="line">	一般厂商再出厂的时候，就会为自己的soc写好rtos的代码，直接调用api就好了。但是如果没有怎么办？</span><br><span class="line">此时，咱们的老大哥，freertos有方案，就是AMP方案，就是每一个核心都运行一个rtos，然后通过一个</span><br><span class="line">流\信号缓冲区来实现，控制和函数调用。具体·流程思路如下:</span><br><span class="line">	大核心，一般都是主控主核，这点大家都是默认的。就是大核心就是一只告高速运行的，此时可以通过</span><br><span class="line">调用api的方法，向rtos中的缓冲区中发送函数指令，特定的核心是时刻处于接收状态的，一旦识别到指令就去</span><br><span class="line">执行，因为他们的空间是共享的，所以就会直接去调用函数。此时大核就完成任务和发布。</span><br><span class="line">	这其实就有点dma的味道，就是告诉dma该干嘛，dma就去干了，完事之后，也往缓冲区中发送执行完毕</span><br><span class="line">的命令此时就实现一个简单的多核操作。</span><br><span class="line"></span><br><span class="line">note：多核心是多核心，不是多板子，是一个芯片里面多个核心，是芯片内部的数据、控制等处理。</span><br><span class="line">不是说一个板子上面接上两个mcu就是多核心了，这只是两个mcu之间的通信，就跟串口那样的，</span><br><span class="line">所以就不是多核心。多核心，它们内部可能有共享内存、线路、指令等，很复杂的走线。</span><br></pre></td></tr></table></figure>
 
-<h5 id="结语"><a href="#结语" class="headerlink" title="结语"></a>结语</h5><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">使用mcu的硬件功能的时候，很多时候都需要配置给一些额外硬件设备。比如硬件iic，就需要外部上拉电阻；</span><br><span class="line">网口就要两个硬件来实现电平变化；can和485都需要差分电平芯片；就连串口ttl都最好加一个电平稳定芯片为好。</span><br></pre></td></tr></table></figure>
+<h5 id="多核心烧录"><a href="#多核心烧录" class="headerlink" title="多核心烧录"></a>多核心烧录</h5><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">多核心怎么烧录呢？我们一般烧写代码，都是mcu那种单核代码烧写或者直接就是linux内核那种多核系统</span><br><span class="line">下载进去了，然后uboot引导开机。</span><br><span class="line">	对于非对称核心的，就是要烧录多次， STM32H745I一个M4和M7核心，但是它们有着独立的空间和数据</span><br><span class="line">。所以，需要分别烧录才行。</span><br><span class="line">	对于对称多核，因为它们是共享内存和数据空间的，所以，往往烧写一次就足够了。对于不同版本，不同</span><br><span class="line">厂商的mcu处理方法有所不同，但是大致的思路是正确的。</span><br></pre></td></tr></table></figure>
+
+<h5 id="结语"><a href="#结语" class="headerlink" title="结语"></a>结语</h5><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">   今天，我问我同时，多核怎么烧录，他思考一会儿，对我说，用不到得，这东西没搞得的必要，</span><br><span class="line">就像我之前问他，觉得mcu动态调用实现，手机那种app的操作，他也觉得没必要。我们的求知欲会</span><br><span class="line">渐渐消退，变得越来越现实。但是我内心的....还是不甘啊，我只是在为了我糟糕的人生赎罪。</span><br></pre></td></tr></table></figure>
 
 
     </div>
@@ -265,7 +260,7 @@
   </li>
   <li class="post-copyright-link">
     <strong>本文链接：</strong>
-    <a href="http://example.com/2024/03/12/STM32%E7%BD%91%E7%BB%9C%E6%8E%A5%E5%8F%A3/" title="STM32网络接口">http://example.com/2024/03/12/STM32网络接口/</a>
+    <a href="http://example.com/2024/04/09/RTOS%E7%9A%84%E5%A4%9A%E6%A0%B8%E5%BF%83%E6%96%B9%E6%A1%88/" title="RTOS的多核心方案">http://example.com/2024/04/09/RTOS的多核心方案/</a>
   </li>
   <li class="post-copyright-license">
     <strong>版权声明： </strong>本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-CSM/4.0/" rel="noopener" target="_blank"><i class="fab fa-fw fa-creative-commons"></i>BY-CSM</a> 许可协议。转载请注明出处！
@@ -276,7 +271,7 @@
 
       <footer class="post-footer">
           <div class="post-tags">
-              <a href="/tags/RJ45/" rel="tag"># RJ45</a>
+              <a href="/tags/OS/" rel="tag"># OS</a>
           </div>
 
         
@@ -285,13 +280,10 @@
         
     <div class="post-nav">
       <div class="post-nav-item">
-    <a href="/2024/03/06/RTT-%E4%BB%8EMCU%E5%88%B0linux%E9%A9%B1%E5%8A%A8%E7%9A%84%E5%85%A5%E9%97%A8%E6%8D%B7%E5%BE%84/" rel="prev" title="RTT 从MCU到linux驱动的入门捷径">
-      <i class="fa fa-chevron-left"></i> RTT 从MCU到linux驱动的入门捷径
+    <a href="/2024/04/07/%E5%86%85%E8%81%9A%E5%92%8C%E8%80%A6%E5%90%88/" rel="prev" title="内聚和耦合">
+      <i class="fa fa-chevron-left"></i> 内聚和耦合
     </a></div>
-      <div class="post-nav-item">
-    <a href="/2024/03/12/mircoPython/" rel="next" title="mircoPython">
-      mircoPython <i class="fa fa-chevron-right"></i>
-    </a></div>
+      <div class="post-nav-item"></div>
     </div>
       </footer>
     
@@ -350,7 +342,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-5"><a class="nav-link" href="#MAC%E5%9C%B0%E5%9D%80"><span class="nav-number">1.</span> <span class="nav-text">MAC地址</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E8%81%94%E7%BD%91%E6%B5%81%E7%A8%8B"><span class="nav-number">2.</span> <span class="nav-text">联网流程</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E9%85%8D%E7%BD%AE%E6%96%B9%E6%B3%95"><span class="nav-number">3.</span> <span class="nav-text">配置方法</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E7%BB%93%E8%AF%AD"><span class="nav-number">4.</span> <span class="nav-text">结语</span></a></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-5"><a class="nav-link" href="#%E8%B5%B7%E5%9B%A0"><span class="nav-number">1.</span> <span class="nav-text">起因</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#SMP"><span class="nav-number">2.</span> <span class="nav-text">SMP</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#AMP"><span class="nav-number">3.</span> <span class="nav-text">AMP</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E5%A4%9A%E6%A0%B8%E5%BF%83%E7%83%A7%E5%BD%95"><span class="nav-number">4.</span> <span class="nav-text">多核心烧录</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E7%BB%93%E8%AF%AD"><span class="nav-number">5.</span> <span class="nav-text">结语</span></a></li></ol></div>
       </div>
       <!--/noindex-->
 
