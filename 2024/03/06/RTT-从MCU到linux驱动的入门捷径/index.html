@@ -30,7 +30,7 @@
 <meta property="og:description" content="今天，分享一些快速入门linux驱动的路子。 起因123今天上班摸鱼看linux内核，感觉一下子就醒悟了，一下子就通透了，脑子里面终于有一种OS的感觉，资源的分配啊，线程管理，进程管理，内存管理的思路了。  OS1234567891011121314要知道OS是分等级的1&gt;.微内核    	鸿蒙  QNX、Minix2&gt;.宏内核		linux  windows3&gt;.混合内核">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2024-03-05T16:08:34.000Z">
-<meta property="article:modified_time" content="2024-04-09T11:58:37.362Z">
+<meta property="article:modified_time" content="2024-04-10T12:08:31.017Z">
 <meta property="article:author" content="CSM">
 <meta property="article:tag" content="RTT">
 <meta name="twitter:card" content="summary">
@@ -137,7 +137,7 @@
   </li>
         <li class="menu-item menu-item-archives">
 
-    <a href="/archives/" rel="section"><i class="archive fa-fw"></i>归档<span class="badge">18</span></a>
+    <a href="/archives/" rel="section"><i class="archive fa-fw"></i>归档<span class="badge">22</span></a>
 
   </li>
         <li class="menu-item menu-item-resources">
@@ -208,7 +208,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2024-04-09 19:58:37" itemprop="dateModified" datetime="2024-04-09T19:58:37+08:00">2024-04-09</time>
+                <time title="修改时间：2024-04-10 20:08:31" itemprop="dateModified" datetime="2024-04-10T20:08:31+08:00">2024-04-10</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -238,7 +238,7 @@
 
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">1.最简单就是裸机编程了，就是顺序循环判断走下去就完事了。</span><br><span class="line"></span><br><span class="line">2.然后就是freeRTOS和ucos了，这个就上一个台阶的难度，但是就是</span><br><span class="line">几个api用来用去，规划好每个任务的优先级和工作时间，利用好空闲任</span><br><span class="line">务，利用好内存资源，多线程就完事了</span><br><span class="line"></span><br><span class="line">3.就是有点难度了，我这边建议学rtt了，因为rtt是仿照linux的，但</span><br><span class="line">是没有设备树这东西。首先呢，纯应用开发的话，和上面的rtos是差不多</span><br><span class="line">的。但是rtt有一个特殊的操作，就是命令行操作。没听错就是命令行，</span><br><span class="line">这个其实是uart串口，而且这些命令行没有linux那些的自带信号，</span><br><span class="line">比如CTRL+C CTRL+Z可能无法打断，需要手动添加接受结束才行，而且也是</span><br><span class="line">拥有驱动开发操作的。</span><br><span class="line"></span><br><span class="line">4.linux了，这个就是在上面的基础上面多了一个设备树的东西和平台</span><br><span class="line">开发，其他的真差不多了，rtt也是有kconfig和menuconfig的。</span><br><span class="line"></span><br><span class="line">5.后面那些就非常复杂了，其实学会linux，如果能够如火纯情，天下无敌</span><br></pre></td></tr></table></figure>
 
-<h5 id="RTT的驱动开发和BSP"><a href="#RTT的驱动开发和BSP" class="headerlink" title="RTT的驱动开发和BSP"></a>RTT的驱动开发和BSP</h5><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line">rtt没有设备树，所以，所有功能实现都要依赖BSP，只有正确的驱动开</span><br><span class="line">发加上Kconfig，才能搞定BSP。</span><br><span class="line">搞stm32开发的时候一般是结合stm32Cube进行的开发，</span><br><span class="line">所以，实际上难的东西都没了，就是把那些gpio的复用功能再用init、</span><br><span class="line">open、write、read、control、callback、 close这几个函数进</span><br><span class="line">行封装。就是类似于linux的file_operations一样。</span><br><span class="line">但是这一步，你并没干啥，为什么这么说呢？因为代码是cube生成的，</span><br><span class="line">很多时候只要按照官网给的默认配置，进行cube生成代码，rtt就能进</span><br><span class="line">行编译，然后自动链接上去，就是rtt没有给你写这些驱动，他们自己以</span><br><span class="line">cube为模板进行驱动设计。只需要做的就是find设备，open init </span><br><span class="line">调用那几个api即可，非常人性化。做BSP的就比较麻烦，大家得去</span><br><span class="line">gitee上面把rtt下载下来，里面就有一个BSP代码，然后跟着官方的</span><br><span class="line">教程走一遍就可以了，这里就不多赘述了。</span><br><span class="line"></span><br><span class="line">这上面是硬件驱动，就是很底层基础，但明显不是我们想要的。比如我想要</span><br><span class="line">一个独立的led自定义驱动功能。</span><br><span class="line">首先，思路，使用了led，那么肯定就是占用一个gpio，那么就要产生依赖和绑定</span><br><span class="line">就是menuconfig中一定要有绑定关系。就需要在kconfig中设置一下关系。</span><br><span class="line">然后就是编写驱动程序，首先就申请设备，操作集，添加注册。使用的时候，就是</span><br><span class="line">find，open ，close，control就够了。编写一个驱动程序即可，使用时候遵循</span><br><span class="line">驱动指定的cmd指令就可以实现了</span><br></pre></td></tr></table></figure>
+<h5 id="RTT的驱动开发和BSP"><a href="#RTT的驱动开发和BSP" class="headerlink" title="RTT的驱动开发和BSP"></a>RTT的驱动开发和BSP</h5><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><span class="line">rtt标准和nano版本没有设备树，所以，所有功能实现都要依赖BSP，只有正确的驱动开</span><br><span class="line">发加上Kconfig，才能搞定BSP。</span><br><span class="line">搞stm32开发的时候一般是结合stm32Cube进行的开发，</span><br><span class="line">所以，实际上难的东西都没了，就是把那些gpio的复用功能再用init、</span><br><span class="line">open、write、read、control、callback、 close这几个函数进</span><br><span class="line">行封装。就是类似于linux的file_operations一样。</span><br><span class="line">但是这一步，你并没干啥，为什么这么说呢？因为代码是cube生成的，</span><br><span class="line">很多时候只要按照官网给的默认配置，进行cube生成代码，rtt就能进</span><br><span class="line">行编译，然后自动链接上去，就是rtt没有给你写这些驱动，他们自己以</span><br><span class="line">cube为模板进行驱动设计。只需要做的就是find设备，open init </span><br><span class="line">调用那几个api即可，非常人性化。做BSP的就比较麻烦，大家得去</span><br><span class="line">gitee上面把rtt下载下来，里面就有一个BSP代码，然后跟着官方的</span><br><span class="line">教程走一遍就可以了，这里就不多赘述了。</span><br><span class="line"></span><br><span class="line">这上面是硬件驱动，就是很底层基础，但明显不是我们想要的。比如我想要</span><br><span class="line">一个独立的led自定义驱动功能。</span><br><span class="line">首先，思路，使用了led，那么肯定就是占用一个gpio，那么就要产生依赖和绑定</span><br><span class="line">就是menuconfig中一定要有绑定关系。就需要在kconfig中设置一下关系。</span><br><span class="line">然后就是编写驱动程序，首先就申请设备，操作集，添加注册。使用的时候，就是</span><br><span class="line">find，open ，close，control就够了。编写一个驱动程序即可，使用时候遵循</span><br><span class="line">驱动指定的cmd指令就可以实现了</span><br><span class="line"></span><br><span class="line">一般使用rtt都是mcu版本，而且单核为主，多核也有，但是目前是支持多核同构。</span><br><span class="line">如果是异构的话，那么可以考虑使用freertos的方案就支持异构多核。</span><br><span class="line">如果是smart版本的话，其实就是和linux基本无异了，需要自己编写设备树，需要自己</span><br><span class="line">编写驱动代码。今天2024-04-10去到深圳参加了rt的线下会。主要就是为了解决异构问题</span><br><span class="line">还有linux与rtos之间的组合，就是大核是linux，小核心通过协议去接收来自大核心的</span><br><span class="line">任务和指令，就是dma那种操作。</span><br><span class="line"></span><br><span class="line">驱动很多时候都是不需要做的，一般都是做了适配，就算添加，也只是添加一些硬件功能</span><br><span class="line">就ok了，也就是cube生成，kconfig修改就可以了。如果说新的国产平台rtt没有支持</span><br><span class="line">那么就难搞了，所有驱动和底层都要自己一个一个添加哦</span><br></pre></td></tr></table></figure>
 
 <h5 id="结语"><a href="#结语" class="headerlink" title="结语"></a>结语</h5><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">加油兄弟们，千万不要呆在自己的舒适区中。不要自我感动和欺骗了。</span><br><span class="line">这样只是在加速淘汰自己，他人的堕落，正是推动你向成功的人前进的动力。</span><br></pre></td></tr></table></figure>
 
@@ -368,7 +368,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">18</span>
+          <span class="site-state-item-count">22</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -443,7 +443,7 @@
 
  <div class="theme-info">
   <div class="powered-by"></div>
-  <span class="post-count">博客全站共14.1k字</span>
+  <span class="post-count">博客全站共14.4k字</span>
 </div>
 
         
