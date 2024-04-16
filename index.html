@@ -266,10 +266,16 @@
                 <i class="far fa-calendar"></i>
               </span>
               <span class="post-meta-item-text">发表于</span>
-              
 
-              <time title="创建时间：2024-04-11 20:58:58 / 修改时间：21:24:51" itemprop="dateCreated datePublished" datetime="2024-04-11T20:58:58+08:00">2024-04-11</time>
+              <time title="创建时间：2024-04-11 20:58:58" itemprop="dateCreated datePublished" datetime="2024-04-11T20:58:58+08:00">2024-04-11</time>
             </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2024-04-16 22:06:05" itemprop="dateModified" datetime="2024-04-16T22:06:05+08:00">2024-04-16</time>
+              </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
                 <i class="far fa-folder"></i>
@@ -291,8 +297,24 @@
     <div class="post-body" itemprop="articleBody">
 
       
-          <p>111</p>
-<h5 id="编码"><a href="#编码" class="headerlink" title="编码"></a>编码</h5><h5 id="图片格式编码"><a href="#图片格式编码" class="headerlink" title="图片格式编码"></a>图片格式编码</h5><h5 id="音频格式编码"><a href="#音频格式编码" class="headerlink" title="音频格式编码"></a>音频格式编码</h5><h5 id="视频格式编码"><a href="#视频格式编码" class="headerlink" title="视频格式编码"></a>视频格式编码</h5>
+          <h5 id="编码"><a href="#编码" class="headerlink" title="编码"></a>编码</h5><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">  什么是编码啊，我们都是adc有，采样量化编码(实际操作种还有滤波)，它就是用来保存实际生活中的数据。</span><br><span class="line">人类是无法完美实现现实的情形，所以，模电转数电，一定就是经历了抽样，就是丢失，采样率越高就越接近实际</span><br><span class="line">但是，采样成功了，就需要输出出来，所以，此时就是依赖编码使用数字信号的方法存下来，然后输出出去。</span><br><span class="line">我们日常生活中，最常见的就是图片，视频，音频，字符.这个博客，只是提一下有什么常见编码，用到的时候再去学习</span><br></pre></td></tr></table></figure>
+
+<h5 id="图片格式编码"><a href="#图片格式编码" class="headerlink" title="图片格式编码"></a>图片格式编码</h5><p>这个图片的编码模式就太多太多了，多的吓人</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">jpeg、png、gif、bmp、svg、pcx、tga、exif、fpx、psd、cdr、pcd、ufp、eps、ai、raw、WMF等</span><br></pre></td></tr></table></figure>
+
+<h5 id="音频格式编码"><a href="#音频格式编码" class="headerlink" title="音频格式编码"></a>音频格式编码</h5><p><a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/499760382">音频编码：入门看这篇就够了丨音视频基础 - 知乎 (zhihu.com)</a></p>
+<p>可以参考这个博客</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">主要目的是为了下面三个</span><br><span class="line">1）时域冗余</span><br><span class="line">2）频域冗余</span><br><span class="line">3）听觉冗余</span><br><span class="line"></span><br><span class="line">常见编码有</span><br><span class="line">PCM 编码   脉冲编码调制（Pulse Code Modulation）</span><br><span class="line">AAC 编码    Advanced Audio Coding</span><br></pre></td></tr></table></figure>
+
+<h5 id="视频格式编码"><a href="#视频格式编码" class="headerlink" title="视频格式编码"></a>视频格式编码</h5><p><a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/516515445">视频编码格式全面解析 - 知乎 (zhihu.com)</a></p>
+<p>可以参考这个博客</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">ffmpeg</span><br><span class="line">H.264</span><br><span class="line">VC-1是软件巨头微软力推</span><br><span class="line">MPEG-7致力于视听数据信息编码的表达</span><br><span class="line">新势力的WebM</span><br><span class="line">MPEG-2和MPEG -1</span><br><span class="line">MPEG -4</span><br></pre></td></tr></table></figure>
+
+<h5 id="字符格式编码"><a href="#字符格式编码" class="headerlink" title="字符格式编码"></a>字符格式编码</h5><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">Unicode 就是 UTF-8、UTF-16、UTF-32  （Unicode Transformation Format） 二进制格式来表示 Unicode 字符</span><br><span class="line">BOM  就是byte-order mark 的缩写，是 &quot;字节序标记&quot; 的意思</span><br><span class="line">ASCII</span><br><span class="line">GB2312`、`GB18030 、GBK</span><br><span class="line">常用也就是utf-8，GBK 、BG2312，有的时候不支持这个编码就需要使用api来进行编码切换了，这个在python很常见的</span><br></pre></td></tr></table></figure>
+
+<h5 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h5><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">  可能大家觉得这期博客很水，是因为我本人其实对这些编码确实是不熟的，但是如果实际开发中，连编码都不知道的话，那么</span><br><span class="line">是很费力，尤其是像方案和创新的时候，不是说记得多少，有多少知识就有用了，任何一件事情，只要学习百分之60或者有一个</span><br><span class="line">正确的概念，在实现的时候再去学习，这才是有用的，一直基于理论的学习是没有重要意义的。编码终究是协议来着，就算使用</span><br><span class="line">也是调用库，调用api，所以，我们只要知道这是什么编码，什么地方可以用到编码，可能用到什么编码，我有没有可能在工程</span><br><span class="line">中使用到或者切换编码。</span><br><span class="line">  不会真想看着编码规则，手搓代码吧？那是最愚蠢的行为，花费巨量时间，干着已经成熟的事，别人甚至连优化都做好了，难道</span><br><span class="line">硬要用自己手搓的吗？</span><br></pre></td></tr></table></figure>
+
+
       
     </div>
 
@@ -1084,7 +1106,7 @@
 
  <div class="theme-info">
   <div class="powered-by"></div>
-  <span class="post-count">博客全站共16.5k字</span>
+  <span class="post-count">博客全站共17.2k字</span>
 </div>
 
         
