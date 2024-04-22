@@ -134,7 +134,7 @@
   </li>
         <li class="menu-item menu-item-archives">
 
-    <a href="/archives/" rel="section"><i class="archive fa-fw"></i>归档<span class="badge">32</span></a>
+    <a href="/archives/" rel="section"><i class="archive fa-fw"></i>归档<span class="badge">33</span></a>
 
   </li>
         <li class="menu-item menu-item-resources">
@@ -170,6 +170,92 @@
 
           <div class="content index posts-expand">
             
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2024/03/28/OS%E7%9A%84%E9%80%89%E6%8B%A9/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/csm.png">
+      <meta itemprop="name" content="CSM">
+      <meta itemprop="description" content="应用是应用，驱动是驱动！你要是偏要应用干驱动，哥们，你怎么不直接薪资翻倍啊！[🦀]">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="我要成为嵌入式高手[doge]">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2024/03/28/OS%E7%9A%84%E9%80%89%E6%8B%A9/" class="post-title-link" itemprop="url">OS的选择</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2024-03-28 22:25:10" itemprop="dateCreated datePublished" datetime="2024-03-28T22:25:10+08:00">2024-03-28</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2024-04-06 14:15:16" itemprop="dateModified" datetime="2024-04-06T14:15:16+08:00">2024-04-06</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/OS/" itemprop="url" rel="index"><span itemprop="name">OS</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h5 id="OS是什么"><a href="#OS是什么" class="headerlink" title="OS是什么"></a>OS是什么</h5><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">OS就是operating system，就是操作系统。系统就是为了资源的充分利用，</span><br><span class="line">这个定义是非常含糊的，因为fat32文件系统，系统内核，电源管理系统，</span><br><span class="line">tcp\ip协议栈等，都可以算是资源的利用和管理，所以，嵌入式系统是需要裁剪</span><br><span class="line">和定制的。</span><br><span class="line">系统没有高低贵贱之分，只是是否合适，是否满足。当然，驾驭更高级的系统，</span><br><span class="line">肯定是要求比驾驭低级的系统需要更多知识点和技术的，需要知道更多原理和技术。</span><br><span class="line">但是两者的本质和使命都是一样，能完成需求的系统就是好系统。</span><br><span class="line">虽然系统本身也会消耗资源，但是这是为了更好的分配和高效使用</span><br></pre></td></tr></table></figure>
+
+<h5 id="OS的属性"><a href="#OS的属性" class="headerlink" title="OS的属性"></a>OS的属性</h5><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">OS有可抢占和非可抢占两种，可抢占就是，可以直接打断当前的任务，</span><br><span class="line">把状态保持到寄存器中去执行优先级高的任务。</span><br><span class="line">这就是抢占式的OS系统，实际上，大部分的RTOS都是抢占式系统，</span><br><span class="line">设置都没有响应优先级，全都是抢占优先级为主。因为实时真的太重要了。</span><br><span class="line"></span><br><span class="line">比如freertos，我们一般都是设为全抢占为主的，但是其实是可以设为响应</span><br><span class="line">的，这也有好处，有些任务确实优先级同级，但是不好中断。</span><br><span class="line"></span><br><span class="line">还有FCFS 先来先服务的OS，就是谁先到就绪列表，下一个就运行谁，这是</span><br><span class="line">有点前后台的味道了。这个就是开触发顺序来进行的任务排序，作为一些特</span><br><span class="line">殊的输入设备来说，可能有用吧。</span><br><span class="line"></span><br><span class="line">短任务有限算法，这个就是提前制定好所有任务的时间消耗，在当前任务运行</span><br><span class="line">完毕之后，在就绪列表中，找到耗时最短的任务有限调用。</span><br><span class="line"></span><br><span class="line">时间片调度，这个是作用于同优先级之间的，但是要注意切换中间也是会消</span><br><span class="line">耗大量资源的，所有想要权衡调度和时间之间的关系，看都运行都公平，</span><br><span class="line">真的值得消耗资源吗？</span><br></pre></td></tr></table></figure>
+
+<h5 id="OS的种类"><a href="#OS的种类" class="headerlink" title="OS的种类"></a>OS的种类</h5><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br></pre></td><td class="code"><pre><span class="line">以下是我个人觉得的难易程度进行分类</span><br><span class="line">1.裸机</span><br><span class="line">一般有MCU SOC 那些的裸机的开发，这些只适合简单，单一线程的工作</span><br><span class="line"></span><br><span class="line">2.RTOS</span><br><span class="line">就连cube都支持直接使用freertos一键生成，还有ucos thread-x那些，</span><br><span class="line">本质还是调用API，是rtos接管了很多寄存器和上下文切换的那些中断操作等</span><br><span class="line"></span><br><span class="line">3.rt-thread</span><br><span class="line">这个就有点难度了，它可以像freertos那样简单的就调用api实现</span><br><span class="line">线程，钩子，空间申请等。但是它有它们没有的，第一个就是BSP，第二个ENV</span><br><span class="line">第三个类linux系统，第四个串口操作</span><br><span class="line">这个BSP还是有点含金量的，很规范，对于移植来说，就是锦上添花的好东西啊。</span><br><span class="line">ENV，这个一下子就让整个编译BSP变得高大上了，还有menucofing呢</span><br><span class="line">类linux驱动开发，因为还有一堆宏操作，就是使用宏来把函数添加到列表中的操作等，</span><br><span class="line">对于没有接触过驱动开发的人来说，甚至没看懂这些宏定义为什么可以把函数添加</span><br><span class="line">进入模块。还有那些文件操作集那些。</span><br><span class="line">不得了，不得了，你使用rtt还能使用命令行操作，就是把上述模块添加之后，</span><br><span class="line">可以在打开特定连接的打印串口，实现串口输入指令来调用模块函数，这真的有操作的</span><br><span class="line"></span><br><span class="line">4.linux 主板OS(电脑主板，识别设备，调度起来)  树莓派</span><br><span class="line">这个难度就非常吓人了，在rtt的基础上面还得学习设备树，字符设备，</span><br><span class="line">平台设备，混杂设备，主设备号，次设备号。而且你会发现一件事，rtt是没人写驱动</span><br><span class="line">因为驱动cube已经生成了，写好kconfig文件就可以了。但是linux不一样了，驱动</span><br><span class="line">得人来写才行得。而且还有应用驱动，这也是rtt没有的。</span><br><span class="line"></span><br><span class="line">5.IOS 安卓 鸿蒙 CUDE(GPU的那个系统)</span><br><span class="line">可没说让你去搞应用开发，是去理解和写驱动那些，不同机型，底层得io，设备啥的</span><br><span class="line">都是不一样的，这个一般都是芯片厂商写的，如果以后进了芯片厂，这些就得要掌握了</span><br><span class="line"></span><br><span class="line">6.windows  Mac  Ubuntu等</span><br><span class="line">这个别想了，多年高强度迭代、一个人不可能掌握，能熟练使用就非常了不起了，而且</span><br><span class="line">还有好多没开源，开源学习成本太高了，回报基本为0.</span><br></pre></td></tr></table></figure>
+
+<h5 id="OS的选择"><a href="#OS的选择" class="headerlink" title="OS的选择"></a>OS的选择</h5><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line">一定要明白一点，OS没有高低贵贱之分，在嵌入式里面没有优越，只有适合，只有满足即可，</span><br><span class="line">一切为了需求，一切够用即可。</span><br><span class="line">MCU不是一定要上系统，难道只有几个功能，还要几个任务相互抢？浪费空间，这个</span><br><span class="line">适合都可以上51了。</span><br><span class="line"></span><br><span class="line">就算是SOC，去看厂商给的代码，大概率都是有一个rtos的demo，为什么？因为不见得</span><br><span class="line">一定要上类linux1或者linux那些系统啊，rtos就够用了啊！有的时候，想要的就是快速的</span><br><span class="line">无条件的实时响应！所以适合简单而好用的小设备，大设备因为太多硬件的，光用rtos很难</span><br><span class="line">进行完美的资源控制和调度了，开发也困难。</span><br><span class="line"></span><br><span class="line">至于那些复杂，多应用的，这个时候就要利用mmu，来给空间进行更多操作，底层全部</span><br><span class="line">丢给系统，这样上层才可以随心所欲实现应用切换，应用下载的功能。虽然mcu也是可以</span><br><span class="line">实现动态加载模组(就是写一个可以控制sram的程序，把app下载到flash，使用的时候</span><br><span class="line">，把代码拷贝到空余的sram空间，这就想手机一样，可以使用空间，可以释放空间，而且</span><br><span class="line">平时不占据sram，sram只有一个sram控制系统),但是，太复杂了，而且引脚躲起来了</span><br><span class="line">，完全就不是开发了，这点厂商也想到了。</span><br><span class="line"></span><br><span class="line">再高级一点的设备就上安卓，鸿蒙了，澎湃OS等了。</span><br><span class="line"></span><br><span class="line">再高级一点就是主机和pc端了啊，上linux，上windows等</span><br><span class="line"></span><br><span class="line">然后就是服务器了，这个不用考虑了，只能是linux系统了，可以Ubuntu，kail等</span><br><span class="line"></span><br><span class="line">note：优先级也是有动静态之分的，一般我们使用的rtos最好都是固定好优先级，不想那种linux高级os</span><br><span class="line">可以动态修改优先级，动态释放和调用资源，因为rtos本身就是为了高效、实时和稳定。功能越复杂，</span><br><span class="line">可能的问题就越多，这是无法避免的</span><br></pre></td></tr></table></figure>
+
+<h5 id="结语"><a href="#结语" class="headerlink" title="结语"></a>结语</h5><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">千万不要神话系统和技术，觉得越高级系统就越神圣，其实不是的，我们一切都是为了需求，</span><br><span class="line">没有任何一个系统是完美的，都是在自己所在领域非常好用，作为嵌入式开发人员，也不要</span><br><span class="line">为此而产生过度的优越感，这样可能会让自己止步不前，从而顾此失彼，看不起其他技术。</span><br><span class="line">这一点就要牢牢铭记，沿用一段文章内容。如下</span><br></pre></td></tr></table></figure>
+
+<p><img src="/../Blogas_images/%E6%8A%80%E6%9C%AF%E4%B8%8D%E6%98%AF%E9%AB%98%E4%BA%BA%E4%B8%80%E7%AD%89.jpg"></p>
+
+      
+    </div>
+
+    
+    
+    
+
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
       
   
   
@@ -975,89 +1061,6 @@
   
   
 
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2024/03/02/%E6%8C%87%E9%92%88%E5%92%8C%E5%AD%97%E7%AC%A6%E4%B8%B2/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/csm.png">
-      <meta itemprop="name" content="CSM">
-      <meta itemprop="description" content="应用是应用，驱动是驱动！你要是偏要应用干驱动，哥们，你怎么不直接薪资翻倍啊！[🦀]">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="我要成为嵌入式高手[doge]">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2024/03/02/%E6%8C%87%E9%92%88%E5%92%8C%E5%AD%97%E7%AC%A6%E4%B8%B2/" class="post-title-link" itemprop="url">指针和字符串</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              <time title="创建时间：2024-03-02 20:01:08" itemprop="dateCreated datePublished" datetime="2024-03-02T20:01:08+08:00">2024-03-02</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2024-04-06 14:28:31" itemprop="dateModified" datetime="2024-04-06T14:28:31+08:00">2024-04-06</time>
-              </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/CPP-C/" itemprop="url" rel="index"><span itemprop="name">CPP/C</span></a>
-                </span>
-            </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <p>这是一篇关于我刚学习C语言和C++的时候留下来的关于字符串、数组、指针的问题</p>
-<h3 id="起因"><a href="#起因" class="headerlink" title="起因"></a>起因</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">今天在看python的时候看到一个表达式字符串，这个东西呢，非常奇妙。</span><br><span class="line">举个例子python里面的字符串有</span><br><span class="line">str1 = <span class="string">&quot; csmznbo &quot;</span></span><br><span class="line">str2 = <span class="string">&#x27; csmznbo &#x27;</span></span><br><span class="line">可以看到此时的字符串都是有空格，所以下面的那个单引号的明显不对劲，对了。</span><br><span class="line">这个就是shell脚本里面类似的原样输出</span><br><span class="line">特殊字符串。如下例子</span><br><span class="line">bash</span><br><span class="line">str3=<span class="string">&#x27;The time now is `data`&#x27;</span></span><br><span class="line">python</span><br><span class="line">str3=<span class="string">&#x27;The time now is data&#x27;</span>.replace(<span class="string">&#x27;data&#x27;</span>,str(time.localtime(time.time())))</span><br><span class="line">其实python的<span class="string">&quot;&quot;</span>格式的字符串也是可以做到输出像上面的东西的，f<span class="string">&quot;&#123;&#125;&quot;</span>也是可以的(format)</span><br><span class="line">bash的例子只是引出这种字符串的特殊用法原样输出。下面的替换输出，虽然不是同一</span><br><span class="line">功能，但是也能知道遇到这奇奇怪怪的字符串的时候可以联想起来好玩的东西。</span><br><span class="line"></span><br><span class="line">但是这个不是今天的主角。</span><br></pre></td></tr></table></figure>
-
-<h3 id="填坑"><a href="#填坑" class="headerlink" title="填坑"></a>填坑</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">这个帖子，主要是为了记录我对指针数组还有字符串的理解。首先呢，我之前总是</span><br><span class="line">不理解为什么字符串是不可写和不可修改现在知道了，因为它存在静态区中。</span><br><span class="line">但是我学了几个月的C语言我才知道了指针不等于字符串，我当时写那些拼接函数，比</span><br><span class="line">较函数，裁剪那些，我都是用数组去实现的。但是学的懵懵懂懂的，我甚至都把数组等于</span><br><span class="line">字符串，字符串又等于指针去了，因为用起来真的差不多。其实是错误的，虽然汇编是一样</span><br><span class="line">当写关于字符串的函数的的时候，传参指针，返回值那些都是天坑。要知道字符串</span><br><span class="line">是不能修改的，所以返回值只能是数组和指针，还有就是指针传参就会导致一些问题</span><br><span class="line">比如不知道数据长度等问题。</span><br><span class="line"></span><br></pre></td></tr></table></figure>
-
-<h3 id="关系"><a href="#关系" class="headerlink" title="关系"></a>关系</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">指针就是指针，指向一个地址，自己指针又有一个属于自己的地址。大小看处理器位数</span><br><span class="line"></span><br><span class="line">数组就是连续地址的元素组成，可以装指针，数组，结构体，函数等等</span><br><span class="line"></span><br><span class="line">C语言中，字符串就是字符串，没别的东西就是全局区的data段中，不可修改的。</span><br><span class="line"></span><br><span class="line">当时第一次学cpp的时候，把String当成字符串了，当时也好奇为什么字符串又可</span><br><span class="line">以删减修改了，其实就是一个容器，不是字符串，你可以认为里面就是一个数组</span><br><span class="line">真正的字符串还是<span class="string">&quot;&quot;</span>这个，这个还是不能修改即便是cpp。</span><br><span class="line">python中字符串也是不能修改的，每一次的修改，都只是新生成一个字符串。</span><br><span class="line">并没有修改原本字符串</span><br><span class="line"></span><br></pre></td></tr></table></figure>
-
-<h3 id="结语"><a href="#结语" class="headerlink" title="结语"></a>结语</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">这次就是一个知识的填坑和巩固罢了果然基础不牢地动山摇。很多时候都</span><br><span class="line">是简单的东西罢了。拜拜，下次继续</span><br></pre></td></tr></table></figure>
-
-      
-    </div>
-
-    
-    
-    
-
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
 
   
   <nav class="pagination">
@@ -1129,7 +1132,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">32</span>
+          <span class="site-state-item-count">33</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -1204,7 +1207,7 @@
 
  <div class="theme-info">
   <div class="powered-by"></div>
-  <span class="post-count">博客全站共21.5k字</span>
+  <span class="post-count">博客全站共21.7k字</span>
 </div>
 
         
