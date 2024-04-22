@@ -22,21 +22,19 @@
     var CONFIG = {"hostname":"example.com","root":"/","scheme":"Pisces","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
   </script>
 
-  <meta name="description" content="起因123今天在菜鸟编程中复习cpp的时候，看到了异常处理。就是try catch throw 三兄弟。python中就是try except else finally raise两者是很相似的。  异常处理1234就是try尝试运行，错误就到catch，catch中进行错误捕捉。还有一个就是throw，这个就是运行的时候，直接抛出错误这个就像人为中断错误，毕竟catch捕捉的东西有限。一旦执行t">
+  <meta name="description" content="应用是应用，驱动是驱动！你要是偏要应用干驱动，哥们，你怎么不直接薪资翻倍啊！[🦀]">
 <meta property="og:type" content="article">
-<meta property="og:title" content="cpp中的const一些用法">
-<meta property="og:url" content="http://example.com/2024/03/05/cpp%E4%B8%AD%E7%9A%84const%E4%B8%80%E4%BA%9B%E7%94%A8%E6%B3%95/index.html">
+<meta property="og:title" content="rust入门">
+<meta property="og:url" content="http://example.com/2024/04/22/rust%E5%85%A5%E9%97%A8/index.html">
 <meta property="og:site_name" content="我要成为嵌入式高手[doge]">
-<meta property="og:description" content="起因123今天在菜鸟编程中复习cpp的时候，看到了异常处理。就是try catch throw 三兄弟。python中就是try except else finally raise两者是很相似的。  异常处理1234就是try尝试运行，错误就到catch，catch中进行错误捕捉。还有一个就是throw，这个就是运行的时候，直接抛出错误这个就像人为中断错误，毕竟catch捕捉的东西有限。一旦执行t">
+<meta property="og:description" content="应用是应用，驱动是驱动！你要是偏要应用干驱动，哥们，你怎么不直接薪资翻倍啊！[🦀]">
 <meta property="og:locale" content="zh_CN">
-<meta property="article:published_time" content="2024-03-05T15:43:03.000Z">
-<meta property="article:modified_time" content="2024-04-06T06:28:18.736Z">
+<meta property="article:published_time" content="2024-04-22T15:34:01.000Z">
+<meta property="article:modified_time" content="2024-04-22T15:34:01.807Z">
 <meta property="article:author" content="CSM">
-<meta property="article:tag" content="Cpp">
-<meta property="article:tag" content="C">
 <meta name="twitter:card" content="summary">
 
-<link rel="canonical" href="http://example.com/2024/03/05/cpp%E4%B8%AD%E7%9A%84const%E4%B8%80%E4%BA%9B%E7%94%A8%E6%B3%95/">
+<link rel="canonical" href="http://example.com/2024/04/22/rust%E5%85%A5%E9%97%A8/">
 
 
 <script id="page-configurations">
@@ -49,7 +47,7 @@
   };
 </script>
 
-  <title>cpp中的const一些用法 | 我要成为嵌入式高手[doge]</title>
+  <title>rust入门 | 我要成为嵌入式高手[doge]</title>
   
 
 
@@ -179,7 +177,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2024/03/05/cpp%E4%B8%AD%E7%9A%84const%E4%B8%80%E4%BA%9B%E7%94%A8%E6%B3%95/">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2024/04/22/rust%E5%85%A5%E9%97%A8/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/csm.png">
@@ -192,7 +190,7 @@
     </span>
       <header class="post-header">
         <h1 class="post-title" itemprop="name headline">
-          cpp中的const一些用法
+          rust入门
         </h1>
 
         <div class="post-meta">
@@ -202,23 +200,7 @@
               </span>
               <span class="post-meta-item-text">发表于</span>
 
-              <time title="创建时间：2024-03-05 23:43:03" itemprop="dateCreated datePublished" datetime="2024-03-05T23:43:03+08:00">2024-03-05</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2024-04-06 14:28:18" itemprop="dateModified" datetime="2024-04-06T14:28:18+08:00">2024-04-06</time>
-              </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/CPP-C/" itemprop="url" rel="index"><span itemprop="name">CPP/C</span></a>
-                </span>
+              <time title="创建时间：2024-04-22 23:34:01" itemprop="dateCreated datePublished" datetime="2024-04-22T23:34:01+08:00">2024-04-22</time>
             </span>
 
           
@@ -232,23 +214,7 @@
     <div class="post-body" itemprop="articleBody">
 
       
-        <h4 id="起因"><a href="#起因" class="headerlink" title="起因"></a>起因</h4><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">今天在菜鸟编程中复习cpp的时候，看到了异常处理。就是try catch </span><br><span class="line">throw 三兄弟。python中就是try except else finally raise</span><br><span class="line">两者是很相似的。</span><br></pre></td></tr></table></figure>
-
-<h5 id="异常处理"><a href="#异常处理" class="headerlink" title="异常处理"></a>异常处理</h5><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">就是try尝试运行，错误就到catch，catch中进行</span><br><span class="line">错误捕捉。还有一个就是throw，这个就是运行的时候，直接抛出错误</span><br><span class="line">这个就像人为中断错误，毕竟catch捕捉的东西有限。一旦执行throw</span><br><span class="line">就会立刻停止程序。</span><br></pre></td></tr></table></figure>
-
-<h5 id="Const"><a href="#Const" class="headerlink" title="Const"></a>Const</h5><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">为什么会出现Const呢？首先，</span><br><span class="line">const char* a</span><br><span class="line">char* const b</span><br><span class="line">const char* const c</span><br><span class="line">const void * fun（）</span><br><span class="line">这四个都是见怪不怪的用法了。</span><br><span class="line">但是我看到一个</span><br><span class="line">const void *what（） const throw（）</span><br><span class="line">重写throw的功能。如下代码所示</span><br></pre></td></tr></table></figure>
-
-<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;exception&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> std;</span><br><span class="line"> </span><br><span class="line"><span class="keyword">struct</span> <span class="title class_">MyException</span> : <span class="keyword">public</span> exception</span><br><span class="line">&#123;</span><br><span class="line">  <span class="function"><span class="type">const</span> <span class="type">char</span> * <span class="title">what</span> <span class="params">()</span> <span class="type">const</span> <span class="title">throw</span> <span class="params">()</span></span></span><br><span class="line"><span class="function">  </span>&#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="string">&quot;C++ Exception&quot;</span>;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;;</span><br><span class="line"> </span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">  <span class="keyword">try</span></span><br><span class="line">  &#123;</span><br><span class="line">    <span class="keyword">throw</span> <span class="built_in">MyException</span>();</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="built_in">catch</span>(MyException&amp; e)</span><br><span class="line">  &#123;</span><br><span class="line">    std::cout &lt;&lt; <span class="string">&quot;MyException caught&quot;</span> &lt;&lt; std::endl;</span><br><span class="line">    std::cout &lt;&lt; e.<span class="built_in">what</span>() &lt;&lt; std::endl;</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="built_in">catch</span>(std::exception&amp; e)</span><br><span class="line">  &#123;</span><br><span class="line">    <span class="comment">//其他的错误</span></span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<h5 id="结果如下"><a href="#结果如下" class="headerlink" title="结果如下"></a>结果如下</h5><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">MyException caught</span><br><span class="line">C++ Exception</span><br></pre></td></tr></table></figure>
-
-<h5 id="非常有意思，为什么函数还可以const呢-？const-char-what-const-throw"><a href="#非常有意思，为什么函数还可以const呢-？const-char-what-const-throw" class="headerlink" title="非常有意思，为什么函数还可以const呢 ？const char * what () const throw ()"></a>非常有意思，为什么函数还可以const呢 ？const char * what () const throw ()</h5><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">我去网上和编译实测了一下，发现确实可以的。但是有限制</span><br><span class="line">1.只能是结构体和类里面的成员方法(cpp中类和结构体都可以继承和实现函数的。) </span><br><span class="line">2.只能调用同为const的函数</span><br><span class="line">3.不能修改类里面的成员对象</span><br><span class="line">4.其他函数可以正常调用const修饰了的函数</span><br><span class="line">5.只能调用同为const的实例  如  const A a； 此时就能使用a</span><br></pre></td></tr></table></figure>
-
-<h5 id="结语"><a href="#结语" class="headerlink" title="结语"></a>结语</h5><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">大家感兴趣的话，可以去尝试用一下，我个人感觉，这个东西还是有意义，反正内部被修改</span><br><span class="line">可以作用一些，返回当前状态的接口上面如return systemTiem.hour;</span><br></pre></td></tr></table></figure>
-
-
-
-
+        
     </div>
 
     
@@ -273,7 +239,7 @@
   </li>
   <li class="post-copyright-link">
     <strong>本文链接：</strong>
-    <a href="http://example.com/2024/03/05/cpp%E4%B8%AD%E7%9A%84const%E4%B8%80%E4%BA%9B%E7%94%A8%E6%B3%95/" title="cpp中的const一些用法">http://example.com/2024/03/05/cpp中的const一些用法/</a>
+    <a href="http://example.com/2024/04/22/rust%E5%85%A5%E9%97%A8/" title="rust入门">http://example.com/2024/04/22/rust入门/</a>
   </li>
   <li class="post-copyright-license">
     <strong>版权声明： </strong>本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-CSM/4.0/" rel="noopener" target="_blank"><i class="fab fa-fw fa-creative-commons"></i>BY-CSM</a> 许可协议。转载请注明出处！
@@ -283,10 +249,6 @@
 
 
       <footer class="post-footer">
-          <div class="post-tags">
-              <a href="/tags/Cpp/" rel="tag"># Cpp</a>
-              <a href="/tags/C/" rel="tag"># C</a>
-          </div>
 
         
 
@@ -294,12 +256,12 @@
         
     <div class="post-nav">
       <div class="post-nav-item">
-    <a href="/2024/03/03/Typora%E5%85%A5%E9%97%A8/" rel="prev" title="Typora入门">
-      <i class="fa fa-chevron-left"></i> Typora入门
+    <a href="/2024/04/17/CPU%E5%B7%A5%E4%BD%9C%E5%8E%9F%E7%90%86%E5%92%8C%E5%86%85%E6%A0%B8/" rel="prev" title="CPU工作原理和内核">
+      <i class="fa fa-chevron-left"></i> CPU工作原理和内核
     </a></div>
       <div class="post-nav-item">
-    <a href="/2024/03/06/RTT-%E4%BB%8EMCU%E5%88%B0linux%E9%A9%B1%E5%8A%A8%E7%9A%84%E5%85%A5%E9%97%A8%E6%8D%B7%E5%BE%84/" rel="next" title="RTT 从MCU到linux驱动的入门捷径">
-      RTT 从MCU到linux驱动的入门捷径 <i class="fa fa-chevron-right"></i>
+    <a href="/2024/04/22/%E4%B8%8A%E4%B8%8B%E6%96%87%E5%88%87%E6%8D%A2/" rel="next" title="上下文切换">
+      上下文切换 <i class="fa fa-chevron-right"></i>
     </a></div>
     </div>
       </footer>
@@ -359,7 +321,6 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E8%B5%B7%E5%9B%A0"><span class="nav-number">1.</span> <span class="nav-text">起因</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#%E5%BC%82%E5%B8%B8%E5%A4%84%E7%90%86"><span class="nav-number">1.1.</span> <span class="nav-text">异常处理</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#Const"><span class="nav-number">1.2.</span> <span class="nav-text">Const</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E7%BB%93%E6%9E%9C%E5%A6%82%E4%B8%8B"><span class="nav-number">1.3.</span> <span class="nav-text">结果如下</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E9%9D%9E%E5%B8%B8%E6%9C%89%E6%84%8F%E6%80%9D%EF%BC%8C%E4%B8%BA%E4%BB%80%E4%B9%88%E5%87%BD%E6%95%B0%E8%BF%98%E5%8F%AF%E4%BB%A5const%E5%91%A2-%EF%BC%9Fconst-char-what-const-throw"><span class="nav-number">1.4.</span> <span class="nav-text">非常有意思，为什么函数还可以const呢 ？const char * what () const throw ()</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E7%BB%93%E8%AF%AD"><span class="nav-number">1.5.</span> <span class="nav-text">结语</span></a></li></ol></li></ol></div>
       </div>
       <!--/noindex-->
 
