@@ -134,7 +134,7 @@
   </li>
         <li class="menu-item menu-item-archives">
 
-    <a href="/archives/" rel="section"><i class="archive fa-fw"></i>归档<span class="badge">33</span></a>
+    <a href="/archives/" rel="section"><i class="archive fa-fw"></i>归档<span class="badge">37</span></a>
 
   </li>
         <li class="menu-item menu-item-resources">
@@ -170,6 +170,353 @@
 
           <div class="content index posts-expand">
             
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2024/04/09/RTOS%E7%9A%84%E5%A4%9A%E6%A0%B8%E5%BF%83%E6%96%B9%E6%A1%88/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/csm.png">
+      <meta itemprop="name" content="CSM">
+      <meta itemprop="description" content="应用是应用，驱动是驱动！你要是偏要应用干驱动，哥们，你怎么不直接薪资翻倍啊！[🦀]">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="我要成为嵌入式高手[doge]">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2024/04/09/RTOS%E7%9A%84%E5%A4%9A%E6%A0%B8%E5%BF%83%E6%96%B9%E6%A1%88/" class="post-title-link" itemprop="url">RTOS的多核心方案</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2024-04-09 19:53:03" itemprop="dateCreated datePublished" datetime="2024-04-09T19:53:03+08:00">2024-04-09</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2024-04-10 19:58:01" itemprop="dateModified" datetime="2024-04-10T19:58:01+08:00">2024-04-10</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/OS/" itemprop="url" rel="index"><span itemprop="name">OS</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h5 id="起因"><a href="#起因" class="headerlink" title="起因"></a>起因</h5><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">今天再看rtt手册的时候看到一个smp方案，就是多核操作调度，其实想想也是，mcu只是</span><br><span class="line">普遍是单核，也不能这样说，esp32就是RISC-v双核MCU呢。</span><br></pre></td></tr></table></figure>
+
+<h5 id="SMP"><a href="#SMP" class="headerlink" title="SMP"></a>SMP</h5><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">这个是多核，注意了，这个多核，指的是全部架构和功能一样的多核，就像cpu多核一样那种，</span><br><span class="line">此时整个系统都是一个rtos，就是一个rtos控制所有核心，每一个核心都可以运行一个任务和中断</span><br><span class="line">等操作。此时，就得注意了，高优先级和低优先级就能一起触发运行了。因为此时是一个cpu干一件事</span><br><span class="line">这件事包括时间片，所以，如果有就绪列表中有任务的话同优先级的任务就会运行在同一个核心上面，</span><br><span class="line">经过时间片调度，一起运行。此时优先级低的任务就可以分到一个cpu来处理同优先级的任务了。这点</span><br><span class="line">是要注意的。至于实现就是比较复杂了，根据官方的操作去移植吧，这里篇幅不够。</span><br><span class="line">反正注意是一个系统控制所有资源和核心，有点linux的味道了，但是linux还有mmu等诸多资源管理。</span><br></pre></td></tr></table></figure>
+
+<h5 id="AMP"><a href="#AMP" class="headerlink" title="AMP"></a>AMP</h5><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">怎么可能总是一样的架构芯片？随便拿一个手机芯片，你看有多少个大核，小核。arm开发板也是一</span><br><span class="line">样的啊 STM32H745I就是M4和M7双核。所以一个arm-A系列，也常常有A53和A7混合啊。这明显就是非对称核</span><br><span class="line">心了。那么此时怎么办？rt-thread的文档没有给方案！</span><br><span class="line">一般厂商再出厂的时候，就会为自己的soc写好rtos的代码，直接调用api就好了。但是如果没有怎么办？</span><br><span class="line">此时，咱们的老大哥，freertos有方案，就是AMP方案，就是每一个核心都运行一个rtos，然后通过一个</span><br><span class="line">流\信号缓冲区来实现，控制和函数调用。具体·流程思路如下:</span><br><span class="line">大核心，一般都是主控主核，这点大家都是默认的。就是大核心就是一只告高速运行的，此时可以通过</span><br><span class="line">调用api的方法，向rtos中的缓冲区中发送函数指令，特定的核心是时刻处于接收状态的，一旦识别到指令就去</span><br><span class="line">执行，因为他们的空间是共享的，所以就会直接去调用函数。此时大核就完成任务和发布。</span><br><span class="line">这其实就有点dma的味道，就是告诉dma该干嘛，dma就去干了，完事之后，也往缓冲区中发送执行完毕</span><br><span class="line">的命令此时就实现一个简单的多核操作。</span><br><span class="line"></span><br><span class="line">note：多核心是多核心，不是多板子，是一个芯片里面多个核心，是芯片内部的数据、控制等处理。</span><br><span class="line">不是说一个板子上面接上两个mcu就是多核心了，这只是两个mcu之间的通信，就跟串口那样的，</span><br><span class="line">所以就不是多核心。多核心，它们内部可能有共享内存、线路、指令等，很复杂的走线。</span><br></pre></td></tr></table></figure>
+
+<h5 id="多核心烧录"><a href="#多核心烧录" class="headerlink" title="多核心烧录"></a>多核心烧录</h5><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">多核心怎么烧录呢？我们一般烧写代码，都是mcu那种单核代码烧写或者直接就是linux内核那种多核系统</span><br><span class="line">下载进去了，然后uboot引导开机。</span><br><span class="line">对于非对称核心的，就是要烧录多次， STM32H745I一个M4和M7核心，但是它们有着独立的空间和数据</span><br><span class="line">。所以，需要分别烧录才行。</span><br><span class="line">还有使用uboot或者bootloader那种进行代码的下载。这个时候就只需要下载一次，此时就是把程序按照</span><br><span class="line">特定的规则来打包，然后再引导程序中解包。</span><br><span class="line">对于对称多核，因为它们是共享内存和数据空间的，所以，往往烧写一次就足够了。对于不同版本，不同</span><br><span class="line">厂商的mcu处理方法有所不同，但是大致的思路是正确的。</span><br></pre></td></tr></table></figure>
+
+<h5 id="结语"><a href="#结语" class="headerlink" title="结语"></a>结语</h5><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">今天，我问我的同事，多核怎么烧录，他思考一会儿，对我说，用不到得，这东西没搞得的必要，</span><br><span class="line">就像我之前问他，觉得mcu动态调用实现，手机那种app的操作，他也觉得没必要。我们的求知欲会</span><br><span class="line">渐渐消退，变得越来越现实。但是我内心的....还是不甘啊，我只是在为了我糟糕的人生赎罪。</span><br></pre></td></tr></table></figure>
+
+
+      
+    </div>
+
+    
+    
+    
+
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2024/04/07/%E5%86%85%E8%81%9A%E5%92%8C%E8%80%A6%E5%90%88/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/csm.png">
+      <meta itemprop="name" content="CSM">
+      <meta itemprop="description" content="应用是应用，驱动是驱动！你要是偏要应用干驱动，哥们，你怎么不直接薪资翻倍啊！[🦀]">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="我要成为嵌入式高手[doge]">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2024/04/07/%E5%86%85%E8%81%9A%E5%92%8C%E8%80%A6%E5%90%88/" class="post-title-link" itemprop="url">内聚和耦合</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+              
+
+              <time title="创建时间：2024-04-07 21:00:04 / 修改时间：21:22:58" itemprop="dateCreated datePublished" datetime="2024-04-07T21:00:04+08:00">2024-04-07</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/OS/" itemprop="url" rel="index"><span itemprop="name">OS</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h5 id="起因"><a href="#起因" class="headerlink" title="起因"></a>起因</h5><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">我在想办法写代码的时候，想降低耦合，增加内聚能力。这个口号天天喊，模块化天天说，但是什么是才算内聚</span><br><span class="line">什么才算耦合？平时我们都是经验主义和习惯主义，脑子中没有一个准确的定义和概念。</span><br></pre></td></tr></table></figure>
+
+<h5 id="内聚"><a href="#内聚" class="headerlink" title="内聚"></a>内聚</h5><p>偶然内聚 ：就是一个模板内，所有元素互不干扰独立的</p>
+<p>逻辑内聚 ：就是通过传参来影响模块内部的逻辑功能，就是一般的传参操作 fun(temp);</p>
+<p>时间内聚 ：同时执行的行为和动作组合起来形成的模块，比如一键实现界面登录和打开主页</p>
+<p>过程内聚 ：指一个模块完成多个任务，这些任务必须按指定的过程执行。 例如：先写姓名 → 电话 → 家庭住址</p>
+<p>通信内聚 ： 在逻辑内聚的基础上，通过传数据结构来实现操作，数组、结构体、链表等</p>
+<p>顺序内聚 ： 一个模块内，前一个元素所产生的影响会影响后一个元素的操作</p>
+<p>功能内聚 ：一个模板内，所有元素完成一个功能，缺一个不可</p>
+<p><img src="/../Blogas_images/%E5%86%85%E8%81%9A.png"></p>
+<h5 id="耦合"><a href="#耦合" class="headerlink" title="耦合"></a>耦合</h5><p>无直接耦合 ：就是模块没有联系，就是主模块来调用两个独立模块</p>
+<p>数据耦合 ： 有联系但不多，就是传参一样的操作</p>
+<p>标记耦合 ： 这个就是在上面基础，传数据结构</p>
+<p>控制耦合 ： 这个就不是传参副本了，而是直接修改源数据了。比如传地址</p>
+<p>外部耦合 ： 就是几个模块共用一堆数据区(全局变量)，但是这些数据区是只读不修改的</p>
+<p>公共耦合 ： 多个模块公用一个数据集合，而且可以修改</p>
+<p>内容耦合 ： 这个是最糟糕的耦合了，就是一个模块调用另一模块内部的属性，比如使用另一个模块的static变量，类变量等等</p>
+<p><img src="/../Blogas_images/%E8%80%A6%E5%90%88.png"></p>
+<h5 id="结语"><a href="#结语" class="headerlink" title="结语"></a>结语</h5><p>内聚和耦合是不可避免的，一些耦合度很高的模块，就可以选择合并到一起，或者编译成库等都是可以的<br>我们作为开发人员，就需要尽可能高内聚低耦合，模块化哦！</p>
+
+      
+    </div>
+
+    
+    
+    
+
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2024/04/05/%E5%8F%AF%E9%87%8D%E5%85%A5%E4%B8%8E%E4%B8%8D%E5%8F%AF%E9%87%8D%E5%85%A5/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/csm.png">
+      <meta itemprop="name" content="CSM">
+      <meta itemprop="description" content="应用是应用，驱动是驱动！你要是偏要应用干驱动，哥们，你怎么不直接薪资翻倍啊！[🦀]">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="我要成为嵌入式高手[doge]">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2024/04/05/%E5%8F%AF%E9%87%8D%E5%85%A5%E4%B8%8E%E4%B8%8D%E5%8F%AF%E9%87%8D%E5%85%A5/" class="post-title-link" itemprop="url">可重入与不可重入</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2024-04-05 22:51:55" itemprop="dateCreated datePublished" datetime="2024-04-05T22:51:55+08:00">2024-04-05</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2024-04-06 14:28:34" itemprop="dateModified" datetime="2024-04-06T14:28:34+08:00">2024-04-06</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/OS/" itemprop="url" rel="index"><span itemprop="name">OS</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h5 id="起因"><a href="#起因" class="headerlink" title="起因"></a>起因</h5><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">为什么突然想起来这个属性呢，因为最近在看嵌入式系统设计的课程。</span><br><span class="line">看到抢占式系统不能直接使用不可重入函数，一下子我就茅塞顿开了。</span><br></pre></td></tr></table></figure>
+
+<h5 id="什么是可重入和不可重入"><a href="#什么是可重入和不可重入" class="headerlink" title="什么是可重入和不可重入"></a>什么是可重入和不可重入</h5><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">你可以认为就是该函数是否独立，是否是模块化的！</span><br><span class="line">如下：</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">volatile</span> <span class="type">uint32_t</span> staticData = <span class="number">100</span>;</span><br><span class="line"></span><br><span class="line"><span class="type">uint32_t</span> <span class="title function_">testFun</span><span class="params">()</span></span><br><span class="line">&#123;</span><br><span class="line">	<span class="keyword">if</span>(staticData&gt;=<span class="number">101</span>)</span><br><span class="line">		<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">	</span><br><span class="line">	<span class="keyword">return</span> staticData++;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">由上面函数可以发现，第一次调用的时候是可以正常返回staticData的数据的，但是以后的</span><br><span class="line">调用都是返回0，也就是无效的，因为它使用全局的静态变量，所以它是非独立的。</span><br><span class="line">假如我任务一是低优先级，此时调用这个函数，但是任务二立刻发生了抢占但是也调用了这个函数</span><br><span class="line">那么任务二是正常调用并得到了数据，此时回到任务一调用就得到了0，是无效的，所以，这个时候</span><br><span class="line">彼此之间发生了干扰，这是不合理的！对系统的稳定和安全有大问题，尤其是项目大的时候。</span><br></pre></td></tr></table></figure>
+
+<h5 id="如何分辨是否是可重入"><a href="#如何分辨是否是可重入" class="headerlink" title="如何分辨是否是可重入"></a>如何分辨是否是可重入</h5><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">1.是否调用全局变量，注意了还有类中的static变量也是全局变量</span><br><span class="line">2.是否有内部的static变量</span><br><span class="line">3.是否发生了跳转 如setjmp和longjmp</span><br><span class="line">4.是否有调用了malloc和new的变量</span><br><span class="line">5.是否有标准 I/O 函数</span><br><span class="line"></span><br><span class="line">note:传参导致的函数返回错误值，这不算不可重入函数，这是你因为外部原因导致数据错误</span><br><span class="line">函数只是正常的反馈数据错误，此时是合理正确的。不要搞混了！！！</span><br></pre></td></tr></table></figure>
+
+<h5 id="如何避免或者解决带来的问题"><a href="#如何避免或者解决带来的问题" class="headerlink" title="如何避免或者解决带来的问题"></a>如何避免或者解决带来的问题</h5><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">1.一个不可重入函数，只给一个任务来使用</span><br><span class="line">2.减少不可重入函数的定义，选择使用传参来进行判断和数据处理，这样就可以在任务进行判断，而并非</span><br><span class="line">来自函数来进行判断，这样就减少不可预知的错误</span><br><span class="line">3.多个标志位来做标记，比如上面的任务二使用之后，就在一个自定义的系统属性结构体中进行使用</span><br><span class="line">过的痕迹(标志位)标记，然后在不可重入函数中进行判断和处理等，非常繁琐，别用。</span><br></pre></td></tr></table></figure>
+
+<h5 id="结语"><a href="#结语" class="headerlink" title="结语"></a>结语</h5><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">OS是非常考验设计师和工程师的水准的，对于每个资源的调度和处理，每一个流程都要了如指掌才行</span><br><span class="line">，得知道这样得代价是什么，很多时候，其实我们都不会犯错误。因为，这些技术和知识，其实就在</span><br><span class="line">我们的日常习惯中，大家都不会乱用goto，都不会乱使用一些繁琐的东西，大家都知道这样不好。</span><br><span class="line">所以很多时候，没出现错误和bug！</span><br><span class="line">但是出现错误了，记得总结为什么出错了，才能真正有效的进步。不要把习惯当成标准！</span><br><span class="line">你只是一时的好习惯拯救了自己，但是你却是在不经意和没有思考之中调用了自己的固有思维罢了。</span><br></pre></td></tr></table></figure>
+
+
+      
+    </div>
+
+    
+    
+    
+
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2024/04/02/%E7%BA%BF%E7%A8%8B%E4%B8%8E%E8%BF%9B%E7%A8%8B%E7%9A%84%E5%88%9D%E6%AD%A5%E4%BA%86%E8%A7%A3/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/csm.png">
+      <meta itemprop="name" content="CSM">
+      <meta itemprop="description" content="应用是应用，驱动是驱动！你要是偏要应用干驱动，哥们，你怎么不直接薪资翻倍啊！[🦀]">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="我要成为嵌入式高手[doge]">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2024/04/02/%E7%BA%BF%E7%A8%8B%E4%B8%8E%E8%BF%9B%E7%A8%8B%E7%9A%84%E5%88%9D%E6%AD%A5%E4%BA%86%E8%A7%A3/" class="post-title-link" itemprop="url">线程与进程的初步了解</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2024-04-02 20:40:33" itemprop="dateCreated datePublished" datetime="2024-04-02T20:40:33+08:00">2024-04-02</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2024-04-06 14:28:49" itemprop="dateModified" datetime="2024-04-06T14:28:49+08:00">2024-04-06</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/OS/" itemprop="url" rel="index"><span itemprop="name">OS</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h5 id="起因"><a href="#起因" class="headerlink" title="起因"></a>起因</h5><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">今天，我的哥们又在上班摸鱼，他发了一些极性码的博客给我，他真的牛逼，都准备搞5G协议栈了，</span><br><span class="line">当然只是看着玩的，学学思路而已，这东西不是一个人可以搞定的，然后他问我，线程和进程怎么区分啊？</span><br><span class="line">我一时间懵了，因为我之前学linux的时候，就是调用api啊，fork thread就完了。</span><br><span class="line">线程最小单位，进程是一个车间啥的，线程共享资源，进程独立资源，脑子就只有这个概念。</span><br><span class="line">我本来想要回答的，它来一个博客，就是关于线程和进程认识。</span><br><span class="line">举个例子，如果是mcu，那么此时就只有一个进程，那么是不是可以认为，控制程序控制块指针就是控制</span><br><span class="line">一个进程呢？如果我们对rtos上系统，是不是就是多任务(线程)了呢？我跟他说了一下观点。我的思路</span><br><span class="line">和观点是比较简单的，这个系统就不是一个人可以实现的！</span><br></pre></td></tr></table></figure>
+
+<h5 id="CPU核心数和线程数"><a href="#CPU核心数和线程数" class="headerlink" title="CPU核心数和线程数"></a>CPU核心数和线程数</h5><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">打开电脑的资源管理器就可以看到几内核，多少逻辑处理器(线程)。还有那些云服务器啥的，也写了参数。</span><br><span class="line">比如: 8核16线程 32核32线程</span><br><span class="line">首先，我们所谓的cpu核心数量，不是这样算的，是一个大cpu里面多个小cpu，每个小cpu有单核，双核，多核。</span><br><span class="line">单核就是同时只能执行一个线程或者进程，双核就是两个，以此类推。</span><br><span class="line">所以此时的核心就是   cpu  		       (核心)</span><br><span class="line">此时的线程就是		 cpu * n *几核心     (线程)</span><br></pre></td></tr></table></figure>
+
+<h5 id="进程和线程"><a href="#进程和线程" class="headerlink" title="进程和线程"></a>进程和线程</h5><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">进程这个概念在mcu中是没有的，就一个单片机，搞个鬼的进程，多任务还差不多。所以，我们就来思考</span><br><span class="line">linux的进程和线程，首先，少不了的结构体，就是进程控制块，内部有id、父id、内部数据、线程列表、</span><br><span class="line">内存大小等。然后就得去找mmu要内存，因为每个进程都是独立的。然后线程列表，共用这个进程中的内存</span><br><span class="line">数据，线程id，线程优先级等。自然这些结构体里面还得有信号处理，还有互斥锁，信号量等东西。</span><br><span class="line">cpu的最小运行单位就是线程，那么进程是怎么处理的呢？</span><br><span class="line">我们要知道每次生成一个进程的时候，一定是有一个主线程，就是进程自身。</span><br><span class="line">所以，cpu哪怕是调用进程，也是运行进程中的线程。我们可以这样认为:</span><br><span class="line">运行一个线程的时候就是裸机。</span><br><span class="line">运行一个进程的时候就是一个rtos。</span><br></pre></td></tr></table></figure>
+
+<h5 id="CPU和系统"><a href="#CPU和系统" class="headerlink" title="CPU和系统"></a>CPU和系统</h5><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">我们学linux的时候，发现线程可以申请非常大，甚至百万千万上亿都是可以的，但是进程是受限制的。</span><br><span class="line">我们通过上面的思考，可以知道因为进程还会申请空间，还会做很多进程通信的配置，所以是非常耗资源的，</span><br><span class="line">加上系统自身还有很多守护进程在，所以，这是进程的申请有限，看配置，而且会越来越卡，因为资源终究有限。</span><br><span class="line">可是我的cpu只有8核16线程啊？再怎么样也比不过系统的进程和线程数啊？</span><br><span class="line">这里就要分清楚了os的并发和硬件cpu的并发不一样。</span><br><span class="line">我们用windows来思考，首先就是bios启动开机，此时就得到了cpu的线程数和核心数，然后告诉系统了，系统</span><br><span class="line">就知道了目前可用的设备和处理器有那些了。它内部的线程和进程就全部添加到列表中，linux里面也有状态，</span><br><span class="line">挂起、运行、暂停、就绪、僵尸、死亡。这些一个个对应着列表，就绪状态的，会被系统调度，然后经过系统的算法和处理，分配cpu线程给到此时的线程和进程，就实现了cpu处理了，所以，本来就不是一一对应的关系。</span><br><span class="line">是类似于时间片轮询的操作来实现一个cpu多个线程和进程来使用。</span><br><span class="line"></span><br><span class="line">我们可以使用python来申请特定的核心来作为进程，就可以发现，cpu是可以被单独用来执行特定目标的，所以，</span><br><span class="line">系统只是经过算法然后就调度到可用的cpu来进行操作了。</span><br><span class="line">我们在linux中，比如编译openwrt，此时就需要使用多线程编译，反正都是生成.o文件，所以，彼此之前不怕干扰，编译就完事了，此时就是linux把可用的cpu丢给编译。我们还可以把进程绑定给一个特定的cpu核心上面，和上面一样的操作就可以实现对核心的操作啦。</span><br><span class="line"></span><br><span class="line">当然对于我这个初学者，我是把它当成多个单片机，只不过中间有很多数据总线，地址总线、控制总线等</span><br></pre></td></tr></table></figure>
+
+<h5 id="结语"><a href="#结语" class="headerlink" title="结语"></a>结语</h5><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">这个博客，是我对于os的内部的原理的初步认识、分析和学习，自然实际中的os，不可能那么简单的啊，就连普通的freertos和rtt都没那么简单的，这个博客，等以后我变强了，再回来修改错误和增添内容哦！</span><br></pre></td></tr></table></figure>
+
+
+      
+    </div>
+
+    
+    
+    
+
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
       
   
   
@@ -704,352 +1051,6 @@
   
   
 
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2024/03/12/mircoPython/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/csm.png">
-      <meta itemprop="name" content="CSM">
-      <meta itemprop="description" content="应用是应用，驱动是驱动！你要是偏要应用干驱动，哥们，你怎么不直接薪资翻倍啊！[🦀]">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="我要成为嵌入式高手[doge]">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2024/03/12/mircoPython/" class="post-title-link" itemprop="url">mircoPython</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              <time title="创建时间：2024-03-12 23:57:29" itemprop="dateCreated datePublished" datetime="2024-03-12T23:57:29+08:00">2024-03-12</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2024-04-06 14:15:11" itemprop="dateModified" datetime="2024-04-06T14:15:11+08:00">2024-04-06</time>
-              </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Python/" itemprop="url" rel="index"><span itemprop="name">Python</span></a>
-                </span>
-            </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <h5 id="起因"><a href="#起因" class="headerlink" title="起因"></a>起因</h5><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">为什么我要说使用这个来开发，因为我们都知道python开发速度快，这一切都是因为</span><br><span class="line">有人写好了底层和模块，所以开发速度非常惊人。缺点就是非常明显的消耗资源和低效率。</span><br><span class="line">那我为什么还要说这个呢？因为环境变了，大家开始卷嵌入式了，现在已经可以使用高级</span><br><span class="line">语言来开发硬件编码了，那么随着时间的发展，这方面就会边卷，我也是出于学习的态度来</span><br><span class="line">了解它，其实大部分情况下，资源还是够用的，除非真的非常稀缺</span><br></pre></td></tr></table></figure>
-
-<h5 id="mricopython"><a href="#mricopython" class="headerlink" title="mricopython"></a>mricopython</h5><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">这个可以开发什么呢？</span><br><span class="line">第一个就是ESP32</span><br><span class="line">第二个就是arduion</span><br><span class="line">第三个就是openmv的产品等</span><br></pre></td></tr></table></figure>
-
-<h5 id="编译和烧写"><a href="#编译和烧写" class="headerlink" title="编译和烧写"></a>编译和烧写</h5><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">就那arduion和esp32来分析吧，两者在选择好设备和串口之后，就可以直接一键编译，然后</span><br><span class="line">一键下载并debug了，它们是通过usb来进行烧写，使用iap来处理的。</span><br></pre></td></tr></table></figure>
-
-<h5 id="代码编写"><a href="#代码编写" class="headerlink" title="代码编写"></a>代码编写</h5><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">既然有了python的名字，那么肯定就是使用python的语法来编译的，所以，就是调用模块</span><br><span class="line">生成和调用实例，通过实例的成员方法来进行io的控制，中断的处理，外设的功能选择等。</span><br><span class="line">然后就是同mcu一样的操作方法了，去做主控该做的事情。</span><br></pre></td></tr></table></figure>
-
-<h5 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h5><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">mricoPython可以让所有程序员都可以生成产品，这个目标是远大的，也必然导致内卷。</span><br><span class="line">而且它本身的效率也是有问题，虽然python确实是基于c的，但是泛型和容器，那些没有初始化，</span><br><span class="line">那些动态的资源，必然导致会消耗更多资源。作为资深的嵌入式开发者，我们对于资源的处理</span><br><span class="line">和管理应该非常敏感和仔细才行。</span><br></pre></td></tr></table></figure>
-
-
-      
-    </div>
-
-    
-    
-    
-
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2024/03/12/STM32%E7%BD%91%E7%BB%9C%E6%8E%A5%E5%8F%A3/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/csm.png">
-      <meta itemprop="name" content="CSM">
-      <meta itemprop="description" content="应用是应用，驱动是驱动！你要是偏要应用干驱动，哥们，你怎么不直接薪资翻倍啊！[🦀]">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="我要成为嵌入式高手[doge]">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2024/03/12/STM32%E7%BD%91%E7%BB%9C%E6%8E%A5%E5%8F%A3/" class="post-title-link" itemprop="url">STM32网络接口</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              <time title="创建时间：2024-03-12 23:57:06" itemprop="dateCreated datePublished" datetime="2024-03-12T23:57:06+08:00">2024-03-12</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2024-04-06 14:15:24" itemprop="dateModified" datetime="2024-04-06T14:15:24+08:00">2024-04-06</time>
-              </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/MCU/" itemprop="url" rel="index"><span itemprop="name">MCU</span></a>
-                </span>
-            </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <p>学习mcu的时候，就在想这个板子是怎么联网的，但是当时老师没教，而且我当时学的东西太多了，确实没那么精力去深究，毕竟还没用到</p>
-<h5 id="MAC地址"><a href="#MAC地址" class="headerlink" title="MAC地址"></a>MAC地址</h5><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">MAC，Media Access Control Address的全称叫做媒体访问控制地址。</span><br><span class="line">你可以认为就是硬件地址，这个一般都是集成在cpu中的，少部分是外接的。</span><br><span class="line">我们都知道要联网肯定要ip，其实关于MAC并没有强制性要求的。但是mcu中有要求的。</span><br></pre></td></tr></table></figure>
-
-<h5 id="联网流程"><a href="#联网流程" class="headerlink" title="联网流程"></a>联网流程</h5><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">首先是CPU，然后就是得到MAC地址，然后通过PHY相当于是芯片外设，然后才可以接上RJ。</span><br><span class="line">RJ有RJ11和RJ45，这两个主要是线的数量和速率不同。</span><br></pre></td></tr></table></figure>
-
-<h5 id="配置方法"><a href="#配置方法" class="headerlink" title="配置方法"></a>配置方法</h5><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">打开cubemx，点击ETH，然后设置网口即可，其他的不用配置了。可以设置接收中断。反正就和串口一样使用就好了，</span><br><span class="line">那些电平变化，数据处理都是硬件搞定了，不需要我去管理了，调用给的回调和API即可完成操作</span><br></pre></td></tr></table></figure>
-
-<h5 id="结语"><a href="#结语" class="headerlink" title="结语"></a>结语</h5><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">使用mcu的硬件功能的时候，很多时候都需要配置给一些额外硬件设备。比如硬件iic，就需要外部上拉电阻；</span><br><span class="line">网口就要两个硬件来实现电平变化；can和485都需要差分电平芯片；就连串口ttl都最好加一个电平稳定芯片为好。</span><br></pre></td></tr></table></figure>
-
-
-      
-    </div>
-
-    
-    
-    
-
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2024/03/06/RTT-%E4%BB%8EMCU%E5%88%B0linux%E9%A9%B1%E5%8A%A8%E7%9A%84%E5%85%A5%E9%97%A8%E6%8D%B7%E5%BE%84/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/csm.png">
-      <meta itemprop="name" content="CSM">
-      <meta itemprop="description" content="应用是应用，驱动是驱动！你要是偏要应用干驱动，哥们，你怎么不直接薪资翻倍啊！[🦀]">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="我要成为嵌入式高手[doge]">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2024/03/06/RTT-%E4%BB%8EMCU%E5%88%B0linux%E9%A9%B1%E5%8A%A8%E7%9A%84%E5%85%A5%E9%97%A8%E6%8D%B7%E5%BE%84/" class="post-title-link" itemprop="url">RTT 从MCU到linux驱动的入门捷径</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              <time title="创建时间：2024-03-06 00:08:34" itemprop="dateCreated datePublished" datetime="2024-03-06T00:08:34+08:00">2024-03-06</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2024-04-10 20:08:31" itemprop="dateModified" datetime="2024-04-10T20:08:31+08:00">2024-04-10</time>
-              </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/OS/" itemprop="url" rel="index"><span itemprop="name">OS</span></a>
-                </span>
-            </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <p>今天，分享一些快速入门linux驱动的路子。</p>
-<h5 id="起因"><a href="#起因" class="headerlink" title="起因"></a>起因</h5><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">今天上班摸鱼看linux内核，感觉一下子就醒悟了，一下子就通透了，</span><br><span class="line">脑子里面终于有一种OS的感觉，资源的分配啊，线程管理，进程管理，</span><br><span class="line">内存管理的思路了。</span><br></pre></td></tr></table></figure>
-
-<h5 id="OS"><a href="#OS" class="headerlink" title="OS"></a>OS</h5><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">要知道OS是分等级的</span><br><span class="line">1&gt;.微内核    	鸿蒙  QNX、Minix</span><br><span class="line">2&gt;.宏内核		linux  windows</span><br><span class="line">3&gt;.混合内核  	windows  XNU内核</span><br><span class="line">4&gt;.rtos		rt-thread  freertos   ucos</span><br><span class="line">5&gt;.裸坤</span><br><span class="line"></span><br><span class="line">而且rtos也是有级别的</span><br><span class="line">POSIX 的RTOS标准</span><br><span class="line">PSE51, PSE52, PSE53, PSE54 共四个级别；</span><br><span class="line">Minimal Real-time System Profile IEEE Std 1003.13 PSE51，基础 RTOS</span><br><span class="line">Real-time Controller Profile IEEE Std 1003.13 PSE52，带有简单的文件系统...等</span><br><span class="line">Dedicated Real-time Profile IEEE Std 1003.13 PSE53，拥有网络功能...等</span><br><span class="line">Multi-Purpose Real-time Profile IEEE Std 1003.13 PSE54，完整的文件系统，带有 Shell 组件...等</span><br></pre></td></tr></table></figure>
-
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">1.最简单就是裸机编程了，就是顺序循环判断走下去就完事了。</span><br><span class="line"></span><br><span class="line">2.然后就是freeRTOS和ucos了，这个就上一个台阶的难度，但是就是</span><br><span class="line">几个api用来用去，规划好每个任务的优先级和工作时间，利用好空闲任</span><br><span class="line">务，利用好内存资源，多线程就完事了</span><br><span class="line"></span><br><span class="line">3.就是有点难度了，我这边建议学rtt了，因为rtt是仿照linux的，但</span><br><span class="line">是没有设备树这东西。首先呢，纯应用开发的话，和上面的rtos是差不多</span><br><span class="line">的。但是rtt有一个特殊的操作，就是命令行操作。没听错就是命令行，</span><br><span class="line">这个其实是uart串口，而且这些命令行没有linux那些的自带信号，</span><br><span class="line">比如CTRL+C CTRL+Z可能无法打断，需要手动添加接受结束才行，而且也是</span><br><span class="line">拥有驱动开发操作的。</span><br><span class="line"></span><br><span class="line">4.linux了，这个就是在上面的基础上面多了一个设备树的东西和平台</span><br><span class="line">开发，其他的真差不多了，rtt也是有kconfig和menuconfig的。</span><br><span class="line"></span><br><span class="line">5.后面那些就非常复杂了，其实学会linux，如果能够如火纯情，天下无敌</span><br></pre></td></tr></table></figure>
-
-<h5 id="RTT的驱动开发和BSP"><a href="#RTT的驱动开发和BSP" class="headerlink" title="RTT的驱动开发和BSP"></a>RTT的驱动开发和BSP</h5><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><span class="line">rtt标准和nano版本没有设备树，所以，所有功能实现都要依赖BSP，只有正确的驱动开</span><br><span class="line">发加上Kconfig，才能搞定BSP。</span><br><span class="line">搞stm32开发的时候一般是结合stm32Cube进行的开发，</span><br><span class="line">所以，实际上难的东西都没了，就是把那些gpio的复用功能再用init、</span><br><span class="line">open、write、read、control、callback、 close这几个函数进</span><br><span class="line">行封装。就是类似于linux的file_operations一样。</span><br><span class="line">但是这一步，你并没干啥，为什么这么说呢？因为代码是cube生成的，</span><br><span class="line">很多时候只要按照官网给的默认配置，进行cube生成代码，rtt就能进</span><br><span class="line">行编译，然后自动链接上去，就是rtt没有给你写这些驱动，他们自己以</span><br><span class="line">cube为模板进行驱动设计。只需要做的就是find设备，open init </span><br><span class="line">调用那几个api即可，非常人性化。做BSP的就比较麻烦，大家得去</span><br><span class="line">gitee上面把rtt下载下来，里面就有一个BSP代码，然后跟着官方的</span><br><span class="line">教程走一遍就可以了，这里就不多赘述了。</span><br><span class="line"></span><br><span class="line">这上面是硬件驱动，就是很底层基础，但明显不是我们想要的。比如我想要</span><br><span class="line">一个独立的led自定义驱动功能。</span><br><span class="line">首先，思路，使用了led，那么肯定就是占用一个gpio，那么就要产生依赖和绑定</span><br><span class="line">就是menuconfig中一定要有绑定关系。就需要在kconfig中设置一下关系。</span><br><span class="line">然后就是编写驱动程序，首先就申请设备，操作集，添加注册。使用的时候，就是</span><br><span class="line">find，open ，close，control就够了。编写一个驱动程序即可，使用时候遵循</span><br><span class="line">驱动指定的cmd指令就可以实现了</span><br><span class="line"></span><br><span class="line">一般使用rtt都是mcu版本，而且单核为主，多核也有，但是目前是支持多核同构。</span><br><span class="line">如果是异构的话，那么可以考虑使用freertos的方案就支持异构多核。</span><br><span class="line">如果是smart版本的话，其实就是和linux基本无异了，需要自己编写设备树，需要自己</span><br><span class="line">编写驱动代码。今天2024-04-10去到深圳参加了rt的线下会。主要就是为了解决异构问题</span><br><span class="line">还有linux与rtos之间的组合，就是大核是linux，小核心通过协议去接收来自大核心的</span><br><span class="line">任务和指令，就是dma那种操作。</span><br><span class="line"></span><br><span class="line">驱动很多时候都是不需要做的，一般都是做了适配，就算添加，也只是添加一些硬件功能</span><br><span class="line">就ok了，也就是cube生成，kconfig修改就可以了。如果说新的国产平台rtt没有支持</span><br><span class="line">那么就难搞了，所有驱动和底层都要自己一个一个添加哦</span><br></pre></td></tr></table></figure>
-
-<h5 id="结语"><a href="#结语" class="headerlink" title="结语"></a>结语</h5><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">加油兄弟们，千万不要呆在自己的舒适区中。不要自我感动和欺骗了。</span><br><span class="line">这样只是在加速淘汰自己，他人的堕落，正是推动你向成功的人前进的动力。</span><br></pre></td></tr></table></figure>
-
-
-      
-    </div>
-
-    
-    
-    
-
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2024/03/05/cpp%E4%B8%AD%E7%9A%84const%E4%B8%80%E4%BA%9B%E7%94%A8%E6%B3%95/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/csm.png">
-      <meta itemprop="name" content="CSM">
-      <meta itemprop="description" content="应用是应用，驱动是驱动！你要是偏要应用干驱动，哥们，你怎么不直接薪资翻倍啊！[🦀]">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="我要成为嵌入式高手[doge]">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2024/03/05/cpp%E4%B8%AD%E7%9A%84const%E4%B8%80%E4%BA%9B%E7%94%A8%E6%B3%95/" class="post-title-link" itemprop="url">cpp中的const一些用法</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              <time title="创建时间：2024-03-05 23:43:03" itemprop="dateCreated datePublished" datetime="2024-03-05T23:43:03+08:00">2024-03-05</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2024-04-06 14:28:18" itemprop="dateModified" datetime="2024-04-06T14:28:18+08:00">2024-04-06</time>
-              </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/CPP-C/" itemprop="url" rel="index"><span itemprop="name">CPP/C</span></a>
-                </span>
-            </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <h4 id="起因"><a href="#起因" class="headerlink" title="起因"></a>起因</h4><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">今天在菜鸟编程中复习cpp的时候，看到了异常处理。就是try catch </span><br><span class="line">throw 三兄弟。python中就是try except else finally raise</span><br><span class="line">两者是很相似的。</span><br></pre></td></tr></table></figure>
-
-<h5 id="异常处理"><a href="#异常处理" class="headerlink" title="异常处理"></a>异常处理</h5><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">就是try尝试运行，错误就到catch，catch中进行</span><br><span class="line">错误捕捉。还有一个就是throw，这个就是运行的时候，直接抛出错误</span><br><span class="line">这个就像人为中断错误，毕竟catch捕捉的东西有限。一旦执行throw</span><br><span class="line">就会立刻停止程序。</span><br></pre></td></tr></table></figure>
-
-<h5 id="Const"><a href="#Const" class="headerlink" title="Const"></a>Const</h5><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">为什么会出现Const呢？首先，</span><br><span class="line">const char* a</span><br><span class="line">char* const b</span><br><span class="line">const char* const c</span><br><span class="line">const void * fun（）</span><br><span class="line">这四个都是见怪不怪的用法了。</span><br><span class="line">但是我看到一个</span><br><span class="line">const void *what（） const throw（）</span><br><span class="line">重写throw的功能。如下代码所示</span><br></pre></td></tr></table></figure>
-
-<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;exception&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> std;</span><br><span class="line"> </span><br><span class="line"><span class="keyword">struct</span> <span class="title class_">MyException</span> : <span class="keyword">public</span> exception</span><br><span class="line">&#123;</span><br><span class="line">  <span class="function"><span class="type">const</span> <span class="type">char</span> * <span class="title">what</span> <span class="params">()</span> <span class="type">const</span> <span class="title">throw</span> <span class="params">()</span></span></span><br><span class="line"><span class="function">  </span>&#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="string">&quot;C++ Exception&quot;</span>;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;;</span><br><span class="line"> </span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">  <span class="keyword">try</span></span><br><span class="line">  &#123;</span><br><span class="line">    <span class="keyword">throw</span> <span class="built_in">MyException</span>();</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="built_in">catch</span>(MyException&amp; e)</span><br><span class="line">  &#123;</span><br><span class="line">    std::cout &lt;&lt; <span class="string">&quot;MyException caught&quot;</span> &lt;&lt; std::endl;</span><br><span class="line">    std::cout &lt;&lt; e.<span class="built_in">what</span>() &lt;&lt; std::endl;</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="built_in">catch</span>(std::exception&amp; e)</span><br><span class="line">  &#123;</span><br><span class="line">    <span class="comment">//其他的错误</span></span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<h5 id="结果如下"><a href="#结果如下" class="headerlink" title="结果如下"></a>结果如下</h5><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">MyException caught</span><br><span class="line">C++ Exception</span><br></pre></td></tr></table></figure>
-
-<h5 id="非常有意思，为什么函数还可以const呢-？const-char-what-const-throw"><a href="#非常有意思，为什么函数还可以const呢-？const-char-what-const-throw" class="headerlink" title="非常有意思，为什么函数还可以const呢 ？const char * what () const throw ()"></a>非常有意思，为什么函数还可以const呢 ？const char * what () const throw ()</h5><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">我去网上和编译实测了一下，发现确实可以的。但是有限制</span><br><span class="line">1.只能是结构体和类里面的成员方法(cpp中类和结构体都可以继承和实现函数的。) </span><br><span class="line">2.只能调用同为const的函数</span><br><span class="line">3.不能修改类里面的成员对象</span><br><span class="line">4.其他函数可以正常调用const修饰了的函数</span><br><span class="line">5.只能调用同为const的实例  如  const A a； 此时就能使用a</span><br></pre></td></tr></table></figure>
-
-<h5 id="结语"><a href="#结语" class="headerlink" title="结语"></a>结语</h5><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">大家感兴趣的话，可以去尝试用一下，我个人感觉，这个东西还是有意义，反正内部被修改</span><br><span class="line">可以作用一些，返回当前状态的接口上面如return systemTiem.hour;</span><br></pre></td></tr></table></figure>
-
-
-
-
-      
-    </div>
-
-    
-    
-    
-
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
 
   
   <nav class="pagination">
@@ -1121,7 +1122,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">33</span>
+          <span class="site-state-item-count">37</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
