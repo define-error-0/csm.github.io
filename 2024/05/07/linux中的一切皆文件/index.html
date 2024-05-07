@@ -22,20 +22,20 @@
     var CONFIG = {"hostname":"example.com","root":"/","scheme":"Pisces","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
   </script>
 
-  <meta name="description" content="应用是应用，驱动是驱动！你要是偏要应用干驱动，哥们，你怎么不直接薪资翻倍啊！[🦀]">
+  <meta name="description" content="起因今天刷到一个视频。我们学习linux的时候就学到了一句话”一切皆是文件“，仔细看了一下他的看法和视频。确实很严谨。”一切皆是文件“是源于unix的，linux继承下来了，但是，不能这样理解。linus曾经解释过，一切皆字节流。我们实际使用一般都是使用api，所以，在api层面就该理解为，一切皆是文件描述符。 文件描述符文件类型字符设备块设备网络设备总结">
 <meta property="og:type" content="article">
-<meta property="og:title" content="内存查找">
-<meta property="og:url" content="http://example.com/2024/04/10/%E5%86%85%E5%AD%98%E6%9F%A5%E6%89%BE/index.html">
+<meta property="og:title" content="linux中的一切皆文件">
+<meta property="og:url" content="http://example.com/2024/05/07/linux%E4%B8%AD%E7%9A%84%E4%B8%80%E5%88%87%E7%9A%86%E6%96%87%E4%BB%B6/index.html">
 <meta property="og:site_name" content="我要成为嵌入式高手[doge]">
-<meta property="og:description" content="应用是应用，驱动是驱动！你要是偏要应用干驱动，哥们，你怎么不直接薪资翻倍啊！[🦀]">
+<meta property="og:description" content="起因今天刷到一个视频。我们学习linux的时候就学到了一句话”一切皆是文件“，仔细看了一下他的看法和视频。确实很严谨。”一切皆是文件“是源于unix的，linux继承下来了，但是，不能这样理解。linus曾经解释过，一切皆字节流。我们实际使用一般都是使用api，所以，在api层面就该理解为，一切皆是文件描述符。 文件描述符文件类型字符设备块设备网络设备总结">
 <meta property="og:locale" content="zh_CN">
-<meta property="article:published_time" content="2024-04-10T12:11:56.000Z">
-<meta property="article:modified_time" content="2024-04-11T13:25:29.576Z">
+<meta property="article:published_time" content="2024-05-07T13:42:29.000Z">
+<meta property="article:modified_time" content="2024-05-07T13:48:13.711Z">
 <meta property="article:author" content="CSM">
-<meta property="article:tag" content="OS">
+<meta property="article:tag" content="Linux">
 <meta name="twitter:card" content="summary">
 
-<link rel="canonical" href="http://example.com/2024/04/10/%E5%86%85%E5%AD%98%E6%9F%A5%E6%89%BE/">
+<link rel="canonical" href="http://example.com/2024/05/07/linux%E4%B8%AD%E7%9A%84%E4%B8%80%E5%88%87%E7%9A%86%E6%96%87%E4%BB%B6/">
 
 
 <script id="page-configurations">
@@ -48,7 +48,7 @@
   };
 </script>
 
-  <title>内存查找 | 我要成为嵌入式高手[doge]</title>
+  <title>linux中的一切皆文件 | 我要成为嵌入式高手[doge]</title>
   
 
 
@@ -178,7 +178,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2024/04/10/%E5%86%85%E5%AD%98%E6%9F%A5%E6%89%BE/">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2024/05/07/linux%E4%B8%AD%E7%9A%84%E4%B8%80%E5%88%87%E7%9A%86%E6%96%87%E4%BB%B6/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/csm.png">
@@ -191,7 +191,7 @@
     </span>
       <header class="post-header">
         <h1 class="post-title" itemprop="name headline">
-          内存查找
+          linux中的一切皆文件
         </h1>
 
         <div class="post-meta">
@@ -200,16 +200,10 @@
                 <i class="far fa-calendar"></i>
               </span>
               <span class="post-meta-item-text">发表于</span>
+              
 
-              <time title="创建时间：2024-04-10 20:11:56" itemprop="dateCreated datePublished" datetime="2024-04-10T20:11:56+08:00">2024-04-10</time>
+              <time title="创建时间：2024-05-07 21:42:29 / 修改时间：21:48:13" itemprop="dateCreated datePublished" datetime="2024-05-07T21:42:29+08:00">2024-05-07</time>
             </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2024-04-11 21:25:29" itemprop="dateModified" datetime="2024-04-11T21:25:29+08:00">2024-04-11</time>
-              </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
                 <i class="far fa-folder"></i>
@@ -231,7 +225,8 @@
     <div class="post-body" itemprop="articleBody">
 
       
-        
+        <h5 id="起因"><a href="#起因" class="headerlink" title="起因"></a>起因</h5><p>今天刷到一个视频。我们学习linux的时候就学到了一句话”一切皆是文件“，仔细看了一下他的看法和视频。确实很严谨。”一切皆是文件“是源于unix的，linux继承下来了，但是，不能这样理解。linus曾经解释过，一切皆字节流。我们实际使用一般都是使用api，所以，在api层面就该理解为，一切皆是文件描述符。</p>
+<h5 id="文件描述符"><a href="#文件描述符" class="headerlink" title="文件描述符"></a>文件描述符</h5><h5 id="文件类型"><a href="#文件类型" class="headerlink" title="文件类型"></a>文件类型</h5><h5 id="字符设备"><a href="#字符设备" class="headerlink" title="字符设备"></a>字符设备</h5><h5 id="块设备"><a href="#块设备" class="headerlink" title="块设备"></a>块设备</h5><h5 id="网络设备"><a href="#网络设备" class="headerlink" title="网络设备"></a>网络设备</h5><h5 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h5>
     </div>
 
     
@@ -256,7 +251,7 @@
   </li>
   <li class="post-copyright-link">
     <strong>本文链接：</strong>
-    <a href="http://example.com/2024/04/10/%E5%86%85%E5%AD%98%E6%9F%A5%E6%89%BE/" title="内存查找">http://example.com/2024/04/10/内存查找/</a>
+    <a href="http://example.com/2024/05/07/linux%E4%B8%AD%E7%9A%84%E4%B8%80%E5%88%87%E7%9A%86%E6%96%87%E4%BB%B6/" title="linux中的一切皆文件">http://example.com/2024/05/07/linux中的一切皆文件/</a>
   </li>
   <li class="post-copyright-license">
     <strong>版权声明： </strong>本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-CSM/4.0/" rel="noopener" target="_blank"><i class="fab fa-fw fa-creative-commons"></i>BY-CSM</a> 许可协议。转载请注明出处！
@@ -267,7 +262,7 @@
 
       <footer class="post-footer">
           <div class="post-tags">
-              <a href="/tags/OS/" rel="tag"># OS</a>
+              <a href="/tags/Linux/" rel="tag"># Linux</a>
           </div>
 
         
@@ -276,13 +271,10 @@
         
     <div class="post-nav">
       <div class="post-nav-item">
-    <a href="/2024/04/10/%E5%86%85%E5%AD%98%E7%AE%A1%E7%90%86/" rel="prev" title="内存管理">
-      <i class="fa fa-chevron-left"></i> 内存管理
+    <a href="/2024/05/07/%E6%95%B0%E6%8D%AE%E6%B5%81%E7%9A%84%E6%A6%82%E5%BF%B5/" rel="prev" title="数据流的概念">
+      <i class="fa fa-chevron-left"></i> 数据流的概念
     </a></div>
-      <div class="post-nav-item">
-    <a href="/2024/04/10/%E5%A4%9A%E7%BA%A7%E7%BC%93%E5%AD%98/" rel="next" title="多级缓存">
-      多级缓存 <i class="fa fa-chevron-right"></i>
-    </a></div>
+      <div class="post-nav-item"></div>
     </div>
       </footer>
     
@@ -341,6 +333,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-5"><a class="nav-link" href="#%E8%B5%B7%E5%9B%A0"><span class="nav-number">1.</span> <span class="nav-text">起因</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E6%96%87%E4%BB%B6%E6%8F%8F%E8%BF%B0%E7%AC%A6"><span class="nav-number">2.</span> <span class="nav-text">文件描述符</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E6%96%87%E4%BB%B6%E7%B1%BB%E5%9E%8B"><span class="nav-number">3.</span> <span class="nav-text">文件类型</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E5%AD%97%E7%AC%A6%E8%AE%BE%E5%A4%87"><span class="nav-number">4.</span> <span class="nav-text">字符设备</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E5%9D%97%E8%AE%BE%E5%A4%87"><span class="nav-number">5.</span> <span class="nav-text">块设备</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E7%BD%91%E7%BB%9C%E8%AE%BE%E5%A4%87"><span class="nav-number">6.</span> <span class="nav-text">网络设备</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E6%80%BB%E7%BB%93"><span class="nav-number">7.</span> <span class="nav-text">总结</span></a></li></ol></div>
       </div>
       <!--/noindex-->
 
