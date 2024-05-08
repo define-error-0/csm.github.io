@@ -124,7 +124,7 @@
   </li>
         <li class="menu-item menu-item-tags">
 
-    <a href="/tags/" rel="section"><i class="tags fa-fw"></i>标签<span class="badge">22</span></a>
+    <a href="/tags/" rel="section"><i class="tags fa-fw"></i>标签<span class="badge">23</span></a>
 
   </li>
         <li class="menu-item menu-item-categories">
@@ -134,7 +134,7 @@
   </li>
         <li class="menu-item menu-item-archives">
 
-    <a href="/archives/" rel="section"><i class="archive fa-fw"></i>归档<span class="badge">40</span></a>
+    <a href="/archives/" rel="section"><i class="archive fa-fw"></i>归档<span class="badge">41</span></a>
 
   </li>
         <li class="menu-item menu-item-resources">
@@ -170,6 +170,102 @@
 
           <div class="content index posts-expand">
             
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2024/04/10/%E5%A4%9A%E7%BA%A7%E7%BC%93%E5%AD%98/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/csm.png">
+      <meta itemprop="name" content="CSM">
+      <meta itemprop="description" content="应用是应用，驱动是驱动！你要是偏要应用干驱动，哥们，你怎么不直接薪资翻倍啊！[🦀]">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="我要成为嵌入式高手[doge]">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2024/04/10/%E5%A4%9A%E7%BA%A7%E7%BC%93%E5%AD%98/" class="post-title-link" itemprop="url">多级缓存</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2024-04-10 20:12:05" itemprop="dateCreated datePublished" datetime="2024-04-10T20:12:05+08:00">2024-04-10</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2024-05-08 21:27:24" itemprop="dateModified" datetime="2024-05-08T21:27:24+08:00">2024-05-08</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/OS/" itemprop="url" rel="index"><span itemprop="name">OS</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h5 id="CPU多级缓存"><a href="#CPU多级缓存" class="headerlink" title="CPU多级缓存"></a>CPU多级缓存</h5><p>为什么需要多级缓存的存在呢？因为，内存太大了，不论是固态还是机械去读取都太慢了，但是cpu的频率又高的吓人，还有多级流水和，流水线设计方案等(比如结构冒险，数据冒险，时间冒险等方案，所以处理起来相当迅速)。所以，总不能让cpu在原地急得跺脚吧，这纯纯浪费资源呢，所以，就想到缓存操作。</p>
+<h5 id="cache高速缓存"><a href="#cache高速缓存" class="headerlink" title="cache高速缓存"></a>cache高速缓存</h5><p>这个，就是直接与cpu连接的一个缓存了，也可以说是速度最快的缓存了，他会提前把需要的数据从内存中提取出来，等待cpu调度和使用，这个非常好用，非常nice了，这就让cpu有的忙了，但是，问题因此来了，为什么cache快呢？就是因为它小啊，而且距离近。cpu处理任务是需要得到所有数据的，cache不可能存放所有数据的，这就来了一个cache命中率问题了。cache命中率越高，就说明了，cpu可以直接cache中得到数据，这是最好最快的。超出cache的就得去内存中找了。</p>
+<h5 id="一级缓存"><a href="#一级缓存" class="headerlink" title="一级缓存"></a>一级缓存</h5><p>上面的cache没捕获到，就到一级缓存中去找，这个就是离cpu第二远的了，因此内存也更大，执行的事情同上面差不多的。</p>
+<p>比如 AMD一级数据缓存设计 AMD采用的一级缓存设计属于传统的“实数据读写缓存”设计。基于该架构的一级数据缓存主要用于存储CPU最先读取的数据；而更多的读取数据则分别存储在二级缓存和系统内存当中。<br>比如Intel 也有的一级缓存不存储数据，而是存储这些数据在二级缓存中的指令代码，这样就可以间接去找到来自二级缓存的数据，而且可以增加一级缓存的容量。</p>
+<p>所以，不同的策略和设计方案，对于cpu来说，效果的好坏其实也是看实际情况的，不论是直接找数据，还是间接找指令跳转到数据，都是一种权衡之后的方案和策略，都是可行而且可靠的至于效果，只能实际测试才知道了。</p>
+<h5 id="二级缓存"><a href="#二级缓存" class="headerlink" title="二级缓存"></a>二级缓存</h5><p>二级缓存就是一级缓存的缓冲器：一级缓存制造成本很高因此它的容量有限，二级缓存的作用就是存储那些CPU处理时需要用到、一级缓存又无法存储的数据。</p>
+<h5 id="三级缓存"><a href="#三级缓存" class="headerlink" title="三级缓存"></a>三级缓存</h5><p>同样道理，三级缓存和内存可以看作是二级缓存的缓冲器，它们的容量递增，但单位制造成本却递减。</p>
+<h5 id="主存-硬盘"><a href="#主存-硬盘" class="headerlink" title="主存(硬盘)"></a>主存(硬盘)</h5><p>到了这一步，说明上面都没成功的捕捉到cpu所需要的数据，只能从内存中读取了，这就效率非常低下了，这个是尽量要减少，但是避免不了的，当然这东西，我肯定设计不来，我也只会纸上谈兵。</p>
+<h5 id="局限性"><a href="#局限性" class="headerlink" title="局限性"></a>局限性</h5><p>这个就有必要说一说，为什么要谈这个呢？因为，我们写代码的时候，就知道，其实，我们的数据是一般都是在一块地方的，比如一个数组，比如一堆全局变量啥的，我们看他们的地址，其实都是连起来的，所以，执行一个应用和任务的时候，就可以猜出来这附近的地址可能都是需要的数据或者代码，所以，就有局限性，这也是符合编程和存储的。就像我们学习和使用mcu的时候，避免不了就是while死循环了，这极大可能就是反复用到同一个数据，所以，一个数据被使用，是不是就意味着它接着可以继续被使用呢？</p>
+<p><strong>1.时间局限性</strong>：如果某数据被访问过，在未来的一段时间内，我们可能还会使用到这个数据，所以缓存就提前把这个数据加载进来并留着，这样就可以让cpu调用的时候，快速去读取。</p>
+<p><strong>2.空间局限性</strong>：这个就是上面说，只要读取了一块地址，是不是就说明附近的地址都可能是应用和任务所需要的数据和内容呢？所以，宁可错杀一万，不可放过一人。</p>
+<p>这些都是缓存读取的方案，自然还有更好的，都是看厂商的想法和设计了。</p>
+<h5 id="内存映射"><a href="#内存映射" class="headerlink" title="内存映射"></a>内存映射</h5><p>这个就是把内存直接映射到缓存之中的方法，一般是直接映射到cache中的。</p>
+<p><strong>1.全相联映射：</strong>所有行均可用于存放主存任何一块数据</p>
+<p>缺点：查找最慢，当cache块装满的时候，可能需要遍历所有的cache行</p>
+<p><strong>正常情况下我们并不限定位置，大家随便坐，先到先得。老师如果想检查一个同学的作业的话，也可以一个一个来找，即线性搜索，当然此举必然花费老师很多时间。另外一点需要强调，学生并不是老老实实坐在座位上的，不断会有学生进来或离开，也会有同学出去后又进来但前后的坐位并不相同的情况，这样的话“线性搜索”将不再可能。</strong></p>
+<p><strong>2.直接映射：</strong>每个主存块只能放到某个固定的cache行，每个主存块所属的cahe行是 主存块号 % cache总行数</p>
+<p><strong>假设上面例子中的教室只有20个座位，编号为0-19，全校共有400名学生，学号分别为0-399。直接映射方式的求是座位不能随便选择，而是通过学号和所有座位数的余数决定，即学号为0、20、40、60…的同学只能坐在0号座位上，同样学号为1、21、41、61…的同学只能争1号座位，后来的同学会将正坐在位置上的同学挤出去，如果1号和21号同学都要来教室的话就会发生两人不断被挤出去的情况，这就是Cache的颠簸效应（Cache Thrashing）。</strong></p>
+<p><strong>3.组组相联映射：</strong>首先要对所有的cache行进行分组，每个主存块只能放到固定的cache组，每个主存块所属的cahe组是 主存块号 % cache总组数，这个就是上面的组合拳头。</p>
+<p><strong>为了解决直接映射的颠簸效应，遂引入了组相联映射。假设学校共有5个系，每个系均有80名学生，那我们可以这样安排座位，一系的学生只能选择0&#x2F;5&#x2F;10&#x2F;15这4个座，二系则是1&#x2F;6&#x2F;11&#x2F;16，依次类推，如下图所示：每个系有4个座位，这4个座位是没有顺序的，即本系的学生随意坐，但全系的80名学生将争抢这4个座位，这种分为5组的映射方式就是4路组相连映射，4路的意思是每组中有4个座位，即4个CacheLine。</strong></p>
+<h5 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h5><p>存储内存，一般有段式，页式，段页式存储方法，同理缓存也有多个方案，没有绝对的方案，都是合适是最好的，一般都会使用折中方案比如段页式。<strong>虽然，我们百分之99的概率遇不上这些工作和研发</strong>，但是充分理解底层，选择合适的内存管理和分配是我们可以控制，理解cpu的调度方案和原理，其实，选择一个好的文件管理系统和内存分配方案，确实可以一定程度的提高速度，自然都是理论上，一切都是以实际为主，代码和人可以跑一个就非常鸟不起啊！</p>
+
+      
+    </div>
+
+    
+    
+    
+
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
       
   
   
@@ -355,7 +451,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2024-04-22 23:33:27" itemprop="dateModified" datetime="2024-04-22T23:33:27+08:00">2024-04-22</time>
+                <time title="修改时间：2024-05-08 21:18:15" itemprop="dateModified" datetime="2024-05-08T21:18:15+08:00">2024-05-08</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -378,8 +474,7 @@
     <div class="post-body" itemprop="articleBody">
 
       
-          <h5 id="混合编程"><a href="#混合编程" class="headerlink" title="混合编程"></a>混合编程</h5><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">什么是混合编程啊。就是不止一种语言的编程。额，这不等于废话。</span><br><span class="line">常见就是c调用c++，c++调用c。这就是最常见的混合编程，这是因为面向对象和面向过程都各有千秋，而且cpp的变量类型</span><br><span class="line">要求更大，所以更可靠点，c的话，小巧高效但是限制太少了，很容易越界，数据类型错误等。主要还是c使用面向过程的方法的话，</span><br><span class="line">是非常利于维护的</span><br></pre></td></tr></table></figure>
-
+          <h5 id="混合编程"><a href="#混合编程" class="headerlink" title="混合编程"></a>混合编程</h5><p>什么是混合编程啊。就是不止一种语言的编程。额，这不等于废话。常见就是c调用c++，c++调用c。这就是最常见的混合编程，这是因为面向对象和面向过程都各有千秋，而且cpp的变量类型要求更大，所以更可靠点，c的话，小巧高效但是限制太少了，很容易越界，数据类型错误等。主要还是c使用面向过程的方法的话，是非常利于维护的</p>
 <h5 id="C调用CPP"><a href="#C调用CPP" class="headerlink" title="C调用CPP"></a>C调用CPP</h5><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//c调用cpp是不能直接使用cpp的类的，也不能直接使用cpp的函数，必须使用extern &quot;C&quot;&#123;&#125; //Cpp的头文件</span></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">testCLASS</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="keyword">public</span>:</span><br><span class="line">    	<span class="function"><span class="type">static</span> <span class="type">void</span> <span class="title">funTest</span><span class="params">(<span class="type">void</span>)</span></span>;</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">outFun</span><span class="params">(<span class="type">void</span>)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    testCLASS::<span class="built_in">funTest</span>();</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">extern</span> <span class="string">&quot;C&quot;</span> <span class="function"><span class="type">void</span> <span class="title">outFun</span><span class="params">()</span></span>;</span><br></pre></td></tr></table></figure>
 
 <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&quot;testFUN.h&quot;</span> </span></span><br><span class="line"></span><br><span class="line"><span class="function">testCLASS::<span class="type">static</span> <span class="type">void</span> <span class="title">funTest</span><span class="params">(<span class="type">void</span>)</span>					<span class="comment">//Cpp文件</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    std::cout&lt;&lt;<span class="string">&quot;OK&quot;</span>&lt;&lt;std::endl;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
@@ -387,8 +482,7 @@
 <figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&quot;testFUN.h&quot;</span> 	<span class="comment">//Cpp的头文件</span></span></span><br><span class="line"></span><br><span class="line"><span class="type">int</span> <span class="title function_">main</span><span class="params">()</span></span><br><span class="line">&#123;</span><br><span class="line">	outFun();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
 <p>这样就是一个最简单最简单的使用了，一般都是c来调用cpp，cpp很多情况都是可以直接调用c，只有部分，因为关键字<br>和数据结构体的问题等才会出现奇奇怪怪的bug。</p>
-<h5 id="C-CPP-调用Python"><a href="#C-CPP-调用Python" class="headerlink" title="C&#x2F;CPP 调用Python"></a>C&#x2F;CPP 调用Python</h5><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">想不到吧，还能调用python呢，这个跟python版本有点关系，在python 3.12的官方手册中，有一个c扩展的功能，</span><br><span class="line">也就是通过调用Python.h来实现，对python函数的使用，那为什么可以实现这种情况呢。</span><br><span class="line">Python 本身就是一个C库。你所看到的可执行体python只不过是个stub。真正的python实体在动态链接库里实现，在Windows平台上，这个文件位于 %SystemRoot%\System32\python27.dll。</span><br></pre></td></tr></table></figure>
-
+<h5 id="C-CPP-调用Python"><a href="#C-CPP-调用Python" class="headerlink" title="C&#x2F;CPP 调用Python"></a>C&#x2F;CPP 调用Python</h5><p>想不到吧，还能调用python呢，这个跟python版本有点关系，在python 3.12的官方手册中，有一个c扩展的功能，也就是通过调用Python.h来实现，对python函数的使用，那为什么可以实现这种情况呢。Python 本身就是一个C库。你所看到的可执行体python只不过是个stub。真正的python实体在动态链接库里实现，在Windows平台上，这个文件位于 %SystemRoot%\System32\python27.dll。</p>
 <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;Python.h&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">(<span class="type">int</span> argc, <span class="type">char</span> *argv[])</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">  <span class="built_in">Py_SetProgramName</span>(argv[<span class="number">0</span>]);</span><br><span class="line">  <span class="built_in">Py_Initialize</span>();</span><br><span class="line">  <span class="built_in">PyRun_SimpleString</span>(<span class="string">&quot;print &#x27;Hello Python!&#x27;\n&quot;</span>);</span><br><span class="line">  <span class="built_in">Py_Finalize</span>();</span><br><span class="line">  <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
 <p>不过编译方法不是直接编译运行</p>
@@ -404,8 +498,7 @@
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> ctypes</span><br></pre></td></tr></table></figure>
 
 <p><img src="/../Blogas_images/ctype.png"></p>
-<h5 id="rust调用c"><a href="#rust调用c" class="headerlink" title="rust调用c"></a>rust调用c</h5><h5 id="c调用rust"><a href="#c调用rust" class="headerlink" title="c调用rust"></a>c调用rust</h5><h5 id="结语"><a href="#结语" class="headerlink" title="结语"></a>结语</h5><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">要说用的多，还是python调用cpp写好的库，这个多实在啊，方便简单。还有就是c调用cpp间接封装好的类接口。</span><br><span class="line">混合编程其实就是为了利用各种语言之间的便捷性来实现互通互补，你说c语言可以不可以搞定一切，那肯定可以啊</span><br><span class="line">，那时间呢？效率呢？难易程度呢？这些都是我们想要考虑的情况，尤其是python，它有非常庞大的生态，很多库</span><br><span class="line">python都是有的，难道c要一个一个写？还是直接使用python来实现混合编程？答案就一目了然了</span><br></pre></td></tr></table></figure>
-
+<h5 id="rust调用c"><a href="#rust调用c" class="headerlink" title="rust调用c"></a>rust调用c</h5><h5 id="c调用rust"><a href="#c调用rust" class="headerlink" title="c调用rust"></a>c调用rust</h5><h5 id="结语"><a href="#结语" class="headerlink" title="结语"></a>结语</h5><p>要说用的多，还是python调用cpp写好的库，这个多实在啊，方便简单。还有就是c调用cpp间接封装好的类接口。混合编程其实就是为了利用各种语言之间的便捷性来实现互通互补，你说c语言可以不可以搞定一切，那肯定可以啊，那时间呢？效率呢？难易程度呢？这些都是我们想要考虑的情况，尤其是python，它有非常庞大的生态，很多库python都是有的，难道c要一个一个写？还是直接使用python来实现混合编程？答案就一目了然了</p>
 
       
     </div>
@@ -458,7 +551,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2024-05-06 22:14:41" itemprop="dateModified" datetime="2024-05-06T22:14:41+08:00">2024-05-06</time>
+                <time title="修改时间：2024-05-08 20:58:38" itemprop="dateModified" datetime="2024-05-08T20:58:38+08:00">2024-05-08</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -481,16 +574,13 @@
     <div class="post-body" itemprop="articleBody">
 
       
-          <h5 id="起因"><a href="#起因" class="headerlink" title="起因"></a>起因</h5><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">今天再看rtt手册的时候看到一个smp方案，就是多核操作调度，其实想想也是，mcu只是</span><br><span class="line">普遍是单核，也不能这样说，esp32就是RISC-v双核MCU呢。</span><br></pre></td></tr></table></figure>
-
-<h5 id="SMP"><a href="#SMP" class="headerlink" title="SMP"></a>SMP</h5><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">这个是多核，注意了，这个多核，指的是全部架构和功能一样的多核，就像cpu多核一样那种，</span><br><span class="line">此时整个系统都是一个rtos，就是一个rtos控制所有核心，每一个核心都可以运行一个任务和中断</span><br><span class="line">等操作。此时，就得注意了，高优先级和低优先级就能一起触发运行了。因为此时是一个cpu干一件事</span><br><span class="line">这件事包括时间片，所以，如果有就绪列表中有任务的话同优先级的任务就会运行在同一个核心上面，</span><br><span class="line">经过时间片调度，一起运行。此时优先级低的任务就可以分到一个cpu来处理同优先级的任务了。这点</span><br><span class="line">是要注意的。至于实现就是比较复杂了，根据官方的操作去移植吧，这里篇幅不够。</span><br><span class="line">反正注意是一个系统控制所有资源和核心，有点linux的味道了，但是linux还有mmu等诸多资源管理。</span><br></pre></td></tr></table></figure>
-
-<h5 id="AMP"><a href="#AMP" class="headerlink" title="AMP"></a>AMP</h5><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">怎么可能总是一样的架构芯片？随便拿一个手机芯片，你看有多少个大核，小核。arm开发板也是一</span><br><span class="line">样的啊 STM32H745I就是M4和M7双核。所以一个arm-A系列，也常常有A53和A7混合啊。这明显就是非对称核</span><br><span class="line">心了。那么此时怎么办？rt-thread的文档没有给方案！</span><br><span class="line">一般厂商再出厂的时候，就会为自己的soc写好rtos的代码，直接调用api就好了。但是如果没有怎么办？</span><br><span class="line">此时，咱们的老大哥，freertos有方案，就是AMP方案，就是每一个核心都运行一个rtos，然后通过一个</span><br><span class="line">流\信号缓冲区来实现，控制和函数调用。具体·流程思路如下:</span><br><span class="line">大核心，一般都是主控主核，这点大家都是默认的。就是大核心就是一只告高速运行的，此时可以通过</span><br><span class="line">调用api的方法，向rtos中的缓冲区中发送函数指令，特定的核心是时刻处于接收状态的，一旦识别到指令就去</span><br><span class="line">执行，因为他们的空间是共享的，所以就会直接去调用函数。此时大核就完成任务和发布。</span><br><span class="line">这其实就有点dma的味道，就是告诉dma该干嘛，dma就去干了，完事之后，也往缓冲区中发送执行完毕</span><br><span class="line">的命令此时就实现一个简单的多核操作。</span><br><span class="line"></span><br><span class="line">note：多核心是多核心，不是多板子，是一个芯片里面多个核心，是芯片内部的数据、控制等处理。</span><br><span class="line">不是说一个板子上面接上两个mcu就是多核心了，这只是两个mcu之间的通信，就跟串口那样的，</span><br><span class="line">所以就不是多核心。多核心，它们内部可能有共享内存、线路、指令等，很复杂的走线。</span><br></pre></td></tr></table></figure>
-
-<h5 id="多核心烧录"><a href="#多核心烧录" class="headerlink" title="多核心烧录"></a>多核心烧录</h5><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">多核心怎么烧录呢？我们一般烧写代码，都是mcu那种单核代码烧写或者直接就是linux内核那种多核系统</span><br><span class="line">下载进去了，然后uboot引导开机。</span><br><span class="line">对于非对称核心的，就是要烧录多次， STM32H745I一个M4和M7核心，但是它们有着独立的空间和数据</span><br><span class="line">。所以，需要分别烧录才行。</span><br><span class="line">还有使用uboot或者bootloader那种进行代码的下载。这个时候就只需要下载一次，此时就是把程序按照</span><br><span class="line">特定的规则来打包，然后再引导程序中解包。</span><br><span class="line">对于对称多核，因为它们是共享内存和数据空间的，所以，往往烧写一次就足够了。对于不同版本，不同</span><br><span class="line">厂商的mcu处理方法有所不同，但是大致的思路是正确的。</span><br><span class="line"></span><br><span class="line">其实，如果是arm架构的单片机，我们要知道一件事，此时它们是在一块内存上面的，因为我们对cube的探索</span><br><span class="line">发现gpio同一个时刻只能给一个核心使用，而且两个核心都是有引脚的控制权，所以，它们内存也是统一编址</span><br><span class="line">的，我们就可以使用keil分别烧录，把M7烧录到0x08000000 把m4烧录到0x08100000 此时就可以两者工作</span><br><span class="line">了，注意了，烧录的时候，不要清空flash了。也可以使用一些cubeide等诸多软件来进行烧录。此时是两份</span><br><span class="line">代码都是通过一个jtag进行烧录的哦。</span><br></pre></td></tr></table></figure>
-
-<h5 id="结语"><a href="#结语" class="headerlink" title="结语"></a>结语</h5><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">今天，我问我的同事，多核怎么烧录，他思考一会儿，对我说，用不到得，这东西没搞得的必要，</span><br><span class="line">就像我之前问他，觉得mcu动态调用实现，手机那种app的操作，他也觉得没必要。我们的求知欲会</span><br><span class="line">渐渐消退，变得越来越现实。但是我内心的....还是不甘啊，我只是在为了我糟糕的人生赎罪。</span><br></pre></td></tr></table></figure>
-
+          <h5 id="起因"><a href="#起因" class="headerlink" title="起因"></a>起因</h5><p>今天再看rtt手册的时候看到一个smp方案，就是多核操作调度，其实想想也是，mcu只是普遍是单核，也不能这样说，esp32就是RISC-v双核MCU呢。</p>
+<h5 id="SMP"><a href="#SMP" class="headerlink" title="SMP"></a>SMP</h5><p>这个是多核，注意了，这个多核，指的是全部架构和功能一样的多核，就像cpu多核一样那种，此时整个系统都是一个rtos，就是一个rtos控制所有核心，每一个核心都可以运行一个任务和中断等操作。此时，就得注意了，高优先级和低优先级就能一起触发运行了。因为此时是一个cpu干一件事这件事包括时间片，所以，如果有就绪列表中有任务的话同优先级的任务就会运行在同一个核心上面，经过时间片调度，一起运行。此时优先级低的任务就可以分到一个cpu来处理同优先级的任务了。这点是要注意的。至于实现就是比较复杂了，根据官方的操作去移植吧，这里篇幅不够。反正注意是一个系统控制所有资源和核心，有点linux的味道了，但是linux还有mmu等诸多资源管理。</p>
+<h5 id="AMP"><a href="#AMP" class="headerlink" title="AMP"></a>AMP</h5><p>怎么可能总是一样的架构芯片？随便拿一个手机芯片，你看有多少个大核，小核。arm开发板也是一样的啊 STM32H745I就是M4和M7双核。所以一个arm-A系列，也常常有A53和A7混合啊。这明显就是非对称核心了。那么此时怎么办？rt-thread的文档没有给方案！一般厂商再出厂的时候，就会为自己的soc写好rtos的代码，直接调用api就好了。但是如果没有怎么办？此时，咱们的老大哥，freertos有方案，就是AMP方案，就是每一个核心都运行一个rtos，然后通过一个流\信号缓冲区来实现，控制和函数调用。具体·流程思路如下:大核心，一般都是主控主核，这点大家都是默认的。就是大核心就是一只告高速运行的，此时可以通过调用api的方法，向rtos中的缓冲区中发送函数指令，特定的核心是时刻处于接收状态的，一旦识别到指令就去执行，因为他们的空间是共享的，所以就会直接去调用函数。此时大核就完成任务和发布。这其实就有点dma的味道，就是告诉dma该干嘛，dma就去干了，完事之后，也往缓冲区中发送执行完毕<br>的命令此时就实现一个简单的多核操作。</p>
+<p><strong>note：</strong>多核心是多核心，不是多板子，是一个芯片里面多个核心，是芯片内部的数据、控制等处理。不是说一个板子上面接上两个mcu就是多核心了，这只是两个mcu之间的通信，就跟串口那样的，所以就不是多核心。多核心，它们内部可能有共享内存、线路、指令等，很复杂的走线。</p>
+<h5 id="多核心烧录"><a href="#多核心烧录" class="headerlink" title="多核心烧录"></a>多核心烧录</h5><p>多核心怎么烧录呢？我们一般烧写代码，都是mcu那种单核代码烧写或者直接就是linux内核那种多核系统下载进去了，然后uboot引导开机。对于非对称核心的，就是要烧录多次， STM32H745I一个M4和M7核心，但是它们有着独立的空间和数据。所以，需要分别烧录才行。还有使用uboot或者bootloader那种进行代码的下载。这个时候就只需要下载一次，此时就是把程序按照特定的规则来打包，然后再引导程序中解包。对于对称多核，因为它们是共享内存和数据空间的，所以，往往烧写一次就足够了。对于不同版本，不同厂商的mcu处理方法有所不同，但是大致的思路是正确的。</p>
+<p>其实，如果是arm架构的单片机，我们要知道一件事，此时它们是在一块内存上面的，因为我们对cube的探索发现gpio同一个时刻只能给一个核心使用，而且两个核心都是有引脚的控制权，所以，它们内存也是统一编址的，我们就可以使用keil分别烧录，把M7烧录到0x08000000 把m4烧录到0x08100000 此时就可以两者工作了，注意了，烧录的时候，不要清空flash了。也可以使用一些cubeide等诸多软件来进行烧录。此时是两份代码都是通过一个jtag进行烧录的哦。</p>
+<h5 id="结语"><a href="#结语" class="headerlink" title="结语"></a>结语</h5><p>今天，我问我的同事，多核怎么烧录，他思考一会儿，对我说，用不到得，这东西没搞得的必要，就像我之前问他，觉得mcu动态调用实现，手机那种app的操作，他也觉得没必要。我们的求知欲会渐渐消退，变得越来越现实。但是我内心的….还是不甘啊，我只是在为了我糟糕的人生赎罪。</p>
 
       
     </div>
@@ -535,10 +625,16 @@
                 <i class="far fa-calendar"></i>
               </span>
               <span class="post-meta-item-text">发表于</span>
-              
 
-              <time title="创建时间：2024-04-07 21:00:04 / 修改时间：21:22:58" itemprop="dateCreated datePublished" datetime="2024-04-07T21:00:04+08:00">2024-04-07</time>
+              <time title="创建时间：2024-04-07 21:00:04" itemprop="dateCreated datePublished" datetime="2024-04-07T21:00:04+08:00">2024-04-07</time>
             </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2024-05-08 21:11:25" itemprop="dateModified" datetime="2024-05-08T21:11:25+08:00">2024-05-08</time>
+              </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
                 <i class="far fa-folder"></i>
@@ -560,8 +656,7 @@
     <div class="post-body" itemprop="articleBody">
 
       
-          <h5 id="起因"><a href="#起因" class="headerlink" title="起因"></a>起因</h5><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">我在想办法写代码的时候，想降低耦合，增加内聚能力。这个口号天天喊，模块化天天说，但是什么是才算内聚</span><br><span class="line">什么才算耦合？平时我们都是经验主义和习惯主义，脑子中没有一个准确的定义和概念。</span><br></pre></td></tr></table></figure>
-
+          <h5 id="起因"><a href="#起因" class="headerlink" title="起因"></a>起因</h5><p>我在想办法写代码的时候，想降低耦合，增加内聚能力。这个口号天天喊，模块化天天说，但是什么是才算内聚什么才算耦合？平时我们都是经验主义和习惯主义，脑子中没有一个准确的定义和概念。</p>
 <h5 id="内聚"><a href="#内聚" class="headerlink" title="内聚"></a>内聚</h5><p>偶然内聚 ：就是一个模板内，所有元素互不干扰独立的</p>
 <p>逻辑内聚 ：就是通过传参来影响模块内部的逻辑功能，就是一般的传参操作 fun(temp);</p>
 <p>时间内聚 ：同时执行的行为和动作组合起来形成的模块，比如一键实现界面登录和打开主页</p>
@@ -631,7 +726,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2024-04-06 14:28:34" itemprop="dateModified" datetime="2024-04-06T14:28:34+08:00">2024-04-06</time>
+                <time title="修改时间：2024-05-08 21:16:52" itemprop="dateModified" datetime="2024-05-08T21:16:52+08:00">2024-05-08</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -654,20 +749,15 @@
     <div class="post-body" itemprop="articleBody">
 
       
-          <h5 id="起因"><a href="#起因" class="headerlink" title="起因"></a>起因</h5><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">为什么突然想起来这个属性呢，因为最近在看嵌入式系统设计的课程。</span><br><span class="line">看到抢占式系统不能直接使用不可重入函数，一下子我就茅塞顿开了。</span><br></pre></td></tr></table></figure>
-
-<h5 id="什么是可重入和不可重入"><a href="#什么是可重入和不可重入" class="headerlink" title="什么是可重入和不可重入"></a>什么是可重入和不可重入</h5><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">你可以认为就是该函数是否独立，是否是模块化的！</span><br><span class="line">如下：</span><br></pre></td></tr></table></figure>
-
+          <h5 id="起因"><a href="#起因" class="headerlink" title="起因"></a>起因</h5><p>为什么突然想起来这个属性呢，因为最近在看嵌入式系统设计的课程。看到抢占式系统不能直接使用不可重入函数，一下子我就茅塞顿开了。</p>
+<h5 id="什么是可重入和不可重入"><a href="#什么是可重入和不可重入" class="headerlink" title="什么是可重入和不可重入"></a>什么是可重入和不可重入</h5><p>你可以认为就是该函数是否独立，是否是模块化的！<br>如下：</p>
 <figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">volatile</span> <span class="type">uint32_t</span> staticData = <span class="number">100</span>;</span><br><span class="line"></span><br><span class="line"><span class="type">uint32_t</span> <span class="title function_">testFun</span><span class="params">()</span></span><br><span class="line">&#123;</span><br><span class="line">	<span class="keyword">if</span>(staticData&gt;=<span class="number">101</span>)</span><br><span class="line">		<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">	</span><br><span class="line">	<span class="keyword">return</span> staticData++;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">由上面函数可以发现，第一次调用的时候是可以正常返回staticData的数据的，但是以后的</span><br><span class="line">调用都是返回0，也就是无效的，因为它使用全局的静态变量，所以它是非独立的。</span><br><span class="line">假如我任务一是低优先级，此时调用这个函数，但是任务二立刻发生了抢占但是也调用了这个函数</span><br><span class="line">那么任务二是正常调用并得到了数据，此时回到任务一调用就得到了0，是无效的，所以，这个时候</span><br><span class="line">彼此之间发生了干扰，这是不合理的！对系统的稳定和安全有大问题，尤其是项目大的时候。</span><br></pre></td></tr></table></figure>
-
-<h5 id="如何分辨是否是可重入"><a href="#如何分辨是否是可重入" class="headerlink" title="如何分辨是否是可重入"></a>如何分辨是否是可重入</h5><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">1.是否调用全局变量，注意了还有类中的static变量也是全局变量</span><br><span class="line">2.是否有内部的static变量</span><br><span class="line">3.是否发生了跳转 如setjmp和longjmp</span><br><span class="line">4.是否有调用了malloc和new的变量</span><br><span class="line">5.是否有标准 I/O 函数</span><br><span class="line"></span><br><span class="line">note:传参导致的函数返回错误值，这不算不可重入函数，这是你因为外部原因导致数据错误</span><br><span class="line">函数只是正常的反馈数据错误，此时是合理正确的。不要搞混了！！！</span><br></pre></td></tr></table></figure>
-
-<h5 id="如何避免或者解决带来的问题"><a href="#如何避免或者解决带来的问题" class="headerlink" title="如何避免或者解决带来的问题"></a>如何避免或者解决带来的问题</h5><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">1.一个不可重入函数，只给一个任务来使用</span><br><span class="line">2.减少不可重入函数的定义，选择使用传参来进行判断和数据处理，这样就可以在任务进行判断，而并非</span><br><span class="line">来自函数来进行判断，这样就减少不可预知的错误</span><br><span class="line">3.多个标志位来做标记，比如上面的任务二使用之后，就在一个自定义的系统属性结构体中进行使用</span><br><span class="line">过的痕迹(标志位)标记，然后在不可重入函数中进行判断和处理等，非常繁琐，别用。</span><br></pre></td></tr></table></figure>
-
-<h5 id="结语"><a href="#结语" class="headerlink" title="结语"></a>结语</h5><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">OS是非常考验设计师和工程师的水准的，对于每个资源的调度和处理，每一个流程都要了如指掌才行</span><br><span class="line">，得知道这样得代价是什么，很多时候，其实我们都不会犯错误。因为，这些技术和知识，其实就在</span><br><span class="line">我们的日常习惯中，大家都不会乱用goto，都不会乱使用一些繁琐的东西，大家都知道这样不好。</span><br><span class="line">所以很多时候，没出现错误和bug！</span><br><span class="line">但是出现错误了，记得总结为什么出错了，才能真正有效的进步。不要把习惯当成标准！</span><br><span class="line">你只是一时的好习惯拯救了自己，但是你却是在不经意和没有思考之中调用了自己的固有思维罢了。</span><br></pre></td></tr></table></figure>
-
+<p>由上面函数可以发现，第一次调用的时候是可以正常返回staticData的数据的，但是以后的调用都是返回0，也就是无效的，因为它使用全局的静态变量，所以它是非独立的。假如我任务一是低优先级，此时调用这个函数，但是任务二立刻发生了抢占但是也调用了这个函数，那么任务二是正常调用并得到了数据，此时回到任务一调用就得到了0，是无效的。这个时候，彼此之间发生了干扰，这是不合理的！对系统的稳定和安全有大问题，尤其是项目大的时候。</p>
+<h5 id="如何分辨是否是可重入"><a href="#如何分辨是否是可重入" class="headerlink" title="如何分辨是否是可重入"></a>如何分辨是否是可重入</h5><p>1.是否调用全局变量，注意了还有类中的static变量也是全局变量<br>2.是否有内部的static变量<br>3.是否发生了跳转 如setjmp和longjmp<br>4.是否有调用了malloc和new的变量<br>5.是否有标准 I&#x2F;O 函数</p>
+<p>note:传参导致的函数返回错误值，这不算不可重入函数，这是你因为外部原因导致数据错误。函数只是正常的反馈数据错误，此时是合理正确的。不要搞混了！！！</p>
+<h5 id="如何避免或者解决带来的问题"><a href="#如何避免或者解决带来的问题" class="headerlink" title="如何避免或者解决带来的问题"></a>如何避免或者解决带来的问题</h5><p>1.一个不可重入函数，只给一个任务来使用<br>2.减少不可重入函数的定义，选择使用传参来进行判断和数据处理，这样就可以在任务进行判断，而并非来自函数来进行判断，这样就减少不可预知的错误<br>3.多个标志位来做标记，比如上面的任务二使用之后，就在一个自定义的系统属性结构体中进行使用过的痕迹(标志位)标记，然后在不可重入函数中进行判断和处理等，非常繁琐，别用。</p>
+<h5 id="结语"><a href="#结语" class="headerlink" title="结语"></a>结语</h5><p>OS是非常考验设计师和工程师的水准的，对于每个资源的调度和处理，每一个流程都要了如指掌才行，得知道这样得代价是什么，很多时候，其实我们都不会犯错误。因为，这些技术和知识，其实就在我们的日常习惯中，大家都不会乱用goto，都不会乱使用一些繁琐的东西，大家都知道这样不好。所以很多时候，没出现错误和bug！但是出现错误了，记得总结为什么出错了，才能真正有效的进步。不要把习惯当成标准！你只是一时的好习惯拯救了自己，但是你却是在不经意和没有思考之中调用了自己的固有思维罢了。</p>
 
       
     </div>
@@ -720,7 +810,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2024-04-06 14:28:49" itemprop="dateModified" datetime="2024-04-06T14:28:49+08:00">2024-04-06</time>
+                <time title="修改时间：2024-05-08 21:11:07" itemprop="dateModified" datetime="2024-05-08T21:11:07+08:00">2024-05-08</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -743,16 +833,11 @@
     <div class="post-body" itemprop="articleBody">
 
       
-          <h5 id="起因"><a href="#起因" class="headerlink" title="起因"></a>起因</h5><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">今天，我的哥们又在上班摸鱼，他发了一些极性码的博客给我，他真的牛逼，都准备搞5G协议栈了，</span><br><span class="line">当然只是看着玩的，学学思路而已，这东西不是一个人可以搞定的，然后他问我，线程和进程怎么区分啊？</span><br><span class="line">我一时间懵了，因为我之前学linux的时候，就是调用api啊，fork thread就完了。</span><br><span class="line">线程最小单位，进程是一个车间啥的，线程共享资源，进程独立资源，脑子就只有这个概念。</span><br><span class="line">我本来想要回答的，它来一个博客，就是关于线程和进程认识。</span><br><span class="line">举个例子，如果是mcu，那么此时就只有一个进程，那么是不是可以认为，控制程序控制块指针就是控制</span><br><span class="line">一个进程呢？如果我们对rtos上系统，是不是就是多任务(线程)了呢？我跟他说了一下观点。我的思路</span><br><span class="line">和观点是比较简单的，这个系统就不是一个人可以实现的！</span><br></pre></td></tr></table></figure>
-
-<h5 id="CPU核心数和线程数"><a href="#CPU核心数和线程数" class="headerlink" title="CPU核心数和线程数"></a>CPU核心数和线程数</h5><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">打开电脑的资源管理器就可以看到几内核，多少逻辑处理器(线程)。还有那些云服务器啥的，也写了参数。</span><br><span class="line">比如: 8核16线程 32核32线程</span><br><span class="line">首先，我们所谓的cpu核心数量，不是这样算的，是一个大cpu里面多个小cpu，每个小cpu有单核，双核，多核。</span><br><span class="line">单核就是同时只能执行一个线程或者进程，双核就是两个，以此类推。</span><br><span class="line">所以此时的核心就是   cpu  		       (核心)</span><br><span class="line">此时的线程就是		 cpu * n *几核心     (线程)</span><br></pre></td></tr></table></figure>
-
-<h5 id="进程和线程"><a href="#进程和线程" class="headerlink" title="进程和线程"></a>进程和线程</h5><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">进程这个概念在mcu中是没有的，就一个单片机，搞个鬼的进程，多任务还差不多。所以，我们就来思考</span><br><span class="line">linux的进程和线程，首先，少不了的结构体，就是进程控制块，内部有id、父id、内部数据、线程列表、</span><br><span class="line">内存大小等。然后就得去找mmu要内存，因为每个进程都是独立的。然后线程列表，共用这个进程中的内存</span><br><span class="line">数据，线程id，线程优先级等。自然这些结构体里面还得有信号处理，还有互斥锁，信号量等东西。</span><br><span class="line">cpu的最小运行单位就是线程，那么进程是怎么处理的呢？</span><br><span class="line">我们要知道每次生成一个进程的时候，一定是有一个主线程，就是进程自身。</span><br><span class="line">所以，cpu哪怕是调用进程，也是运行进程中的线程。我们可以这样认为:</span><br><span class="line">运行一个线程的时候就是裸机。</span><br><span class="line">运行一个进程的时候就是一个rtos。</span><br></pre></td></tr></table></figure>
-
-<h5 id="CPU和系统"><a href="#CPU和系统" class="headerlink" title="CPU和系统"></a>CPU和系统</h5><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">我们学linux的时候，发现线程可以申请非常大，甚至百万千万上亿都是可以的，但是进程是受限制的。</span><br><span class="line">我们通过上面的思考，可以知道因为进程还会申请空间，还会做很多进程通信的配置，所以是非常耗资源的，</span><br><span class="line">加上系统自身还有很多守护进程在，所以，这是进程的申请有限，看配置，而且会越来越卡，因为资源终究有限。</span><br><span class="line">可是我的cpu只有8核16线程啊？再怎么样也比不过系统的进程和线程数啊？</span><br><span class="line">这里就要分清楚了os的并发和硬件cpu的并发不一样。</span><br><span class="line">我们用windows来思考，首先就是bios启动开机，此时就得到了cpu的线程数和核心数，然后告诉系统了，系统</span><br><span class="line">就知道了目前可用的设备和处理器有那些了。它内部的线程和进程就全部添加到列表中，linux里面也有状态，</span><br><span class="line">挂起、运行、暂停、就绪、僵尸、死亡。这些一个个对应着列表，就绪状态的，会被系统调度，然后经过系统的算法和处理，分配cpu线程给到此时的线程和进程，就实现了cpu处理了，所以，本来就不是一一对应的关系。</span><br><span class="line">是类似于时间片轮询的操作来实现一个cpu多个线程和进程来使用。</span><br><span class="line"></span><br><span class="line">我们可以使用python来申请特定的核心来作为进程，就可以发现，cpu是可以被单独用来执行特定目标的，所以，</span><br><span class="line">系统只是经过算法然后就调度到可用的cpu来进行操作了。</span><br><span class="line">我们在linux中，比如编译openwrt，此时就需要使用多线程编译，反正都是生成.o文件，所以，彼此之前不怕干扰，编译就完事了，此时就是linux把可用的cpu丢给编译。我们还可以把进程绑定给一个特定的cpu核心上面，和上面一样的操作就可以实现对核心的操作啦。</span><br><span class="line"></span><br><span class="line">当然对于我这个初学者，我是把它当成多个单片机，只不过中间有很多数据总线，地址总线、控制总线等</span><br></pre></td></tr></table></figure>
-
-<h5 id="结语"><a href="#结语" class="headerlink" title="结语"></a>结语</h5><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">这个博客，是我对于os的内部的原理的初步认识、分析和学习，自然实际中的os，不可能那么简单的啊，就连普通的freertos和rtt都没那么简单的，这个博客，等以后我变强了，再回来修改错误和增添内容哦！</span><br></pre></td></tr></table></figure>
-
+          <h5 id="起因"><a href="#起因" class="headerlink" title="起因"></a>起因</h5><p>​    今天，我的哥们又在上班摸鱼，他发了一些极性码的博客给我，他真的牛逼，都准备搞5G协议栈了，当然只是看着玩的，学学思路而已，这东西不是一个人可以搞定的，然后他问我，线程和进程怎么区分啊？我一时间懵了，因为我之前学linux的时候，就是调用api啊，fork thread就完了。线程最小单位，进程是一个车间啥的，线程共享资源，进程独立资源，脑子就只有这个概念。我本来想要回答的，它来一个博客，就是关于线程和进程认识。举个例子，如果是mcu，那么此时就只有一个进程，那么是不是可以认为，控制程序控制块指针就是控制一个进程呢？如果我们对rtos上系统，是不是就是多任务(线程)了呢？我跟他说了一下观点。我的思路和观点是比较简单的，这个系统就不是一个人可以实现的！</p>
+<h5 id="CPU核心数和线程数"><a href="#CPU核心数和线程数" class="headerlink" title="CPU核心数和线程数"></a>CPU核心数和线程数</h5><p>打开电脑的资源管理器就可以看到几内核，多少逻辑处理器(线程)。还有那些云服务器啥的，也写了参数。<br>比如: 8核16线程 32核32线程<br>首先，我们所谓的cpu核心数量，不是这样算的，是一个大cpu里面多个小cpu，每个小cpu有单核，双核，多核。<br>单核就是同时只能执行一个线程或者进程，双核就是两个，以此类推。<br>所以此时的核心就是   cpu  		       (核心)<br>此时的线程就是		 cpu * n *几核心     (线程)     这里是使用超线程技术哦。</p>
+<h5 id="进程和线程"><a href="#进程和线程" class="headerlink" title="进程和线程"></a>进程和线程</h5><p>进程这个概念在mcu中是没有的，就一个单片机，搞个鬼的进程，多任务还差不多。所以，我们就来思考linux的进程和线程，首先，少不了的结构体，就是进程控制块，内部有id、父id、内部数据、线程列表、内存大小等。然后就得去找mmu要内存，因为每个进程都是独立的。然后线程列表，共用这个进程中的内存数据，线程id，线程优先级等。自然这些结构体里面还得有信号处理，还有互斥锁，信号量等东西。cpu的最小运行单位就是线程，那么进程是怎么处理的呢？<br>我们要知道每次生成一个进程的时候，一定是有一个主线程，就是进程自身。<br>所以，cpu哪怕是调用进程，也是运行进程中的线程。我们可以这样认为:<br>运行一个线程的时候就是裸机。运行一个进程的时候就是一个rtos。</p>
+<h5 id="CPU和系统"><a href="#CPU和系统" class="headerlink" title="CPU和系统"></a>CPU和系统</h5><p>​    我们学linux的时候，发现线程可以申请非常大，甚至百万千万上亿都是可以的，但是进程是受限制的。<br>​    我们通过上面的思考，可以知道因为进程还会申请空间，还会做很多进程通信的配置，所以是非常耗资源的，加上系统自身还有很多守护进程在，所以，这是进程的申请有限，看配置，而且会越来越卡，因为资源终究有限。可是我的cpu只有8核16线程啊？再怎么样也比不过系统的进程和线程数啊？<br>​    这里就要分清楚了os的并发和硬件cpu的并发不一样。<br>​    我们用windows来思考，首先就是bios启动开机，此时就得到了cpu的线程数和核心数，然后告诉系统了，系统就知道了目前可用的设备和处理器有那些了。它内部的线程和进程就全部添加到列表中，linux里面也有状态，挂起、运行、暂停、就绪、僵尸、死亡。这些一个个对应着列表，就绪状态的，会被系统调度，然后经过系统的算法和处理，分配cpu线程给到此时的线程和进程，就实现了cpu处理了，所以，本来就不是一一对应的关系。是类似于时间片轮询的操作来实现一个cpu多个线程和进程来使用。<br>​    我们可以使用python来申请特定的核心来作为进程，就可以发现，cpu是可以被单独用来执行特定目标的，所以，<br>系统只是经过算法然后就调度到可用的cpu来进行操作了。我们在linux中，比如编译openwrt，此时就需要使用多线程编译，反正都是生成.o文件，所以，彼此之前不怕干扰，编译就完事了，此时就是linux把可用的cpu丢给编译。我们还可以把进程绑定给一个特定的cpu核心上面，和上面一样的操作就可以实现对核心的操作啦。当然对于我这个初学者，我是把它当成多个单片机，只不过中间有很多数据总线，地址总线、控制总线等</p>
+<h5 id="结语"><a href="#结语" class="headerlink" title="结语"></a>结语</h5><p>​    这个博客，是我对于os的内部的原理的初步认识、分析和学习，自然实际中的os，不可能那么简单的啊，就连普通的freertos和rtt都没那么简单的，这个博客，等以后我变强了，再回来修改错误和增添内容哦！</p>
 
       
     </div>
@@ -805,7 +890,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2024-04-08 19:59:36" itemprop="dateModified" datetime="2024-04-08T19:59:36+08:00">2024-04-08</time>
+                <time title="修改时间：2024-05-08 21:26:25" itemprop="dateModified" datetime="2024-05-08T21:26:25+08:00">2024-05-08</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -828,16 +913,19 @@
     <div class="post-body" itemprop="articleBody">
 
       
-          <h5 id="起因"><a href="#起因" class="headerlink" title="起因"></a>起因</h5><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">为什么突然开始写这个博客呢，因为上班摸鱼的时候，看到一个国产芯片功能结构图。</span><br><span class="line">里面有啥IPU(AI视觉那种的芯片)、GPIO、USB、flash、I2S等众多功能嘛，我还记得</span><br><span class="line">我刚学嵌入式的时候，看到这个芯片图都是懵的，现在好了一点。里面突然看到一个OTP</span><br><span class="line">，我就想到了OTA，然后去看了一下，不是一个东西啊。这竟然是只能烧录一次的存储空间</span><br><span class="line">One Time Programming，烧录之后就会熔丝，就不能再次更改了。</span><br><span class="line">星宸科技的芯片功能图如下：</span><br></pre></td></tr></table></figure>
-
+          <h5 id="起因"><a href="#起因" class="headerlink" title="起因"></a>起因</h5><p>为什么突然开始写这个博客呢，因为上班摸鱼的时候，看到一个国产芯片功能结构图。里面有啥IPU(AI视觉那种的芯片)、GPIO、USB、flash、I2S等众多功能嘛，我还记得我刚学嵌入式的时候，看到这个芯片图都是懵的，现在好了一点。里面突然看到一个OTP，我就想到了OTA，然后去看了一下，不是一个东西啊。这竟然是只能烧录一次的存储空间One Time Programming，烧录之后就会熔丝，就不能再次更改了。星宸科技的芯片功能图如下：</p>
 <p><a target="_blank" rel="noopener" href="https://cx.comake.online/getNewsCon?key=1703844370799762">芯片方案链接</a></p>
 <p><img src="/../Blogas_images/%E8%8A%AF%E7%89%87%E5%8A%9F%E8%83%BD%E5%9B%BE.png"></p>
-<h5 id="存储空间"><a href="#存储空间" class="headerlink" title="存储空间"></a>存储空间</h5><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">要明白，只有外行才会叫存储空间为内存，内存其实就是ram,这类东西，就是用来跑程序的。</span><br><span class="line">存储空间就是rom，这个是掉电非易丢失。</span><br><span class="line">prom 这个就是只可以烧写一次的rom空间，就是说烧坏了，就没了，这个是好的，防止固件</span><br><span class="line">丢失等奇奇怪怪的情况，前提是代码得对，而且对后还得兼容才行。这个是比较考虑水准的。</span><br><span class="line"></span><br><span class="line">eprom 这个就是在全新的生产工艺，利用那些射线来清空rom中数据，然后再烧录写。这个</span><br><span class="line">是非常耗时耗力的，而且也只能烧写十来次的东西，还得把注意保护不要受光照影响等。</span><br><span class="line"></span><br><span class="line">eeprom 这个就是划时代的东西了，这个就可以多次烧写，甚至对每一个位随心所欲的进行操作</span><br><span class="line">这因为是针对每一个位的读写，所以就会导致效率低下。主要是iic来读写，而且因为是对位进行</span><br><span class="line">操作，所以它的线路设计的非常复杂，导致了价格高，而且体积大不了。一般都是几十kb，百来kb</span><br><span class="line"></span><br><span class="line">因此flash就出来了，flash的特点就是写0可以按位，但是想要重新写的话，就要整页，整块，</span><br><span class="line">整扇区的清空才行，你可以认为他们pnp类型中，有部分全部集中在一个集上，就像全部串联起来</span><br><span class="line">一刷新就全刷新。再mcu中flash主要是依靠spi进行读写的，注意力spi可不止一种。</span><br></pre></td></tr></table></figure>
-
-<h5 id="烧写办法"><a href="#烧写办法" class="headerlink" title="烧写办法"></a>烧写办法</h5><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line">这里要介绍一下boot0 和boot1这两个兄弟了</span><br><span class="line">boot0接地，就会默认是烧写到0x08000000中，最常用。</span><br><span class="line">boot0 = 1 boot1 接地，就会是内部ISP引导程序来操作了，就是从0x1FF00000开始了</span><br><span class="line">boot0 = 1 boot1 = 1，此时就是下载到sram中，就是从0x20000000开始了掉电就丢失</span><br><span class="line">，适合于测试。</span><br><span class="line"></span><br><span class="line">1.ICP(In Circuit Programing)在电路编程</span><br><span class="line">PC上运行的软件（ICP编程工具）通过SWD的接口更新芯片内部APROM、LDROM、数据闪存（DataFlash）</span><br><span class="line">和目标用户配置字（Config）</span><br><span class="line"></span><br><span class="line">2.IAP(In applicating Programing)在应用编程</span><br><span class="line">IAP就是通过软件实现在线电擦除和编程的方法。IAP技术是从结构上将Flash存储器映射为</span><br><span class="line">两个存储体，当运行一个存储体上的用户程序时，可对另一个存储体重新编程，之后将程序</span><br><span class="line">从一个存储体转向另一个。此时就是用到了内部的引导程序了</span><br><span class="line"></span><br><span class="line">3.ISp(In System Programing)在系统编程</span><br><span class="line">目标芯片通过USB/UART/SPI/I²C/RS-485/CAN等周边接口的LDROM引导代码去更新芯片</span><br><span class="line">的内部APROM、数据闪存(DataFlash)和用户配置字(Config)。这个需要用户提前先写入</span><br><span class="line">bootloader程序，这个不是内部程序，而是自己写的引导程序，用来接收来自接口的数据</span><br><span class="line">，自己进行选择升级，或者跳转。</span><br><span class="line"></span><br><span class="line">常见的就是 SWD+J-flash烧录，只要4根线还能debug调试，自然会还有jtag(但是多几根</span><br><span class="line">线),而且debug还没swd好、串口烧录、配合软件比如flyMCU STC51等IAP下载方法。</span><br></pre></td></tr></table></figure>
-
-<h5 id="烧写重启"><a href="#烧写重启" class="headerlink" title="烧写重启"></a>烧写重启</h5><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">如果是keil中的话，是需要勾选自动下载完毕复位的。负责就要我们来手动点击一下复位键才能</span><br><span class="line">运行代码，为什么不能下载好就继续运行代码呢？因为上电了，cpu就开始工作了，但是啥都没有的</span><br><span class="line">cpu是根据arm设定的规则开始运行就是从0开始跑代码，这是微机原理。所以，代码下载好了，</span><br><span class="line">此时运行是老代码，而且也不知道那些空间可以覆盖，cpu跑没边了，硬件配置也对不上，还容易出现</span><br><span class="line">错误，溢出等诸多bug。只有重新上电才会重新加载sram。所以直接复位才是最好的选择。</span><br></pre></td></tr></table></figure>
-
+<h5 id="存储空间"><a href="#存储空间" class="headerlink" title="存储空间"></a>存储空间</h5><p>要明白，只有外行才会叫存储空间为内存，内存其实就是ram,这类东西，就是用来跑程序的。存储空间就是rom，这个是掉电非易丢失。<br>prom 这个就是只可以烧写一次的rom空间，就是说烧坏了，就没了，这个是好的，防止固件丢失等奇奇怪怪的情况，前提是代码得对，而且对后还得兼容才行。这个是比较考虑水准的。</p>
+<p>eprom 这个就是在全新的生产工艺，利用那些射线来清空rom中数据，然后再烧录写。这个是非常耗时耗力的，而且也只能烧写十来次的东西，还得把注意保护不要受光照影响等。</p>
+<p>eeprom 这个就是划时代的东西了，这个就可以多次烧写，甚至对每一个位随心所欲的进行操作。这因为是针对每一个位的读写，所以就会导致效率低下。主要是iic来读写，而且因为是对位进行操作，所以它的线路设计的非常复杂，导致了价格高，而且体积大不了。一般都是几十kb，百来kb</p>
+<p>因此flash就出来了，flash的特点就是写0可以按位，但是想要重新写的话，就要整页，整块，整扇区的清空才行，你可以认为他们pnp类型中，有部分全部集中在一个集上，就像全部串联起来一刷新就全刷新。再mcu中flash主要是依靠spi进行读写的，注意力spi可不止一种。</p>
+<h5 id="烧写办法"><a href="#烧写办法" class="headerlink" title="烧写办法"></a>烧写办法</h5><p>这里要介绍一下boot0 和boot1这两个兄弟了<br>boot0接地，就会默认是烧写到0x08000000中，最常用。<br>boot0 &#x3D; 1 boot1 接地，就会是内部ISP引导程序来操作了，就是从0x1FF00000开始了<br>boot0 &#x3D; 1 boot1 &#x3D; 1，此时就是下载到sram中，就是从0x20000000开始了掉电就丢失，适合于测试。</p>
+<p>1.ICP(In Circuit Programing)在电路编程<br>PC上运行的软件（ICP编程工具）通过SWD的接口更新芯片内部APROM、LDROM、数据闪存（DataFlash）和目标用户配置字（Config）</p>
+<p>2.IAP(In applicating Programing)在应用编程<br>IAP就是通过软件实现在线电擦除和编程的方法。IAP技术是从结构上将Flash存储器映射为两个存储体，当运行一个存储体上的用户程序时，可对另一个存储体重新编程，之后将程序从一个存储体转向另一个。此时就是用到了内部的引导程序了</p>
+<p>3.ISp(In System Programing)在系统编程<br>目标芯片通过USB&#x2F;UART&#x2F;SPI&#x2F;I²C&#x2F;RS-485&#x2F;CAN等周边接口的LDROM引导代码去更新芯片的内部APROM、数据闪存(DataFlash)和用户配置字(Config)。这个需要用户提前先写入bootloader程序，这个不是内部程序，而是自己写的引导程序，用来接收来自接口的数据，自己进行选择升级，或者跳转。</p>
+<p>常见的就是 SWD+J-flash烧录，只要4根线还能debug调试，自然会还有jtag(但是多几根线),而且debug还没swd好、串口烧录、配合软件比如flyMCU STC51等IAP下载方法。</p>
+<h5 id="烧写重启"><a href="#烧写重启" class="headerlink" title="烧写重启"></a>烧写重启</h5><p>如果是keil中的话，是需要勾选自动下载完毕复位的。否则就要我们来手动点击一下复位键才能运行代码，为什么不能下载好就继续运行代码呢？因为上电了，cpu就开始工作了，但是啥都没有的cpu是根据arm设定的架构规则就开始运行就是从0开始跑代码，但是代码有地址映射的，所以是0x08000000为代码地址，也可以实现代码运行行了，这个算是arm的取巧了。所以，代码下载好了，此时运行是老代码，而且也不知道那些空间可以覆盖，cpu跑没边了，硬件配置也对不上，还容易出现错误，溢出等诸多bug。只有重新上电才会重新加载sram。所以直接复位才是最好的选择。</p>
 
       
     </div>
@@ -890,7 +978,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2024-04-06 14:15:16" itemprop="dateModified" datetime="2024-04-06T14:15:16+08:00">2024-04-06</time>
+                <time title="修改时间：2024-05-08 21:00:22" itemprop="dateModified" datetime="2024-05-08T21:00:22+08:00">2024-05-08</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -913,104 +1001,26 @@
     <div class="post-body" itemprop="articleBody">
 
       
-          <h5 id="OS是什么"><a href="#OS是什么" class="headerlink" title="OS是什么"></a>OS是什么</h5><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">OS就是operating system，就是操作系统。系统就是为了资源的充分利用，</span><br><span class="line">这个定义是非常含糊的，因为fat32文件系统，系统内核，电源管理系统，</span><br><span class="line">tcp\ip协议栈等，都可以算是资源的利用和管理，所以，嵌入式系统是需要裁剪</span><br><span class="line">和定制的。</span><br><span class="line">系统没有高低贵贱之分，只是是否合适，是否满足。当然，驾驭更高级的系统，</span><br><span class="line">肯定是要求比驾驭低级的系统需要更多知识点和技术的，需要知道更多原理和技术。</span><br><span class="line">但是两者的本质和使命都是一样，能完成需求的系统就是好系统。</span><br><span class="line">虽然系统本身也会消耗资源，但是这是为了更好的分配和高效使用</span><br></pre></td></tr></table></figure>
-
-<h5 id="OS的属性"><a href="#OS的属性" class="headerlink" title="OS的属性"></a>OS的属性</h5><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">OS有可抢占和非可抢占两种，可抢占就是，可以直接打断当前的任务，</span><br><span class="line">把状态保持到寄存器中去执行优先级高的任务。</span><br><span class="line">这就是抢占式的OS系统，实际上，大部分的RTOS都是抢占式系统，</span><br><span class="line">设置都没有响应优先级，全都是抢占优先级为主。因为实时真的太重要了。</span><br><span class="line"></span><br><span class="line">比如freertos，我们一般都是设为全抢占为主的，但是其实是可以设为响应</span><br><span class="line">的，这也有好处，有些任务确实优先级同级，但是不好中断。</span><br><span class="line"></span><br><span class="line">还有FCFS 先来先服务的OS，就是谁先到就绪列表，下一个就运行谁，这是</span><br><span class="line">有点前后台的味道了。这个就是开触发顺序来进行的任务排序，作为一些特</span><br><span class="line">殊的输入设备来说，可能有用吧。</span><br><span class="line"></span><br><span class="line">短任务有限算法，这个就是提前制定好所有任务的时间消耗，在当前任务运行</span><br><span class="line">完毕之后，在就绪列表中，找到耗时最短的任务有限调用。</span><br><span class="line"></span><br><span class="line">时间片调度，这个是作用于同优先级之间的，但是要注意切换中间也是会消</span><br><span class="line">耗大量资源的，所有想要权衡调度和时间之间的关系，看都运行都公平，</span><br><span class="line">真的值得消耗资源吗？</span><br></pre></td></tr></table></figure>
-
-<h5 id="OS的种类"><a href="#OS的种类" class="headerlink" title="OS的种类"></a>OS的种类</h5><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br></pre></td><td class="code"><pre><span class="line">以下是我个人觉得的难易程度进行分类</span><br><span class="line">1.裸机</span><br><span class="line">一般有MCU SOC 那些的裸机的开发，这些只适合简单，单一线程的工作</span><br><span class="line"></span><br><span class="line">2.RTOS</span><br><span class="line">就连cube都支持直接使用freertos一键生成，还有ucos thread-x那些，</span><br><span class="line">本质还是调用API，是rtos接管了很多寄存器和上下文切换的那些中断操作等</span><br><span class="line"></span><br><span class="line">3.rt-thread</span><br><span class="line">这个就有点难度了，它可以像freertos那样简单的就调用api实现</span><br><span class="line">线程，钩子，空间申请等。但是它有它们没有的，第一个就是BSP，第二个ENV</span><br><span class="line">第三个类linux系统，第四个串口操作</span><br><span class="line">这个BSP还是有点含金量的，很规范，对于移植来说，就是锦上添花的好东西啊。</span><br><span class="line">ENV，这个一下子就让整个编译BSP变得高大上了，还有menucofing呢</span><br><span class="line">类linux驱动开发，因为还有一堆宏操作，就是使用宏来把函数添加到列表中的操作等，</span><br><span class="line">对于没有接触过驱动开发的人来说，甚至没看懂这些宏定义为什么可以把函数添加</span><br><span class="line">进入模块。还有那些文件操作集那些。</span><br><span class="line">不得了，不得了，你使用rtt还能使用命令行操作，就是把上述模块添加之后，</span><br><span class="line">可以在打开特定连接的打印串口，实现串口输入指令来调用模块函数，这真的有操作的</span><br><span class="line"></span><br><span class="line">4.linux 主板OS(电脑主板，识别设备，调度起来)  树莓派</span><br><span class="line">这个难度就非常吓人了，在rtt的基础上面还得学习设备树，字符设备，</span><br><span class="line">平台设备，混杂设备，主设备号，次设备号。而且你会发现一件事，rtt是没人写驱动</span><br><span class="line">因为驱动cube已经生成了，写好kconfig文件就可以了。但是linux不一样了，驱动</span><br><span class="line">得人来写才行得。而且还有应用驱动，这也是rtt没有的。</span><br><span class="line"></span><br><span class="line">5.IOS 安卓 鸿蒙 CUDE(GPU的那个系统)</span><br><span class="line">可没说让你去搞应用开发，是去理解和写驱动那些，不同机型，底层得io，设备啥的</span><br><span class="line">都是不一样的，这个一般都是芯片厂商写的，如果以后进了芯片厂，这些就得要掌握了</span><br><span class="line"></span><br><span class="line">6.windows  Mac  Ubuntu等</span><br><span class="line">这个别想了，多年高强度迭代、一个人不可能掌握，能熟练使用就非常了不起了，而且</span><br><span class="line">还有好多没开源，开源学习成本太高了，回报基本为0.</span><br></pre></td></tr></table></figure>
-
-<h5 id="OS的选择"><a href="#OS的选择" class="headerlink" title="OS的选择"></a>OS的选择</h5><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line">一定要明白一点，OS没有高低贵贱之分，在嵌入式里面没有优越，只有适合，只有满足即可，</span><br><span class="line">一切为了需求，一切够用即可。</span><br><span class="line">MCU不是一定要上系统，难道只有几个功能，还要几个任务相互抢？浪费空间，这个</span><br><span class="line">适合都可以上51了。</span><br><span class="line"></span><br><span class="line">就算是SOC，去看厂商给的代码，大概率都是有一个rtos的demo，为什么？因为不见得</span><br><span class="line">一定要上类linux1或者linux那些系统啊，rtos就够用了啊！有的时候，想要的就是快速的</span><br><span class="line">无条件的实时响应！所以适合简单而好用的小设备，大设备因为太多硬件的，光用rtos很难</span><br><span class="line">进行完美的资源控制和调度了，开发也困难。</span><br><span class="line"></span><br><span class="line">至于那些复杂，多应用的，这个时候就要利用mmu，来给空间进行更多操作，底层全部</span><br><span class="line">丢给系统，这样上层才可以随心所欲实现应用切换，应用下载的功能。虽然mcu也是可以</span><br><span class="line">实现动态加载模组(就是写一个可以控制sram的程序，把app下载到flash，使用的时候</span><br><span class="line">，把代码拷贝到空余的sram空间，这就想手机一样，可以使用空间，可以释放空间，而且</span><br><span class="line">平时不占据sram，sram只有一个sram控制系统),但是，太复杂了，而且引脚躲起来了</span><br><span class="line">，完全就不是开发了，这点厂商也想到了。</span><br><span class="line"></span><br><span class="line">再高级一点的设备就上安卓，鸿蒙了，澎湃OS等了。</span><br><span class="line"></span><br><span class="line">再高级一点就是主机和pc端了啊，上linux，上windows等</span><br><span class="line"></span><br><span class="line">然后就是服务器了，这个不用考虑了，只能是linux系统了，可以Ubuntu，kail等</span><br><span class="line"></span><br><span class="line">note：优先级也是有动静态之分的，一般我们使用的rtos最好都是固定好优先级，不想那种linux高级os</span><br><span class="line">可以动态修改优先级，动态释放和调用资源，因为rtos本身就是为了高效、实时和稳定。功能越复杂，</span><br><span class="line">可能的问题就越多，这是无法避免的</span><br></pre></td></tr></table></figure>
-
-<h5 id="结语"><a href="#结语" class="headerlink" title="结语"></a>结语</h5><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">千万不要神话系统和技术，觉得越高级系统就越神圣，其实不是的，我们一切都是为了需求，</span><br><span class="line">没有任何一个系统是完美的，都是在自己所在领域非常好用，作为嵌入式开发人员，也不要</span><br><span class="line">为此而产生过度的优越感，这样可能会让自己止步不前，从而顾此失彼，看不起其他技术。</span><br><span class="line">这一点就要牢牢铭记，沿用一段文章内容。如下</span><br></pre></td></tr></table></figure>
-
+          <h5 id="OS是什么"><a href="#OS是什么" class="headerlink" title="OS是什么"></a>OS是什么</h5><p>OS就是operating system，就是操作系统。系统就是为了资源的充分利用，这个定义是非常含糊的，因为fat32文件系统，系统内核，电源管理系统，tcp\ip协议栈等，都可以算是资源的利用和管理，所以，嵌入式系统是需要裁剪和定制的。系统没有高低贵贱之分，只是是否合适，是否满足。当然，驾驭更高级的系统，肯定是要求比驾驭低级的系统需要更多知识点和技术的，需要知道更多原理和技术。<br>但是两者的本质和使命都是一样，能完成需求的系统就是好系统。虽然系统本身也会消耗资源，但是这是为了更好的分配和高效使用</p>
+<h5 id="OS的属性"><a href="#OS的属性" class="headerlink" title="OS的属性"></a>OS的属性</h5><p>OS有可抢占和非可抢占两种，可抢占就是，可以直接打断当前的任务，把状态保持到寄存器中去执行优先级高的任务。这就是抢占式的OS系统，实际上，大部分的RTOS都是抢占式系统，设置都没有响应优先级，全都是抢占优先级为主。因为实时真的太重要了。</p>
+<p>比如freertos，我们一般都是设为全抢占为主的，但是其实是可以设为响应的，这也有好处，有些任务确实优先级同级，但是不好中断。</p>
+<p>还有FCFS 先来先服务的OS，就是谁先到就绪列表，下一个就运行谁，这是有点前后台的味道了。这个就是开触发顺序来进行的任务排序，作为一些特殊的输入设备来说，可能有用吧。</p>
+<p>短任务有限算法，这个就是提前制定好所有任务的时间消耗，在当前任务运行完毕之后，在就绪列表中，找到耗时最短的任务有限调用。</p>
+<p>时间片调度，这个是作用于同优先级之间的，但是要注意切换中间也是会消耗大量资源的，所有想要权衡调度和时间之间的关系，看都运行都公平，真的值得消耗资源吗？</p>
+<h5 id="OS的种类"><a href="#OS的种类" class="headerlink" title="OS的种类"></a>OS的种类</h5><p>以下是我个人觉得的难易程度进行分类<br>1.裸机<br>一般有MCU SOC 那些的裸机的开发，这些只适合简单，单一线程的工作</p>
+<p>2.RTOS<br>就连cube都支持直接使用freertos一键生成，还有ucos thread-x那些，本质还是调用API，是rtos接管了很多寄存器和上下文切换的那些中断操作等</p>
+<p>3.rt-thread<br>这个就有点难度了，它可以像freertos那样简单的就调用api实现线程，钩子，空间申请等。但是它有它们没有的，第一个就是BSP，第二个ENV第三个类linux系统，第四个串口操作这个BSP还是有点含金量的，很规范，对于移植来说，就是锦上添花的好东西啊。ENV，这个一下子就让整个编译BSP变得高大上了，还有menucofing呢类linux驱动开发，因为还有一堆宏操作，就是使用宏来把函数添加到列表中的操作等，对于没有接触过驱动开发的人来说，甚至没看懂这些宏定义为什么可以把函数添加进入模块。还有那些文件操作集那些。不得了，不得了，你使用rtt还能使用命令行操作，就是把上述模块添加之后，可以在打开特定连接的打印串口，实现串口输入指令来调用模块函数，这真的有操作的</p>
+<p>4.linux 主板OS(电脑主板，识别设备，调度起来)  树莓派<br>这个难度就非常吓人了，在rtt的基础上面还得学习设备树，字符设备，平台设备，混杂设备，主设备号，次设备号。而且你会发现一件事，rtt是没人写驱动因为驱动cube已经生成了，写好kconfig文件就可以了。但是linux不一样了，驱动得人来写才行得。而且还有应用驱动，这也是rtt没有的。</p>
+<p>5.IOS 安卓 鸿蒙 CUDE(GPU的那个系统)<br>可没说让你去搞应用开发，是去理解和写驱动那些，不同机型，底层得io，设备啥的都是不一样的，这个一般都是芯片厂商写的，如果以后进了芯片厂，这些就得要掌握了</p>
+<p>6.windows  Mac  Ubuntu等<br>这个别想了，多年高强度迭代、一个人不可能掌握，能熟练使用就非常了不起了，而且还有好多没开源，开源学习成本太高了，回报基本为0.</p>
+<h5 id="OS的选择"><a href="#OS的选择" class="headerlink" title="OS的选择"></a>OS的选择</h5><p>一定要明白一点，OS没有高低贵贱之分，在嵌入式里面没有优越，只有适合，只有满足即可，一切为了需求，一切够用即可。<br>MCU不是一定要上系统，难道只有几个功能，还要几个任务相互抢？浪费空间，这个适合都可以上51了。</p>
+<p>就算是SOC，去看厂商给的代码，大概率都是有一个rtos的demo，为什么？因为不见得一定要上类linux1或者linux那些系统啊，rtos就够用了啊！有的时候，想要的就是快速的无条件的实时响应！所以适合简单而好用的小设备，大设备因为太多硬件的，光用rtos很难<br>进行完美的资源控制和调度了，开发也困难。</p>
+<p>至于那些复杂，多应用的，这个时候就要利用mmu，来给空间进行更多操作，底层全部丢给系统，这样上层才可以随心所欲实现应用切换，应用下载的功能。虽然mcu也是可以实现动态加载模组(就是写一个可以控制sram的程序，把app下载到flash，使用的时候<br>，把代码拷贝到空余的sram空间，这就想手机一样，可以使用空间，可以释放空间，而且平时不占据sram，sram只有一个sram控制系统),但是，太复杂了，而且引脚躲起来了，完全就不是开发了，这点厂商也想到了。</p>
+<p>再高级一点的设备就上安卓，鸿蒙了，澎湃OS等了。再高级一点就是主机和pc端了啊，上linux，上windows等</p>
+<p>然后就是服务器了，这个不用考虑了，只能是linux系统了，可以Ubuntu，kail等</p>
+<p>note：优先级也是有动静态之分的，一般我们使用的rtos最好都是固定好优先级，不想那种linux高级os可以动态修改优先级，动态释放和调用资源，因为rtos本身就是为了高效、实时和稳定。功能越复杂，可能的问题就越多，这是无法避免的</p>
+<h5 id="结语"><a href="#结语" class="headerlink" title="结语"></a>结语</h5><p>千万不要神话系统和技术，觉得越高级系统就越神圣，其实不是的，我们一切都是为了需求，没有任何一个系统是完美的，都是在自己所在领域非常好用，作为嵌入式开发人员，也不要为此而产生过度的优越感，这样可能会让自己止步不前，从而顾此失彼，看不起其他技术。这一点就要牢牢铭记，沿用一段文章内容。如下</p>
 <p><img src="/../Blogas_images/%E6%8A%80%E6%9C%AF%E4%B8%8D%E6%98%AF%E9%AB%98%E4%BA%BA%E4%B8%80%E7%AD%89.jpg"></p>
-
-      
-    </div>
-
-    
-    
-    
-
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2024/03/27/github%E7%AE%A1%E7%90%86/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/csm.png">
-      <meta itemprop="name" content="CSM">
-      <meta itemprop="description" content="应用是应用，驱动是驱动！你要是偏要应用干驱动，哥们，你怎么不直接薪资翻倍啊！[🦀]">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="我要成为嵌入式高手[doge]">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2024/03/27/github%E7%AE%A1%E7%90%86/" class="post-title-link" itemprop="url">github管理</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              <time title="创建时间：2024-03-27 20:40:37" itemprop="dateCreated datePublished" datetime="2024-03-27T20:40:37+08:00">2024-03-27</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2024-04-06 14:15:01" itemprop="dateModified" datetime="2024-04-06T14:15:01+08:00">2024-04-06</time>
-              </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Git/" itemprop="url" rel="index"><span itemprop="name">Git</span></a>
-                </span>
-            </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <h5 id="git-管理"><a href="#git-管理" class="headerlink" title="git 管理"></a>git 管理</h5><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">git有啥东西？不就是add、commit、push 、 pull 、</span><br><span class="line">reset 、log 、reflog 、status  、tag、 branch  、checkout....</span><br><span class="line">常用也就是这些了，但是，还有很多其他的操作，这些操作是更加面向团队和管理的</span><br><span class="line">首先，pr，还有分支管理和分支保护，管理员，fork，ssh</span><br></pre></td></tr></table></figure>
-
-<h5 id="git-ssh"><a href="#git-ssh" class="headerlink" title="git ssh"></a>git ssh</h5><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">ssh就是建立一个安全的下载链接罢了，但是如果是下载私有仓库，那还是得进</span><br><span class="line">行github登录才能实现下载，不是说有ssh就可以直接下载了</span><br></pre></td></tr></table></figure>
-
-<h5 id="git-fork"><a href="#git-fork" class="headerlink" title="git fork"></a>git fork</h5><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line">我们经常可以看到github上面好多代码贡献的，比如linux，这个提交量</span><br><span class="line">非常大，而且fork数量也非常多。</span><br><span class="line">fork不等于clone，更不等于zip下载。</span><br><span class="line"></span><br><span class="line">zip下载就是下载一个版本或者当前版本，常见就是Tag进行版本管理，这些是没有.git。</span><br><span class="line"></span><br><span class="line">clone和ssh就是把整个开发的过程的git都下载过来，这个，就是直接把开源库</span><br><span class="line">复制一份到自己的分布式主机上面。此时是无法通过push提交到原仓库的。那为</span><br><span class="line">什么gitee那些又可以拉人，又可以下载和提交呢，那是因为所有clone都是默</span><br><span class="line">认为不可push，只有管理员去修改我的访问和提交权限，我才能提交和修改。</span><br><span class="line"></span><br><span class="line">fork 这个就是不一样了，是自己生成一个仓库副本，就是在github上面直接生</span><br><span class="line">成这个这个仓库，此时，就要切换为一个新分支，然后，正常提交，然后push给</span><br><span class="line">新分支，然后选择pr就可以提交到原仓库中，然后等待原仓库管理员去解决冲突</span><br><span class="line">和选择、审批等。如下操作：</span><br><span class="line">1.首先打开一个项目，然后直接fork，点击创造fork。这样就会在我的账户下面生成一个fork副本。</span><br><span class="line">2.此时可以使用git clone 或者ssh来下载。</span><br><span class="line">3.git remote add upstream https://github.com/original-author/project-name.git</span><br><span class="line">4.新建分支 git checkout -b feature-or-bugfix</span><br><span class="line">5.修改和提交代码</span><br><span class="line">6.推送分支 git push -u origin feature-or-bugfix</span><br><span class="line">7.创建Pull Request (PR)  跟提交分支一样的操作是</span><br><span class="line">8.等待原仓库管理人进行处理</span><br><span class="line"></span><br><span class="line">如果不想要fork，就进入到fork仓库，点击settings中的delete仓库，对，就是删库就好了。</span><br></pre></td></tr></table></figure>
-
-<h5 id="git-branch保护"><a href="#git-branch保护" class="headerlink" title="git branch保护"></a>git branch保护</h5><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">为什么要分支保护啊？我们在看gitee一些项目，可以看到main分支上面有</span><br><span class="line">一把锁，这个时候就是管理员把main分支进行上锁，就是变为可读模式，此时</span><br><span class="line">就是无法修改。使用的是Lock branch这个一般是短期无需修改才会选择这</span><br><span class="line">个状态，这个是管理员随时可以修改得状态。</span><br><span class="line"></span><br><span class="line">一般常用就是Require a pull request before merging，就是只能通</span><br><span class="line">过pr合并来实现main分支的更新，不允许直接push提交，这样就可以让整个</span><br><span class="line">结构和流程更加简洁和方便管理，防止胡乱提交导致版本错误等诸多问题。</span><br><span class="line"></span><br><span class="line">此时还可以Require approvals，这个就是添加审核人，审核人必须发言和评价才能合并。</span><br><span class="line"></span><br><span class="line">使用Do not allow bypassing the above settings就是管理员和</span><br><span class="line">用户一视同仁，这个不建议勾选，因为管理员就是为了快速方便管理分支和</span><br><span class="line">仓库，只要管理员认真点，仔细点就行了，只要分支保护做的好，都是ok的</span><br></pre></td></tr></table></figure>
-
-<h5 id="git-令牌-git-小组"><a href="#git-令牌-git-小组" class="headerlink" title="git 令牌  &amp; git 小组"></a>git 令牌  &amp; git 小组</h5><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line">git 令牌</span><br><span class="line">这个就是把我的私有仓库通过令牌的方式，给与他人使用权限。</span><br><span class="line">这个就是在个人然后点击settings，然后点击Developer settings，</span><br><span class="line">然后选择token，两个都可以new和classic，无脑选择new就行了，然后</span><br><span class="line">就是权限限制读写操作，然后就仓库限制，时间天数限制。然后点击确认就</span><br><span class="line">是生成令牌。使用git 令牌下载只能使用https下载不能使用ssh下载。</span><br><span class="line">下载的时候，直接git clone 仓库，然后写上我的名字，然后就输入这</span><br><span class="line">个生成的token就可以下载，分享啦。</span><br><span class="line"></span><br><span class="line">git 小组</span><br><span class="line">就是拉人到自己的仓库，一起创作</span><br><span class="line">进入仓库，点击settings，然后点击collaborators，添加用户的邮箱</span><br><span class="line">，然后进入即可，然后就是小组啦自然还有那些企业版啥的，我目前还没用</span><br><span class="line">过，我感觉大差不差应该都是这个原理，企业版就是，可以把所有人拉到一</span><br><span class="line">个开发组，然后方便拉近仓库和管理。</span><br><span class="line"></span><br><span class="line">git 小组踢人</span><br><span class="line">就是在collaborators中，点击删除就好了</span><br><span class="line"></span><br><span class="line">git 小组主动退出</span><br><span class="line">点击右上角的头像，点击setting，点击仓库，就可以看到共同工作的仓库，里面有leave按键，然后确认就好了</span><br></pre></td></tr></table></figure>
-
-<h5 id="git总结"><a href="#git总结" class="headerlink" title="git总结"></a>git总结</h5><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">git一句话分布式管理，这个本质就是为了团队，大家一起工作，小公司可能用</span><br><span class="line">不到git，但是为了项目管理，为了整体发展git的重要性非常高。git只是自己</span><br><span class="line">一个人用，那么就是失去了分布式的意义了，这不就是变成了一个同步了吗？没用的!!!</span><br></pre></td></tr></table></figure>
-
 
       
     </div>
@@ -1031,7 +1041,7 @@
 
   
   <nav class="pagination">
-    <a class="extend prev" rel="prev" href="/page/2/"><i class="fa fa-angle-left" aria-label="上一页"></i></a><a class="page-number" href="/">1</a><a class="page-number" href="/page/2/">2</a><span class="page-number current">3</span><a class="page-number" href="/page/4/">4</a><a class="extend next" rel="next" href="/page/4/"><i class="fa fa-angle-right" aria-label="下一页"></i></a>
+    <a class="extend prev" rel="prev" href="/page/2/"><i class="fa fa-angle-left" aria-label="上一页"></i></a><a class="page-number" href="/">1</a><a class="page-number" href="/page/2/">2</a><span class="page-number current">3</span><a class="page-number" href="/page/4/">4</a><a class="page-number" href="/page/5/">5</a><a class="extend next" rel="next" href="/page/4/"><i class="fa fa-angle-right" aria-label="下一页"></i></a>
   </nav>
 
 
@@ -1099,7 +1109,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">40</span>
+          <span class="site-state-item-count">41</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -1112,7 +1122,7 @@
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">22</span>
+        <span class="site-state-item-count">23</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>
@@ -1174,7 +1184,7 @@
 
  <div class="theme-info">
   <div class="powered-by"></div>
-  <span class="post-count">博客全站共33.2k字</span>
+  <span class="post-count">博客全站共35k字</span>
 </div>
 
         

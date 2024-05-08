@@ -22,15 +22,15 @@
     var CONFIG = {"hostname":"example.com","root":"/","scheme":"Pisces","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
   </script>
 
-  <meta name="description" content="学习mcu的时候，就在想这个板子是怎么联网的，但是当时老师没教，而且我当时学的东西太多了，确实没那么精力去深究，毕竟还没用到 MAC地址123MAC，Media Access Control Address的全称叫做媒体访问控制地址。你可以认为就是硬件地址，这个一般都是集成在cpu中的，少部分是外接的。我们都知道要联网肯定要ip，其实关于MAC并没有强制性要求的。但是mcu中有要求的。  联网流程">
+  <meta name="description" content="起因学习mcu的时候，就在想这个板子是怎么联网的，但是当时老师没教，而且我当时学的东西太多了，确实没那么精力去深究，毕竟还没用到 MAC地址MAC，Media Access Control Address的全称叫做媒体访问控制地址。你可以认为就是硬件地址，这个一般都是集成在cpu中的，少部分是外接的。我们都知道要联网肯定要ip，其实关于MAC并没有强制性要求的。但是mcu中有要求的。 联网流程首先">
 <meta property="og:type" content="article">
 <meta property="og:title" content="STM32网络接口">
 <meta property="og:url" content="http://example.com/2024/03/12/STM32%E7%BD%91%E7%BB%9C%E6%8E%A5%E5%8F%A3/index.html">
 <meta property="og:site_name" content="我要成为嵌入式高手[doge]">
-<meta property="og:description" content="学习mcu的时候，就在想这个板子是怎么联网的，但是当时老师没教，而且我当时学的东西太多了，确实没那么精力去深究，毕竟还没用到 MAC地址123MAC，Media Access Control Address的全称叫做媒体访问控制地址。你可以认为就是硬件地址，这个一般都是集成在cpu中的，少部分是外接的。我们都知道要联网肯定要ip，其实关于MAC并没有强制性要求的。但是mcu中有要求的。  联网流程">
+<meta property="og:description" content="起因学习mcu的时候，就在想这个板子是怎么联网的，但是当时老师没教，而且我当时学的东西太多了，确实没那么精力去深究，毕竟还没用到 MAC地址MAC，Media Access Control Address的全称叫做媒体访问控制地址。你可以认为就是硬件地址，这个一般都是集成在cpu中的，少部分是外接的。我们都知道要联网肯定要ip，其实关于MAC并没有强制性要求的。但是mcu中有要求的。 联网流程首先">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2024-03-12T15:57:06.000Z">
-<meta property="article:modified_time" content="2024-04-06T06:15:24.671Z">
+<meta property="article:modified_time" content="2024-05-08T12:54:26.710Z">
 <meta property="article:author" content="CSM">
 <meta property="article:tag" content="RJ45">
 <meta name="twitter:card" content="summary">
@@ -127,7 +127,7 @@
   </li>
         <li class="menu-item menu-item-tags">
 
-    <a href="/tags/" rel="section"><i class="tags fa-fw"></i>标签<span class="badge">22</span></a>
+    <a href="/tags/" rel="section"><i class="tags fa-fw"></i>标签<span class="badge">23</span></a>
 
   </li>
         <li class="menu-item menu-item-categories">
@@ -137,7 +137,7 @@
   </li>
         <li class="menu-item menu-item-archives">
 
-    <a href="/archives/" rel="section"><i class="archive fa-fw"></i>归档<span class="badge">40</span></a>
+    <a href="/archives/" rel="section"><i class="archive fa-fw"></i>归档<span class="badge">41</span></a>
 
   </li>
         <li class="menu-item menu-item-resources">
@@ -208,7 +208,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2024-04-06 14:15:24" itemprop="dateModified" datetime="2024-04-06T14:15:24+08:00">2024-04-06</time>
+                <time title="修改时间：2024-05-08 20:54:26" itemprop="dateModified" datetime="2024-05-08T20:54:26+08:00">2024-05-08</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -231,15 +231,11 @@
     <div class="post-body" itemprop="articleBody">
 
       
-        <p>学习mcu的时候，就在想这个板子是怎么联网的，但是当时老师没教，而且我当时学的东西太多了，确实没那么精力去深究，毕竟还没用到</p>
-<h5 id="MAC地址"><a href="#MAC地址" class="headerlink" title="MAC地址"></a>MAC地址</h5><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">MAC，Media Access Control Address的全称叫做媒体访问控制地址。</span><br><span class="line">你可以认为就是硬件地址，这个一般都是集成在cpu中的，少部分是外接的。</span><br><span class="line">我们都知道要联网肯定要ip，其实关于MAC并没有强制性要求的。但是mcu中有要求的。</span><br></pre></td></tr></table></figure>
-
-<h5 id="联网流程"><a href="#联网流程" class="headerlink" title="联网流程"></a>联网流程</h5><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">首先是CPU，然后就是得到MAC地址，然后通过PHY相当于是芯片外设，然后才可以接上RJ。</span><br><span class="line">RJ有RJ11和RJ45，这两个主要是线的数量和速率不同。</span><br></pre></td></tr></table></figure>
-
-<h5 id="配置方法"><a href="#配置方法" class="headerlink" title="配置方法"></a>配置方法</h5><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">打开cubemx，点击ETH，然后设置网口即可，其他的不用配置了。可以设置接收中断。反正就和串口一样使用就好了，</span><br><span class="line">那些电平变化，数据处理都是硬件搞定了，不需要我去管理了，调用给的回调和API即可完成操作</span><br></pre></td></tr></table></figure>
-
-<h5 id="结语"><a href="#结语" class="headerlink" title="结语"></a>结语</h5><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">使用mcu的硬件功能的时候，很多时候都需要配置给一些额外硬件设备。比如硬件iic，就需要外部上拉电阻；</span><br><span class="line">网口就要两个硬件来实现电平变化；can和485都需要差分电平芯片；就连串口ttl都最好加一个电平稳定芯片为好。</span><br></pre></td></tr></table></figure>
-
+        <h5 id="起因"><a href="#起因" class="headerlink" title="起因"></a>起因</h5><p>学习mcu的时候，就在想这个板子是怎么联网的，但是当时老师没教，而且我当时学的东西太多了，确实没那么精力去深究，毕竟还没用到</p>
+<h5 id="MAC地址"><a href="#MAC地址" class="headerlink" title="MAC地址"></a>MAC地址</h5><p>MAC，Media Access Control Address的全称叫做媒体访问控制地址。你可以认为就是硬件地址，这个一般都是集成在cpu中的，少部分是外接的。我们都知道要联网肯定要ip，其实关于MAC并没有强制性要求的。但是mcu中有要求的。</p>
+<h5 id="联网流程"><a href="#联网流程" class="headerlink" title="联网流程"></a>联网流程</h5><p>首先是CPU，然后就是得到MAC地址，然后通过PHY相当于是芯片外设，然后才可以接上RJ。RJ有RJ11和RJ45，这两个主要是线的数量和速率不同。</p>
+<h5 id="配置方法"><a href="#配置方法" class="headerlink" title="配置方法"></a>配置方法</h5><p>打开cubemx，点击ETH，然后设置网口即可，其他的不用配置了。可以设置接收中断。反正就和串口一样使用就好了，那些电平变化，数据处理都是硬件搞定了，不需要我去管理了，调用给的回调和API即可完成操作</p>
+<h5 id="结语"><a href="#结语" class="headerlink" title="结语"></a>结语</h5><p>使用mcu的硬件功能的时候，很多时候都需要配置给一些额外硬件设备。比如硬件iic，就需要外部上拉电阻；网口就要两个硬件来实现电平变化；can和485都需要差分电平芯片；就连串口ttl都最好加一个电平稳定芯片为好。</p>
 
     </div>
 
@@ -350,7 +346,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-5"><a class="nav-link" href="#MAC%E5%9C%B0%E5%9D%80"><span class="nav-number">1.</span> <span class="nav-text">MAC地址</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E8%81%94%E7%BD%91%E6%B5%81%E7%A8%8B"><span class="nav-number">2.</span> <span class="nav-text">联网流程</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E9%85%8D%E7%BD%AE%E6%96%B9%E6%B3%95"><span class="nav-number">3.</span> <span class="nav-text">配置方法</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E7%BB%93%E8%AF%AD"><span class="nav-number">4.</span> <span class="nav-text">结语</span></a></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-5"><a class="nav-link" href="#%E8%B5%B7%E5%9B%A0"><span class="nav-number">1.</span> <span class="nav-text">起因</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#MAC%E5%9C%B0%E5%9D%80"><span class="nav-number">2.</span> <span class="nav-text">MAC地址</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E8%81%94%E7%BD%91%E6%B5%81%E7%A8%8B"><span class="nav-number">3.</span> <span class="nav-text">联网流程</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E9%85%8D%E7%BD%AE%E6%96%B9%E6%B3%95"><span class="nav-number">4.</span> <span class="nav-text">配置方法</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E7%BB%93%E8%AF%AD"><span class="nav-number">5.</span> <span class="nav-text">结语</span></a></li></ol></div>
       </div>
       <!--/noindex-->
 
@@ -366,7 +362,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">40</span>
+          <span class="site-state-item-count">41</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -379,7 +375,7 @@
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">22</span>
+        <span class="site-state-item-count">23</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>
@@ -441,7 +437,7 @@
 
  <div class="theme-info">
   <div class="powered-by"></div>
-  <span class="post-count">博客全站共33.2k字</span>
+  <span class="post-count">博客全站共35k字</span>
 </div>
 
         

@@ -22,15 +22,15 @@
     var CONFIG = {"hostname":"example.com","root":"/","scheme":"Pisces","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
   </script>
 
-  <meta name="description" content="起因12345678今天，我的哥们又在上班摸鱼，他发了一些极性码的博客给我，他真的牛逼，都准备搞5G协议栈了，当然只是看着玩的，学学思路而已，这东西不是一个人可以搞定的，然后他问我，线程和进程怎么区分啊？我一时间懵了，因为我之前学linux的时候，就是调用api啊，fork thread就完了。线程最小单位，进程是一个车间啥的，线程共享资源，进程独立资源，脑子就只有这个概念。我本来想要回答的，它来">
+  <meta name="description" content="起因​    今天，我的哥们又在上班摸鱼，他发了一些极性码的博客给我，他真的牛逼，都准备搞5G协议栈了，当然只是看着玩的，学学思路而已，这东西不是一个人可以搞定的，然后他问我，线程和进程怎么区分啊？我一时间懵了，因为我之前学linux的时候，就是调用api啊，fork thread就完了。线程最小单位，进程是一个车间啥的，线程共享资源，进程独立资源，脑子就只有这个概念。我本来想要回答的，它来一个博">
 <meta property="og:type" content="article">
 <meta property="og:title" content="线程与进程的初步了解">
 <meta property="og:url" content="http://example.com/2024/04/02/%E7%BA%BF%E7%A8%8B%E4%B8%8E%E8%BF%9B%E7%A8%8B%E7%9A%84%E5%88%9D%E6%AD%A5%E4%BA%86%E8%A7%A3/index.html">
 <meta property="og:site_name" content="我要成为嵌入式高手[doge]">
-<meta property="og:description" content="起因12345678今天，我的哥们又在上班摸鱼，他发了一些极性码的博客给我，他真的牛逼，都准备搞5G协议栈了，当然只是看着玩的，学学思路而已，这东西不是一个人可以搞定的，然后他问我，线程和进程怎么区分啊？我一时间懵了，因为我之前学linux的时候，就是调用api啊，fork thread就完了。线程最小单位，进程是一个车间啥的，线程共享资源，进程独立资源，脑子就只有这个概念。我本来想要回答的，它来">
+<meta property="og:description" content="起因​    今天，我的哥们又在上班摸鱼，他发了一些极性码的博客给我，他真的牛逼，都准备搞5G协议栈了，当然只是看着玩的，学学思路而已，这东西不是一个人可以搞定的，然后他问我，线程和进程怎么区分啊？我一时间懵了，因为我之前学linux的时候，就是调用api啊，fork thread就完了。线程最小单位，进程是一个车间啥的，线程共享资源，进程独立资源，脑子就只有这个概念。我本来想要回答的，它来一个博">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2024-04-02T12:40:33.000Z">
-<meta property="article:modified_time" content="2024-04-06T06:28:49.948Z">
+<meta property="article:modified_time" content="2024-05-08T13:11:07.442Z">
 <meta property="article:author" content="CSM">
 <meta property="article:tag" content="并发">
 <meta name="twitter:card" content="summary">
@@ -127,7 +127,7 @@
   </li>
         <li class="menu-item menu-item-tags">
 
-    <a href="/tags/" rel="section"><i class="tags fa-fw"></i>标签<span class="badge">22</span></a>
+    <a href="/tags/" rel="section"><i class="tags fa-fw"></i>标签<span class="badge">23</span></a>
 
   </li>
         <li class="menu-item menu-item-categories">
@@ -137,7 +137,7 @@
   </li>
         <li class="menu-item menu-item-archives">
 
-    <a href="/archives/" rel="section"><i class="archive fa-fw"></i>归档<span class="badge">40</span></a>
+    <a href="/archives/" rel="section"><i class="archive fa-fw"></i>归档<span class="badge">41</span></a>
 
   </li>
         <li class="menu-item menu-item-resources">
@@ -208,7 +208,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2024-04-06 14:28:49" itemprop="dateModified" datetime="2024-04-06T14:28:49+08:00">2024-04-06</time>
+                <time title="修改时间：2024-05-08 21:11:07" itemprop="dateModified" datetime="2024-05-08T21:11:07+08:00">2024-05-08</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -231,16 +231,11 @@
     <div class="post-body" itemprop="articleBody">
 
       
-        <h5 id="起因"><a href="#起因" class="headerlink" title="起因"></a>起因</h5><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">今天，我的哥们又在上班摸鱼，他发了一些极性码的博客给我，他真的牛逼，都准备搞5G协议栈了，</span><br><span class="line">当然只是看着玩的，学学思路而已，这东西不是一个人可以搞定的，然后他问我，线程和进程怎么区分啊？</span><br><span class="line">我一时间懵了，因为我之前学linux的时候，就是调用api啊，fork thread就完了。</span><br><span class="line">线程最小单位，进程是一个车间啥的，线程共享资源，进程独立资源，脑子就只有这个概念。</span><br><span class="line">我本来想要回答的，它来一个博客，就是关于线程和进程认识。</span><br><span class="line">举个例子，如果是mcu，那么此时就只有一个进程，那么是不是可以认为，控制程序控制块指针就是控制</span><br><span class="line">一个进程呢？如果我们对rtos上系统，是不是就是多任务(线程)了呢？我跟他说了一下观点。我的思路</span><br><span class="line">和观点是比较简单的，这个系统就不是一个人可以实现的！</span><br></pre></td></tr></table></figure>
-
-<h5 id="CPU核心数和线程数"><a href="#CPU核心数和线程数" class="headerlink" title="CPU核心数和线程数"></a>CPU核心数和线程数</h5><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">打开电脑的资源管理器就可以看到几内核，多少逻辑处理器(线程)。还有那些云服务器啥的，也写了参数。</span><br><span class="line">比如: 8核16线程 32核32线程</span><br><span class="line">首先，我们所谓的cpu核心数量，不是这样算的，是一个大cpu里面多个小cpu，每个小cpu有单核，双核，多核。</span><br><span class="line">单核就是同时只能执行一个线程或者进程，双核就是两个，以此类推。</span><br><span class="line">所以此时的核心就是   cpu  		       (核心)</span><br><span class="line">此时的线程就是		 cpu * n *几核心     (线程)</span><br></pre></td></tr></table></figure>
-
-<h5 id="进程和线程"><a href="#进程和线程" class="headerlink" title="进程和线程"></a>进程和线程</h5><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">进程这个概念在mcu中是没有的，就一个单片机，搞个鬼的进程，多任务还差不多。所以，我们就来思考</span><br><span class="line">linux的进程和线程，首先，少不了的结构体，就是进程控制块，内部有id、父id、内部数据、线程列表、</span><br><span class="line">内存大小等。然后就得去找mmu要内存，因为每个进程都是独立的。然后线程列表，共用这个进程中的内存</span><br><span class="line">数据，线程id，线程优先级等。自然这些结构体里面还得有信号处理，还有互斥锁，信号量等东西。</span><br><span class="line">cpu的最小运行单位就是线程，那么进程是怎么处理的呢？</span><br><span class="line">我们要知道每次生成一个进程的时候，一定是有一个主线程，就是进程自身。</span><br><span class="line">所以，cpu哪怕是调用进程，也是运行进程中的线程。我们可以这样认为:</span><br><span class="line">运行一个线程的时候就是裸机。</span><br><span class="line">运行一个进程的时候就是一个rtos。</span><br></pre></td></tr></table></figure>
-
-<h5 id="CPU和系统"><a href="#CPU和系统" class="headerlink" title="CPU和系统"></a>CPU和系统</h5><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">我们学linux的时候，发现线程可以申请非常大，甚至百万千万上亿都是可以的，但是进程是受限制的。</span><br><span class="line">我们通过上面的思考，可以知道因为进程还会申请空间，还会做很多进程通信的配置，所以是非常耗资源的，</span><br><span class="line">加上系统自身还有很多守护进程在，所以，这是进程的申请有限，看配置，而且会越来越卡，因为资源终究有限。</span><br><span class="line">可是我的cpu只有8核16线程啊？再怎么样也比不过系统的进程和线程数啊？</span><br><span class="line">这里就要分清楚了os的并发和硬件cpu的并发不一样。</span><br><span class="line">我们用windows来思考，首先就是bios启动开机，此时就得到了cpu的线程数和核心数，然后告诉系统了，系统</span><br><span class="line">就知道了目前可用的设备和处理器有那些了。它内部的线程和进程就全部添加到列表中，linux里面也有状态，</span><br><span class="line">挂起、运行、暂停、就绪、僵尸、死亡。这些一个个对应着列表，就绪状态的，会被系统调度，然后经过系统的算法和处理，分配cpu线程给到此时的线程和进程，就实现了cpu处理了，所以，本来就不是一一对应的关系。</span><br><span class="line">是类似于时间片轮询的操作来实现一个cpu多个线程和进程来使用。</span><br><span class="line"></span><br><span class="line">我们可以使用python来申请特定的核心来作为进程，就可以发现，cpu是可以被单独用来执行特定目标的，所以，</span><br><span class="line">系统只是经过算法然后就调度到可用的cpu来进行操作了。</span><br><span class="line">我们在linux中，比如编译openwrt，此时就需要使用多线程编译，反正都是生成.o文件，所以，彼此之前不怕干扰，编译就完事了，此时就是linux把可用的cpu丢给编译。我们还可以把进程绑定给一个特定的cpu核心上面，和上面一样的操作就可以实现对核心的操作啦。</span><br><span class="line"></span><br><span class="line">当然对于我这个初学者，我是把它当成多个单片机，只不过中间有很多数据总线，地址总线、控制总线等</span><br></pre></td></tr></table></figure>
-
-<h5 id="结语"><a href="#结语" class="headerlink" title="结语"></a>结语</h5><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">这个博客，是我对于os的内部的原理的初步认识、分析和学习，自然实际中的os，不可能那么简单的啊，就连普通的freertos和rtt都没那么简单的，这个博客，等以后我变强了，再回来修改错误和增添内容哦！</span><br></pre></td></tr></table></figure>
-
+        <h5 id="起因"><a href="#起因" class="headerlink" title="起因"></a>起因</h5><p>​    今天，我的哥们又在上班摸鱼，他发了一些极性码的博客给我，他真的牛逼，都准备搞5G协议栈了，当然只是看着玩的，学学思路而已，这东西不是一个人可以搞定的，然后他问我，线程和进程怎么区分啊？我一时间懵了，因为我之前学linux的时候，就是调用api啊，fork thread就完了。线程最小单位，进程是一个车间啥的，线程共享资源，进程独立资源，脑子就只有这个概念。我本来想要回答的，它来一个博客，就是关于线程和进程认识。举个例子，如果是mcu，那么此时就只有一个进程，那么是不是可以认为，控制程序控制块指针就是控制一个进程呢？如果我们对rtos上系统，是不是就是多任务(线程)了呢？我跟他说了一下观点。我的思路和观点是比较简单的，这个系统就不是一个人可以实现的！</p>
+<h5 id="CPU核心数和线程数"><a href="#CPU核心数和线程数" class="headerlink" title="CPU核心数和线程数"></a>CPU核心数和线程数</h5><p>打开电脑的资源管理器就可以看到几内核，多少逻辑处理器(线程)。还有那些云服务器啥的，也写了参数。<br>比如: 8核16线程 32核32线程<br>首先，我们所谓的cpu核心数量，不是这样算的，是一个大cpu里面多个小cpu，每个小cpu有单核，双核，多核。<br>单核就是同时只能执行一个线程或者进程，双核就是两个，以此类推。<br>所以此时的核心就是   cpu  		       (核心)<br>此时的线程就是		 cpu * n *几核心     (线程)     这里是使用超线程技术哦。</p>
+<h5 id="进程和线程"><a href="#进程和线程" class="headerlink" title="进程和线程"></a>进程和线程</h5><p>进程这个概念在mcu中是没有的，就一个单片机，搞个鬼的进程，多任务还差不多。所以，我们就来思考linux的进程和线程，首先，少不了的结构体，就是进程控制块，内部有id、父id、内部数据、线程列表、内存大小等。然后就得去找mmu要内存，因为每个进程都是独立的。然后线程列表，共用这个进程中的内存数据，线程id，线程优先级等。自然这些结构体里面还得有信号处理，还有互斥锁，信号量等东西。cpu的最小运行单位就是线程，那么进程是怎么处理的呢？<br>我们要知道每次生成一个进程的时候，一定是有一个主线程，就是进程自身。<br>所以，cpu哪怕是调用进程，也是运行进程中的线程。我们可以这样认为:<br>运行一个线程的时候就是裸机。运行一个进程的时候就是一个rtos。</p>
+<h5 id="CPU和系统"><a href="#CPU和系统" class="headerlink" title="CPU和系统"></a>CPU和系统</h5><p>​    我们学linux的时候，发现线程可以申请非常大，甚至百万千万上亿都是可以的，但是进程是受限制的。<br>​    我们通过上面的思考，可以知道因为进程还会申请空间，还会做很多进程通信的配置，所以是非常耗资源的，加上系统自身还有很多守护进程在，所以，这是进程的申请有限，看配置，而且会越来越卡，因为资源终究有限。可是我的cpu只有8核16线程啊？再怎么样也比不过系统的进程和线程数啊？<br>​    这里就要分清楚了os的并发和硬件cpu的并发不一样。<br>​    我们用windows来思考，首先就是bios启动开机，此时就得到了cpu的线程数和核心数，然后告诉系统了，系统就知道了目前可用的设备和处理器有那些了。它内部的线程和进程就全部添加到列表中，linux里面也有状态，挂起、运行、暂停、就绪、僵尸、死亡。这些一个个对应着列表，就绪状态的，会被系统调度，然后经过系统的算法和处理，分配cpu线程给到此时的线程和进程，就实现了cpu处理了，所以，本来就不是一一对应的关系。是类似于时间片轮询的操作来实现一个cpu多个线程和进程来使用。<br>​    我们可以使用python来申请特定的核心来作为进程，就可以发现，cpu是可以被单独用来执行特定目标的，所以，<br>系统只是经过算法然后就调度到可用的cpu来进行操作了。我们在linux中，比如编译openwrt，此时就需要使用多线程编译，反正都是生成.o文件，所以，彼此之前不怕干扰，编译就完事了，此时就是linux把可用的cpu丢给编译。我们还可以把进程绑定给一个特定的cpu核心上面，和上面一样的操作就可以实现对核心的操作啦。当然对于我这个初学者，我是把它当成多个单片机，只不过中间有很多数据总线，地址总线、控制总线等</p>
+<h5 id="结语"><a href="#结语" class="headerlink" title="结语"></a>结语</h5><p>​    这个博客，是我对于os的内部的原理的初步认识、分析和学习，自然实际中的os，不可能那么简单的啊，就连普通的freertos和rtt都没那么简单的，这个博客，等以后我变强了，再回来修改错误和增添内容哦！</p>
 
     </div>
 
@@ -367,7 +362,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">40</span>
+          <span class="site-state-item-count">41</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -380,7 +375,7 @@
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">22</span>
+        <span class="site-state-item-count">23</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>
@@ -442,7 +437,7 @@
 
  <div class="theme-info">
   <div class="powered-by"></div>
-  <span class="post-count">博客全站共33.2k字</span>
+  <span class="post-count">博客全站共35k字</span>
 </div>
 
         
