@@ -134,7 +134,7 @@
   </li>
         <li class="menu-item menu-item-archives">
 
-    <a href="/archives/" rel="section"><i class="archive fa-fw"></i>归档<span class="badge">41</span></a>
+    <a href="/archives/" rel="section"><i class="archive fa-fw"></i>归档<span class="badge">46</span></a>
 
   </li>
         <li class="menu-item menu-item-resources">
@@ -170,6 +170,442 @@
 
           <div class="content index posts-expand">
             
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2024/03/12/STM32%E7%BD%91%E7%BB%9C%E6%8E%A5%E5%8F%A3/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/csm.png">
+      <meta itemprop="name" content="CSM">
+      <meta itemprop="description" content="应用是应用，驱动是驱动！你要是偏要应用干驱动，哥们，你怎么不直接薪资翻倍啊！[🦀]">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="我要成为嵌入式高手[doge]">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2024/03/12/STM32%E7%BD%91%E7%BB%9C%E6%8E%A5%E5%8F%A3/" class="post-title-link" itemprop="url">STM32网络接口</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2024-03-12 23:57:06" itemprop="dateCreated datePublished" datetime="2024-03-12T23:57:06+08:00">2024-03-12</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2024-05-28 23:29:53" itemprop="dateModified" datetime="2024-05-28T23:29:53+08:00">2024-05-28</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/MCU/" itemprop="url" rel="index"><span itemprop="name">MCU</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h5 id="起因"><a href="#起因" class="headerlink" title="起因"></a>起因</h5><p>学习mcu的时候，就在想这个板子是怎么联网的，但是当时老师没教，而且我当时学的东西太多了，确实没那么精力去深究，毕竟还没用到</p>
+<h5 id="MAC地址"><a href="#MAC地址" class="headerlink" title="MAC地址"></a>MAC地址</h5><p>MAC，Media Access Control Address的全称叫做媒体访问控制地址。你可以认为就是硬件地址，这个一般都是集成在cpu中的，少部分是外接的。我们都知道要联网肯定要ip，其实关于MAC并没有强制性要求的。但是mcu中有要求的。</p>
+<h5 id="联网流程"><a href="#联网流程" class="headerlink" title="联网流程"></a>联网流程</h5><p>首先是CPU，然后就是得到MAC地址，然后通过PHY相当于是芯片外设，然后才可以接上RJ。RJ有RJ11和RJ45，这两个主要是线的数量和速率不同。</p>
+<h5 id="配置方法"><a href="#配置方法" class="headerlink" title="配置方法"></a>配置方法</h5><p>打开cubemx，点击ETH，然后设置网口即可，其他的不用配置了。可以设置接收中断。反正就和串口一样使用就好了，那些电平变化，数据处理都是硬件搞定了，不需要我去管理了，调用给的回调和API即可完成操作</p>
+<h5 id="其他方法"><a href="#其他方法" class="headerlink" title="其他方法"></a>其他方法</h5><p>还可以使用qspi来实现联网，这个是什么操作呢？其实看看usb拓展坞上面的网口转usb就知道，其实网口是可以通过ic进行转换的，只要通讯速度跟得上，所以就可以使用并行的usb和spi进行转换操作。</p>
+<p><a target="_blank" rel="noopener" href="https://doc.embedfire.com/module/module_tutorial/zh/latest/Module_Manual/spi_class/w5500.html">https://doc.embedfire.com/module/module_tutorial/zh/latest/Module_Manual/spi_class/w5500.html</a><br>别人写好了驱动，进行引脚修改为了对应的spi调用收发函数，状态判断就可以了。初始化肯定也得有哦。ping成功之后，就可以get去访问了，自然mqtt那些也是可以用的。此时就不用主控去配置网络接口通过spi就能联网。</p>
+<h5 id="结语"><a href="#结语" class="headerlink" title="结语"></a>结语</h5><p>使用mcu的硬件功能的时候，很多时候都需要配置给一些额外硬件设备。比如硬件iic，就需要外部上拉电阻；网口就要两个硬件来实现电平变化；can和485都需要差分电平芯片；就连串口ttl都最好加一个电平稳定芯片为好。</p>
+
+      
+    </div>
+
+    
+    
+    
+
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2024/03/06/RTT-%E4%BB%8EMCU%E5%88%B0linux%E9%A9%B1%E5%8A%A8%E7%9A%84%E5%85%A5%E9%97%A8%E6%8D%B7%E5%BE%84/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/csm.png">
+      <meta itemprop="name" content="CSM">
+      <meta itemprop="description" content="应用是应用，驱动是驱动！你要是偏要应用干驱动，哥们，你怎么不直接薪资翻倍啊！[🦀]">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="我要成为嵌入式高手[doge]">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2024/03/06/RTT-%E4%BB%8EMCU%E5%88%B0linux%E9%A9%B1%E5%8A%A8%E7%9A%84%E5%85%A5%E9%97%A8%E6%8D%B7%E5%BE%84/" class="post-title-link" itemprop="url">RTT 从MCU到linux驱动的入门捷径</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2024-03-06 00:08:34" itemprop="dateCreated datePublished" datetime="2024-03-06T00:08:34+08:00">2024-03-06</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2024-05-08 20:56:52" itemprop="dateModified" datetime="2024-05-08T20:56:52+08:00">2024-05-08</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/OS/" itemprop="url" rel="index"><span itemprop="name">OS</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <p>今天，分享一些快速入门linux驱动的路子。</p>
+<h5 id="起因"><a href="#起因" class="headerlink" title="起因"></a>起因</h5><p>今天上班摸鱼看linux内核，感觉一下子就醒悟了，一下子就通透了，脑子里面终于有一种OS的感觉，资源的分配啊，线程管理，进程管理，内存管理的思路了。</p>
+<h5 id="OS"><a href="#OS" class="headerlink" title="OS"></a>OS</h5><p>要知道OS是分等级的<br>1&gt;.微内核    	鸿蒙  QNX、Minix<br>2&gt;.宏内核		linux  windows<br>3&gt;.混合内核  	windows  XNU内核<br>4&gt;.rtos		rt-thread  freertos   ucos<br>5&gt;.裸坤</p>
+<p>而且rtos也是有级别的<br>POSIX 的RTOS标准<br>PSE51, PSE52, PSE53, PSE54 共四个级别；<br>Minimal Real-time System Profile IEEE Std 1003.13 PSE51，基础 RTOS<br>Real-time Controller Profile IEEE Std 1003.13 PSE52，带有简单的文件系统…等<br>Dedicated Real-time Profile IEEE Std 1003.13 PSE53，拥有网络功能…等<br>Multi-Purpose Real-time Profile IEEE Std 1003.13 PSE54，完整的文件系统，带有 Shell 组件…等</p>
+<p>1.最简单就是裸机编程了，就是顺序循环判断走下去就完事了。</p>
+<p>2.然后就是freeRTOS和ucos了，这个就上一个台阶的难度，但是就是几个api用来用去，规划好每个任务的优先级和工作时间，利用好空闲任务，利用好内存资源，多线程就完事了</p>
+<p>3.就是有点难度了，我这边建议学rtt了，因为rtt是仿照linux的，nano版本和标准版本是没有设备树这东西。首先呢，纯应用开发的话，和上面的rtos是差不多的。但是rtt有一个特殊的操作，就是命令行操作。没听错就是命令行，这个其实是uart串口，而且这些命令行没有linux那些的自带信号，比如CTRL+C CTRL+Z可能无法打断，需要手动添加接受结束才行，而且也是拥有驱动开发操作的。</p>
+<p>4.linux了，这个就是在上面的基础上面多了一个设备树的东西和平台开发，其他的真差不多了，rtt也是有kconfig和menuconfig的。</p>
+<p>5.后面那些就非常复杂了，其实学会linux，如果能够如火纯情，天下无敌</p>
+<h5 id="RTT的驱动开发和BSP"><a href="#RTT的驱动开发和BSP" class="headerlink" title="RTT的驱动开发和BSP"></a>RTT的驱动开发和BSP</h5><p>rtt标准和nano版本没有设备树，所以，所有功能实现都要依赖BSP，只有正确的驱动开发加上Kconfig，才能搞定BSP。搞stm32开发的时候一般是结合stm32Cube进行的开发，所以，实际上难的东西都没了，就是把那些gpio的复用功能再用init、open、write、read、control、callback、 close这几个函数进行封装。就是类似于linux的file_operations一样。但是这一步，你并没干啥，为什么这么说呢？因为代码是cube生成的，很多时候只要按照官网给的默认配置，进行cube生成代码，rtt就能进行编译，然后自动链接上去，就是rtt没有给你写这些驱动，他们自己以cube为模板进行驱动设计。只需要做的就是find设备，open init 调用那几个api即可，非常人性化。做BSP的就比较麻烦，大家得去gitee上面把rtt下载下来，里面就有一个BSP代码，然后跟着官方的教程走一遍就可以了，这里就不多赘述了。</p>
+<p>这上面是硬件驱动，就是很底层基础，但明显不是我们想要的。比如我想要一个独立的led自定义驱动功能。首先，思路，使用了led，那么肯定就是占用一个gpio，那么就要产生依赖和绑定就是menuconfig中一定要有绑定关系。就需要在kconfig中设置一下关系。然后就是编写驱动程序，首先就申请设备，操作集，添加注册。使用的时候，就是find，open ，close，control就够了。编写一个驱动程序即可，使用时候遵循驱动指定的cmd指令就可以实现了。</p>
+<p>一般使用rtt都是mcu版本，而且单核为主，多核也有，但是目前是支持多核同构。如果是异构的话，那么可以考虑使用freertos的方案就支持异构多核。如果是smart版本的话，其实就是和linux基本无异了，需要自己编写设备树，需要自己编写驱动代码。今天2024-04-10去到深圳参加了rt的线下会。主要就是为了解决异构问题还有linux与rtos之间的组合，就是大核是linux，小核心通过协议去接收来自大核心的任务和指令，就是dma那种操作。</p>
+<p>驱动很多时候都是不需要做的，一般都是做了适配，就算添加，也只是添加一些硬件功能就ok了，也就是cube生成，kconfig修改就可以了。如果说新的国产平台rtt没有支持那么就难搞了，所有驱动和底层都要自己一个一个添加哦。rtt可以实现其他驱动，不过，需要根据范例进行模仿。</p>
+<h5 id="结语"><a href="#结语" class="headerlink" title="结语"></a>结语</h5><p>加油兄弟们，千万不要呆在自己的舒适区中。不要自我感动和欺骗了。这样只是在加速淘汰自己，他人的堕落，正是推动你向成功的人前进的动力。</p>
+
+      
+    </div>
+
+    
+    
+    
+
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2024/03/05/cpp%E4%B8%AD%E7%9A%84const%E4%B8%80%E4%BA%9B%E7%94%A8%E6%B3%95/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/csm.png">
+      <meta itemprop="name" content="CSM">
+      <meta itemprop="description" content="应用是应用，驱动是驱动！你要是偏要应用干驱动，哥们，你怎么不直接薪资翻倍啊！[🦀]">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="我要成为嵌入式高手[doge]">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2024/03/05/cpp%E4%B8%AD%E7%9A%84const%E4%B8%80%E4%BA%9B%E7%94%A8%E6%B3%95/" class="post-title-link" itemprop="url">cpp中的const一些用法</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2024-03-05 23:43:03" itemprop="dateCreated datePublished" datetime="2024-03-05T23:43:03+08:00">2024-03-05</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2024-05-08 21:07:37" itemprop="dateModified" datetime="2024-05-08T21:07:37+08:00">2024-05-08</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/CPP-C/" itemprop="url" rel="index"><span itemprop="name">CPP/C</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h4 id="起因"><a href="#起因" class="headerlink" title="起因"></a>起因</h4><p>   今天在菜鸟编程中复习cpp的时候，看到了异常处理。就是try catch throw 三兄弟。python中就是try except else finally raise<br>两者是很相似的。中间一个个代码如下面所示</p>
+<h5 id="异常处理"><a href="#异常处理" class="headerlink" title="异常处理"></a>异常处理</h5><p>就是try尝试运行，错误就到catch，catch中进行错误捕捉。还有一个就是throw，这个就是运行的时候，直接抛出错误这个就像人为中断错误，毕竟catch捕捉的东西有限。一旦执行throw就会立刻停止程序。</p>
+<h5 id="Const"><a href="#Const" class="headerlink" title="Const"></a>Const</h5><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;exception&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> std;</span><br><span class="line"> </span><br><span class="line"><span class="keyword">struct</span> <span class="title class_">MyException</span> : <span class="keyword">public</span> exception</span><br><span class="line">&#123;</span><br><span class="line">  <span class="function"><span class="type">const</span> <span class="type">char</span> * <span class="title">what</span> <span class="params">()</span> <span class="type">const</span> <span class="title">throw</span> <span class="params">()</span></span></span><br><span class="line"><span class="function">  </span>&#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="string">&quot;C++ Exception&quot;</span>;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;;</span><br><span class="line"> </span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">  <span class="keyword">try</span></span><br><span class="line">  &#123;</span><br><span class="line">    <span class="keyword">throw</span> <span class="built_in">MyException</span>();</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="built_in">catch</span>(MyException&amp; e)</span><br><span class="line">  &#123;</span><br><span class="line">    std::cout &lt;&lt; <span class="string">&quot;MyException caught&quot;</span> &lt;&lt; std::endl;</span><br><span class="line">    std::cout &lt;&lt; e.<span class="built_in">what</span>() &lt;&lt; std::endl;</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="built_in">catch</span>(std::exception&amp; e)</span><br><span class="line">  &#123;</span><br><span class="line">    <span class="comment">//其他的错误</span></span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>为什么会出现Const呢？首先，<br>const char* a<br>char* const b<br>const char* const c<br>const void * fun（）<br>这四个都是见怪不怪的用法了。<br>但是我看到一个<br>const void *what（） const throw（）<br>重写throw的功能。如下代码所示</p>
+<h5 id="结果如下"><a href="#结果如下" class="headerlink" title="结果如下"></a>结果如下</h5><p>MyException caught<br>C++ Exception</p>
+<h5 id="非常有意思，为什么函数还可以const呢-？const-char-what-const-throw"><a href="#非常有意思，为什么函数还可以const呢-？const-char-what-const-throw" class="headerlink" title="非常有意思，为什么函数还可以const呢 ？const char * what () const throw ()"></a>非常有意思，为什么函数还可以const呢 ？const char * what () const throw ()</h5><p>我去网上和编译实测了一下，发现确实可以的。但是有限制<br>1.只能是结构体和类里面的成员方法(cpp中类和结构体都可以继承和实现函数的。)<br>2.只能调用同为const的函数<br>3.不能修改类里面的成员对象<br>4.其他函数可以正常调用const修饰了的函数<br>5.只能调用同为const的实例  如  const A a； 此时就能使用a</p>
+<h5 id="结语"><a href="#结语" class="headerlink" title="结语"></a>结语</h5><p>大家感兴趣的话，可以去尝试用一下，我个人感觉，这个东西还是有意义，反正内部被修改可以作用一些，返回当前状态的接口上面如return systemTiem.hour;</p>
+
+      
+    </div>
+
+    
+    
+    
+
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2024/03/03/Typora%E5%85%A5%E9%97%A8/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/csm.png">
+      <meta itemprop="name" content="CSM">
+      <meta itemprop="description" content="应用是应用，驱动是驱动！你要是偏要应用干驱动，哥们，你怎么不直接薪资翻倍啊！[🦀]">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="我要成为嵌入式高手[doge]">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2024/03/03/Typora%E5%85%A5%E9%97%A8/" class="post-title-link" itemprop="url">Typora入门</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2024-03-03 10:14:21" itemprop="dateCreated datePublished" datetime="2024-03-03T10:14:21+08:00">2024-03-03</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2024-05-08 20:53:29" itemprop="dateModified" datetime="2024-05-08T20:53:29+08:00">2024-05-08</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Tools/" itemprop="url" rel="index"><span itemprop="name">Tools</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <p>这个博客的目的是为了让以后的笔记都变成md格式的，txt笔记确实不好。所以记录一下<br>Typora的用法，方便入门</p>
+<h4 id="Typora的使用"><a href="#Typora的使用" class="headerlink" title="Typora的使用"></a>Typora的使用</h4><h5 id="标题"><a href="#标题" class="headerlink" title="标题"></a>标题</h5><p>自然就是先标题，那就是ctrl+数字，1-6从大到小</p>
+<h5 id="代码区域"><a href="#代码区域" class="headerlink" title="代码区域"></a>代码区域</h5><p>输入”&#96;&#96;&#96;”就是了，连按3次，会变成一个代码区域，可以选择语言</p>
+<h5 id="分割线"><a href="#分割线" class="headerlink" title="分割线"></a>分割线</h5><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">&quot;***&quot;</span><br><span class="line">&quot;---&quot;</span><br><span class="line">&quot;___&quot;</span><br><span class="line">***</span><br><span class="line">---</span><br><span class="line">___</span><br></pre></td></tr></table></figure>
+
+<h5 id="网站跳转超链接"><a href="#网站跳转超链接" class="headerlink" title="网站跳转超链接"></a>网站跳转超链接</h5><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="string">&quot;[百度一下](https://www.baidu.com/)&quot;</span>[百度一下](https://www.baidu.com/)</span><br></pre></td></tr></table></figure>
+
+<h5 id="下标"><a href="#下标" class="headerlink" title="下标"></a>下标</h5><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">~</span><br></pre></td></tr></table></figure>
+
+<h5 id="上标"><a href="#上标" class="headerlink" title="上标"></a>上标</h5><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">^</span><br></pre></td></tr></table></figure>
+
+<h5 id="高亮"><a href="#高亮" class="headerlink" title="高亮"></a>高亮</h5><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="string">&quot;==高亮==&quot;</span></span><br><span class="line">==高亮==</span><br></pre></td></tr></table></figure>
+
+<h5 id="插入图片"><a href="#插入图片" class="headerlink" title="插入图片"></a>插入图片</h5><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">直接右键选择图片插入即可</span><br></pre></td></tr></table></figure>
+
+<h5 id="快捷键"><a href="#快捷键" class="headerlink" title="快捷键"></a>快捷键</h5><p><img src="https://pic3.zhimg.com/80/v2-ea45c6141947e07581740058468cefae_1440w.webp" alt="img"></p>
+<p>以上图片来自(<a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/515945667">https://zhuanlan.zhihu.com/p/515945667</a>)</p>
+<h5 id="结语"><a href="#结语" class="headerlink" title="结语"></a>结语</h5><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">掌握以上主要的几个操作就可以加快编写速度了，我也要去奋斗努力去了，有机会再见</span><br></pre></td></tr></table></figure>
+
+
+      
+    </div>
+
+    
+    
+    
+
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2024/03/02/%E6%8C%87%E9%92%88%E5%92%8C%E5%AD%97%E7%AC%A6%E4%B8%B2/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/csm.png">
+      <meta itemprop="name" content="CSM">
+      <meta itemprop="description" content="应用是应用，驱动是驱动！你要是偏要应用干驱动，哥们，你怎么不直接薪资翻倍啊！[🦀]">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="我要成为嵌入式高手[doge]">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2024/03/02/%E6%8C%87%E9%92%88%E5%92%8C%E5%AD%97%E7%AC%A6%E4%B8%B2/" class="post-title-link" itemprop="url">指针和字符串</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2024-03-02 20:01:08" itemprop="dateCreated datePublished" datetime="2024-03-02T20:01:08+08:00">2024-03-02</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2024-05-08 21:09:18" itemprop="dateModified" datetime="2024-05-08T21:09:18+08:00">2024-05-08</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/CPP-C/" itemprop="url" rel="index"><span itemprop="name">CPP/C</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <p>这是一篇关于我刚学习C语言和C++的时候留下来的关于字符串、数组、指针的问题</p>
+<h3 id="起因"><a href="#起因" class="headerlink" title="起因"></a>起因</h3><p>今天在看python的时候看到一个表达式字符串，这个东西呢，非常奇妙。<br>举个例子python里面的字符串有</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">str1 = <span class="string">&quot; csmznbo &quot;</span></span><br><span class="line">str2 = <span class="string">&#x27; csmznbo &#x27;</span></span><br></pre></td></tr></table></figure>
+
+<p>可以看到此时的字符串都是有空格，所以下面的那个单引号的明显不对劲，对了。<br>这个就是shell脚本里面类似的原样输出<br>特殊字符串。如下例子</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#bash</span></span><br><span class="line">str3=<span class="string">&#x27;The time now is `data`&#x27;</span></span><br><span class="line"><span class="comment">#python</span></span><br><span class="line">str3=<span class="string">&#x27;The time now is data&#x27;</span>.replace(<span class="string">&#x27;data&#x27;</span>,<span class="built_in">str</span>(time.localtime(time.time())))</span><br></pre></td></tr></table></figure>
+
+<p>其实python的””格式的字符串也是可以做到输出像上面的东西的，f”{}”也是可以的(format)<br>bash的例子只是引出这种字符串的特殊用法原样输出。下面的替换输出，虽然不是同一<br>功能，但是也能知道遇到这奇奇怪怪的字符串的时候可以联想起来好玩的东西。</p>
+<p>但是这个不是今天的主角。</p>
+<h3 id="填坑"><a href="#填坑" class="headerlink" title="填坑"></a>填坑</h3><p>这个帖子，主要是为了记录我对指针数组还有字符串的理解。首先呢，我之前总是不理解为什么字符串是不可写和不可修改现在知道了，因为它存在静态区中。但是我学了几个月的C语言我才知道了指针不等于字符串，我当时写那些拼接函数，比较函数，裁剪那些，我都是用数组去实现的。但是学的懵懵懂懂的，我甚至都把数组等于字符串，字符串又等于指针去了，因为用起来真的差不多。其实是错误的，虽然汇编是一样当写关于字符串的函数的的时候，传参指针，返回值那些都是天坑。要知道字符串是不能修改的，所以返回值只能是数组和指针，还有就是指针传参就会导致一些问题。比如不知道数据长度等问题。</p>
+<h3 id="关系"><a href="#关系" class="headerlink" title="关系"></a>关系</h3><p>指针就是指针，指向一个地址，自己指针又有一个属于自己的地址。大小看处理器位数数组就是连续地址的元素组成，可以装指针，数组，结构体，函数等等</p>
+<p>C语言中，字符串就是字符串，没别的东西就是全局区的data段中，不可修改的。当时第一次学cpp的时候，把String当成字符串了，当时也好奇为什么字符串又可以删减修改了，其实就是一个容器，不是字符串，你可以认为里面就是一个数组真正的字符串还是””这个，这个还是不能修改即便是cpp。python中字符串也是不能修改的，每一次的修改，都只是新生成一个字符串。并没有修改原本字符串</p>
+<h3 id="结语"><a href="#结语" class="headerlink" title="结语"></a>结语</h3><p>这次就是一个知识的填坑和巩固罢了果然基础不牢地动山摇。很多时候都是简单的东西罢了。拜拜，下次继续</p>
+
+      
+    </div>
+
+    
+    
+    
+
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
       
   
   
@@ -329,7 +765,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">41</span>
+          <span class="site-state-item-count">46</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -404,7 +840,7 @@
 
  <div class="theme-info">
   <div class="powered-by"></div>
-  <span class="post-count">博客全站共35k字</span>
+  <span class="post-count">博客全站共35.4k字</span>
 </div>
 
         
