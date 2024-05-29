@@ -22,23 +22,19 @@
     var CONFIG = {"hostname":"example.com","root":"/","scheme":"Pisces","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
   </script>
 
-  <meta name="description" content="起因今天在写软考题目的时候，我无意间才发现，我居然一直在按位进行寻址，但是实际上都是按照字节取地址的。一下子，我就懵了啊？为什么不是按位取地址？为什么是按照字节？ 历史原因早期的计算机科学太夸张了，早期的计算器五花八门，大家都有各自的方法和规格，当时大家都用字进行寻址，我们知道字不是字节，字的长短是受到系统位数的影响，比如32位的字就是4字节，就是比如IBM 370就是4字节寻址，其他也有一些2字">
+  <meta name="description" content="应用是应用，驱动是驱动！你要是偏要应用干驱动，哥们，你怎么不直接薪资翻倍啊！[🦀]">
 <meta property="og:type" content="article">
-<meta property="og:title" content="”为什么寻址是通过字节寻址“">
-<meta property="og:url" content="http://example.com/2024/04/17/%E2%80%9D%E4%B8%BA%E4%BB%80%E4%B9%88%E5%AF%BB%E5%9D%80%E6%98%AF%E9%80%9A%E8%BF%87%E5%AD%97%E8%8A%82%E5%AF%BB%E5%9D%80%E2%80%9C/index.html">
+<meta property="og:title" content="Linux的USB驱动开发">
+<meta property="og:url" content="http://example.com/2024/05/29/Linux%E7%9A%84USB%E9%A9%B1%E5%8A%A8%E5%BC%80%E5%8F%91/index.html">
 <meta property="og:site_name" content="我要成为嵌入式高手[doge]">
-<meta property="og:description" content="起因今天在写软考题目的时候，我无意间才发现，我居然一直在按位进行寻址，但是实际上都是按照字节取地址的。一下子，我就懵了啊？为什么不是按位取地址？为什么是按照字节？ 历史原因早期的计算机科学太夸张了，早期的计算器五花八门，大家都有各自的方法和规格，当时大家都用字进行寻址，我们知道字不是字节，字的长短是受到系统位数的影响，比如32位的字就是4字节，就是比如IBM 370就是4字节寻址，其他也有一些2字">
+<meta property="og:description" content="应用是应用，驱动是驱动！你要是偏要应用干驱动，哥们，你怎么不直接薪资翻倍啊！[🦀]">
 <meta property="og:locale" content="zh_CN">
-<meta property="og:image" content="http://example.com/Blogas_images/%E5%AD%98%E5%82%A8%E5%8D%95%E5%85%83.webp">
-<meta property="og:image" content="http://example.com/Blogas_images/%E5%AD%97%E7%BA%BF%E7%89%A9%E7%90%86%E7%BB%93%E6%9E%84.jpg">
-<meta property="article:published_time" content="2024-04-17T15:47:23.000Z">
-<meta property="article:modified_time" content="2024-05-08T13:24:15.469Z">
+<meta property="article:published_time" content="2024-05-29T15:54:04.000Z">
+<meta property="article:modified_time" content="2024-05-29T15:54:04.223Z">
 <meta property="article:author" content="CSM">
-<meta property="article:tag" content="OS">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="http://example.com/Blogas_images/%E5%AD%98%E5%82%A8%E5%8D%95%E5%85%83.webp">
 
-<link rel="canonical" href="http://example.com/2024/04/17/%E2%80%9D%E4%B8%BA%E4%BB%80%E4%B9%88%E5%AF%BB%E5%9D%80%E6%98%AF%E9%80%9A%E8%BF%87%E5%AD%97%E8%8A%82%E5%AF%BB%E5%9D%80%E2%80%9C/">
+<link rel="canonical" href="http://example.com/2024/05/29/Linux%E7%9A%84USB%E9%A9%B1%E5%8A%A8%E5%BC%80%E5%8F%91/">
 
 
 <script id="page-configurations">
@@ -51,7 +47,7 @@
   };
 </script>
 
-  <title>”为什么寻址是通过字节寻址“ | 我要成为嵌入式高手[doge]</title>
+  <title>Linux的USB驱动开发 | 我要成为嵌入式高手[doge]</title>
   
 
 
@@ -140,7 +136,7 @@
   </li>
         <li class="menu-item menu-item-archives">
 
-    <a href="/archives/" rel="section"><i class="archive fa-fw"></i>归档<span class="badge">46</span></a>
+    <a href="/archives/" rel="section"><i class="archive fa-fw"></i>归档<span class="badge">53</span></a>
 
   </li>
         <li class="menu-item menu-item-resources">
@@ -181,7 +177,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2024/04/17/%E2%80%9D%E4%B8%BA%E4%BB%80%E4%B9%88%E5%AF%BB%E5%9D%80%E6%98%AF%E9%80%9A%E8%BF%87%E5%AD%97%E8%8A%82%E5%AF%BB%E5%9D%80%E2%80%9C/">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2024/05/29/Linux%E7%9A%84USB%E9%A9%B1%E5%8A%A8%E5%BC%80%E5%8F%91/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/csm.png">
@@ -194,7 +190,7 @@
     </span>
       <header class="post-header">
         <h1 class="post-title" itemprop="name headline">
-          ”为什么寻址是通过字节寻址“
+          Linux的USB驱动开发
         </h1>
 
         <div class="post-meta">
@@ -204,23 +200,7 @@
               </span>
               <span class="post-meta-item-text">发表于</span>
 
-              <time title="创建时间：2024-04-17 23:47:23" itemprop="dateCreated datePublished" datetime="2024-04-17T23:47:23+08:00">2024-04-17</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2024-05-08 21:24:15" itemprop="dateModified" datetime="2024-05-08T21:24:15+08:00">2024-05-08</time>
-              </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/OS/" itemprop="url" rel="index"><span itemprop="name">OS</span></a>
-                </span>
+              <time title="创建时间：2024-05-29 23:54:04" itemprop="dateCreated datePublished" datetime="2024-05-29T23:54:04+08:00">2024-05-29</time>
             </span>
 
           
@@ -234,16 +214,7 @@
     <div class="post-body" itemprop="articleBody">
 
       
-        <h5 id="起因"><a href="#起因" class="headerlink" title="起因"></a>起因</h5><p>今天在写软考题目的时候，我无意间才发现，我居然一直在按位进行寻址，但是实际上都是按照字节取地址的。一下子，我就懵了啊？为什么不是按位取地址？为什么是按照字节？</p>
-<h5 id="历史原因"><a href="#历史原因" class="headerlink" title="历史原因"></a>历史原因</h5><p>早期的计算机科学太夸张了，早期的计算器五花八门，大家都有各自的方法和规格，当时大家都用字进行寻址，我们知道字不是字节，字的长短是受到系统位数的影响，比如32位的字就是4字节，就是比如IBM 370就是4字节寻址，其他也有一些2字节寻址，1字节寻址等，此时内部的指令也会因为这些寻址而变得非常混乱。我个人觉得可能是因为优化了和统一指令，所以，大家一起选择使用了字节。这就是不断探索中总结出来的实践经验吧。</p>
-<h5 id="物理结构"><a href="#物理结构" class="headerlink" title="物理结构"></a>物理结构</h5><p>其实，我们可以思考一下，如果寻址，总是寻找一个地方的高低电平，这其实是对开发来说，是毁灭的打击，这就像寄存器编程一样非常痛苦，如果是按照字节寻址就可以得到一个字符，这个意义就很大了，可以组成一段话，可以组成有用的数据。所以，就设计成了一个字线上面有8个位的物理结构设计，此时，也可以做到对位操作，也可以寻址，一举两得。</p>
-<p>下面就是一个最基础的位的存储单元</p>
-<p><img src="/../Blogas_images/%E5%AD%98%E5%82%A8%E5%8D%95%E5%85%83.webp"></p>
-<p>下面是一个字线的物理结构</p>
-<p><img src="/../Blogas_images/%E5%AD%97%E7%BA%BF%E7%89%A9%E7%90%86%E7%BB%93%E6%9E%84.jpg"></p>
-<h5 id="效率"><a href="#效率" class="headerlink" title="效率"></a>效率</h5><p>这个字节选择，肯定不是简单你说我们大家都来用字节，我就用字节的，肯定是因为开发效率高，目前c语言最小的数据类型就是char，我们也确实感觉char作为最小用来开发非常简单，如果是一个一个01组合，那不得了，人得疯掉。还有就是执行效率问题，比如我们使用结构体对齐的时候，就知道，这是为了牺牲空间换取时间效率，因为cpu需要提前根据数据类型来进行对应的寄存器调度和处理。如果按照位来操作，那cpu对其和操作就变成非常复杂。其实，还可以举例子呗，就拿flash和eeprom，那我们知道flash都是按照页来进行操作，因为它快啊，不论是刷新还是写入都是快的，因为他是一块一块处理，如果都和eeprom对一个一个位进行操作，不但效率低下，而且内部线路设计也非常复杂。</p>
-<h5 id="结语"><a href="#结语" class="headerlink" title="结语"></a>结语</h5><p>综上所述，我个人觉得，选择字节作为寻址和编程基础，是经过大家对设计探索和研究所得到最优解。用过keil都知道，都是会选择开启优化2为主的，这也就是处于一个空间和时间相对平衡的过程，不优化和优化3都是一个比较一般的表现。这也是上古时代，前人用时间和实践一步一步走出来的选择，然后再定下来的结构，确实还是很合理的、很可靠的、很好用的。</p>
-
+        
     </div>
 
     
@@ -268,7 +239,7 @@
   </li>
   <li class="post-copyright-link">
     <strong>本文链接：</strong>
-    <a href="http://example.com/2024/04/17/%E2%80%9D%E4%B8%BA%E4%BB%80%E4%B9%88%E5%AF%BB%E5%9D%80%E6%98%AF%E9%80%9A%E8%BF%87%E5%AD%97%E8%8A%82%E5%AF%BB%E5%9D%80%E2%80%9C/" title="”为什么寻址是通过字节寻址“">http://example.com/2024/04/17/”为什么寻址是通过字节寻址“/</a>
+    <a href="http://example.com/2024/05/29/Linux%E7%9A%84USB%E9%A9%B1%E5%8A%A8%E5%BC%80%E5%8F%91/" title="Linux的USB驱动开发">http://example.com/2024/05/29/Linux的USB驱动开发/</a>
   </li>
   <li class="post-copyright-license">
     <strong>版权声明： </strong>本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-CSM/4.0/" rel="noopener" target="_blank"><i class="fab fa-fw fa-creative-commons"></i>BY-CSM</a> 许可协议。转载请注明出处！
@@ -278,9 +249,6 @@
 
 
       <footer class="post-footer">
-          <div class="post-tags">
-              <a href="/tags/OS/" rel="tag"># OS</a>
-          </div>
 
         
 
@@ -288,12 +256,12 @@
         
     <div class="post-nav">
       <div class="post-nav-item">
-    <a href="/2024/04/11/%E8%99%9A%E6%8B%9F%E6%96%87%E4%BB%B6%E7%B3%BB%E7%BB%9F/" rel="prev" title="虚拟文件系统">
-      <i class="fa fa-chevron-left"></i> 虚拟文件系统
+    <a href="/2024/05/29/STM32USB%E5%BA%94%E7%94%A8%E5%BC%80%E5%8F%91/" rel="prev" title="STM32USB应用开发">
+      <i class="fa fa-chevron-left"></i> STM32USB应用开发
     </a></div>
       <div class="post-nav-item">
-    <a href="/2024/04/17/CPU%E5%B7%A5%E4%BD%9C%E5%8E%9F%E7%90%86%E5%92%8C%E5%86%85%E6%A0%B8/" rel="next" title="CPU工作原理和内核">
-      CPU工作原理和内核 <i class="fa fa-chevron-right"></i>
+    <a href="/2024/05/29/Linux%E7%9A%84USB%E5%BA%94%E7%94%A8%E5%BC%80%E5%8F%91/" rel="next" title="Linux的USB应用开发">
+      Linux的USB应用开发 <i class="fa fa-chevron-right"></i>
     </a></div>
     </div>
       </footer>
@@ -353,7 +321,6 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-5"><a class="nav-link" href="#%E8%B5%B7%E5%9B%A0"><span class="nav-number">1.</span> <span class="nav-text">起因</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E5%8E%86%E5%8F%B2%E5%8E%9F%E5%9B%A0"><span class="nav-number">2.</span> <span class="nav-text">历史原因</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E7%89%A9%E7%90%86%E7%BB%93%E6%9E%84"><span class="nav-number">3.</span> <span class="nav-text">物理结构</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E6%95%88%E7%8E%87"><span class="nav-number">4.</span> <span class="nav-text">效率</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E7%BB%93%E8%AF%AD"><span class="nav-number">5.</span> <span class="nav-text">结语</span></a></li></ol></div>
       </div>
       <!--/noindex-->
 
@@ -369,7 +336,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">46</span>
+          <span class="site-state-item-count">53</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -444,7 +411,7 @@
 
  <div class="theme-info">
   <div class="powered-by"></div>
-  <span class="post-count">博客全站共35.8k字</span>
+  <span class="post-count">博客全站共36.5k字</span>
 </div>
 
         
