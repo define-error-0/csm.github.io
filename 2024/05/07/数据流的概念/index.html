@@ -22,16 +22,17 @@
     var CONFIG = {"hostname":"example.com","root":"/","scheme":"Pisces","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
   </script>
 
-  <meta name="description" content="应用是应用，驱动是驱动！你要是偏要应用干驱动，哥们，你怎么不直接薪资翻倍啊！[🦀]">
+  <meta name="description" content="起因我当时学这个文件io的时候，也是懵懵懂懂的，就知道，open read write close lseek  fflush那些，其实也没明白是怎么回事。 数据流是指在计算机系统中，程序与文件之间进行数据交换的过程。当你在程序中执行文件操作，如读取、写入、修改等，这些操作都涉及到数据在程序和文件之间的传输，这个过程就是文件IO的数据流。 文件管理系统自从学习了flash，我之前就好奇了，flas">
 <meta property="og:type" content="article">
 <meta property="og:title" content="数据流的概念">
 <meta property="og:url" content="http://example.com/2024/05/07/%E6%95%B0%E6%8D%AE%E6%B5%81%E7%9A%84%E6%A6%82%E5%BF%B5/index.html">
 <meta property="og:site_name" content="我要成为嵌入式高手[doge]">
-<meta property="og:description" content="应用是应用，驱动是驱动！你要是偏要应用干驱动，哥们，你怎么不直接薪资翻倍啊！[🦀]">
+<meta property="og:description" content="起因我当时学这个文件io的时候，也是懵懵懂懂的，就知道，open read write close lseek  fflush那些，其实也没明白是怎么回事。 数据流是指在计算机系统中，程序与文件之间进行数据交换的过程。当你在程序中执行文件操作，如读取、写入、修改等，这些操作都涉及到数据在程序和文件之间的传输，这个过程就是文件IO的数据流。 文件管理系统自从学习了flash，我之前就好奇了，flas">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2024-05-07T13:41:38.000Z">
-<meta property="article:modified_time" content="2024-05-07T13:41:38.246Z">
+<meta property="article:modified_time" content="2024-06-03T14:26:28.450Z">
 <meta property="article:author" content="CSM">
+<meta property="article:tag" content="文件IO">
 <meta name="twitter:card" content="summary">
 
 <link rel="canonical" href="http://example.com/2024/05/07/%E6%95%B0%E6%8D%AE%E6%B5%81%E7%9A%84%E6%A6%82%E5%BF%B5/">
@@ -126,7 +127,7 @@
   </li>
         <li class="menu-item menu-item-tags">
 
-    <a href="/tags/" rel="section"><i class="tags fa-fw"></i>标签<span class="badge">24</span></a>
+    <a href="/tags/" rel="section"><i class="tags fa-fw"></i>标签<span class="badge">25</span></a>
 
   </li>
         <li class="menu-item menu-item-categories">
@@ -202,6 +203,13 @@
 
               <time title="创建时间：2024-05-07 21:41:38" itemprop="dateCreated datePublished" datetime="2024-05-07T21:41:38+08:00">2024-05-07</time>
             </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2024-06-03 22:26:28" itemprop="dateModified" datetime="2024-06-03T22:26:28+08:00">2024-06-03</time>
+              </span>
 
           
 
@@ -214,7 +222,20 @@
     <div class="post-body" itemprop="articleBody">
 
       
-        
+        <h5 id="起因"><a href="#起因" class="headerlink" title="起因"></a>起因</h5><p>我当时学这个文件io的时候，也是懵懵懂懂的，就知道，open read write close lseek  fflush那些，其实也没明白是怎么回事。</p>
+<p>数据流是指在计算机系统中，程序与文件之间进行数据交换的过程。当你在程序中执行文件操作，如读取、写入、修改等，这些操作都涉及到数据在程序和文件之间的传输，这个过程就是文件IO的数据流。</p>
+<h5 id="文件管理系统"><a href="#文件管理系统" class="headerlink" title="文件管理系统"></a>文件管理系统</h5><p>自从学习了flash，我之前就好奇了，flash是可以作为一个管理空间，但是，对于一个文件来说，如果把数据存储在flash中，那么，如何进行精确的修改呢？这个flash肯定是要先刷新才能使用的啊，为什么好像使用这些文件io的时候，可以那么顺利呢？其实，如果是追加的话，其实还是可以理解的，就是通过系统去链接起来，调用系统的文件io就可以实现文件完整使用和读取，所以，哪怕文件不是连续地址，也可以实现文件追加。读就更容易了，写呢？如果在原有基础上写呢？所以，我就像这种情况肯定是要刷新flash的区块来实现的。恰好，我想起来了数据流的概念。</p>
+<h5 id="数据流"><a href="#数据流" class="headerlink" title="数据流"></a>数据流</h5><p>使用文件io的时候，就会到打开这个文件，同时把所有数据通过数据流的形式导出来，我们对着这个数据流进行修改。这个数据流，可以认为就是系统把这一段空间都读取出来了，我们对着这个字符串进行操作而已。</p>
+<p>在Flash存储中，当你需要修改一个文件时，操作系统和文件系统会采取一些策略来确保不会影响到其他文件：</p>
+<ol>
+<li><strong>写入时复制（Copy-on-Write）</strong>：在修改文件之前，系统会先将原始文件复制到另一个块，然后在新块上进行修改。这样，原始文件保持不变，新的修改内容存储在另一个块上。这种方法可以避免在修改过程中影响到其他文件。</li>
+<li><strong>垃圾回收（Garbage Collection）</strong>：随着文件的修改和删除，Flash存储上可能会产生一些不再使用的空间。这些空间被称为垃圾。垃圾回收机制会定期运行，将这些垃圾空间整理并合并，以便于未来的文件存储和修改。</li>
+<li><strong>磨损平衡（Wear Leveling）</strong>：Flash存储具有有限的写入次数，频繁写入同一块区域会导致磨损加速。为了避免这个问题，Flash存储控制器会实现磨损平衡策略，将写入操作分散到不同的块，以延长Flash存储的使用寿命。</li>
+<li><strong>日志结构（Log-Structured）文件系统</strong>：一些文件系统（如F2FS、Btrfs等）采用日志结构设计，将文件的元数据和实际数据分开存储。这种设计有助于减少对Flash存储的磨损，并提高文件系统的性能。</li>
+</ol>
+<p>所以，我们不用担心回写导致flash错误的问题，这些都是通过文件管理系统区处理。</p>
+<h5 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h5><p>数据流是一个非常迷糊的概念，只有使用open才会打开，使用close和fflush才会刷新保存，所以，如果在close和fflush之前电脑停电、蓝屏、死掉了等。哦吼，数据流就随着RAM一起没啦！此时就没了通过文件管理系统回写这个操作了。这个时候追悔莫及了，一无所有啦。</p>
+
     </div>
 
     
@@ -249,6 +270,9 @@
 
 
       <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/%E6%96%87%E4%BB%B6IO/" rel="tag"># 文件IO</a>
+          </div>
 
         
 
@@ -321,6 +345,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-5"><a class="nav-link" href="#%E8%B5%B7%E5%9B%A0"><span class="nav-number">1.</span> <span class="nav-text">起因</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E6%96%87%E4%BB%B6%E7%AE%A1%E7%90%86%E7%B3%BB%E7%BB%9F"><span class="nav-number">2.</span> <span class="nav-text">文件管理系统</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E6%95%B0%E6%8D%AE%E6%B5%81"><span class="nav-number">3.</span> <span class="nav-text">数据流</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E6%80%BB%E7%BB%93"><span class="nav-number">4.</span> <span class="nav-text">总结</span></a></li></ol></div>
       </div>
       <!--/noindex-->
 
@@ -349,7 +374,7 @@
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">24</span>
+        <span class="site-state-item-count">25</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>
@@ -411,7 +436,7 @@
 
  <div class="theme-info">
   <div class="powered-by"></div>
-  <span class="post-count">博客全站共40.7k字</span>
+  <span class="post-count">博客全站共44.2k字</span>
 </div>
 
         
