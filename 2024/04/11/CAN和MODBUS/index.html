@@ -30,7 +30,7 @@
 <meta property="og:description" content="起因之前一直没搞懂，这两个的区别，甚至以为可以一起使用，哈哈哈，两个还是有很大的本质区别的。首先就是实时性了。还有成本，效率，使用场景都是不同的。 性质都是基于差分信号来实现的，数据发送和传输，所以，它们有着一样的电气特性。但是，他们的数据和工作原理是完全不同的。最直接比较吧，CAN是全主机，MODBUS是一主多从。因为CAN有线与操作，所以，0电平就会被当成显性电平，从而获得话语权。显性电平和隐">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2024-04-10T16:34:41.000Z">
-<meta property="article:modified_time" content="2024-06-03T14:55:03.185Z">
+<meta property="article:modified_time" content="2024-06-12T15:15:32.089Z">
 <meta property="article:author" content="CSM">
 <meta property="article:tag" content="STM32">
 <meta property="article:tag" content="CAN">
@@ -139,7 +139,7 @@
   </li>
         <li class="menu-item menu-item-archives">
 
-    <a href="/archives/" rel="section"><i class="archive fa-fw"></i>归档<span class="badge">57</span></a>
+    <a href="/archives/" rel="section"><i class="archive fa-fw"></i>归档<span class="badge">61</span></a>
 
   </li>
         <li class="menu-item menu-item-resources">
@@ -210,7 +210,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2024-06-03 22:55:03" itemprop="dateModified" datetime="2024-06-03T22:55:03+08:00">2024-06-03</time>
+                <time title="修改时间：2024-06-12 23:15:32" itemprop="dateModified" datetime="2024-06-12T23:15:32+08:00">2024-06-12</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -235,7 +235,8 @@
       
         <h5 id="起因"><a href="#起因" class="headerlink" title="起因"></a>起因</h5><p>之前一直没搞懂，这两个的区别，甚至以为可以一起使用，哈哈哈，两个还是有很大的本质区别的。首先就是实时性了。还有成本，效率，使用场景都是不同的。</p>
 <h5 id="性质"><a href="#性质" class="headerlink" title="性质"></a>性质</h5><p>都是基于差分信号来实现的，数据发送和传输，所以，它们有着一样的电气特性。但是，他们的数据和工作原理是完全不同的。最直接比较吧，CAN是全主机，MODBUS是一主多从。因为CAN有线与操作，所以，0电平就会被当成显性电平，从而获得话语权。显性电平和隐性电平也是can独有的。而MODBUS就是在485的技术上，增加一些对于帧的要求，对于时序的要求。相比起CAN来说，数据帧和查错能力完全不能比</p>
-<h5 id="MODBUS"><a href="#MODBUS" class="headerlink" title="MODBUS"></a>MODBUS</h5><h5 id="CAN"><a href="#CAN" class="headerlink" title="CAN"></a>CAN</h5><h5 id="使用场景"><a href="#使用场景" class="headerlink" title="使用场景"></a>使用场景</h5><h5 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h5>
+<h5 id="MODBUS"><a href="#MODBUS" class="headerlink" title="MODBUS"></a>MODBUS</h5><h5 id="CAN"><a href="#CAN" class="headerlink" title="CAN"></a>CAN</h5><h5 id="LIN"><a href="#LIN" class="headerlink" title="LIN"></a>LIN</h5><h5 id="使用场景"><a href="#使用场景" class="headerlink" title="使用场景"></a>使用场景</h5><p>首先呢，CAN是多主机的，而且MODBUS只有一个主机，所以MODBUS同一时刻只能有一个设备在发送数据。但是很多时候，有些设备是高优先级的，他必须要得到发言，不可能等待其他人执行完毕，而且还要满足大家都发送，所以这个时候线与的作用就出来了，可以多主机仲裁，而且可靠，很多时候好像确实是CAN更好更更可靠，但是CAN更贵，配置也更难，工控的话MDOBUS就足够了。</p>
+<h5 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h5>
     </div>
 
     
@@ -347,7 +348,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-5"><a class="nav-link" href="#%E8%B5%B7%E5%9B%A0"><span class="nav-number">1.</span> <span class="nav-text">起因</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E6%80%A7%E8%B4%A8"><span class="nav-number">2.</span> <span class="nav-text">性质</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#MODBUS"><span class="nav-number">3.</span> <span class="nav-text">MODBUS</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#CAN"><span class="nav-number">4.</span> <span class="nav-text">CAN</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E4%BD%BF%E7%94%A8%E5%9C%BA%E6%99%AF"><span class="nav-number">5.</span> <span class="nav-text">使用场景</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E6%80%BB%E7%BB%93"><span class="nav-number">6.</span> <span class="nav-text">总结</span></a></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-5"><a class="nav-link" href="#%E8%B5%B7%E5%9B%A0"><span class="nav-number">1.</span> <span class="nav-text">起因</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E6%80%A7%E8%B4%A8"><span class="nav-number">2.</span> <span class="nav-text">性质</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#MODBUS"><span class="nav-number">3.</span> <span class="nav-text">MODBUS</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#CAN"><span class="nav-number">4.</span> <span class="nav-text">CAN</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#LIN"><span class="nav-number">5.</span> <span class="nav-text">LIN</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E4%BD%BF%E7%94%A8%E5%9C%BA%E6%99%AF"><span class="nav-number">6.</span> <span class="nav-text">使用场景</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E6%80%BB%E7%BB%93"><span class="nav-number">7.</span> <span class="nav-text">总结</span></a></li></ol></div>
       </div>
       <!--/noindex-->
 
@@ -363,7 +364,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">57</span>
+          <span class="site-state-item-count">61</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -438,7 +439,7 @@
 
  <div class="theme-info">
   <div class="powered-by"></div>
-  <span class="post-count">博客全站共44.2k字</span>
+  <span class="post-count">博客全站共44.5k字</span>
 </div>
 
         
