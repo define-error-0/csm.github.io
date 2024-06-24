@@ -134,7 +134,7 @@
   </li>
         <li class="menu-item menu-item-archives">
 
-    <a href="/archives/" rel="section"><i class="archive fa-fw"></i>归档<span class="badge">61</span></a>
+    <a href="/archives/" rel="section"><i class="archive fa-fw"></i>归档<span class="badge">62</span></a>
 
   </li>
         <li class="menu-item menu-item-resources">
@@ -170,6 +170,94 @@
 
           <div class="content index posts-expand">
             
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2024/03/02/%E6%8C%87%E9%92%88%E5%92%8C%E5%AD%97%E7%AC%A6%E4%B8%B2/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/csm.png">
+      <meta itemprop="name" content="CSM">
+      <meta itemprop="description" content="应用是应用，驱动是驱动！你要是偏要应用干驱动，哥们，你怎么不直接薪资翻倍啊！[🦀]">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="我要成为嵌入式高手[doge]">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2024/03/02/%E6%8C%87%E9%92%88%E5%92%8C%E5%AD%97%E7%AC%A6%E4%B8%B2/" class="post-title-link" itemprop="url">指针和字符串</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2024-03-02 20:01:08" itemprop="dateCreated datePublished" datetime="2024-03-02T20:01:08+08:00">2024-03-02</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2024-05-08 21:09:18" itemprop="dateModified" datetime="2024-05-08T21:09:18+08:00">2024-05-08</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/CPP-C/" itemprop="url" rel="index"><span itemprop="name">CPP/C</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <p>这是一篇关于我刚学习C语言和C++的时候留下来的关于字符串、数组、指针的问题</p>
+<h3 id="起因"><a href="#起因" class="headerlink" title="起因"></a>起因</h3><p>今天在看python的时候看到一个表达式字符串，这个东西呢，非常奇妙。<br>举个例子python里面的字符串有</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">str1 = <span class="string">&quot; csmznbo &quot;</span></span><br><span class="line">str2 = <span class="string">&#x27; csmznbo &#x27;</span></span><br></pre></td></tr></table></figure>
+
+<p>可以看到此时的字符串都是有空格，所以下面的那个单引号的明显不对劲，对了。<br>这个就是shell脚本里面类似的原样输出<br>特殊字符串。如下例子</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#bash</span></span><br><span class="line">str3=<span class="string">&#x27;The time now is `data`&#x27;</span></span><br><span class="line"><span class="comment">#python</span></span><br><span class="line">str3=<span class="string">&#x27;The time now is data&#x27;</span>.replace(<span class="string">&#x27;data&#x27;</span>,<span class="built_in">str</span>(time.localtime(time.time())))</span><br></pre></td></tr></table></figure>
+
+<p>其实python的””格式的字符串也是可以做到输出像上面的东西的，f”{}”也是可以的(format)<br>bash的例子只是引出这种字符串的特殊用法原样输出。下面的替换输出，虽然不是同一<br>功能，但是也能知道遇到这奇奇怪怪的字符串的时候可以联想起来好玩的东西。</p>
+<p>但是这个不是今天的主角。</p>
+<h3 id="填坑"><a href="#填坑" class="headerlink" title="填坑"></a>填坑</h3><p>这个帖子，主要是为了记录我对指针数组还有字符串的理解。首先呢，我之前总是不理解为什么字符串是不可写和不可修改现在知道了，因为它存在静态区中。但是我学了几个月的C语言我才知道了指针不等于字符串，我当时写那些拼接函数，比较函数，裁剪那些，我都是用数组去实现的。但是学的懵懵懂懂的，我甚至都把数组等于字符串，字符串又等于指针去了，因为用起来真的差不多。其实是错误的，虽然汇编是一样当写关于字符串的函数的的时候，传参指针，返回值那些都是天坑。要知道字符串是不能修改的，所以返回值只能是数组和指针，还有就是指针传参就会导致一些问题。比如不知道数据长度等问题。</p>
+<h3 id="关系"><a href="#关系" class="headerlink" title="关系"></a>关系</h3><p>指针就是指针，指向一个地址，自己指针又有一个属于自己的地址。大小看处理器位数数组就是连续地址的元素组成，可以装指针，数组，结构体，函数等等</p>
+<p>C语言中，字符串就是字符串，没别的东西就是全局区的data段中，不可修改的。当时第一次学cpp的时候，把String当成字符串了，当时也好奇为什么字符串又可以删减修改了，其实就是一个容器，不是字符串，你可以认为里面就是一个数组真正的字符串还是””这个，这个还是不能修改即便是cpp。python中字符串也是不能修改的，每一次的修改，都只是新生成一个字符串。并没有修改原本字符串</p>
+<h3 id="结语"><a href="#结语" class="headerlink" title="结语"></a>结语</h3><p>这次就是一个知识的填坑和巩固罢了果然基础不牢地动山摇。很多时候都是简单的东西罢了。拜拜，下次继续</p>
+
+      
+    </div>
+
+    
+    
+    
+
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
       
   
   
@@ -329,7 +417,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">61</span>
+          <span class="site-state-item-count">62</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
