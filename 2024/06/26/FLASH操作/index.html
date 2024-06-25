@@ -22,21 +22,24 @@
     var CONFIG = {"hostname":"example.com","root":"/","scheme":"Pisces","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
   </script>
 
-  <meta name="description" content="这是一篇关于我刚学习C语言和C++的时候留下来的关于字符串、数组、指针的问题 起因今天在看python的时候看到一个表达式字符串，这个东西呢，非常奇妙。举个例子python里面的字符串有 12str1 &#x3D; &quot; csmznbo &quot;str2 &#x3D; &amp;#x27; csmznbo &amp;#x27;  可以看到此时的字符串都是有空格，所以下面的那个单引号的明显不对劲，对了。这个就是shell脚">
+  <meta name="description" content="起因还是经典的摸鱼？不是的，是我公司的一个工程师，让我帮他搞一下治具，突然发现，烧不了代码了，所以，我经过j-flash的测试，才知道加读保护了。而且用的还是APM32这个芯片，我没想到是APM32是直接照抄STM32的，甚至我的STM32的bin代码都可以直接跑哦，真合着寄存器，外设引脚，内部完全一模一样呗。所以，我想到做一期关于flash的博客。来巩固一下知识点。 FLASH是什么FLASH就">
 <meta property="og:type" content="article">
-<meta property="og:title" content="指针和字符串">
-<meta property="og:url" content="http://example.com/2024/03/02/%E6%8C%87%E9%92%88%E5%92%8C%E5%AD%97%E7%AC%A6%E4%B8%B2/index.html">
+<meta property="og:title" content="FLASH操作">
+<meta property="og:url" content="http://example.com/2024/06/26/FLASH%E6%93%8D%E4%BD%9C/index.html">
 <meta property="og:site_name" content="我要成为嵌入式高手[doge]">
-<meta property="og:description" content="这是一篇关于我刚学习C语言和C++的时候留下来的关于字符串、数组、指针的问题 起因今天在看python的时候看到一个表达式字符串，这个东西呢，非常奇妙。举个例子python里面的字符串有 12str1 &#x3D; &quot; csmznbo &quot;str2 &#x3D; &amp;#x27; csmznbo &amp;#x27;  可以看到此时的字符串都是有空格，所以下面的那个单引号的明显不对劲，对了。这个就是shell脚">
+<meta property="og:description" content="起因还是经典的摸鱼？不是的，是我公司的一个工程师，让我帮他搞一下治具，突然发现，烧不了代码了，所以，我经过j-flash的测试，才知道加读保护了。而且用的还是APM32这个芯片，我没想到是APM32是直接照抄STM32的，甚至我的STM32的bin代码都可以直接跑哦，真合着寄存器，外设引脚，内部完全一模一样呗。所以，我想到做一期关于flash的博客。来巩固一下知识点。 FLASH是什么FLASH就">
 <meta property="og:locale" content="zh_CN">
-<meta property="article:published_time" content="2024-03-02T12:01:08.000Z">
-<meta property="article:modified_time" content="2024-05-08T13:09:18.703Z">
+<meta property="og:image" content="http://example.com/Blogas_images/Flash.jpg">
+<meta property="og:image" content="http://example.com/Blogas_images/flash2.png">
+<meta property="og:image" content="http://example.com/Blogas_images/FLASH3.jpg">
+<meta property="article:published_time" content="2024-06-25T17:30:37.000Z">
+<meta property="article:modified_time" content="2024-06-25T17:31:03.445Z">
 <meta property="article:author" content="CSM">
-<meta property="article:tag" content="Cpp">
-<meta property="article:tag" content="C">
+<meta property="article:tag" content="FLASH">
 <meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://example.com/Blogas_images/Flash.jpg">
 
-<link rel="canonical" href="http://example.com/2024/03/02/%E6%8C%87%E9%92%88%E5%92%8C%E5%AD%97%E7%AC%A6%E4%B8%B2/">
+<link rel="canonical" href="http://example.com/2024/06/26/FLASH%E6%93%8D%E4%BD%9C/">
 
 
 <script id="page-configurations">
@@ -49,7 +52,7 @@
   };
 </script>
 
-  <title>指针和字符串 | 我要成为嵌入式高手[doge]</title>
+  <title>FLASH操作 | 我要成为嵌入式高手[doge]</title>
   
 
 
@@ -179,7 +182,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2024/03/02/%E6%8C%87%E9%92%88%E5%92%8C%E5%AD%97%E7%AC%A6%E4%B8%B2/">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2024/06/26/FLASH%E6%93%8D%E4%BD%9C/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/csm.png">
@@ -192,7 +195,7 @@
     </span>
       <header class="post-header">
         <h1 class="post-title" itemprop="name headline">
-          指针和字符串
+          FLASH操作
         </h1>
 
         <div class="post-meta">
@@ -201,24 +204,9 @@
                 <i class="far fa-calendar"></i>
               </span>
               <span class="post-meta-item-text">发表于</span>
+              
 
-              <time title="创建时间：2024-03-02 20:01:08" itemprop="dateCreated datePublished" datetime="2024-03-02T20:01:08+08:00">2024-03-02</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2024-05-08 21:09:18" itemprop="dateModified" datetime="2024-05-08T21:09:18+08:00">2024-05-08</time>
-              </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/CPP-C/" itemprop="url" rel="index"><span itemprop="name">CPP/C</span></a>
-                </span>
+              <time title="创建时间：2024-06-26 01:30:37 / 修改时间：01:31:03" itemprop="dateCreated datePublished" datetime="2024-06-26T01:30:37+08:00">2024-06-26</time>
             </span>
 
           
@@ -232,19 +220,28 @@
     <div class="post-body" itemprop="articleBody">
 
       
-        <p>这是一篇关于我刚学习C语言和C++的时候留下来的关于字符串、数组、指针的问题</p>
-<h3 id="起因"><a href="#起因" class="headerlink" title="起因"></a>起因</h3><p>今天在看python的时候看到一个表达式字符串，这个东西呢，非常奇妙。<br>举个例子python里面的字符串有</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">str1 = <span class="string">&quot; csmznbo &quot;</span></span><br><span class="line">str2 = <span class="string">&#x27; csmznbo &#x27;</span></span><br></pre></td></tr></table></figure>
-
-<p>可以看到此时的字符串都是有空格，所以下面的那个单引号的明显不对劲，对了。<br>这个就是shell脚本里面类似的原样输出<br>特殊字符串。如下例子</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#bash</span></span><br><span class="line">str3=<span class="string">&#x27;The time now is `data`&#x27;</span></span><br><span class="line"><span class="comment">#python</span></span><br><span class="line">str3=<span class="string">&#x27;The time now is data&#x27;</span>.replace(<span class="string">&#x27;data&#x27;</span>,<span class="built_in">str</span>(time.localtime(time.time())))</span><br></pre></td></tr></table></figure>
-
-<p>其实python的””格式的字符串也是可以做到输出像上面的东西的，f”{}”也是可以的(format)<br>bash的例子只是引出这种字符串的特殊用法原样输出。下面的替换输出，虽然不是同一<br>功能，但是也能知道遇到这奇奇怪怪的字符串的时候可以联想起来好玩的东西。</p>
-<p>但是这个不是今天的主角。</p>
-<h3 id="填坑"><a href="#填坑" class="headerlink" title="填坑"></a>填坑</h3><p>这个帖子，主要是为了记录我对指针数组还有字符串的理解。首先呢，我之前总是不理解为什么字符串是不可写和不可修改现在知道了，因为它存在静态区中。但是我学了几个月的C语言我才知道了指针不等于字符串，我当时写那些拼接函数，比较函数，裁剪那些，我都是用数组去实现的。但是学的懵懵懂懂的，我甚至都把数组等于字符串，字符串又等于指针去了，因为用起来真的差不多。其实是错误的，虽然汇编是一样当写关于字符串的函数的的时候，传参指针，返回值那些都是天坑。要知道字符串是不能修改的，所以返回值只能是数组和指针，还有就是指针传参就会导致一些问题。比如不知道数据长度等问题。</p>
-<h3 id="关系"><a href="#关系" class="headerlink" title="关系"></a>关系</h3><p>指针就是指针，指向一个地址，自己指针又有一个属于自己的地址。大小看处理器位数数组就是连续地址的元素组成，可以装指针，数组，结构体，函数等等</p>
-<p>C语言中，字符串就是字符串，没别的东西就是全局区的data段中，不可修改的。当时第一次学cpp的时候，把String当成字符串了，当时也好奇为什么字符串又可以删减修改了，其实就是一个容器，不是字符串，你可以认为里面就是一个数组真正的字符串还是””这个，这个还是不能修改即便是cpp。python中字符串也是不能修改的，每一次的修改，都只是新生成一个字符串。并没有修改原本字符串</p>
-<h3 id="结语"><a href="#结语" class="headerlink" title="结语"></a>结语</h3><p>这次就是一个知识的填坑和巩固罢了果然基础不牢地动山摇。很多时候都是简单的东西罢了。拜拜，下次继续</p>
+        <h5 id="起因"><a href="#起因" class="headerlink" title="起因"></a>起因</h5><p>还是经典的摸鱼？不是的，是我公司的一个工程师，让我帮他搞一下治具，突然发现，烧不了代码了，所以，我经过j-flash的测试，才知道加读保护了。而且用的还是APM32这个芯片，我没想到是APM32是直接照抄STM32的，甚至我的STM32的bin代码都可以直接跑哦，真合着寄存器，外设引脚，内部完全一模一样呗。所以，我想到做一期关于flash的博客。来巩固一下知识点。</p>
+<h5 id="FLASH是什么"><a href="#FLASH是什么" class="headerlink" title="FLASH是什么"></a>FLASH是什么</h5><p>FLASH就是一种掉电不丢失的储存单元，特性就是成本低，但是不能按位操作，空间大，结构简单。</p>
+<p>为什么，不能按位呢？因为FLASH本身就是一个半导体一样的东西，我们看到刷新flash全是置为FF，为什么是FF，是因为此时单元束缚了一个电荷单元，旁边的高阻抗的传感器识别到，这个位置有电势差，所以就知道这个位bit里面有数据的。此时，就是把电子拿出来简单，放回去就难了，所以需要刷新才能重写。为什么拿出来和放回去难度不一样呢？因为上下结构不一样的。</p>
+<p><img src="/../Blogas_images/Flash.jpg"></p>
+<p><img src="/../Blogas_images/flash2.png"></p>
+<p>上面是一个flash单元，因为flash下面的所有单元衬底其实是一整块的，所以，无法做到，按位进行操作，因为一操作就会导致所有数据都归零，所以，只能操作上面部分的电荷来实现放电操作。刷新过程，其实就是衬底清空，此时就会对上面的浮栅进行充电，然后，电压一走电荷就会被束缚在栅极之中。</p>
+<p>还有那些颗粒类型什么的，我就不太了解了，因为我是一个臭写代码的，这个FLASH设计，要专业人士才能操作。当前存储颗粒主要分类：SLC、MLC、TLC、QLC</p>
+<p><img src="/../Blogas_images/FLASH3.jpg"></p>
+<p>可以认为那些储存都是这些FLASH颗粒组成的哦。上面这个只是一个二维的设计，因为这个衬底可以设计成3维的，所以，3维的flash成本更低，同时擦除的块也变大了，这个是厂商设计的哦。</p>
+<p>为什么设计简单，我们可以举例子，比如eemprom，这个其实就是内部类似矩阵一样，可以知道横纵就知道位置和操作了，因为没有采用统一衬底的设计，所以可以对任意位置操作，带来的布线、设计成本、生产成本，容量大小等诸多问题，都是限制它的原因。</p>
+<p>还有就是速率啦，FLASH一般是SRAM或者SPI的，eemprom一般都是iic</p>
+<h5 id="FLASH类型"><a href="#FLASH类型" class="headerlink" title="FLASH类型"></a>FLASH类型</h5><p>目前市面上常见的集成存储芯片类型：eMMC、UFS、SPI-Flash、QSPI-Flash、各尺寸的SD卡等。</p>
+<p>我这里就分为2大类：第一个是NORFlash，第二个是NANOFlash</p>
+<p>怎么理解呢？</p>
+<p>NORFlash就是扩容的一个Flash，我们可以修改MCU的内存大小和BANK来使用外部的SRAM或者NORFlash，在外部上面跑代码就是指针直接指向，把外部的也当成SRAM跑，而且还是很可靠的，掉电不丢失，突发情况说不定还能查看内部bit来还原数据呢。读速度还行，写速度慢，每次使用都要刷新，擦写次数比NANOFlash少太多了。它的接口是SRAM的接口，同MCU的引脚连接。</p>
+<p>NANOFlash就是纯纯的存储空间啦，一般都是有一个FLash芯片来实现对这写Flash单元的控制的，此时一般都是SPI，也有很多使用QSPI，一般是好的FLASH芯片都是有QSPI支持的，然后希望手册多一些有用的指令，便宜的FLash确实可以用，但是它的功能和指令都被阉割了。如果想要实现QSPI和文件系统等一些操作就比较麻烦了。读写速率都很快，但是不可靠，寿命高，可以擦写很多很多次。</p>
+<h5 id="内部FLASH"><a href="#内部FLASH" class="headerlink" title="内部FLASH"></a>内部FLASH</h5><p>回到上面提到的读保护吧，确实一般在mcu中，只有写保护，就是想要修改FLASH，需要解除锁，才能刷新再写，读的话，一般是直接地址指过去了。那么读保护是干嘛的？我这内部完全没有限制我读取啊？</p>
+<p>读保护是防外人的，那些狗东西最喜欢逆向和偷别人代码了，此时我开启读保护等级1，他们就不能通过调试来获取我的代码了。但是此时MCU是可以恢复到读保护等级0，只需要选择使用boot0 boot1都为1的SRAM启动，我们修改运行地址到SRAM中，修改映射，就可以在SRAM中把读保护等级修改了。但是如果读保护等级为2的时候，就把SRAM也禁用了，此时就gg了。</p>
+<p>此时，不能更新了吗？不是的，我们此时是禁用了外部的操作啊，但是我们可以ota啊，我们程序还是可以通过内部的开锁关锁来实现对flash的更新，这个是内部的操作，不是来自外部的哦[doge]</p>
+<h5 id="SRAM-FLASH-ROM区别"><a href="#SRAM-FLASH-ROM区别" class="headerlink" title="SRAM  FLASH  ROM区别"></a>SRAM  FLASH  ROM区别</h5><p>SRAM和NORFlash都可以运行代码，他们的区别就是SRAM肯定更快啊，想都不用想的，而且不用担心丢失，掉电就没了，固态使用的DRAM，还需要定期充电呢维持呢，速度也快，成本贼低。</p>
+<p>ROM和NANOFlash的区别呢？都想是存储的东西，但是，本质还是不一样的。ROM是一种只读的统称，可以认为是PROM（可编程ROM）、EPROM（可擦除可编程ROM，通过紫外线擦除）、EEPROM。ROM也是可以编程的，但是更少，Flash就擦除写入的多了，一般的固态SSD都是FLASH，因为便宜快速高效可以反复擦除。</p>
+<h5 id="感想"><a href="#感想" class="headerlink" title="感想"></a>感想</h5><p>FLASH真的一个跨时代的发明。我想到了，最近要搞一个NAS玩玩，先玩黑群晖吧，刚好有一个闲置的垃圾笔记本，我看了一下群晖裸机也要1300呢，有点贵的，用的是机械盘，本质，是中间那个磁盘来着，怎么说呢。那个东西可以修复确实好，不过固态确实越来越好用。服务器还是机械吧，固态坏了真的修不了，都是电子和位，怎么恢复啊。FLASH带来的便利，也带来一些麻烦，比如固态涨价涨疯了，我都买不起了，呜呜呜。</p>
 
     </div>
 
@@ -270,7 +267,7 @@
   </li>
   <li class="post-copyright-link">
     <strong>本文链接：</strong>
-    <a href="http://example.com/2024/03/02/%E6%8C%87%E9%92%88%E5%92%8C%E5%AD%97%E7%AC%A6%E4%B8%B2/" title="指针和字符串">http://example.com/2024/03/02/指针和字符串/</a>
+    <a href="http://example.com/2024/06/26/FLASH%E6%93%8D%E4%BD%9C/" title="FLASH操作">http://example.com/2024/06/26/FLASH操作/</a>
   </li>
   <li class="post-copyright-license">
     <strong>版权声明： </strong>本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-CSM/4.0/" rel="noopener" target="_blank"><i class="fab fa-fw fa-creative-commons"></i>BY-CSM</a> 许可协议。转载请注明出处！
@@ -281,8 +278,7 @@
 
       <footer class="post-footer">
           <div class="post-tags">
-              <a href="/tags/Cpp/" rel="tag"># Cpp</a>
-              <a href="/tags/C/" rel="tag"># C</a>
+              <a href="/tags/FLASH/" rel="tag"># FLASH</a>
           </div>
 
         
@@ -291,13 +287,10 @@
         
     <div class="post-nav">
       <div class="post-nav-item">
-    <a href="/2024/03/01/FristBlog-STM32%E8%B6%85%E9%A2%91%E8%BF%87%E5%A4%B4%E8%8A%AF%E7%89%87%E9%94%81%E6%AD%BB/" rel="prev" title="frist STM32超频过头芯片锁死">
-      <i class="fa fa-chevron-left"></i> frist STM32超频过头芯片锁死
+    <a href="/2024/06/24/Flash%E7%9A%84%E5%BA%95%E5%B1%82%E9%A9%B1%E5%8A%A8%E5%92%8C%E4%B8%8A%E5%B1%82%E8%B0%83%E7%94%A8%E7%AD%96%E7%95%A5/" rel="prev" title="Flash的底层驱动和上层调用策略">
+      <i class="fa fa-chevron-left"></i> Flash的底层驱动和上层调用策略
     </a></div>
-      <div class="post-nav-item">
-    <a href="/2024/03/03/Typora%E5%85%A5%E9%97%A8/" rel="next" title="Typora入门">
-      Typora入门 <i class="fa fa-chevron-right"></i>
-    </a></div>
+      <div class="post-nav-item"></div>
     </div>
       </footer>
     
@@ -356,7 +349,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%B5%B7%E5%9B%A0"><span class="nav-number">1.</span> <span class="nav-text">起因</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%A1%AB%E5%9D%91"><span class="nav-number">2.</span> <span class="nav-text">填坑</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%85%B3%E7%B3%BB"><span class="nav-number">3.</span> <span class="nav-text">关系</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%BB%93%E8%AF%AD"><span class="nav-number">4.</span> <span class="nav-text">结语</span></a></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-5"><a class="nav-link" href="#%E8%B5%B7%E5%9B%A0"><span class="nav-number">1.</span> <span class="nav-text">起因</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#FLASH%E6%98%AF%E4%BB%80%E4%B9%88"><span class="nav-number">2.</span> <span class="nav-text">FLASH是什么</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#FLASH%E7%B1%BB%E5%9E%8B"><span class="nav-number">3.</span> <span class="nav-text">FLASH类型</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E5%86%85%E9%83%A8FLASH"><span class="nav-number">4.</span> <span class="nav-text">内部FLASH</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#SRAM-FLASH-ROM%E5%8C%BA%E5%88%AB"><span class="nav-number">5.</span> <span class="nav-text">SRAM  FLASH  ROM区别</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E6%84%9F%E6%83%B3"><span class="nav-number">6.</span> <span class="nav-text">感想</span></a></li></ol></div>
       </div>
       <!--/noindex-->
 
