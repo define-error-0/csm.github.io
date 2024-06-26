@@ -22,18 +22,20 @@
     var CONFIG = {"hostname":"example.com","root":"/","scheme":"Pisces","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
   </script>
 
-  <meta name="description" content="起因NANOFlash底层驱动NORFlash底层扩容操作QSPI文件管理系统FLASH读写封装FLASH应用层驱动总结">
+  <meta name="description" content="起因我朋友发了一个sqi的flash芯片手册给我看了一下，那个是一个垃圾的国产芯片，只有简单的读取和写入功能，很多其他指令都没有，他说很难实现sfud的功能，sfud就是为了兼容不同型号的flash，我感觉确实挺不错的，有水平的，新出的flash一般都是支持SFDP标准的，而sfud也是支持的SFDP标准的，所以，只要满足就可以使用啦。想都想到flash就一个FLASH博客咯。 NANOFlash">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Flash的底层驱动和上层调用策略">
 <meta property="og:url" content="http://example.com/2024/06/24/Flash%E7%9A%84%E5%BA%95%E5%B1%82%E9%A9%B1%E5%8A%A8%E5%92%8C%E4%B8%8A%E5%B1%82%E8%B0%83%E7%94%A8%E7%AD%96%E7%95%A5/index.html">
 <meta property="og:site_name" content="我要成为嵌入式高手[doge]">
-<meta property="og:description" content="起因NANOFlash底层驱动NORFlash底层扩容操作QSPI文件管理系统FLASH读写封装FLASH应用层驱动总结">
+<meta property="og:description" content="起因我朋友发了一个sqi的flash芯片手册给我看了一下，那个是一个垃圾的国产芯片，只有简单的读取和写入功能，很多其他指令都没有，他说很难实现sfud的功能，sfud就是为了兼容不同型号的flash，我感觉确实挺不错的，有水平的，新出的flash一般都是支持SFDP标准的，而sfud也是支持的SFDP标准的，所以，只要满足就可以使用啦。想都想到flash就一个FLASH博客咯。 NANOFlash">
 <meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="http://example.com/Blogas_images/QSPIflash.png">
 <meta property="article:published_time" content="2024-06-24T14:23:28.000Z">
-<meta property="article:modified_time" content="2024-06-25T17:32:20.363Z">
+<meta property="article:modified_time" content="2024-06-26T14:59:26.582Z">
 <meta property="article:author" content="CSM">
 <meta property="article:tag" content="FLASH">
 <meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://example.com/Blogas_images/QSPIflash.png">
 
 <link rel="canonical" href="http://example.com/2024/06/24/Flash%E7%9A%84%E5%BA%95%E5%B1%82%E9%A9%B1%E5%8A%A8%E5%92%8C%E4%B8%8A%E5%B1%82%E8%B0%83%E7%94%A8%E7%AD%96%E7%95%A5/">
 
@@ -208,7 +210,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2024-06-26 01:32:20" itemprop="dateModified" datetime="2024-06-26T01:32:20+08:00">2024-06-26</time>
+                <time title="修改时间：2024-06-26 22:59:26" itemprop="dateModified" datetime="2024-06-26T22:59:26+08:00">2024-06-26</time>
               </span>
 
           
@@ -222,7 +224,45 @@
     <div class="post-body" itemprop="articleBody">
 
       
-        <h5 id="起因"><a href="#起因" class="headerlink" title="起因"></a>起因</h5><h5 id="NANOFlash底层驱动"><a href="#NANOFlash底层驱动" class="headerlink" title="NANOFlash底层驱动"></a>NANOFlash底层驱动</h5><h5 id="NORFlash底层扩容操作"><a href="#NORFlash底层扩容操作" class="headerlink" title="NORFlash底层扩容操作"></a>NORFlash底层扩容操作</h5><h5 id="QSPI"><a href="#QSPI" class="headerlink" title="QSPI"></a>QSPI</h5><h5 id="文件管理系统"><a href="#文件管理系统" class="headerlink" title="文件管理系统"></a>文件管理系统</h5><h5 id="FLASH读写封装"><a href="#FLASH读写封装" class="headerlink" title="FLASH读写封装"></a>FLASH读写封装</h5><h5 id="FLASH应用层驱动"><a href="#FLASH应用层驱动" class="headerlink" title="FLASH应用层驱动"></a>FLASH应用层驱动</h5><h5 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h5>
+        <h5 id="起因"><a href="#起因" class="headerlink" title="起因"></a>起因</h5><p>我朋友发了一个sqi的flash芯片手册给我看了一下，那个是一个垃圾的国产芯片，只有简单的读取和写入功能，很多其他指令都没有，他说很难实现sfud的功能，sfud就是为了兼容不同型号的flash，我感觉确实挺不错的，有水平的，新出的flash一般都是支持SFDP标准的，而sfud也是支持的SFDP标准的，所以，只要满足就可以使用啦。想都想到flash就一个FLASH博客咯。</p>
+<h5 id="NANOFlash底层驱动"><a href="#NANOFlash底层驱动" class="headerlink" title="NANOFlash底层驱动"></a>NANOFlash底层驱动</h5><p>这个就是纯纯数据啦，现在固态都是NANOFLash的哦，(服务器的还是用机械盘，因为机械盘坏了可以修复，固态坏了是真的没救了)。是不能直接执行代码的,不过可以通过引导程序把代码下载到ram之中来运行哦。接口一般是看芯片的设计的，芯片有spi、m.2 、pcie、sata都是可以的，通信协议只是一个建立交互的手段罢了，速率和成本满足要求，怎么样都行。这个就没啥好操作的了，就是根据协议，写好收发，看着手册进行指令的发送，状态的判断，数据的获取和写入。封装成一个个api给上层调用咯。</p>
+<h5 id="NORFlash底层扩容操作"><a href="#NORFlash底层扩容操作" class="headerlink" title="NORFlash底层扩容操作"></a>NORFlash底层扩容操作</h5><p>NORFlash一般不是用来存储东西的，更多是扩容和进行代码运行的，它是跟mcu的扩容引脚接在一起的，也就是说，mcu可以配置外部的bank之后，可以直接访问这个外部的Flash地址来进行操作，而且这个是非常可靠的，缺点肯定是有的，比如SRAM快和高效，掉电不丢失，重启要刷新等。</p>
+<p>使用方法，一般都是抽象使用，也就是mmu来管理这块地址，因为flash刷新就会按照块来进行处理的，所以，里面最好不要又可变的变量，而是一个固定不变的数据和函数，当然可以用指针去直接使用它，没有mmu的管制，想干嘛都是可以的。实践中现代操作系统和环境通常会提供更高级别的抽象来管理内存和代码的执行，而不是直接由程序员操作指针去执行Flash中的代码。不过，在嵌入式系统或特定的低级编程场景中，这种直接操作更为常见。</p>
+<h5 id="QSPI"><a href="#QSPI" class="headerlink" title="QSPI"></a>QSPI</h5><p>我们使用的SPI，一般都是sck，miso，mosi，css组成的，可以放弃一根线，只有mosi或者miso，也有使用qspi的，就是并行spi的，可以认为这种spi就是利用并发的操作来增加速率，每多一根并行，理论上是可以翻倍速率的，具体还是看QSPI硬件芯片的处理了。</p>
+<p><img src="/../Blogas_images/QSPIflash.png"></p>
+<h5 id="文件管理系统"><a href="#文件管理系统" class="headerlink" title="文件管理系统"></a>文件管理系统</h5><p>这个就是FLASH的底层调用啦，通过指令，知道空间大小，可以通过指令去处理和读写数据、文件等操作。</p>
+<p>文件管理系统是操作系统的一个关键组成部分，负责组织、存储、检索用户和系统数据。它为用户提供了一个访问和管理文件的接口，使得用户能够创建、删除、修改、重命名文件以及目录（文件夹）。常见的文件管理系统有NTFS（Windows）、HFS+（macOS早期版本）、APFS（macOS新版本）、EXT4（Linux）等。它们通过各种数据结构（如inode、文件分配表等）来跟踪文件存储的位置、大小、权限等信息。</p>
+<p>FLASH，通常指的是闪存技术，是一种非易失性存储器，意味着断电后存储的数据不会丢失。与传统的硬盘驱动器（HDD）使用磁性介质不同，闪存使用电子存储数据，在读写速度、功耗、抗震性方面具有优势。FLASH技术分为两类：NAND Flash和NOR Flash，其中NAND Flash因其高密度、低成本和较高速度的特点，广泛应用于USB闪存盘、固态硬盘（SSD）、移动设备的内部存储等场景。</p>
+<p>虽然文件管理系统和FLASH技术分属不同层面，但它们紧密相关。现代的存储设备，特别是固态硬盘（SSD），大量采用FLASH技术作为存储介质。为了优化FLASH存储的性能和寿命（因为FLASH有擦写次数限制），文件管理系统需要针对FLASH特性进行特别设计或调整，比如引入TRIM指令来通知SSD哪些数据块已不再使用，可以提前擦除以提高写入效率；或者使用磨损均衡算法来均衡FLASH芯片中各区块的擦写次数，延长SSD寿命。</p>
+<ol>
+<li><strong>理解FLASH硬件特性</strong>：首先，深入了解您所使用的FLASH（NAND或NOR）的技术规格、命令集、读写速度、擦写寿命限制等，这对于设计高效且安全的接口至关重要。</li>
+<li><strong>开发驱动程序</strong>：对于嵌入式系统或特定应用，可能需要编写低级驱动程序来直接控制FLASH芯片。这包括初始化FLASH、发送读写命令、处理错误和状态返回等。</li>
+<li><strong>设计高级API</strong>：在驱动程序之上，设计一套易于使用的API，比如打开、关闭、读取、写入、 seek（定位）、truncate（截断）等操作，模仿文件I&#x2F;O的方式，这样上层应用可以不关心底层硬件细节。</li>
+<li><strong>错误处理与磨损平衡</strong>：考虑到FLASH的擦写寿命，您的API设计应包含磨损平衡策略和错误处理机制，比如记录和报告坏块信息，使用损耗均衡算法等。</li>
+<li><strong>性能优化</strong>：根据FLASH的特性（如页大小、块大小）优化读写操作，比如批量读写以减少开销，利用缓存技术加速访问等。</li>
+<li><strong>测试与验证</strong>：彻底测试您的接口在各种条件下的表现，确保数据的完整性和可靠性。</li>
+</ol>
+<p>现代文件系统通过维护元数据来跟踪文件的分配情况，通过多种机制确保数据一致性和空间的有效管理，同时提供给上层应用接口以实现并发访问控制和空间的精确计算。</p>
+<p>其实就是一句话，文件系统给了需要接口，我们就得从底层提供api比如多大，读写操作api，空间使用等。然后文件系统就会自己去处理和判断空间剩余，空间使用，然后再封装api就可以进行文件io的操作了。</p>
+<h5 id="虚拟文件系统（Virtual-File-System-VFS）"><a href="#虚拟文件系统（Virtual-File-System-VFS）" class="headerlink" title="虚拟文件系统（Virtual File System, VFS）"></a>虚拟文件系统（Virtual File System, VFS）</h5><p>现代操作系统内核中的一个重要组件，它提供了一个抽象层，使得操作系统和上层应用程序可以以统一的方式访问不同类型的文件系统，而无需关注底层文件系统的具体实现细节。VFS在处理并发访问和空间管理时，也遵循类似的原理，但其作用范围和方式更为通用和抽象。</p>
+<h6 id="并发访问控制"><a href="#并发访问控制" class="headerlink" title="并发访问控制"></a>并发访问控制</h6><p>在VFS层面处理并发访问，主要是通过文件描述符、文件句柄以及与之相关的锁机制来实现的。当多个进程或线程试图访问同一个文件时，VFS会确保通过以下方式避免冲突：</p>
+<ul>
+<li><strong>文件描述符表</strong>：每个进程都有一个文件描述符表，其中包含了指向内核中打开文件结构的指针。这些结构包含了锁和其他同步机制，以保护文件的并发访问。</li>
+<li><strong>锁机制</strong>：VFS支持不同类型的锁，如读锁和写锁，来控制文件的访问权限。这些锁可以是进程间共享的，也可以是独占的，确保了读取和写入操作的原子性和一致性。</li>
+<li><strong>同步原语</strong>：操作系统提供的同步原语（如信号量、互斥锁等）同样可用于VFS层面的同步控制，尤其是在涉及更复杂的并发控制策略时。</li>
+</ul>
+<p>空间管理</p>
+<p>VFS不仅管理文件的逻辑表示，还间接参与空间的管理，尽管具体的磁盘块分配和空闲空间跟踪通常由下层的文件系统实现：</p>
+<ul>
+<li><strong>元数据抽象</strong>：VFS定义了统一的元数据接口，允许上层查询文件大小、链接数等信息，而底层文件系统负责实际的物理空间分配和释放。</li>
+<li><strong>空间分配策略</strong>：虽然具体的块分配算法（如位图、B树等）由具体文件系统实现，VFS确保了上层应用可以通过标准接口请求和释放空间，而不必关心底层细节。</li>
+<li><strong>跨文件系统操作</strong>：VFS使得不同文件系统可以挂载在同一目录树下，每个文件系统独立管理自己的空间，VFS提供了一个统一的视角，让上层可以透明地访问和管理这些不同文件系统中的文件。</li>
+</ul>
+<p>总之，虚拟文件系统通过提供统一的接口和抽象，简化了对文件系统多样性的管理，同时也为并发访问控制和空间管理提供了一个基础框架，确保了操作的高效和一致性。</p>
+<h5 id="FLASH应用层"><a href="#FLASH应用层" class="headerlink" title="FLASH应用层"></a>FLASH应用层</h5><p>这个应用层是给到程序员的啊，一般都是在文件系统之上使用文件io去操作和处理很多事情，增删查改；还有使用数据库、日志等操作，这些操作都是看起来简答的api调用，实际上是底层驱动和文件系统做了很多处理的。写好应用层就可以给用户使用啦，这里要多注意判断的判断、纠错、校验、以及用户体验等问题。</p>
+<h5 id="FLAS用户层"><a href="#FLAS用户层" class="headerlink" title="FLAS用户层"></a>FLAS用户层</h5><p>就是用户看到的数据啦，我们使用文件管理系统就可以知道当前的状态了，此时可以使用上位机的办法或者指令的办法去固态进行处理和操作，其实就是对文件系统的那些io操作进行处理而已。比如打开我的电脑，就可以直接看到固态空间和使用情况，还可以直接进行修改，这个就是一个非常简单的使用了，已经是高度封装和抽象了。</p>
+<h5 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h5><p>FLASH的原理和使用是简单的，如果直接为了实现通信和简单交互，其实是很简单的，但是现实是，用户是要体验的，要速率的，要稳定性，要可靠安全高效的，这个时候就要文件系统做非常大的校验和判断，还有底层的代码要不断优化，增加校验，增加纠错，增加速率，甚至修改通信协议等诸多问题，来给用户带来超棒的体验。</p>
+
     </div>
 
     
@@ -332,7 +372,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-5"><a class="nav-link" href="#%E8%B5%B7%E5%9B%A0"><span class="nav-number">1.</span> <span class="nav-text">起因</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#NANOFlash%E5%BA%95%E5%B1%82%E9%A9%B1%E5%8A%A8"><span class="nav-number">2.</span> <span class="nav-text">NANOFlash底层驱动</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#NORFlash%E5%BA%95%E5%B1%82%E6%89%A9%E5%AE%B9%E6%93%8D%E4%BD%9C"><span class="nav-number">3.</span> <span class="nav-text">NORFlash底层扩容操作</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#QSPI"><span class="nav-number">4.</span> <span class="nav-text">QSPI</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E6%96%87%E4%BB%B6%E7%AE%A1%E7%90%86%E7%B3%BB%E7%BB%9F"><span class="nav-number">5.</span> <span class="nav-text">文件管理系统</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#FLASH%E8%AF%BB%E5%86%99%E5%B0%81%E8%A3%85"><span class="nav-number">6.</span> <span class="nav-text">FLASH读写封装</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#FLASH%E5%BA%94%E7%94%A8%E5%B1%82%E9%A9%B1%E5%8A%A8"><span class="nav-number">7.</span> <span class="nav-text">FLASH应用层驱动</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E6%80%BB%E7%BB%93"><span class="nav-number">8.</span> <span class="nav-text">总结</span></a></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-5"><a class="nav-link" href="#%E8%B5%B7%E5%9B%A0"><span class="nav-number">1.</span> <span class="nav-text">起因</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#NANOFlash%E5%BA%95%E5%B1%82%E9%A9%B1%E5%8A%A8"><span class="nav-number">2.</span> <span class="nav-text">NANOFlash底层驱动</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#NORFlash%E5%BA%95%E5%B1%82%E6%89%A9%E5%AE%B9%E6%93%8D%E4%BD%9C"><span class="nav-number">3.</span> <span class="nav-text">NORFlash底层扩容操作</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#QSPI"><span class="nav-number">4.</span> <span class="nav-text">QSPI</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E6%96%87%E4%BB%B6%E7%AE%A1%E7%90%86%E7%B3%BB%E7%BB%9F"><span class="nav-number">5.</span> <span class="nav-text">文件管理系统</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E8%99%9A%E6%8B%9F%E6%96%87%E4%BB%B6%E7%B3%BB%E7%BB%9F%EF%BC%88Virtual-File-System-VFS%EF%BC%89"><span class="nav-number">6.</span> <span class="nav-text">虚拟文件系统（Virtual File System, VFS）</span></a><ol class="nav-child"><li class="nav-item nav-level-6"><a class="nav-link" href="#%E5%B9%B6%E5%8F%91%E8%AE%BF%E9%97%AE%E6%8E%A7%E5%88%B6"><span class="nav-number">6.1.</span> <span class="nav-text">并发访问控制</span></a></li></ol></li><li class="nav-item nav-level-5"><a class="nav-link" href="#FLASH%E5%BA%94%E7%94%A8%E5%B1%82"><span class="nav-number">7.</span> <span class="nav-text">FLASH应用层</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#FLAS%E7%94%A8%E6%88%B7%E5%B1%82"><span class="nav-number">8.</span> <span class="nav-text">FLAS用户层</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E6%80%BB%E7%BB%93"><span class="nav-number">9.</span> <span class="nav-text">总结</span></a></li></ol></div>
       </div>
       <!--/noindex-->
 
@@ -423,7 +463,7 @@
 
  <div class="theme-info">
   <div class="powered-by"></div>
-  <span class="post-count">博客全站共50.6k字</span>
+  <span class="post-count">博客全站共53.4k字</span>
 </div>
 
         
