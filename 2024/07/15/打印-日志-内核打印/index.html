@@ -1,0 +1,510 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 6.3.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/location.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/eye.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/earth.png">
+  <link rel="mask-icon" href="/images/ikun.png" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+  <link rel="stylesheet" href="/lib/pace/pace-theme-minimal.min.css">
+  <script src="/lib/pace/pace.min.js"></script>
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"example.com","root":"/","scheme":"Pisces","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
+  </script>
+
+  <meta name="description" content="打印学C语言第一个就是printf(“Hello World\n”)；这个可以说基本就是说有程序员的开头了，若干年之后再次看到这句话，真的会有不同的感觉吧。回到正题，为什么是打印呢？因为在上古时代，那些机械和电脑非常非常打的时候，输出是没有屏幕的，但是人们想要一个记录和输出，此时就是打卡机了，就是在纸上打孔，这个孔就是数据输出啦，随着慢慢发展，也就沿用下来了。 打印操作这个真的太多了，而且分平台，">
+<meta property="og:type" content="article">
+<meta property="og:title" content="打印 日志 内核打印">
+<meta property="og:url" content="http://example.com/2024/07/15/%E6%89%93%E5%8D%B0-%E6%97%A5%E5%BF%97-%E5%86%85%E6%A0%B8%E6%89%93%E5%8D%B0/index.html">
+<meta property="og:site_name" content="我要成为嵌入式高手[doge]">
+<meta property="og:description" content="打印学C语言第一个就是printf(“Hello World\n”)；这个可以说基本就是说有程序员的开头了，若干年之后再次看到这句话，真的会有不同的感觉吧。回到正题，为什么是打印呢？因为在上古时代，那些机械和电脑非常非常打的时候，输出是没有屏幕的，但是人们想要一个记录和输出，此时就是打卡机了，就是在纸上打孔，这个孔就是数据输出啦，随着慢慢发展，也就沿用下来了。 打印操作这个真的太多了，而且分平台，">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2024-07-15T13:31:12.000Z">
+<meta property="article:modified_time" content="2024-07-15T14:15:36.672Z">
+<meta property="article:author" content="CSM">
+<meta property="article:tag" content="OS">
+<meta name="twitter:card" content="summary">
+
+<link rel="canonical" href="http://example.com/2024/07/15/%E6%89%93%E5%8D%B0-%E6%97%A5%E5%BF%97-%E5%86%85%E6%A0%B8%E6%89%93%E5%8D%B0/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+
+  <title>打印 日志 内核打印 | 我要成为嵌入式高手[doge]</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">我要成为嵌入式高手[doge]</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="home fa-fw"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="user fa-fw"></i>关于</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="tags fa-fw"></i>标签<span class="badge">27</span></a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="th fa-fw"></i>分类<span class="badge">10</span></a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="archive fa-fw"></i>归档<span class="badge">70</span></a>
+
+  </li>
+        <li class="menu-item menu-item-resources">
+
+    <a href="/resources/" rel="section"><i class="download fa-fw"></i>嵌入式资源</a>
+
+  </li>
+        <li class="menu-item menu-item-公益">
+
+    <a href="https://gongyi.qq.com/" rel="noopener" target="_blank"><i class="bilibili_icon fa-fw"></i>公益</a>
+
+  </li>
+  </ul>
+</nav>
+
+
+
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2024/07/15/%E6%89%93%E5%8D%B0-%E6%97%A5%E5%BF%97-%E5%86%85%E6%A0%B8%E6%89%93%E5%8D%B0/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/csm.png">
+      <meta itemprop="name" content="CSM">
+      <meta itemprop="description" content="应用是应用，驱动是驱动！你要是偏要应用干驱动，哥们，你怎么不直接薪资翻倍啊！[🦀]">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="我要成为嵌入式高手[doge]">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          打印 日志 内核打印
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+              
+
+              <time title="创建时间：2024-07-15 21:31:12 / 修改时间：22:15:36" itemprop="dateCreated datePublished" datetime="2024-07-15T21:31:12+08:00">2024-07-15</time>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <h5 id="打印"><a href="#打印" class="headerlink" title="打印"></a>打印</h5><p>学C语言第一个就是printf(“Hello World\n”)；这个可以说基本就是说有程序员的开头了，若干年之后再次看到这句话，真的会有不同的感觉吧。回到正题，为什么是打印呢？因为在上古时代，那些机械和电脑非常非常打的时候，输出是没有屏幕的，但是人们想要一个记录和输出，此时就是打卡机了，就是在纸上打孔，这个孔就是数据输出啦，随着慢慢发展，也就沿用下来了。</p>
+<h5 id="打印操作"><a href="#打印操作" class="headerlink" title="打印操作"></a>打印操作</h5><p>这个真的太多了，而且分平台，分语法，分架构，分系统等等，不过，现在是很少用打印机了，写代码还用打印机才是逆天啊。所以，一般都是屏幕直接现实或者命令行输出。</p>
+<p>C语言就是fputc、printf等操作；linuxc就是printf、perror等操作；Qt就是qdebug咯；python就是print啦；自然还有mcu那些非windows，非控制台的环境了，他们就得重定向才能使用打印函数哦，就是把打印函数重写成串口发送等函数。<strong>这里要提一下啊了，为什么，嵌入式不能使用控制台。我当时学c语言的，都是devC++和gcc编译的，我觉得有控制台才对啊，为什么mcu就不能有控制台那些东西呢，还要费尽心思搞那些环境和芯片配置，后面懂得越来越多才知道，确实所有编译都可以算是交叉编译，因为都是为了满足一个平台和架构的特性，之所以在windows上面可以跑控制台是因为，他本来就是用自己的编译链，本来就是跑自己环境和架构，同理因为gcc是支持linux环境，所以linux才能用gcc编译，然后在命令行中打印出来，后面又要使用交叉编译才能烧录到特定的架构的芯片上，因为linux环境和架构是同目标的芯片又是不同的，所以还得要一次交叉编译才行。</strong></p>
+<p>花活，多颜色打印：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br></pre></td><td class="code"><pre><span class="line">一个朋友 <span class="number">11</span>:<span class="number">24</span>:<span class="number">59</span></span><br><span class="line"><span class="meta">#<span class="keyword">ifndef</span> _COLOR_H_</span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> _COLOR_H_</span></span><br><span class="line"></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> NONE                  <span class="string">&quot;\e[0m&quot;</span>           <span class="comment">//清除颜色，即之后的打印为正常输出，之前的不受影响</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> BLACK                 <span class="string">&quot;\e[0;30m&quot;</span>         <span class="comment">//深黑</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> L_BLACK             <span class="string">&quot;\e[1;30m&quot;</span>            <span class="comment">//亮黑，偏灰褐</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> RED                     <span class="string">&quot;\e[0;31m&quot;</span>      <span class="comment">//深红，暗红</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> L_RED                 <span class="string">&quot;\e[1;31m&quot;</span>        <span class="comment">//鲜红</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> GREEN                <span class="string">&quot;\e[0;32m&quot;</span>         <span class="comment">//深绿，暗绿</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> L_GREEN            <span class="string">&quot;\e[1;32m&quot;</span>           <span class="comment">//鲜绿</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> BROWN               <span class="string">&quot;\e[0;33m&quot;</span>          <span class="comment">//深黄，暗黄</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> YELLOW              <span class="string">&quot;\e[1;33m&quot;</span>          <span class="comment">//鲜黄</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> BLUE                    <span class="string">&quot;\e[0;34m&quot;</span>      <span class="comment">//深蓝，暗蓝</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> L_BLUE                <span class="string">&quot;\e[1;34m&quot;</span>        <span class="comment">//亮蓝，偏白灰</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> PURPLE               <span class="string">&quot;\e[0;35m&quot;</span>         <span class="comment">//深粉，暗粉，偏暗紫</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> L_PURPLE           <span class="string">&quot;\e[1;35m&quot;</span>           <span class="comment">//亮粉，偏白灰</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> CYAN                   <span class="string">&quot;\e[0;36m&quot;</span>       <span class="comment">//暗青色</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> L_CYAN               <span class="string">&quot;\e[1;36m&quot;</span>         <span class="comment">//鲜亮青色</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> GRAY                   <span class="string">&quot;\e[0;37m&quot;</span>       <span class="comment">//灰色</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> WHITE                  <span class="string">&quot;\e[1;37m&quot;</span>       <span class="comment">//白色，字体粗一点，比正常大，比bold小</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> BOLD                    <span class="string">&quot;\e[1m&quot;</span>         <span class="comment">//白色，粗体</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> UNDERLINE         <span class="string">&quot;\e[4m&quot;</span>               <span class="comment">//下划线，白色，正常大小</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> BLINK                   <span class="string">&quot;\e[5m&quot;</span>         <span class="comment">//闪烁，白色，正常大小</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> REVERSE            <span class="string">&quot;\e[7m&quot;</span>              <span class="comment">//反转，即字体背景为白色，字体为黑色</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> HIDE                     <span class="string">&quot;\e[8m&quot;</span>        <span class="comment">//隐藏</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> CLEAR                  <span class="string">&quot;\e[2J&quot;</span>          <span class="comment">//清除</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> CLRLINE               <span class="string">&quot;\r\e[K&quot;</span>          <span class="comment">//清除行</span></span></span><br><span class="line"></span><br><span class="line"><span class="meta">#<span class="keyword">endif</span></span></span><br><span class="line"></span><br><span class="line"> <span class="built_in">printf</span>(<span class="string">&quot;This is a character control test!\n&quot;</span> );</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">&quot;[%2u]&quot;</span> CLEAR <span class="string">&quot;CLEAR\n&quot;</span> NONE, __LINE__);</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">&quot;[%2u]&quot;</span> BLACK <span class="string">&quot;BLACK &quot;</span> L_BLACK <span class="string">&quot;L_BLACK\n&quot;</span> NONE, __LINE__);</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">&quot;[%2u]&quot;</span> RED <span class="string">&quot;RED &quot;</span> L_RED <span class="string">&quot;L_RED\n&quot;</span> NONE, __LINE__);</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">&quot;[%2u]&quot;</span> GREEN <span class="string">&quot;GREEN &quot;</span> L_GREEN <span class="string">&quot;L_GREEN\n&quot;</span> NONE, __LINE__);</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">&quot;[%2u]&quot;</span> BROWN <span class="string">&quot;BROWN &quot;</span> YELLOW <span class="string">&quot;YELLOW\n&quot;</span> NONE, __LINE__);</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">&quot;[%2u]&quot;</span> BLUE <span class="string">&quot;BLUE &quot;</span> L_BLUE <span class="string">&quot;L_BLUE\n&quot;</span> NONE, __LINE__);</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">&quot;[%2u]&quot;</span> PURPLE <span class="string">&quot;PURPLE &quot;</span> L_PURPLE <span class="string">&quot;L_PURPLE\n&quot;</span> NONE, __LINE__);</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">&quot;[%2u]&quot;</span> CYAN <span class="string">&quot;CYAN &quot;</span> L_CYAN <span class="string">&quot;L_CYAN\n&quot;</span> NONE, __LINE__);</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">&quot;[%2u]&quot;</span> GRAY <span class="string">&quot;GRAY &quot;</span> WHITE <span class="string">&quot;WHITE\n&quot;</span> NONE, __LINE__);</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">&quot;[%2u]&quot;</span> BOLD <span class="string">&quot;BOLD\n&quot;</span> NONE, __LINE__);</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">&quot;[%2u]&quot;</span> UNDERLINE <span class="string">&quot;UNDERLINE\n&quot;</span> NONE, __LINE__);</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">&quot;[%2u]&quot;</span> BLINK <span class="string">&quot;BLINK\n&quot;</span> NONE, __LINE__);</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">&quot;[%2u]&quot;</span> REVERSE <span class="string">&quot;REVERSE\n&quot;</span> NONE, __LINE__);</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">&quot;[%2u]&quot;</span> HIDE <span class="string">&quot;HIDE\n&quot;</span> NONE, __LINE__);</span><br><span class="line"></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p><a target="_blank" rel="noopener" href="https://blog.csdn.net/MoDa_Li/article/details/82156888">C语言中使用printf()打印漂亮的颜色字体_c语言printf颜色-CSDN博客</a></p>
+<p>这里巧妙的使用字符串的自动拼接，而且不只是改变字体颜色那么简单哦，还可以改背景色，前景色等诸多操作，感兴趣去了解一下。给自己的枯燥无味的debug生活一点乐子咯。还有那种ai雌小鬼助手，打印出来的那些杂鱼啥的特殊颜色字体应该都是这样可以实现的哦。</p>
+<h5 id="日志"><a href="#日志" class="headerlink" title="日志"></a>日志</h5><p>一开始，我看到那些神秘兮兮的log函数，我真的觉得有什么特别牛的东西，后面我才知道，他就是打印的一层封装，他本质还是打印函数，不过是会打印出操作、警告、操作者等属性，就是打印之前还会把其他属性也打印出来。这个在mcu中，因为空间的问题，所以都是直接打印出来没有保存的，如果使用文件系统就可以存放到文件系统，这样可以命令行去访问特定文件来知道干了什么，前提是空间要够啊。linux就不用说了，你敲的每一行指令，都有log历史记录的，用户是谁，干了什么，是否危险，什么权限都知道的。</p>
+<h5 id="内核打印"><a href="#内核打印" class="headerlink" title="内核打印"></a>内核打印</h5><p>这个就是搞linux内核驱动的啦。Linux 内核共提供了八种不同的消息级别，分为级别 0~7。数值越大，表示级别越低，对应的消息越不重要。相应的<a target="_blank" rel="noopener" href="https://so.csdn.net/so/search?q=%E5%AE%8F%E5%AE%9A%E4%B9%89&spm=1001.2101.3001.7020">宏定义</a>在 <code>include/linux/kern_levels.h</code> 文件中。</p>
+<p>KERN_EMERG 表示紧急事件，一般是系统崩溃之前提示的消息；<br>KERN_ALERT 表示必须立即采取行动的消息；<br>KERN_CRIT 表示临界状态，通常涉及严重的硬件或软件操作失败；<br>KERN_ERR 用于报告错误状态，设备驱动程序会经常使用该级别来报告来自硬件的问题；<br>KERN_WARNING 对可能出现问题的情况进行警告，这类情况通常不会对系统造成严重的问题；<br>KERN_NOTICE 表示有必要进行提示的正常情形，许多与安全相关的状况用这个级别进行汇报；<br>KERN_INFO 表示内核提示信息，很多驱动程序在启动的时候，用这个级别打印出它们找到的硬件信息；<br>KERN_DEBUG 用于调试信息。</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">define</span> KERN_EMERG  KERN_SOH <span class="string">&quot;0&quot;</span>    <span class="comment">/* system is unusable */</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> KERN_ALERT  KERN_SOH <span class="string">&quot;1&quot;</span>    <span class="comment">/* action must be taken immediately */</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> KERN_CRIT   KERN_SOH <span class="string">&quot;2&quot;</span>    <span class="comment">/* critical conditions */</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> KERN_ERR    KERN_SOH <span class="string">&quot;3&quot;</span>    <span class="comment">/* error conditions */</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> KERN_WARNING    KERN_SOH <span class="string">&quot;4&quot;</span>    <span class="comment">/* warning conditions */</span>                                              </span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> KERN_NOTICE KERN_SOH <span class="string">&quot;5&quot;</span>    <span class="comment">/* normal but significant condition */</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> KERN_INFO   KERN_SOH <span class="string">&quot;6&quot;</span>    <span class="comment">/* informational */</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> KERN_DEBUG  KERN_SOH <span class="string">&quot;7&quot;</span>    <span class="comment">/* debug-level messages */</span></span></span><br></pre></td></tr></table></figure>
+
+<p>注意：打印消息的级别大于控制台的打印级别时，才能出现在终端。并且：数字越大，级别越低</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ <span class="built_in">cat</span> /proc/sys/kernel/printk</span><br><span class="line">4				    	4					1					7</span><br></pre></td></tr></table></figure>
+
+<p>控制台打印级别    消息的默认打印级别      控制台最大打印级别       控制台最小级别</p>
+<p>四个数值的含义如下：</p>
+<ul>
+<li>控制台日志级别：优先级高于该值的消息将被打印至控制台；</li>
+<li>默认的消息日志级别：将用该优先级来打印没有优先级的消息（即 printk 没有指定消息级别）；</li>
+<li>最低的控制台日志级别：控制台日志级别可被设置的最小值（最高优先级）；</li>
+<li>默认的控制台日志级别：控制台日志级别的缺省值。</li>
+</ul>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">printk(&quot;%s:%s:%d\n&quot;, __FILE__, __func__, __LINE__);   //此时是没有设置打印等级的，就是默认4</span><br><span class="line">printk(KERN_DEBUG &quot;HELLO LINUX PRINTK\n&quot;);		//这个就是设置等级啦，KERN_DEBUG</span><br></pre></td></tr></table></figure>
+
+<p><a target="_blank" rel="noopener" href="https://blog.csdn.net/weixin_45437140/article/details/124309795">Linux内核之 printk 打印_linux printk-CSDN博客</a></p>
+<h5 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h5><p>打印是入门和快速测试的基础，日志是可以记录所有操作，可以保存到本地，这样其实是更加有利于bug复现的，还有调试交互，后续设计的，不过mcu和那些空间本来就少的设备是真的遭不住的。内核打印，就是写驱动的人才用得到的东西，因为此时打印函数都是无效的了，只能通过内核提供的打印函数才能实现打印效果哦。</p>
+
+    </div>
+
+    
+    
+    
+
+    
+       <div>
+         <div>
+    
+        <div style="text-align:center;color: #ccc;font-size:24px;">-------------下次的来访是什么时候呢[doge]-------------</div>
+    
+</div>
+       </div>
+    
+        
+
+<div>
+<ul class="post-copyright">
+  <li class="post-copyright-author">
+    <strong>本文作者： </strong>CSM
+  </li>
+  <li class="post-copyright-link">
+    <strong>本文链接：</strong>
+    <a href="http://example.com/2024/07/15/%E6%89%93%E5%8D%B0-%E6%97%A5%E5%BF%97-%E5%86%85%E6%A0%B8%E6%89%93%E5%8D%B0/" title="打印 日志 内核打印">http://example.com/2024/07/15/打印-日志-内核打印/</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>版权声明： </strong>本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-CSM/4.0/" rel="noopener" target="_blank"><i class="fab fa-fw fa-creative-commons"></i>BY-CSM</a> 许可协议。转载请注明出处！
+  </li>
+</ul>
+</div>
+
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/OS/" rel="tag"># OS</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2024/07/15/TIM%E4%B8%89%E5%A4%A7%E6%97%B6%E5%9F%BA/" rel="prev" title="TIM三大时基">
+      <i class="fa fa-chevron-left"></i> TIM三大时基
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2024/07/15/IPC%E6%A1%86%E6%9E%B6/" rel="next" title="IPC框架">
+      IPC框架 <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-5"><a class="nav-link" href="#%E6%89%93%E5%8D%B0"><span class="nav-number">1.</span> <span class="nav-text">打印</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E6%89%93%E5%8D%B0%E6%93%8D%E4%BD%9C"><span class="nav-number">2.</span> <span class="nav-text">打印操作</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E6%97%A5%E5%BF%97"><span class="nav-number">3.</span> <span class="nav-text">日志</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E5%86%85%E6%A0%B8%E6%89%93%E5%8D%B0"><span class="nav-number">4.</span> <span class="nav-text">内核打印</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E6%80%BB%E7%BB%93"><span class="nav-number">5.</span> <span class="nav-text">总结</span></a></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="CSM"
+      src="/images/csm.png">
+  <p class="site-author-name" itemprop="name">CSM</p>
+  <div class="site-description" itemprop="description">应用是应用，驱动是驱动！你要是偏要应用干驱动，哥们，你怎么不直接薪资翻倍啊！[🦀]</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">70</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">10</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">27</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/define-error-0" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;define-error-0" rel="noopener" target="_blank"><i class="github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:csmznbo@gmail.com" title="E-Mail → mailto:csmznbo@gmail.com" rel="noopener" target="_blank"><i class="envelope fa-fw"></i>E-Mail</a>
+      </span>
+  </div>
+
+
+  <div class="links-of-blogroll motion-element">
+    <div class="links-of-blogroll-title"><i class="fa fa-link fa-fw"></i>
+      Links
+    </div>
+    <ul class="links-of-blogroll-list">
+        <li class="links-of-blogroll-item">
+          <a href="https://bilibili.com/" title="https:&#x2F;&#x2F;bilibili.com" rel="noopener" target="_blank">B站</a>
+        </li>
+        <li class="links-of-blogroll-item">
+          <a href="https://baidu.com/" title="https:&#x2F;&#x2F;baidu.com" rel="noopener" target="_blank">百度</a>
+        </li>
+        <li class="links-of-blogroll-item">
+          <a href="https://fishc.com.cn/" title="https:&#x2F;&#x2F;fishc.com.cn" rel="noopener" target="_blank">鱼C论坛</a>
+        </li>
+    </ul>
+  </div>
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2024</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">CSM</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://pisces.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Pisces</a> 强力驱动
+  </div>
+
+ <div class="theme-info">
+  <div class="powered-by"></div>
+  <span class="post-count">博客全站共57.4k字</span>
+</div>
+
+        
+<div class="busuanzi-count">
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+</div>
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  
+  <script color='0,0,255' opacity='0.5' zIndex='-1' count='99' src="/lib/canvas-nest/canvas-nest.min.js"></script>
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+  <script defer src="/lib/three/three.min.js"></script>
+    <script defer src="/lib/three/canvas_sphere.min.js"></script>
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+<script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"pluginRootPath":"live2dw/","pluginJsPath":"lib/","pluginModelPath":"assets/","tagMode":false,"debug":false,"model":{"jsonPath":"/live2dw/assets/hijiki.model.json"},"display":{"position":"right","width":225,"height":450,"hOffset":-15,"vOffset":-15},"mobile":{"show":true},"react":{"opacity":0.7},"log":false});</script></body>
+</html>
