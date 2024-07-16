@@ -134,7 +134,7 @@
   </li>
         <li class="menu-item menu-item-archives">
 
-    <a href="/archives/" rel="section"><i class="archive fa-fw"></i>归档<span class="badge">70</span></a>
+    <a href="/archives/" rel="section"><i class="archive fa-fw"></i>归档<span class="badge">72</span></a>
 
   </li>
         <li class="menu-item menu-item-resources">
@@ -170,6 +170,195 @@
 
           <div class="content index posts-expand">
             
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2024/03/28/OS%E7%9A%84%E9%80%89%E6%8B%A9/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/csm.png">
+      <meta itemprop="name" content="CSM">
+      <meta itemprop="description" content="应用是应用，驱动是驱动！你要是偏要应用干驱动，哥们，你怎么不直接薪资翻倍啊！[🦀]">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="我要成为嵌入式高手[doge]">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2024/03/28/OS%E7%9A%84%E9%80%89%E6%8B%A9/" class="post-title-link" itemprop="url">OS的选择</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2024-03-28 22:25:10" itemprop="dateCreated datePublished" datetime="2024-03-28T22:25:10+08:00">2024-03-28</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2024-05-28 23:21:54" itemprop="dateModified" datetime="2024-05-28T23:21:54+08:00">2024-05-28</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/OS/" itemprop="url" rel="index"><span itemprop="name">OS</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h5 id="OS是什么"><a href="#OS是什么" class="headerlink" title="OS是什么"></a>OS是什么</h5><p>OS就是operating system，就是操作系统。系统就是为了资源的充分利用，这个定义是非常含糊的，因为fat32文件系统，系统内核，电源管理系统，tcp\ip协议栈等，都可以算是资源的利用和管理，所以，嵌入式系统是需要裁剪和定制的。系统没有高低贵贱之分，只是是否合适，是否满足。当然，驾驭更高级的系统，肯定是要求比驾驭低级的系统需要更多知识点和技术的，需要知道更多原理和技术。<br>但是两者的本质和使命都是一样，能完成需求的系统就是好系统。虽然系统本身也会消耗资源，但是这是为了更好的分配和高效使用</p>
+<h5 id="OS的属性"><a href="#OS的属性" class="headerlink" title="OS的属性"></a>OS的属性</h5><p>OS有可抢占和非可抢占两种，可抢占就是，可以直接打断当前的任务，把状态保持到寄存器中去执行优先级高的任务。这就是抢占式的OS系统，实际上，大部分的RTOS都是抢占式系统，设置都没有响应优先级，全都是抢占优先级为主。因为实时真的太重要了。</p>
+<p>比如freertos，我们一般都是设为全抢占为主的，但是其实是可以设为响应的，这也有好处，有些任务确实优先级同级，但是不好中断。</p>
+<p>还有FCFS 先来先服务的OS，就是谁先到就绪列表，下一个就运行谁，这是有点前后台的味道了。这个就是开触发顺序来进行的任务排序，作为一些特殊的输入设备来说，可能有用吧。</p>
+<p>短任务有限算法，这个就是提前制定好所有任务的时间消耗，在当前任务运行完毕之后，在就绪列表中，找到耗时最短的任务有限调用。</p>
+<p>时间片调度，这个是作用于同优先级之间的，但是要注意切换中间也是会消耗大量资源的，所有想要权衡调度和时间之间的关系，看都运行都公平，真的值得消耗资源吗？</p>
+<h5 id="OS的种类"><a href="#OS的种类" class="headerlink" title="OS的种类"></a>OS的种类</h5><p>OS一般有分时系统，实时系统，批处理系统。</p>
+<p>分时系统就是多个用户，比如linux，windows。<br>实时系统就是rt-thread，ucos，freertos<br>批处理就是集群，大批量的服务器的OS。</p>
+<p>一般使用分时和实时系统，如下所示：</p>
+<p>以下是我个人觉得的难易程度进行分类<br>1.裸机<br>一般有MCU SOC 那些的裸机的开发，这些只适合简单，单一线程的工作</p>
+<p>2.RTOS<br>就连cube都支持直接使用freertos一键生成，还有ucos thread-x那些，本质还是调用API，是rtos接管了很多寄存器和上下文切换的那些中断操作等</p>
+<p>3.rt-thread<br>这个就有点难度了，它可以像freertos那样简单的就调用api实现线程，钩子，空间申请等。但是它有它们没有的，第一个就是BSP，第二个ENV第三个类linux系统，第四个串口操作这个BSP还是有点含金量的，很规范，对于移植来说，就是锦上添花的好东西啊。ENV，这个一下子就让整个编译BSP变得高大上了，还有menucofing呢类linux驱动开发，因为还有一堆宏操作，就是使用宏来把函数添加到列表中的操作等，对于没有接触过驱动开发的人来说，甚至没看懂这些宏定义为什么可以把函数添加进入模块。还有那些文件操作集那些。不得了，不得了，你使用rtt还能使用命令行操作，就是把上述模块添加之后，可以在打开特定连接的打印串口，实现串口输入指令来调用模块函数，这真的有操作的</p>
+<p>4.linux 主板OS(电脑主板，识别设备，调度起来)  树莓派<br>这个难度就非常吓人了，在rtt的基础上面还得学习设备树，字符设备，平台设备，混杂设备，主设备号，次设备号。而且你会发现一件事，rtt是没人写驱动因为驱动cube已经生成了，写好kconfig文件就可以了。但是linux不一样了，驱动得人来写才行得。而且还有应用驱动，这也是rtt没有的。</p>
+<p>5.IOS 安卓 鸿蒙 CUDE(GPU的那个系统)<br>可没说让你去搞应用开发，是去理解和写驱动那些，不同机型，底层得io，设备啥的都是不一样的，这个一般都是芯片厂商写的，如果以后进了芯片厂，这些就得要掌握了</p>
+<p>6.windows  Mac  Ubuntu等<br>这个别想了，多年高强度迭代、一个人不可能掌握，能熟练使用就非常了不起了，而且还有好多没开源，开源学习成本太高了，回报基本为0.</p>
+<h5 id="OS的选择"><a href="#OS的选择" class="headerlink" title="OS的选择"></a>OS的选择</h5><p>一定要明白一点，OS没有高低贵贱之分，在嵌入式里面没有优越，只有适合，只有满足即可，一切为了需求，一切够用即可。<br>MCU不是一定要上系统，难道只有几个功能，还要几个任务相互抢？浪费空间，这个适合都可以上51了。</p>
+<p>就算是SOC，去看厂商给的代码，大概率都是有一个rtos的demo，为什么？因为不见得一定要上类linux1或者linux那些系统啊，rtos就够用了啊！有的时候，想要的就是快速的无条件的实时响应！所以适合简单而好用的小设备，大设备因为太多硬件的，光用rtos很难<br>进行完美的资源控制和调度了，开发也困难。</p>
+<p>至于那些复杂，多应用的，这个时候就要利用mmu，来给空间进行更多操作，底层全部丢给系统，这样上层才可以随心所欲实现应用切换，应用下载的功能。虽然mcu也是可以实现动态加载模组(就是写一个可以控制sram的程序，把app下载到flash，使用的时候<br>，把代码拷贝到空余的sram空间，这就想手机一样，可以使用空间，可以释放空间，而且平时不占据sram，sram只有一个sram控制系统),但是，太复杂了，而且引脚躲起来了，完全就不是开发了，这点厂商也想到了。</p>
+<p>再高级一点的设备就上安卓，鸿蒙了，澎湃OS等了。再高级一点就是主机和pc端了啊，上linux，上windows等</p>
+<p>然后就是服务器了，这个不用考虑了，只能是linux系统了，可以Ubuntu，kail等</p>
+<p>note：优先级也是有动静态之分的，一般我们使用的rtos最好都是固定好优先级，不想那种linux高级os可以动态修改优先级，动态释放和调用资源，因为rtos本身就是为了高效、实时和稳定。功能越复杂，可能的问题就越多，这是无法避免的</p>
+<h5 id="结语"><a href="#结语" class="headerlink" title="结语"></a>结语</h5><p>千万不要神话系统和技术，觉得越高级系统就越神圣，其实不是的，我们一切都是为了需求，没有任何一个系统是完美的，都是在自己所在领域非常好用，作为嵌入式开发人员，也不要为此而产生过度的优越感，这样可能会让自己止步不前，从而顾此失彼，看不起其他技术。这一点就要牢牢铭记，沿用一段文章内容。如下</p>
+<p><img src="/../Blogas_images/%E6%8A%80%E6%9C%AF%E4%B8%8D%E6%98%AF%E9%AB%98%E4%BA%BA%E4%B8%80%E7%AD%89.jpg"></p>
+
+      
+    </div>
+
+    
+    
+    
+
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2024/03/27/github%E7%AE%A1%E7%90%86/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/csm.png">
+      <meta itemprop="name" content="CSM">
+      <meta itemprop="description" content="应用是应用，驱动是驱动！你要是偏要应用干驱动，哥们，你怎么不直接薪资翻倍啊！[🦀]">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="我要成为嵌入式高手[doge]">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2024/03/27/github%E7%AE%A1%E7%90%86/" class="post-title-link" itemprop="url">github管理</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2024-03-27 20:40:37" itemprop="dateCreated datePublished" datetime="2024-03-27T20:40:37+08:00">2024-03-27</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2024-05-08 21:03:07" itemprop="dateModified" datetime="2024-05-08T21:03:07+08:00">2024-05-08</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Git/" itemprop="url" rel="index"><span itemprop="name">Git</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h5 id="git-管理"><a href="#git-管理" class="headerlink" title="git 管理"></a>git 管理</h5><p>git有啥东西？不就是add、commit、push 、 pull 、reset 、log 、reflog 、status  、tag、 branch  、checkout….<br>常用也就是这些了，但是，还有很多其他的操作，这些操作是更加面向团队和管理的首先，pr，还有分支管理和分支保护，管理员，fork，ssh</p>
+<h5 id="git-ssh"><a href="#git-ssh" class="headerlink" title="git ssh"></a>git ssh</h5><p>ssh就是建立一个安全的下载链接罢了，但是如果是下载私有仓库，那还是得进<br>行github登录才能实现下载，不是说有ssh就可以直接下载了</p>
+<h5 id="git-fork"><a href="#git-fork" class="headerlink" title="git fork"></a>git fork</h5><p>我们经常可以看到github上面好多代码贡献的，比如linux，这个提交量<br>非常大，而且fork数量也非常多。<br>fork不等于clone，更不等于zip下载。</p>
+<p>zip下载就是下载一个版本或者当前版本，常见就是Tag进行版本管理，这些是没有.git。</p>
+<p>clone和ssh就是把整个开发的过程的git都下载过来，这个，就是直接把开源库复制一份到自己的分布式主机上面。此时是无法通过push提交到原仓库的。那为什么gitee那些又可以拉人，又可以下载和提交呢，那是因为所有clone都是默认为不可push，只有管理员去修改我的访问和提交权限，我才能提交和修改。</p>
+<p>fork 这个就是不一样了，是自己生成一个仓库副本，就是在github上面直接生成这个这个仓库，此时，就要切换为一个新分支，然后，正常提交，然后push给新分支，然后选择pr就可以提交到原仓库中，然后等待原仓库管理员去解决冲突和选择、审批等。如下操作：<br>1.首先打开一个项目，然后直接fork，点击创造fork。这样就会在我的账户下面生成一个fork副本。<br>2.此时可以使用git clone 或者ssh来下载。<br>3.git remote add upstream <a target="_blank" rel="noopener" href="https://github.com/original-author/project-name.git">https://github.com/original-author/project-name.git</a><br>4.新建分支 git checkout -b feature-or-bugfix<br>5.修改和提交代码<br>6.推送分支 git push -u origin feature-or-bugfix<br>7.创建Pull Request (PR)  跟提交分支一样的操作是<br>8.等待原仓库管理人进行处理</p>
+<p>如果不想要fork，就进入到fork仓库，点击settings中的delete仓库，对，就是删库就好了。</p>
+<h5 id="git-branch保护"><a href="#git-branch保护" class="headerlink" title="git branch保护"></a>git branch保护</h5><p>为什么要分支保护啊？我们在看gitee一些项目，可以看到main分支上面有一把锁，这个时候就是管理员把main分支进行上锁，就是变为可读模式，此时就是无法修改。使用的是Lock branch这个一般是短期无需修改才会选择这个状态，这个是管理员随时可以修改得状态。</p>
+<p>一般常用就是Require a pull request before merging，就是只能通过pr合并来实现main分支的更新，不允许直接push提交，这样就可以让整个结构和流程更加简洁和方便管理，防止胡乱提交导致版本错误等诸多问题。</p>
+<p>此时还可以Require approvals，这个就是添加审核人，审核人必须发言和评价才能合并。</p>
+<p>使用Do not allow bypassing the above settings就是管理员和用户一视同仁，这个不建议勾选，因为管理员就是为了快速方便管理分支和仓库，只要管理员认真点，仔细点就行了，只要分支保护做的好，都是ok的</p>
+<h5 id="git-令牌-git-小组"><a href="#git-令牌-git-小组" class="headerlink" title="git 令牌  &amp; git 小组"></a>git 令牌  &amp; git 小组</h5><p>git 令牌<br>这个就是把我的私有仓库通过令牌的方式，给与他人使用权限。这个就是在个人然后点击settings，然后点击Developer settings，<br>然后选择token，两个都可以new和classic，无脑选择new就行了，然后就是权限限制读写操作，然后就仓库限制，时间天数限制。然后点击确认就是生成令牌。使用git 令牌下载只能使用https下载不能使用ssh下载。下载的时候，直接git clone 仓库，然后写上我的名字，然后就输入这个生成的token就可以下载，分享啦。</p>
+<p>git 小组<br>就是拉人到自己的仓库，一起创作进入仓库，点击settings，然后点击collaborators，添加用户的邮箱，然后进入即可，然后就是小组啦自然还有那些企业版啥的，我目前还没用过，我感觉大差不差应该都是这个原理，企业版就是，可以把所有人拉到一个开发组，然后方便拉近仓库和管理。</p>
+<p>git 小组踢人<br>就是在collaborators中，点击删除就好了</p>
+<p>git 小组主动退出<br>点击右上角的头像，点击setting，点击仓库，就可以看到共同工作的仓库，里面有leave按键，然后确认就好了</p>
+<h5 id="git总结"><a href="#git总结" class="headerlink" title="git总结"></a>git总结</h5><p>git一句话分布式管理，这个本质就是为了团队，大家一起工作，小公司可能用不到git，但是为了项目管理，为了整体发展git的重要性非常高。git只是自己一个人用，那么就是失去了分布式的意义了，这不就是变成了一个同步了吗？没用的!!!</p>
+
+      
+    </div>
+
+    
+    
+    
+
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
       
   
   
@@ -864,186 +1053,10 @@
   
   
 
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2024/03/02/%E6%8C%87%E9%92%88%E5%92%8C%E5%AD%97%E7%AC%A6%E4%B8%B2/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/csm.png">
-      <meta itemprop="name" content="CSM">
-      <meta itemprop="description" content="应用是应用，驱动是驱动！你要是偏要应用干驱动，哥们，你怎么不直接薪资翻倍啊！[🦀]">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="我要成为嵌入式高手[doge]">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2024/03/02/%E6%8C%87%E9%92%88%E5%92%8C%E5%AD%97%E7%AC%A6%E4%B8%B2/" class="post-title-link" itemprop="url">指针和字符串</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              <time title="创建时间：2024-03-02 20:01:08" itemprop="dateCreated datePublished" datetime="2024-03-02T20:01:08+08:00">2024-03-02</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2024-05-08 21:09:18" itemprop="dateModified" datetime="2024-05-08T21:09:18+08:00">2024-05-08</time>
-              </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/CPP-C/" itemprop="url" rel="index"><span itemprop="name">CPP/C</span></a>
-                </span>
-            </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <p>这是一篇关于我刚学习C语言和C++的时候留下来的关于字符串、数组、指针的问题</p>
-<h3 id="起因"><a href="#起因" class="headerlink" title="起因"></a>起因</h3><p>今天在看python的时候看到一个表达式字符串，这个东西呢，非常奇妙。<br>举个例子python里面的字符串有</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">str1 = <span class="string">&quot; csmznbo &quot;</span></span><br><span class="line">str2 = <span class="string">&#x27; csmznbo &#x27;</span></span><br></pre></td></tr></table></figure>
-
-<p>可以看到此时的字符串都是有空格，所以下面的那个单引号的明显不对劲，对了。<br>这个就是shell脚本里面类似的原样输出<br>特殊字符串。如下例子</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#bash</span></span><br><span class="line">str3=<span class="string">&#x27;The time now is `data`&#x27;</span></span><br><span class="line"><span class="comment">#python</span></span><br><span class="line">str3=<span class="string">&#x27;The time now is data&#x27;</span>.replace(<span class="string">&#x27;data&#x27;</span>,<span class="built_in">str</span>(time.localtime(time.time())))</span><br></pre></td></tr></table></figure>
-
-<p>其实python的””格式的字符串也是可以做到输出像上面的东西的，f”{}”也是可以的(format)<br>bash的例子只是引出这种字符串的特殊用法原样输出。下面的替换输出，虽然不是同一<br>功能，但是也能知道遇到这奇奇怪怪的字符串的时候可以联想起来好玩的东西。</p>
-<p>但是这个不是今天的主角。</p>
-<h3 id="填坑"><a href="#填坑" class="headerlink" title="填坑"></a>填坑</h3><p>这个帖子，主要是为了记录我对指针数组还有字符串的理解。首先呢，我之前总是不理解为什么字符串是不可写和不可修改现在知道了，因为它存在静态区中。但是我学了几个月的C语言我才知道了指针不等于字符串，我当时写那些拼接函数，比较函数，裁剪那些，我都是用数组去实现的。但是学的懵懵懂懂的，我甚至都把数组等于字符串，字符串又等于指针去了，因为用起来真的差不多。其实是错误的，虽然汇编是一样当写关于字符串的函数的的时候，传参指针，返回值那些都是天坑。要知道字符串是不能修改的，所以返回值只能是数组和指针，还有就是指针传参就会导致一些问题。比如不知道数据长度等问题。</p>
-<h3 id="关系"><a href="#关系" class="headerlink" title="关系"></a>关系</h3><p>指针就是指针，指向一个地址，自己指针又有一个属于自己的地址。大小看处理器位数数组就是连续地址的元素组成，可以装指针，数组，结构体，函数等等</p>
-<p>C语言中，字符串就是字符串，没别的东西就是全局区的data段中，不可修改的。当时第一次学cpp的时候，把String当成字符串了，当时也好奇为什么字符串又可以删减修改了，其实就是一个容器，不是字符串，你可以认为里面就是一个数组真正的字符串还是””这个，这个还是不能修改即便是cpp。python中字符串也是不能修改的，每一次的修改，都只是新生成一个字符串。并没有修改原本字符串</p>
-<h3 id="结语"><a href="#结语" class="headerlink" title="结语"></a>结语</h3><p>这次就是一个知识的填坑和巩固罢了果然基础不牢地动山摇。很多时候都是简单的东西罢了。拜拜，下次继续</p>
-
-      
-    </div>
-
-    
-    
-    
-
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2024/03/01/FristBlog-STM32%E8%B6%85%E9%A2%91%E8%BF%87%E5%A4%B4%E8%8A%AF%E7%89%87%E9%94%81%E6%AD%BB/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/csm.png">
-      <meta itemprop="name" content="CSM">
-      <meta itemprop="description" content="应用是应用，驱动是驱动！你要是偏要应用干驱动，哥们，你怎么不直接薪资翻倍啊！[🦀]">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="我要成为嵌入式高手[doge]">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2024/03/01/FristBlog-STM32%E8%B6%85%E9%A2%91%E8%BF%87%E5%A4%B4%E8%8A%AF%E7%89%87%E9%94%81%E6%AD%BB/" class="post-title-link" itemprop="url">frist STM32超频过头芯片锁死</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              <time title="创建时间：2024-03-01 20:21:25" itemprop="dateCreated datePublished" datetime="2024-03-01T20:21:25+08:00">2024-03-01</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2024-05-08 20:53:02" itemprop="dateModified" datetime="2024-05-08T20:53:02+08:00">2024-05-08</time>
-              </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/MCU/" itemprop="url" rel="index"><span itemprop="name">MCU</span></a>
-                </span>
-            </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <p>这是第一篇关于stm32超频芯片锁死的博客</p>
-<h5 id="起因"><a href="#起因" class="headerlink" title="起因"></a>起因</h5><p>我公司的两个stm32f103芯片板子的晶振不同，我在使用cubeMX生成代码的时候，修改时钟树的时候，没有回车。导致时钟树代码还没配置好，我就直接生成代码了，导致，频率一下子就超了。</p>
-<h5 id="后果"><a href="#后果" class="headerlink" title="后果"></a>后果</h5><p>代码下载进去之后，就无法使用jflash和vs的debug功能了，就会显示芯片内存不可读取。</p>
-<h5 id="修复办法"><a href="#修复办法" class="headerlink" title="修复办法"></a>修复办法</h5><p>boot0设为1，boot1设为0.，此时就会进入系统存储器的空间，这里有一段引导程序，而且这段程<br>序本来就是不可读ROM从一开始就是ST公司写死的东西。然后就奇迹般的发现，flash可以读取了。<br>然后选择jflash里面的擦除功能把整个芯片删除干净，然后再把boot0设为0就可以了。这个时候代<br>码可以下载和debug了哦。</p>
-<h5 id="读保护和写保护"><a href="#读保护和写保护" class="headerlink" title="读保护和写保护"></a>读保护和写保护</h5><p>这个可以代码进行编写，也可以使用ST官方的link软件来进行保护，注意了不要随便使用最高级的都保护哦，一旦操作了就没有回头路了。还可以使用j-flash进行读保护，这个读保护等级是2的，可以多次使用哦。</p>
-<h5 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h5><p>链接: <a target="_blank" rel="noopener" href="https://blog.csdn.net/qq_33559992/article/details/105487168">https://blog.csdn.net/qq_33559992/article/details/105487168</a></p>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/2024/03/01/FristBlog-STM32%E8%B6%85%E9%A2%91%E8%BF%87%E5%A4%B4%E8%8A%AF%E7%89%87%E9%94%81%E6%AD%BB/#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
 
   
   <nav class="pagination">
-    <a class="extend prev" rel="prev" href="/page/6/"><i class="fa fa-angle-left" aria-label="上一页"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/6/">6</a><span class="page-number current">7</span>
+    <a class="extend prev" rel="prev" href="/page/6/"><i class="fa fa-angle-left" aria-label="上一页"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/6/">6</a><span class="page-number current">7</span><a class="page-number" href="/page/8/">8</a><a class="extend next" rel="next" href="/page/8/"><i class="fa fa-angle-right" aria-label="下一页"></i></a>
   </nav>
 
 
@@ -1111,7 +1124,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">70</span>
+          <span class="site-state-item-count">72</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -1186,7 +1199,7 @@
 
  <div class="theme-info">
   <div class="powered-by"></div>
-  <span class="post-count">博客全站共57.4k字</span>
+  <span class="post-count">博客全站共58.8k字</span>
 </div>
 
         
