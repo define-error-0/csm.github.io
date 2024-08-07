@@ -659,7 +659,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2024-06-02 15:24:00" itemprop="dateModified" datetime="2024-06-02T15:24:00+08:00">2024-06-02</time>
+                <time title="修改时间：2024-08-07 23:58:52" itemprop="dateModified" datetime="2024-08-07T23:58:52+08:00">2024-08-07</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -682,7 +682,14 @@
     <div class="post-body" itemprop="articleBody">
 
       
-          
+          <h5 id="文件系统"><a href="#文件系统" class="headerlink" title="文件系统"></a>文件系统</h5><p>文件系统，就是来管理物理层面的硬盘，cd，u盘等存储设备，常见的spi，qspi，iic来读取flash和eeporm那些存储设备，这些空间的管理就需要文件系统了，这样可以方便用户知道剩余空间和打开文件。比如有NTFS、FATFS、FAT32等</p>
+<h5 id="文件io"><a href="#文件io" class="headerlink" title="文件io"></a>文件io</h5><p>我们也知道，我们在开发程序的时候，也是少不了open close write read这些文件io的，还有目录io，不过，为什么我可以使用这些api开发不出现问题呢？</p>
+<p>不同的文件系统，它的分配、api、属性、特性都不一样，总不能开发的时候，还一个一个对着这些不同文件系统的api来进行处理吧？</p>
+<p>换个思路理解，此时我有一个u盘，我插到linux开发板中，此时就会系统就会识别到一个存储设备，就会自动配置一个设备符，&#x2F;dev&#x2F;sda1，此时就可以mount挂载在特定的目录中，此时就可以读取了。此时，可以发现，不论u盘是什么属性什么系统，只要mount挂载上来就可以被读取，这就是虚拟文件系统帮的忙。</p>
+<h5 id="虚拟文件系统"><a href="#虚拟文件系统" class="headerlink" title="虚拟文件系统"></a>虚拟文件系统</h5><p>一个系统不可能只有一个文件系统的，大家安装固态的时候，分区的时候，肯定就会选择一个文件系统进行格式化比如NTFS，这个时候，这个固态的文件系统就是NTFS了，同时还有一个大小、速率等属性就被系统读取到了，此时，只有把分区执行完毕才能在我的电脑中看到新增加的分盘。这和上面哪个挂载是一个原理。</p>
+<p>有了这个虚拟文件系统，就可以极大的方便用户层的开发、使用和管理。本质上就是对多层的文件系统进行一次统一的封装，封装完毕之后，就可以方便上层开发了，所以，哪怕我只有一个2t的固态，我也可以分为1个E盘，一个F盘，至于这个E和F就是虚拟文件系统分出来的东西，实际上的空间就是这个2t的NTFS的固态啦。</p>
+<h5 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h5><p>虚拟文件系统，只是一个对多个文件系统的api的一次封装，所有文件系统在接入系统的时候，都要主动去对接这个虚拟系统所提供的api，可以认为就是把函数对准虚拟文件系统的函数指针来，然后通过虚拟文件系统的封装，就可以提供给上层开发和管理啦。</p>
+
       
     </div>
 
@@ -1169,7 +1176,7 @@
 
  <div class="theme-info">
   <div class="powered-by"></div>
-  <span class="post-count">博客全站共58.8k字</span>
+  <span class="post-count">博客全站共61.2k字</span>
 </div>
 
         
