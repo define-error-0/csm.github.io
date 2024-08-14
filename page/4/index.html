@@ -134,7 +134,7 @@
   </li>
         <li class="menu-item menu-item-archives">
 
-    <a href="/archives/" rel="section"><i class="archive fa-fw"></i>归档<span class="badge">72</span></a>
+    <a href="/archives/" rel="section"><i class="archive fa-fw"></i>归档<span class="badge">97</span></a>
 
   </li>
         <li class="menu-item menu-item-resources">
@@ -174,7 +174,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2024/05/28/PCIe%E6%80%BB%E7%BA%BF/">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2024/07/15/IPC%E6%A1%86%E6%9E%B6/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/csm.png">
@@ -188,7 +188,7 @@
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
           
-            <a href="/2024/05/28/PCIe%E6%80%BB%E7%BA%BF/" class="post-title-link" itemprop="url">PCIe总线</a>
+            <a href="/2024/07/15/IPC%E6%A1%86%E6%9E%B6/" class="post-title-link" itemprop="url">IPC框架</a>
         </h2>
 
         <div class="post-meta">
@@ -198,15 +198,8 @@
               </span>
               <span class="post-meta-item-text">发表于</span>
 
-              <time title="创建时间：2024-05-28 23:19:14" itemprop="dateCreated datePublished" datetime="2024-05-28T23:19:14+08:00">2024-05-28</time>
+              <time title="创建时间：2024-07-15 21:31:30" itemprop="dateCreated datePublished" datetime="2024-07-15T21:31:30+08:00">2024-07-15</time>
             </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2024-06-02 15:17:27" itemprop="dateModified" datetime="2024-06-02T15:17:27+08:00">2024-06-02</time>
-              </span>
 
           
 
@@ -219,55 +212,94 @@
     <div class="post-body" itemprop="articleBody">
 
       
-          <h5 id="PCIe"><a href="#PCIe" class="headerlink" title="PCIe"></a>PCIe</h5><p><strong>PCI</strong>-E总线是一种通用的总线规格，它由Intel所提倡和推广，其最终的设计目的是为了取代现有 电脑系统 内部的总线 传输接口 ，这不只包括 显示接口 ，还囊括了 CPU 、PCI、HDD、Network等多种应用接口。</p>
-<h5 id="PCIe特点"><a href="#PCIe特点" class="headerlink" title="PCIe特点"></a>PCIe特点</h5><p><img src="/../Blogas_images/PCIe%E6%8E%A5%E5%8F%A3.png"></p>
-<p>首先就是差分信号，其次就是全双工，有点422的味道了，还有就是支持热插拔，对了pci也是支持热插拔的，高速，多个设备等。</p>
-<p>即允许在同一时刻，同时进行发送和接收数据。如下图所示，设备A和设备B之间通过双向的Link相连接，每个Link支持1到32个通道（Lane）PCIe使用的是8b&#x2F;10b的编码。</p>
-<p>为了实现直流均衡。在高速<a target="_blank" rel="noopener" href="https://so.csdn.net/so/search?q=%E4%B8%B2%E8%A1%8C%E9%80%9A%E4%BF%A1&spm=1001.2101.3001.7020">串行通信</a>中，8B&#x2F;10B编码是一种经常用到的编码方式。而高速串行总线中，通常采用交流耦合方式，即在发送端（TX）串接电容，根据电容“隔直流，通交流”的特性，或者理想电容的阻抗公式：<br>电容阻抗公式</p>
-<p><img src="/../Blogas_images/%E9%98%BB%E6%8A%97%E5%85%AC%E5%BC%8F.png"></p>
-<p>信号频率越高，电容阻抗越低。当数据位流中出现多个连续的1或0时，可以认为该时间段信号是直流的，电容的损耗变大，导致信号的幅度降低，直流信号被滤除，到最后无法识别是1还是0。而且接收端收到连续的1或0时，没有充分的定时信息，对接收端的<a target="_blank" rel="noopener" href="https://so.csdn.net/so/search?q=%E8%A7%A3%E7%A0%81&spm=1001.2101.3001.7020">解码</a>带来了困难。其原理如下图所示：</p>
-<p><img src="/../Blogas_images/%E9%98%BB%E6%8A%97%E6%95%B0%E6%8D%AE%E5%8E%9F%E7%90%86%E5%9B%BE.png"></p>
-<p>8B&#x2F;10B编码以字节为单位，将数据映射成10位宽度的数据（具体映射方式可查表），使得编码后的二进制数据流中1和0的数量基本保持一致，同时确保字节同步易于实现。</p>
-<p><a target="_blank" rel="noopener" href="https://blog.csdn.net/qq_37654178/article/details/112391245">8B&#x2F;10B编码基本原理_8b10b编码原理-CSDN博客</a></p>
-<p>PCIe协议是一种端对端的互连协议，一个典型的PCIe系统框图如下：</p>
-<p><img src="/../Blogas_images/PCIe%E7%BB%93%E6%9E%84.png"></p>
-<p>与PCIe拓扑结构相关的其他术语如下：</p>
+          
+      
+    </div>
+
+    
+    
+    
+
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2024/07/15/%E6%89%93%E5%8D%B0-%E6%97%A5%E5%BF%97-%E5%86%85%E6%A0%B8%E6%89%93%E5%8D%B0/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/csm.png">
+      <meta itemprop="name" content="CSM">
+      <meta itemprop="description" content="应用是应用，驱动是驱动！你要是偏要应用干驱动，哥们，你怎么不直接薪资翻倍啊！[🦀]">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="我要成为嵌入式高手[doge]">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2024/07/15/%E6%89%93%E5%8D%B0-%E6%97%A5%E5%BF%97-%E5%86%85%E6%A0%B8%E6%89%93%E5%8D%B0/" class="post-title-link" itemprop="url">打印 日志 内核打印</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+              
+
+              <time title="创建时间：2024-07-15 21:31:12 / 修改时间：22:15:36" itemprop="dateCreated datePublished" datetime="2024-07-15T21:31:12+08:00">2024-07-15</time>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h5 id="打印"><a href="#打印" class="headerlink" title="打印"></a>打印</h5><p>学C语言第一个就是printf(“Hello World\n”)；这个可以说基本就是说有程序员的开头了，若干年之后再次看到这句话，真的会有不同的感觉吧。回到正题，为什么是打印呢？因为在上古时代，那些机械和电脑非常非常打的时候，输出是没有屏幕的，但是人们想要一个记录和输出，此时就是打卡机了，就是在纸上打孔，这个孔就是数据输出啦，随着慢慢发展，也就沿用下来了。</p>
+<h5 id="打印操作"><a href="#打印操作" class="headerlink" title="打印操作"></a>打印操作</h5><p>这个真的太多了，而且分平台，分语法，分架构，分系统等等，不过，现在是很少用打印机了，写代码还用打印机才是逆天啊。所以，一般都是屏幕直接现实或者命令行输出。</p>
+<p>C语言就是fputc、printf等操作；linuxc就是printf、perror等操作；Qt就是qdebug咯；python就是print啦；自然还有mcu那些非windows，非控制台的环境了，他们就得重定向才能使用打印函数哦，就是把打印函数重写成串口发送等函数。<strong>这里要提一下啊了，为什么，嵌入式不能使用控制台。我当时学c语言的，都是devC++和gcc编译的，我觉得有控制台才对啊，为什么mcu就不能有控制台那些东西呢，还要费尽心思搞那些环境和芯片配置，后面懂得越来越多才知道，确实所有编译都可以算是交叉编译，因为都是为了满足一个平台和架构的特性，之所以在windows上面可以跑控制台是因为，他本来就是用自己的编译链，本来就是跑自己环境和架构，同理因为gcc是支持linux环境，所以linux才能用gcc编译，然后在命令行中打印出来，后面又要使用交叉编译才能烧录到特定的架构的芯片上，因为linux环境和架构是同目标的芯片又是不同的，所以还得要一次交叉编译才行。</strong></p>
+<p>花活，多颜色打印：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br></pre></td><td class="code"><pre><span class="line">一个朋友 <span class="number">11</span>:<span class="number">24</span>:<span class="number">59</span></span><br><span class="line"><span class="meta">#<span class="keyword">ifndef</span> _COLOR_H_</span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> _COLOR_H_</span></span><br><span class="line"></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> NONE                  <span class="string">&quot;\e[0m&quot;</span>           <span class="comment">//清除颜色，即之后的打印为正常输出，之前的不受影响</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> BLACK                 <span class="string">&quot;\e[0;30m&quot;</span>         <span class="comment">//深黑</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> L_BLACK             <span class="string">&quot;\e[1;30m&quot;</span>            <span class="comment">//亮黑，偏灰褐</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> RED                     <span class="string">&quot;\e[0;31m&quot;</span>      <span class="comment">//深红，暗红</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> L_RED                 <span class="string">&quot;\e[1;31m&quot;</span>        <span class="comment">//鲜红</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> GREEN                <span class="string">&quot;\e[0;32m&quot;</span>         <span class="comment">//深绿，暗绿</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> L_GREEN            <span class="string">&quot;\e[1;32m&quot;</span>           <span class="comment">//鲜绿</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> BROWN               <span class="string">&quot;\e[0;33m&quot;</span>          <span class="comment">//深黄，暗黄</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> YELLOW              <span class="string">&quot;\e[1;33m&quot;</span>          <span class="comment">//鲜黄</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> BLUE                    <span class="string">&quot;\e[0;34m&quot;</span>      <span class="comment">//深蓝，暗蓝</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> L_BLUE                <span class="string">&quot;\e[1;34m&quot;</span>        <span class="comment">//亮蓝，偏白灰</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> PURPLE               <span class="string">&quot;\e[0;35m&quot;</span>         <span class="comment">//深粉，暗粉，偏暗紫</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> L_PURPLE           <span class="string">&quot;\e[1;35m&quot;</span>           <span class="comment">//亮粉，偏白灰</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> CYAN                   <span class="string">&quot;\e[0;36m&quot;</span>       <span class="comment">//暗青色</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> L_CYAN               <span class="string">&quot;\e[1;36m&quot;</span>         <span class="comment">//鲜亮青色</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> GRAY                   <span class="string">&quot;\e[0;37m&quot;</span>       <span class="comment">//灰色</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> WHITE                  <span class="string">&quot;\e[1;37m&quot;</span>       <span class="comment">//白色，字体粗一点，比正常大，比bold小</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> BOLD                    <span class="string">&quot;\e[1m&quot;</span>         <span class="comment">//白色，粗体</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> UNDERLINE         <span class="string">&quot;\e[4m&quot;</span>               <span class="comment">//下划线，白色，正常大小</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> BLINK                   <span class="string">&quot;\e[5m&quot;</span>         <span class="comment">//闪烁，白色，正常大小</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> REVERSE            <span class="string">&quot;\e[7m&quot;</span>              <span class="comment">//反转，即字体背景为白色，字体为黑色</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> HIDE                     <span class="string">&quot;\e[8m&quot;</span>        <span class="comment">//隐藏</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> CLEAR                  <span class="string">&quot;\e[2J&quot;</span>          <span class="comment">//清除</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> CLRLINE               <span class="string">&quot;\r\e[K&quot;</span>          <span class="comment">//清除行</span></span></span><br><span class="line"></span><br><span class="line"><span class="meta">#<span class="keyword">endif</span></span></span><br><span class="line"></span><br><span class="line"> <span class="built_in">printf</span>(<span class="string">&quot;This is a character control test!\n&quot;</span> );</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">&quot;[%2u]&quot;</span> CLEAR <span class="string">&quot;CLEAR\n&quot;</span> NONE, __LINE__);</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">&quot;[%2u]&quot;</span> BLACK <span class="string">&quot;BLACK &quot;</span> L_BLACK <span class="string">&quot;L_BLACK\n&quot;</span> NONE, __LINE__);</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">&quot;[%2u]&quot;</span> RED <span class="string">&quot;RED &quot;</span> L_RED <span class="string">&quot;L_RED\n&quot;</span> NONE, __LINE__);</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">&quot;[%2u]&quot;</span> GREEN <span class="string">&quot;GREEN &quot;</span> L_GREEN <span class="string">&quot;L_GREEN\n&quot;</span> NONE, __LINE__);</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">&quot;[%2u]&quot;</span> BROWN <span class="string">&quot;BROWN &quot;</span> YELLOW <span class="string">&quot;YELLOW\n&quot;</span> NONE, __LINE__);</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">&quot;[%2u]&quot;</span> BLUE <span class="string">&quot;BLUE &quot;</span> L_BLUE <span class="string">&quot;L_BLUE\n&quot;</span> NONE, __LINE__);</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">&quot;[%2u]&quot;</span> PURPLE <span class="string">&quot;PURPLE &quot;</span> L_PURPLE <span class="string">&quot;L_PURPLE\n&quot;</span> NONE, __LINE__);</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">&quot;[%2u]&quot;</span> CYAN <span class="string">&quot;CYAN &quot;</span> L_CYAN <span class="string">&quot;L_CYAN\n&quot;</span> NONE, __LINE__);</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">&quot;[%2u]&quot;</span> GRAY <span class="string">&quot;GRAY &quot;</span> WHITE <span class="string">&quot;WHITE\n&quot;</span> NONE, __LINE__);</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">&quot;[%2u]&quot;</span> BOLD <span class="string">&quot;BOLD\n&quot;</span> NONE, __LINE__);</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">&quot;[%2u]&quot;</span> UNDERLINE <span class="string">&quot;UNDERLINE\n&quot;</span> NONE, __LINE__);</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">&quot;[%2u]&quot;</span> BLINK <span class="string">&quot;BLINK\n&quot;</span> NONE, __LINE__);</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">&quot;[%2u]&quot;</span> REVERSE <span class="string">&quot;REVERSE\n&quot;</span> NONE, __LINE__);</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">&quot;[%2u]&quot;</span> HIDE <span class="string">&quot;HIDE\n&quot;</span> NONE, __LINE__);</span><br><span class="line"></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p><a target="_blank" rel="noopener" href="https://blog.csdn.net/MoDa_Li/article/details/82156888">C语言中使用printf()打印漂亮的颜色字体_c语言printf颜色-CSDN博客</a></p>
+<p>这里巧妙的使用字符串的自动拼接，而且不只是改变字体颜色那么简单哦，还可以改背景色，前景色等诸多操作，感兴趣去了解一下。给自己的枯燥无味的debug生活一点乐子咯。还有那种ai雌小鬼助手，打印出来的那些杂鱼啥的特殊颜色字体应该都是这样可以实现的哦。</p>
+<h5 id="日志"><a href="#日志" class="headerlink" title="日志"></a>日志</h5><p>一开始，我看到那些神秘兮兮的log函数，我真的觉得有什么特别牛的东西，后面我才知道，他就是打印的一层封装，他本质还是打印函数，不过是会打印出操作、警告、操作者等属性，就是打印之前还会把其他属性也打印出来。这个在mcu中，因为空间的问题，所以都是直接打印出来没有保存的，如果使用文件系统就可以存放到文件系统，这样可以命令行去访问特定文件来知道干了什么，前提是空间要够啊。linux就不用说了，你敲的每一行指令，都有log历史记录的，用户是谁，干了什么，是否危险，什么权限都知道的。</p>
+<h5 id="内核打印"><a href="#内核打印" class="headerlink" title="内核打印"></a>内核打印</h5><p>这个就是搞linux内核驱动的啦。Linux 内核共提供了八种不同的消息级别，分为级别 0~7。数值越大，表示级别越低，对应的消息越不重要。相应的<a target="_blank" rel="noopener" href="https://so.csdn.net/so/search?q=%E5%AE%8F%E5%AE%9A%E4%B9%89&spm=1001.2101.3001.7020">宏定义</a>在 <code>include/linux/kern_levels.h</code> 文件中。</p>
+<p>KERN_EMERG 表示紧急事件，一般是系统崩溃之前提示的消息；<br>KERN_ALERT 表示必须立即采取行动的消息；<br>KERN_CRIT 表示临界状态，通常涉及严重的硬件或软件操作失败；<br>KERN_ERR 用于报告错误状态，设备驱动程序会经常使用该级别来报告来自硬件的问题；<br>KERN_WARNING 对可能出现问题的情况进行警告，这类情况通常不会对系统造成严重的问题；<br>KERN_NOTICE 表示有必要进行提示的正常情形，许多与安全相关的状况用这个级别进行汇报；<br>KERN_INFO 表示内核提示信息，很多驱动程序在启动的时候，用这个级别打印出它们找到的硬件信息；<br>KERN_DEBUG 用于调试信息。</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">define</span> KERN_EMERG  KERN_SOH <span class="string">&quot;0&quot;</span>    <span class="comment">/* system is unusable */</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> KERN_ALERT  KERN_SOH <span class="string">&quot;1&quot;</span>    <span class="comment">/* action must be taken immediately */</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> KERN_CRIT   KERN_SOH <span class="string">&quot;2&quot;</span>    <span class="comment">/* critical conditions */</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> KERN_ERR    KERN_SOH <span class="string">&quot;3&quot;</span>    <span class="comment">/* error conditions */</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> KERN_WARNING    KERN_SOH <span class="string">&quot;4&quot;</span>    <span class="comment">/* warning conditions */</span>                                              </span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> KERN_NOTICE KERN_SOH <span class="string">&quot;5&quot;</span>    <span class="comment">/* normal but significant condition */</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> KERN_INFO   KERN_SOH <span class="string">&quot;6&quot;</span>    <span class="comment">/* informational */</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> KERN_DEBUG  KERN_SOH <span class="string">&quot;7&quot;</span>    <span class="comment">/* debug-level messages */</span></span></span><br></pre></td></tr></table></figure>
+
+<p>注意：打印消息的级别大于控制台的打印级别时，才能出现在终端。并且：数字越大，级别越低</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ <span class="built_in">cat</span> /proc/sys/kernel/printk</span><br><span class="line">4				    	4					1					7</span><br></pre></td></tr></table></figure>
+
+<p>控制台打印级别    消息的默认打印级别      控制台最大打印级别       控制台最小级别</p>
+<p>四个数值的含义如下：</p>
 <ul>
-<li>根复合体（Root Complex）</li>
-<li>PCIe终端设备（PCIe Endpoint）</li>
-<li>PCIe桥接器（PCIe bridge）</li>
+<li>控制台日志级别：优先级高于该值的消息将被打印至控制台；</li>
+<li>默认的消息日志级别：将用该优先级来打印没有优先级的消息（即 printk 没有指定消息级别）；</li>
+<li>最低的控制台日志级别：控制台日志级别可被设置的最小值（最高优先级）；</li>
+<li>默认的控制台日志级别：控制台日志级别的缺省值。</li>
 </ul>
-<p>Root Complex我们简称为根复合体。根复合体将CPU和内存子系统(Memory)连接到由一个或多个PCIe或PCI设备组成的PCI Express交换结构。它是PCI反向树拓扑结构的“根”，代表CPU与其他设备进行通信。</p>
-<p>PCIe endpoint就是PCIe的终端设备&#x2F;PCIe终结点。PCIe终端设备可以直接与根设备进行连接，也可以通过Swith交换设备与根设备连接(交换设备类似于接口扩展功能)。</p>
-<p>根据PCIe规范，在PCIe拓扑中可以有256个总线，每个总线上有32个设备，每个设备有8个功能。一个终节点最多可以支持8个功能，每个功能都有自己独立的配置空间。</p>
-<p>例如：基于PCIe的非易失性内存（NVM）和基于PCIe的固态硬盘（SSD）是计算机系统中的两种终节点设备。</p>
-<p>PCIe桥接器：桥接器可以将PCI设备的请求转换为PCIe x1规范的请求，并连接到计算机PCIe插槽上。工作流程如下：</p>
-<p>主设备发送带有必要参数的请求到PCIe桥接器。</p>
-<p>PCIe桥接器接收请求并进行协议转换，将PCI请求转换为适合PCIe接口的形式。</p>
-<p>转换后的请求在PCIe接口上发起点对点传输。</p>
-<p>请求在接口通道上进行传输，通过PCIe总线连接到目标设备。</p>
-<p>通过这种方式，PCI设备能够利用PCIe插槽和接口连接到计算机系统，实现数据和控制的交换。</p>
-<h5 id="PCIe层级"><a href="#PCIe层级" class="headerlink" title="PCIe层级"></a>PCIe层级</h5><p>PCIe体系结构包括应用层、事务层（Transaction Layer）、数据链路层（Data Link Layer）和物理层（Physical Layer）。</p>
-<h5 id="PCIe接口版本"><a href="#PCIe接口版本" class="headerlink" title="PCIe接口版本"></a>PCIe接口版本</h5><p>PCIe-x只是一个接口协议，如果大家都老老实实就好了，但是，这个接口而已嘛，想要干嘛就可以干嘛，只要两边对上引脚和协议就ok了。</p>
-<h5 id="PCIe协议版本"><a href="#PCIe协议版本" class="headerlink" title="PCIe协议版本"></a>PCIe协议版本</h5><p>PCIE1.0&#x2F;PCIE2.0&#x2F;PCIE3.0&#x2F;PCIE4.0&#x2F;PCIE5.0</p>
-<p><img src="/../Blogas_images/PCIe.png"></p>
-<ul>
-<li><p>PCIe的向下兼容性体现在以下几个方面：PCIe具有向下兼容的特性，这意味着较新版本的PCIe插槽和设备可以与较旧版本的PCIe插槽和设备进行互操作。这种兼容性确保了新设备可以与旧设备一起使用，从而减少了升级和更换设备时的不便。</p>
-</li>
-<li><p>插槽兼容性：较新版本的PCIe插槽通常可以容纳较旧版本的PCIe卡。例如，一个PCIe x16插槽通常可以容纳任何较小的PCIe卡，如PCIe x8、PCIe x4或PCIe x1。这意味着您可以将较旧的PCIe卡插入较新的插槽中，以实现互操作性。</p>
-</li>
-<li><p>带宽适配：如果您将一个使用较少通道的PCIe卡插入一个具有更多通道的PCIe插槽中，系统会自动适配带宽。例如，将一个PCIe x1卡插入PCIe x16插槽中，系统会将该卡的带宽限制为PCIe x1的速度。这确保了卡与插槽之间的通信不会出现不匹配问题。</p>
-</li>
-<li><p>协议兼容性：即使新版本的PCIe协议引入了一些新功能和特性，但它们通常会保持与旧版本的兼容性。这意味着使用旧版本PCIe设备的系统不会因为新版本PCIe插槽而出现兼容性问题。</p>
-</li>
-<li><p>供电兼容性：PCIe插槽还需要向下兼容供电。较新的PCIe插槽可以为较旧版本的PCIe卡提供适当的电源。这确保了即使插槽能够提供更高的电源能力，也不会损坏较旧的卡。</p>
-</li>
-<li><p>PCIe的向下兼容性使得用户能够在升级或更换设备时更加灵活，无需担心新设备是否与旧设备兼容。这种特性有助于维持系统的稳定性和灵活性，同时节省了升级成本。</p>
-</li>
-</ul>
-<h5 id="PCIe用途"><a href="#PCIe用途" class="headerlink" title="PCIe用途"></a>PCIe用途</h5><p>显卡、固态硬盘（PCIe接口形式）、无线网卡、有线网卡、声卡、视频采集卡、PCIe转接M.2接口、PCIe转接USB接口、PCIe转接Tpye-C接口</p>
-<h5 id="PCIe自定义引脚和协议"><a href="#PCIe自定义引脚和协议" class="headerlink" title="PCIe自定义引脚和协议"></a>PCIe自定义引脚和协议</h5><p>因为，我们看到PCIe是有物理层的，所以，我们其实就可以单独使用物理层一个就可以了，什么意思就是，插口卡口是固定的，但是接的线是可以改动的，我不一定要按照它的协议进行设计，我也可以用我自己的接口引脚协议，只要两个设备统一引脚和接线协议就好了。</p>
-<h5 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h5><p>PCIe是一个高级的协议和接口，它在iso层级中有4层使用方法，所以，它不但是硬件协议，还是软件协议，自然是只有高端的嵌入式设备或者高性能设备才有使用到的资格，但是，只是使用硬件协议，就是那些接口的话，啥地方都能用的。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">printk(&quot;%s:%s:%d\n&quot;, __FILE__, __func__, __LINE__);   //此时是没有设置打印等级的，就是默认4</span><br><span class="line">printk(KERN_DEBUG &quot;HELLO LINUX PRINTK\n&quot;);		//这个就是设置等级啦，KERN_DEBUG</span><br></pre></td></tr></table></figure>
+
+<p><a target="_blank" rel="noopener" href="https://blog.csdn.net/weixin_45437140/article/details/124309795">Linux内核之 printk 打印_linux printk-CSDN博客</a></p>
+<h5 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h5><p>打印是入门和快速测试的基础，日志是可以记录所有操作，可以保存到本地，这样其实是更加有利于bug复现的，还有调试交互，后续设计的，不过mcu和那些空间本来就少的设备是真的遭不住的。内核打印，就是写驱动的人才用得到的东西，因为此时打印函数都是无效的了，只能通过内核提供的打印函数才能实现打印效果哦。</p>
 
       
     </div>
@@ -289,7 +321,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2024/05/08/git%E7%9A%84%E4%B8%80%E4%BA%9B%E6%93%8D%E4%BD%9C/">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2024/07/15/TIM%E4%B8%89%E5%A4%A7%E6%97%B6%E5%9F%BA/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/csm.png">
@@ -303,7 +335,7 @@
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
           
-            <a href="/2024/05/08/git%E7%9A%84%E4%B8%80%E4%BA%9B%E6%93%8D%E4%BD%9C/" class="post-title-link" itemprop="url">git的一些操作</a>
+            <a href="/2024/07/15/TIM%E4%B8%89%E5%A4%A7%E6%97%B6%E5%9F%BA/" class="post-title-link" itemprop="url">TIM三大时基</a>
         </h2>
 
         <div class="post-meta">
@@ -313,23 +345,76 @@
               </span>
               <span class="post-meta-item-text">发表于</span>
 
-              <time title="创建时间：2024-05-08 19:52:27" itemprop="dateCreated datePublished" datetime="2024-05-08T19:52:27+08:00">2024-05-08</time>
+              <time title="创建时间：2024-07-15 21:28:56" itemprop="dateCreated datePublished" datetime="2024-07-15T21:28:56+08:00">2024-07-15</time>
             </span>
               <span class="post-meta-item">
                 <span class="post-meta-item-icon">
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2024-05-10 00:28:14" itemprop="dateModified" datetime="2024-05-10T00:28:14+08:00">2024-05-10</time>
+                <time title="修改时间：2024-07-16 23:49:11" itemprop="dateModified" datetime="2024-07-16T23:49:11+08:00">2024-07-16</time>
               </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h5 id="定时器"><a href="#定时器" class="headerlink" title="定时器"></a>定时器</h5><p>MCU的经典外设之一了，这个确实有点新手噩梦的感觉了，尤其是当时学时钟树，我愣是横看竖看没看懂，现在是看懂也学会了，但是，我搞混了一个概念，也就是三大时基中的自动重装载了。</p>
+<h5 id="三大时基"><a href="#三大时基" class="headerlink" title="三大时基"></a>三大时基</h5><p>预分频，计数器，自动重装载这三个就是大名鼎鼎的三大时基，可以说，只有配好他们才能保证定时器是稳稳当当的。此时就要看时钟树给此时定时器分了多少的频率，此时再通过我们的预分频就能设置为多少hz为一个节拍，计数器呢就是多少个节拍算完成任务，自动重装载我一般都是使能的，因为我一直以为是cnt到了计数器的时候，是自动重装载把cnt归位的，没想到还是计数器归位的。为什么我发现这个问题呢？直到有一天我发现没配置也能实现中断触发和回调的时候，我的世界观崩了！</p>
+<h5 id="自动重装载和影子寄存器"><a href="#自动重装载和影子寄存器" class="headerlink" title="自动重装载和影子寄存器"></a>自动重装载和影子寄存器</h5><h5 id="TIM触发一次"><a href="#TIM触发一次" class="headerlink" title="TIM触发一次"></a>TIM触发一次</h5><h5 id="TIM中断"><a href="#TIM中断" class="headerlink" title="TIM中断"></a>TIM中断</h5><h5 id="TIM的PWM输出"><a href="#TIM的PWM输出" class="headerlink" title="TIM的PWM输出"></a>TIM的PWM输出</h5><h5 id="TIM相位编码"><a href="#TIM相位编码" class="headerlink" title="TIM相位编码"></a>TIM相位编码</h5><h5 id="TIM刹车"><a href="#TIM刹车" class="headerlink" title="TIM刹车"></a>TIM刹车</h5><h5 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h5>
+      
+    </div>
+
+    
+    
+    
+
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2024/07/15/ADC%E5%BC%82%E5%B8%B8/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/csm.png">
+      <meta itemprop="name" content="CSM">
+      <meta itemprop="description" content="应用是应用，驱动是驱动！你要是偏要应用干驱动，哥们，你怎么不直接薪资翻倍啊！[🦀]">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="我要成为嵌入式高手[doge]">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2024/07/15/ADC%E5%BC%82%E5%B8%B8/" class="post-title-link" itemprop="url">ADC异常</a>
+        </h2>
+
+        <div class="post-meta">
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
+                <i class="far fa-calendar"></i>
               </span>
-              <span class="post-meta-item-text">分类于</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Git/" itemprop="url" rel="index"><span itemprop="name">Git</span></a>
-                </span>
+              <span class="post-meta-item-text">发表于</span>
+              
+
+              <time title="创建时间：2024-07-15 21:28:46 / 修改时间：22:27:01" itemprop="dateCreated datePublished" datetime="2024-07-15T21:28:46+08:00">2024-07-15</time>
             </span>
 
           
@@ -343,30 +428,21 @@
     <div class="post-body" itemprop="articleBody">
 
       
-          <h5 id="起因"><a href="#起因" class="headerlink" title="起因"></a>起因</h5><p>因为，我同事它对git不熟，所以，特意来找我来帮帮他解决问题，所以，我就去了，他要下载一个仓库代码，但是仓库的默认主分支不是他想要的，他想要的是一个xxxx&amp;yyyy&amp;zzzz的分支，所以，我然后直接</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">git branch -a</span><br><span class="line">git checkout xxxx&amp;yyyy&amp;zzzz</span><br></pre></td></tr></table></figure>
-
-<p>问题来了，我确实看到了remote的 xxxx&amp;yyyy&amp;zzzz分支，但是，无法执行，它告诉我指令不存在。所以，一时间有点懵逼，我还特意使用</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git clone -b xxxx&amp;yyyy&amp;zzzz https://.....</span><br></pre></td></tr></table></figure>
-
-<p>去下载特定分支，发现也失败了。我都懵了的时候，我尝试切换其他分支，成了，我就知道，是命令行输了呢。呜呜呜，竟然让GUI赢了一把。大家应该发现了问题了吧！没错就是&amp;。</p>
-<p><a target="_blank" rel="noopener" href="https://csmznbo.top/2024/03/27/github%E7%AE%A1%E7%90%86/">github管理 | 我要成为嵌入式高手(csmznbo.top)</a>这是我上一期关于git的入门操作哦，有兴趣的可以看一下。</p>
-<h5 id=""><a href="#" class="headerlink" title="&amp; | &amp;&amp; ||"></a>&amp; | &amp;&amp; ||</h5><p>&amp;：一旦shell指令识别到&amp;就会把后面那些当成指令看待，所以，可以做一个测试，新建一个 ls&amp;cat README.md 的文件夹。对这个文件夹执行ls，就会发现，它执行了cat操作了，注意力此时cat是占据当前进程的，所以，如果后面没有+文件的话，你的中断就会堵塞卡死。<strong>注意了，如果一个子线程，直接使用system没有+&amp;，那么这个子线程就会堵死，但是不会影响其他线程哈哈哈。</strong>你懂我什么意思的，这确实是一个搞人的手段，尤其可以选择在md后面也加一个&amp;。这样就是两个后台工作了。偷偷摸摸后台搞事情哦。</p>
-<p>|：管道，就是前面数据给后面，注意力，文件夹和问价不能用|来命名，所以管道操作实现不了哦</p>
-<p>&amp;&amp;：命令行的与操作，经典断路</p>
-<p>||：命令行或操作，经典短路</p>
-<p>解决&amp;的方法就是+ “”双引号框起来就好了。</p>
-<h5 id="git仓库版本问题"><a href="#git仓库版本问题" class="headerlink" title="git仓库版本问题"></a>git仓库版本问题</h5><p>我们可以把git粗略分为用户和系统两个部分，那些文件，代码，数据都是用户添加，属于用户层面，可以随意修改。但是.git文件夹里面就不行了，里面保存所有历史记录和操作，不能随意修改，如果只是本地无所谓的，但是要和云端同步的话，就麻烦了。</p>
-<p>如果本地仓库没有远程仓库的所有历史记录，那么push就是失败，就是说提交的版本一定要大于而包含远程版本才能提交。所以，别人抢先push了，你记得得git pull之后才能提交，就是包含别人的版本。</p>
-<p>如果要想修改提交的云端历史记录就没办法了。因为你修改之后，你是想要进行git pull之后才可以push的，此时就会强行修正过来，导致对历史提交修改全部被纠正。因为此时两个版本对不上，提交是错误的。</p>
-<p>真的有不得不修改的数据，那就只能强行推送覆盖云端，但是这样会把别人的记录也可能覆盖了，这是一件非常不提倡的事情。而且非常危险。</p>
-<h5 id="git-版本和-git-tag"><a href="#git-版本和-git-tag" class="headerlink" title="git 版本和 git tag"></a>git 版本和 git tag</h5><p>这个git 版本就是一个时刻的仓库的切片，一些重要的版本级别的仓库，这些是可以选择进行版本设置，这样就快速保存可用的版本，也方便回溯，分别下载，方便使用等诸多好处。</p>
-<p>tag就是标签，这个版本有啥，这个版本怎么样，都是可以打上标签的。</p>
-<h5 id="pr的评论和保护分支机制"><a href="#pr的评论和保护分支机制" class="headerlink" title="pr的评论和保护分支机制"></a>pr的评论和保护分支机制</h5><p>我们可以在设置添加对分支的保护，添加管理员也不能违反，这样就可以杜绝直接本地就提交覆盖分支，而是只能通过pr来实现合并，在添加，评审人评论和同意才能合并方案，就可以有效防止恶意分支合并和覆盖。</p>
-<h5 id="git查看提交代码量和次数"><a href="#git查看提交代码量和次数" class="headerlink" title="git查看提交代码量和次数"></a>git查看提交代码量和次数</h5><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_">#</span><span class="language-bash">提交代码量</span></span><br><span class="line">git log  --author=&quot;csm@gmail.com&quot; --pretty=tformat: --numstat | awk &#x27;&#123; add += $1; subs += $2; loc += $1 - $2 &#125; END &#123; printf &quot;added lines: %s, removed lines: %s, total lines: %s\n&quot;, add, subs, loc &#125;&#x27; -</span><br><span class="line"><span class="meta prompt_">#</span><span class="language-bash">added lines: 7572, removed lines: 675, total lines: 6897</span></span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_">#</span><span class="language-bash">定期代码量检测</span></span><br><span class="line">git log  --author=&quot;csm@gmail.com&quot; --since==2024-03-01 --until=2024-04-01 --pretty=tformat: --numstat | awk &#x27;&#123; add += $1; subs += $2; loc += $1 - $2 &#125; END &#123; printf &quot;added lines: %s, removed lines: %s, total lines: %s\n&quot;, add, subs, loc &#125;&#x27; -</span><br><span class="line"><span class="meta prompt_">#</span><span class="language-bash">added lines: 2456, removed lines: 609, total lines: 1847</span></span><br><span class="line"><span class="meta prompt_">#</span><span class="language-bash">从2024-03-01到2024-04-01 作者csm@gmail.com的提交量，后面是awk语法</span></span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_">#</span><span class="language-bash">提交具体详情</span></span><br><span class="line">git log --author=&quot;csm@gmail.com&quot; --pretty=format:&quot;%H|%an|%ae|%s&quot; | while read line; do</span><br><span class="line">    echo &quot;$line&quot;</span><br><span class="line">done </span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">对每一行做相应处理，例如提取commit <span class="built_in">hash</span>、作者名、邮箱和提交信息</span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">%H 表示commit <span class="built_in">hash</span>， %an 表示作者名， %ae 表示作者电子邮件，%s 表示提交消息摘要。</span></span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_">#</span><span class="language-bash">提交次数</span></span><br><span class="line">git log  --author=csm@gmail.com --since=&quot;2024-03-01&quot; --no-merges | grep -e &#x27;commit [a-zA-Z0-9]*&#x27; | wc -l</span><br><span class="line"><span class="meta prompt_">#</span><span class="language-bash">21</span></span><br></pre></td></tr></table></figure>
-
-<h5 id="git冲突"><a href="#git冲突" class="headerlink" title="git冲突"></a>git冲突</h5><p>总有些家伙啊，意见不合，就导致了冲突，常见了的文件缺失，内存冲突，版本问题带来的冲突，此时就要进行合并才行。这些都是需要手动解决的，此时就去到冲突的文件中手动删除冲突部分，它会贴心的告诉用&lt;&lt;&lt;&lt;&lt;&lt;和&gt;&gt;&gt;&gt;&gt;&gt;来告诉那些是当前的分支，那些是要合并的分支。跟冲突的人协商之后，进行选择性的删除和添加就解决冲突了，保存提交推送就好了。</p>
-<h5 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h5><p>git是一个好东西呢，确实分布式系统，一开始上手都是有点懵逼的，充分理解git的工作原理和运行逻辑，处理方法，真的香啊，linus是真的伟人，真的牛人，linux系统+git系统，真的是令人敬佩。</p>
+          <h5 id="起因"><a href="#起因" class="headerlink" title="起因"></a>起因</h5><p>我写好了协议层和应用层，但是我的同事也写了一个bootloader，但是他…所以，在我和他多次交流和协商下，他搞定了bootloader，但是出现问题了，就是adc不一样，他给的adc表格，不符合我实际读取的，所以就会出现偏差。</p>
+<h5 id="bug查找"><a href="#bug查找" class="headerlink" title="bug查找"></a>bug查找</h5><p>我一开始以为是采样问题，看了周期，看了转换速度，看了分频，都是正常，代码cube一键生成，也是启动adc了，因为使用的F1的MCU，所以是不能修改分辨率的，统一是12，F4的那些高级一点才能自己选择分辨率哦。</p>
+<p>最后，我让他把源码发给我了，我看了中断回调，看了函数处理，看了数据处理，都没问题，最后看到了，他没有校准ADC，这个我是早早的写了，我启动ADC就立刻校准了。</p>
+<h5 id="为什么要校准"><a href="#为什么要校准" class="headerlink" title="为什么要校准"></a>为什么要校准</h5><p>我还记得高中和初中的时候，我还是物理科代表呢，但是做啥实验第一步都是清零校准，才能保证统一和实验性。放在我们现在的工作之中就是，使用万用表和示波器肯定要先校验才能保证数据和波形是正确的啊。所以，在处理传感器和adc，dac等方面都要注意校验的问题，不是说光初始init就能解决一切bug的。</p>
+<p>那为什么会出现误差呢？</p>
+<p>STM32 的 ADC 校准一般有 参考电压校准 和 增益校准。</p>
+<p>参考电压校准：</p>
+<p>先测量 ADC 参考电压的实际值，然后将该值与预设的参考电压进行比较，得到参考电压的偏差，最终通过校准将其校正的方式叫做 参考电压校准 ，其目的是为了准确测量 ADC 的输入信号。</p>
+<p>叫做增益校准:</p>
+<p>通过测量内部基准电压和 ADC 输入信号的幅值之间的比例关系，校准 ADC 增益的方式 叫做增益校准，其目的是确保 ADC 输出的数值与输入信号的幅值之间具有良好的线性关系，为了准确的转换 ADC 输入信号。</p>
+<p>ADC 校准的目的是为了消除 ADC 的偏移误差和增益误差，从而提高测量精度。<br>原文链接：<a target="_blank" rel="noopener" href="https://blog.csdn.net/weixin_42328389/article/details/129518720">https://blog.csdn.net/weixin_42328389/article/details/129518720</a></p>
+<p>这个就像芯片生产过程制造中的差异化一样，ADC部分也存在一些差异化（虽然很小），其参考电压、偏置电压、增益等参数可能存在一些不确定性和漂移，这些参数的变化会导致 ADC 的测量结果产生误差。</p>
+<p>就想上面介绍什么是 ADC 校准最后说的，为了提高测量精度，消除 ADC 的偏移误差和增益误差，所以在使用 ADC 采样的时候都需要进行 ADC 校准。</p>
+<p>只要不改变adc设置就不会变化哦，修改通道是没事的，前提是别改属性，也就是可以关闭，但是寄存器别动，下次继续使用是没问题的。如果工作环境一直发生变化，噪声环境比较恶劣，温度啊，干扰，那就得用一次校准一次了。</p>
+<h5 id="解决办法"><a href="#解决办法" class="headerlink" title="解决办法"></a>解决办法</h5><p>就是启动ADC就立刻使用校准咯，这样就可以保证不同设备，或者同一个设备不同程序一样的adc啦。</p>
 
       
     </div>
@@ -388,7 +464,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2024/05/07/linux%E4%B8%AD%E7%9A%84%E4%B8%80%E5%88%87%E7%9A%86%E6%96%87%E4%BB%B6/">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2024/06/26/FLASH%E6%93%8D%E4%BD%9C/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/csm.png">
@@ -402,7 +478,7 @@
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
           
-            <a href="/2024/05/07/linux%E4%B8%AD%E7%9A%84%E4%B8%80%E5%88%87%E7%9A%86%E6%96%87%E4%BB%B6/" class="post-title-link" itemprop="url">linux中的一切皆文件</a>
+            <a href="/2024/06/26/FLASH%E6%93%8D%E4%BD%9C/" class="post-title-link" itemprop="url">FLASH操作</a>
         </h2>
 
         <div class="post-meta">
@@ -411,24 +487,9 @@
                 <i class="far fa-calendar"></i>
               </span>
               <span class="post-meta-item-text">发表于</span>
+              
 
-              <time title="创建时间：2024-05-07 21:42:29" itemprop="dateCreated datePublished" datetime="2024-05-07T21:42:29+08:00">2024-05-07</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2024-05-28 23:26:12" itemprop="dateModified" datetime="2024-05-28T23:26:12+08:00">2024-05-28</time>
-              </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/OS/" itemprop="url" rel="index"><span itemprop="name">OS</span></a>
-                </span>
+              <time title="创建时间：2024-06-26 01:30:37 / 修改时间：01:31:03" itemprop="dateCreated datePublished" datetime="2024-06-26T01:30:37+08:00">2024-06-26</time>
             </span>
 
           
@@ -442,9 +503,29 @@
     <div class="post-body" itemprop="articleBody">
 
       
-          <h5 id="起因"><a href="#起因" class="headerlink" title="起因"></a>起因</h5><p>今天刷到一个视频。我们学习linux的时候就学到了一句话”一切皆是文件“，仔细看了一下他的看法和视频。确实很严谨。”一切皆是文件“是源于unix的，linux继承下来了，但是，不能这样理解。linus曾经解释过，一切皆字节流。我们实际使用一般都是使用api，所以，在api层面就该理解为，一切皆是文件描述符。</p>
-<h5 id="文件描述符"><a href="#文件描述符" class="headerlink" title="文件描述符"></a>文件描述符</h5><h5 id="文件类型"><a href="#文件类型" class="headerlink" title="文件类型"></a>文件类型</h5><h5 id="字符设备"><a href="#字符设备" class="headerlink" title="字符设备"></a>字符设备</h5><h5 id="块设备"><a href="#块设备" class="headerlink" title="块设备"></a>块设备</h5><h5 id="网络设备"><a href="#网络设备" class="headerlink" title="网络设备"></a>网络设备</h5><h5 id="总线设备"><a href="#总线设备" class="headerlink" title="总线设备"></a>总线设备</h5><p>别好奇，搞驱动不只是字符，块，网络。还有平台和总线设备驱动。比如usb，spi，iic。这些你说他们是什么设备？都不一定的。这个是开用途的，usb可以网口啊，usb可以u盘啊，usb可以键盘鼠标啊！所以，这些平台设备和总线设备是另一种驱动，这些是给上面三种驱动一个总线驱动和驱动方法，这些一般都是厂商写好的，usb只能通过调用linux内核中的api来实现usb驱动的编写，因为，高度封装了，想得到usb配置符，只能靠内核哦！</p>
-<h5 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h5>
+          <h5 id="起因"><a href="#起因" class="headerlink" title="起因"></a>起因</h5><p>还是经典的摸鱼？不是的，是我公司的一个工程师，让我帮他搞一下治具，突然发现，烧不了代码了，所以，我经过j-flash的测试，才知道加读保护了。而且用的还是APM32这个芯片，我没想到是APM32是直接照抄STM32的，甚至我的STM32的bin代码都可以直接跑哦，真合着寄存器，外设引脚，内部完全一模一样呗。所以，我想到做一期关于flash的博客。来巩固一下知识点。</p>
+<h5 id="FLASH是什么"><a href="#FLASH是什么" class="headerlink" title="FLASH是什么"></a>FLASH是什么</h5><p>FLASH就是一种掉电不丢失的储存单元，特性就是成本低，但是不能按位操作，空间大，结构简单。</p>
+<p>为什么，不能按位呢？因为FLASH本身就是一个半导体一样的东西，我们看到刷新flash全是置为FF，为什么是FF，是因为此时单元束缚了一个电荷单元，旁边的高阻抗的传感器识别到，这个位置有电势差，所以就知道这个位bit里面有数据的。此时，就是把电子拿出来简单，放回去就难了，所以需要刷新才能重写。为什么拿出来和放回去难度不一样呢？因为上下结构不一样的。</p>
+<p><img src="/../Blogas_images/Flash.jpg"></p>
+<p><img src="/../Blogas_images/flash2.png"></p>
+<p>上面是一个flash单元，因为flash下面的所有单元衬底其实是一整块的，所以，无法做到，按位进行操作，因为一操作就会导致所有数据都归零，所以，只能操作上面部分的电荷来实现放电操作。刷新过程，其实就是衬底清空，此时就会对上面的浮栅进行充电，然后，电压一走电荷就会被束缚在栅极之中。</p>
+<p>还有那些颗粒类型什么的，我就不太了解了，因为我是一个臭写代码的，这个FLASH设计，要专业人士才能操作。当前存储颗粒主要分类：SLC、MLC、TLC、QLC</p>
+<p><img src="/../Blogas_images/FLASH3.jpg"></p>
+<p>可以认为那些储存都是这些FLASH颗粒组成的哦。上面这个只是一个二维的设计，因为这个衬底可以设计成3维的，所以，3维的flash成本更低，同时擦除的块也变大了，这个是厂商设计的哦。</p>
+<p>为什么设计简单，我们可以举例子，比如eemprom，这个其实就是内部类似矩阵一样，可以知道横纵就知道位置和操作了，因为没有采用统一衬底的设计，所以可以对任意位置操作，带来的布线、设计成本、生产成本，容量大小等诸多问题，都是限制它的原因。</p>
+<p>还有就是速率啦，FLASH一般是SRAM或者SPI的，eemprom一般都是iic</p>
+<h5 id="FLASH类型"><a href="#FLASH类型" class="headerlink" title="FLASH类型"></a>FLASH类型</h5><p>目前市面上常见的集成存储芯片类型：eMMC、UFS、SPI-Flash、QSPI-Flash、各尺寸的SD卡等。</p>
+<p>我这里就分为2大类：第一个是NORFlash，第二个是NANOFlash</p>
+<p>怎么理解呢？</p>
+<p>NORFlash就是扩容的一个Flash，我们可以修改MCU的内存大小和BANK来使用外部的SRAM或者NORFlash，在外部上面跑代码就是指针直接指向，把外部的也当成SRAM跑，而且还是很可靠的，掉电不丢失，突发情况说不定还能查看内部bit来还原数据呢。读速度还行，写速度慢，每次使用都要刷新，擦写次数比NANOFlash少太多了。它的接口是SRAM的接口，同MCU的引脚连接。</p>
+<p>NANOFlash就是纯纯的存储空间啦，一般都是有一个FLash芯片来实现对这写Flash单元的控制的，此时一般都是SPI，也有很多使用QSPI，一般是好的FLASH芯片都是有QSPI支持的，然后希望手册多一些有用的指令，便宜的FLash确实可以用，但是它的功能和指令都被阉割了。如果想要实现QSPI和文件系统等一些操作就比较麻烦了。读写速率都很快，但是不可靠，寿命高，可以擦写很多很多次。</p>
+<h5 id="内部FLASH"><a href="#内部FLASH" class="headerlink" title="内部FLASH"></a>内部FLASH</h5><p>回到上面提到的读保护吧，确实一般在mcu中，只有写保护，就是想要修改FLASH，需要解除锁，才能刷新再写，读的话，一般是直接地址指过去了。那么读保护是干嘛的？我这内部完全没有限制我读取啊？</p>
+<p>读保护是防外人的，那些狗东西最喜欢逆向和偷别人代码了，此时我开启读保护等级1，他们就不能通过调试来获取我的代码了。但是此时MCU是可以恢复到读保护等级0，只需要选择使用boot0 boot1都为1的SRAM启动，我们修改运行地址到SRAM中，修改映射，就可以在SRAM中把读保护等级修改了。但是如果读保护等级为2的时候，就把SRAM也禁用了，此时就gg了。</p>
+<p>此时，不能更新了吗？不是的，我们此时是禁用了外部的操作啊，但是我们可以ota啊，我们程序还是可以通过内部的开锁关锁来实现对flash的更新，这个是内部的操作，不是来自外部的哦[doge]</p>
+<h5 id="SRAM-FLASH-ROM区别"><a href="#SRAM-FLASH-ROM区别" class="headerlink" title="SRAM  FLASH  ROM区别"></a>SRAM  FLASH  ROM区别</h5><p>SRAM和NORFlash都可以运行代码，他们的区别就是SRAM肯定更快啊，想都不用想的，而且不用担心丢失，掉电就没了，固态使用的DRAM，还需要定期充电呢维持呢，速度也快，成本贼低。</p>
+<p>ROM和NANOFlash的区别呢？都想是存储的东西，但是，本质还是不一样的。ROM是一种只读的统称，可以认为是PROM（可编程ROM）、EPROM（可擦除可编程ROM，通过紫外线擦除）、EEPROM。ROM也是可以编程的，但是更少，Flash就擦除写入的多了，一般的固态SSD都是FLASH，因为便宜快速高效可以反复擦除。</p>
+<h5 id="感想"><a href="#感想" class="headerlink" title="感想"></a>感想</h5><p>FLASH真的一个跨时代的发明。我想到了，最近要搞一个NAS玩玩，先玩黑群晖吧，刚好有一个闲置的垃圾笔记本，我看了一下群晖裸机也要1300呢，有点贵的，用的是机械盘，本质，是中间那个磁盘来着，怎么说呢。那个东西可以修复确实好，不过固态确实越来越好用。服务器还是机械吧，固态坏了真的修不了，都是电子和位，怎么恢复啊。FLASH带来的便利，也带来一些麻烦，比如固态涨价涨疯了，我都买不起了，呜呜呜。</p>
+
       
     </div>
 
@@ -465,7 +546,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2024/05/07/%E6%95%B0%E6%8D%AE%E6%B5%81%E7%9A%84%E6%A6%82%E5%BF%B5/">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2024/06/24/Flash%E7%9A%84%E5%BA%95%E5%B1%82%E9%A9%B1%E5%8A%A8%E5%92%8C%E4%B8%8A%E5%B1%82%E8%B0%83%E7%94%A8%E7%AD%96%E7%95%A5/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/csm.png">
@@ -479,7 +560,7 @@
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
           
-            <a href="/2024/05/07/%E6%95%B0%E6%8D%AE%E6%B5%81%E7%9A%84%E6%A6%82%E5%BF%B5/" class="post-title-link" itemprop="url">数据流的概念</a>
+            <a href="/2024/06/24/Flash%E7%9A%84%E5%BA%95%E5%B1%82%E9%A9%B1%E5%8A%A8%E5%92%8C%E4%B8%8A%E5%B1%82%E8%B0%83%E7%94%A8%E7%AD%96%E7%95%A5/" class="post-title-link" itemprop="url">Flash的底层驱动和上层调用策略</a>
         </h2>
 
         <div class="post-meta">
@@ -489,14 +570,14 @@
               </span>
               <span class="post-meta-item-text">发表于</span>
 
-              <time title="创建时间：2024-05-07 21:41:38" itemprop="dateCreated datePublished" datetime="2024-05-07T21:41:38+08:00">2024-05-07</time>
+              <time title="创建时间：2024-06-24 22:23:28" itemprop="dateCreated datePublished" datetime="2024-06-24T22:23:28+08:00">2024-06-24</time>
             </span>
               <span class="post-meta-item">
                 <span class="post-meta-item-icon">
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2024-06-03 22:26:28" itemprop="dateModified" datetime="2024-06-03T22:26:28+08:00">2024-06-03</time>
+                <time title="修改时间：2024-06-26 22:59:26" itemprop="dateModified" datetime="2024-06-26T22:59:26+08:00">2024-06-26</time>
               </span>
 
           
@@ -510,19 +591,44 @@
     <div class="post-body" itemprop="articleBody">
 
       
-          <h5 id="起因"><a href="#起因" class="headerlink" title="起因"></a>起因</h5><p>我当时学这个文件io的时候，也是懵懵懂懂的，就知道，open read write close lseek  fflush那些，其实也没明白是怎么回事。</p>
-<p>数据流是指在计算机系统中，程序与文件之间进行数据交换的过程。当你在程序中执行文件操作，如读取、写入、修改等，这些操作都涉及到数据在程序和文件之间的传输，这个过程就是文件IO的数据流。</p>
-<h5 id="文件管理系统"><a href="#文件管理系统" class="headerlink" title="文件管理系统"></a>文件管理系统</h5><p>自从学习了flash，我之前就好奇了，flash是可以作为一个管理空间，但是，对于一个文件来说，如果把数据存储在flash中，那么，如何进行精确的修改呢？这个flash肯定是要先刷新才能使用的啊，为什么好像使用这些文件io的时候，可以那么顺利呢？其实，如果是追加的话，其实还是可以理解的，就是通过系统去链接起来，调用系统的文件io就可以实现文件完整使用和读取，所以，哪怕文件不是连续地址，也可以实现文件追加。读就更容易了，写呢？如果在原有基础上写呢？所以，我就像这种情况肯定是要刷新flash的区块来实现的。恰好，我想起来了数据流的概念。</p>
-<h5 id="数据流"><a href="#数据流" class="headerlink" title="数据流"></a>数据流</h5><p>使用文件io的时候，就会到打开这个文件，同时把所有数据通过数据流的形式导出来，我们对着这个数据流进行修改。这个数据流，可以认为就是系统把这一段空间都读取出来了，我们对着这个字符串进行操作而已。</p>
-<p>在Flash存储中，当你需要修改一个文件时，操作系统和文件系统会采取一些策略来确保不会影响到其他文件：</p>
+          <h5 id="起因"><a href="#起因" class="headerlink" title="起因"></a>起因</h5><p>我朋友发了一个sqi的flash芯片手册给我看了一下，那个是一个垃圾的国产芯片，只有简单的读取和写入功能，很多其他指令都没有，他说很难实现sfud的功能，sfud就是为了兼容不同型号的flash，我感觉确实挺不错的，有水平的，新出的flash一般都是支持SFDP标准的，而sfud也是支持的SFDP标准的，所以，只要满足就可以使用啦。想都想到flash就一个FLASH博客咯。</p>
+<h5 id="NANOFlash底层驱动"><a href="#NANOFlash底层驱动" class="headerlink" title="NANOFlash底层驱动"></a>NANOFlash底层驱动</h5><p>这个就是纯纯数据啦，现在固态都是NANOFLash的哦，(服务器的还是用机械盘，因为机械盘坏了可以修复，固态坏了是真的没救了)。是不能直接执行代码的,不过可以通过引导程序把代码下载到ram之中来运行哦。接口一般是看芯片的设计的，芯片有spi、m.2 、pcie、sata都是可以的，通信协议只是一个建立交互的手段罢了，速率和成本满足要求，怎么样都行。这个就没啥好操作的了，就是根据协议，写好收发，看着手册进行指令的发送，状态的判断，数据的获取和写入。封装成一个个api给上层调用咯。</p>
+<h5 id="NORFlash底层扩容操作"><a href="#NORFlash底层扩容操作" class="headerlink" title="NORFlash底层扩容操作"></a>NORFlash底层扩容操作</h5><p>NORFlash一般不是用来存储东西的，更多是扩容和进行代码运行的，它是跟mcu的扩容引脚接在一起的，也就是说，mcu可以配置外部的bank之后，可以直接访问这个外部的Flash地址来进行操作，而且这个是非常可靠的，缺点肯定是有的，比如SRAM快和高效，掉电不丢失，重启要刷新等。</p>
+<p>使用方法，一般都是抽象使用，也就是mmu来管理这块地址，因为flash刷新就会按照块来进行处理的，所以，里面最好不要又可变的变量，而是一个固定不变的数据和函数，当然可以用指针去直接使用它，没有mmu的管制，想干嘛都是可以的。实践中现代操作系统和环境通常会提供更高级别的抽象来管理内存和代码的执行，而不是直接由程序员操作指针去执行Flash中的代码。不过，在嵌入式系统或特定的低级编程场景中，这种直接操作更为常见。</p>
+<h5 id="QSPI"><a href="#QSPI" class="headerlink" title="QSPI"></a>QSPI</h5><p>我们使用的SPI，一般都是sck，miso，mosi，css组成的，可以放弃一根线，只有mosi或者miso，也有使用qspi的，就是并行spi的，可以认为这种spi就是利用并发的操作来增加速率，每多一根并行，理论上是可以翻倍速率的，具体还是看QSPI硬件芯片的处理了。</p>
+<p><img src="/../Blogas_images/QSPIflash.png"></p>
+<h5 id="文件管理系统"><a href="#文件管理系统" class="headerlink" title="文件管理系统"></a>文件管理系统</h5><p>这个就是FLASH的底层调用啦，通过指令，知道空间大小，可以通过指令去处理和读写数据、文件等操作。</p>
+<p>文件管理系统是操作系统的一个关键组成部分，负责组织、存储、检索用户和系统数据。它为用户提供了一个访问和管理文件的接口，使得用户能够创建、删除、修改、重命名文件以及目录（文件夹）。常见的文件管理系统有NTFS（Windows）、HFS+（macOS早期版本）、APFS（macOS新版本）、EXT4（Linux）等。它们通过各种数据结构（如inode、文件分配表等）来跟踪文件存储的位置、大小、权限等信息。</p>
+<p>FLASH，通常指的是闪存技术，是一种非易失性存储器，意味着断电后存储的数据不会丢失。与传统的硬盘驱动器（HDD）使用磁性介质不同，闪存使用电子存储数据，在读写速度、功耗、抗震性方面具有优势。FLASH技术分为两类：NAND Flash和NOR Flash，其中NAND Flash因其高密度、低成本和较高速度的特点，广泛应用于USB闪存盘、固态硬盘（SSD）、移动设备的内部存储等场景。</p>
+<p>虽然文件管理系统和FLASH技术分属不同层面，但它们紧密相关。现代的存储设备，特别是固态硬盘（SSD），大量采用FLASH技术作为存储介质。为了优化FLASH存储的性能和寿命（因为FLASH有擦写次数限制），文件管理系统需要针对FLASH特性进行特别设计或调整，比如引入TRIM指令来通知SSD哪些数据块已不再使用，可以提前擦除以提高写入效率；或者使用磨损均衡算法来均衡FLASH芯片中各区块的擦写次数，延长SSD寿命。</p>
 <ol>
-<li><strong>写入时复制（Copy-on-Write）</strong>：在修改文件之前，系统会先将原始文件复制到另一个块，然后在新块上进行修改。这样，原始文件保持不变，新的修改内容存储在另一个块上。这种方法可以避免在修改过程中影响到其他文件。</li>
-<li><strong>垃圾回收（Garbage Collection）</strong>：随着文件的修改和删除，Flash存储上可能会产生一些不再使用的空间。这些空间被称为垃圾。垃圾回收机制会定期运行，将这些垃圾空间整理并合并，以便于未来的文件存储和修改。</li>
-<li><strong>磨损平衡（Wear Leveling）</strong>：Flash存储具有有限的写入次数，频繁写入同一块区域会导致磨损加速。为了避免这个问题，Flash存储控制器会实现磨损平衡策略，将写入操作分散到不同的块，以延长Flash存储的使用寿命。</li>
-<li><strong>日志结构（Log-Structured）文件系统</strong>：一些文件系统（如F2FS、Btrfs等）采用日志结构设计，将文件的元数据和实际数据分开存储。这种设计有助于减少对Flash存储的磨损，并提高文件系统的性能。</li>
+<li><strong>理解FLASH硬件特性</strong>：首先，深入了解您所使用的FLASH（NAND或NOR）的技术规格、命令集、读写速度、擦写寿命限制等，这对于设计高效且安全的接口至关重要。</li>
+<li><strong>开发驱动程序</strong>：对于嵌入式系统或特定应用，可能需要编写低级驱动程序来直接控制FLASH芯片。这包括初始化FLASH、发送读写命令、处理错误和状态返回等。</li>
+<li><strong>设计高级API</strong>：在驱动程序之上，设计一套易于使用的API，比如打开、关闭、读取、写入、 seek（定位）、truncate（截断）等操作，模仿文件I&#x2F;O的方式，这样上层应用可以不关心底层硬件细节。</li>
+<li><strong>错误处理与磨损平衡</strong>：考虑到FLASH的擦写寿命，您的API设计应包含磨损平衡策略和错误处理机制，比如记录和报告坏块信息，使用损耗均衡算法等。</li>
+<li><strong>性能优化</strong>：根据FLASH的特性（如页大小、块大小）优化读写操作，比如批量读写以减少开销，利用缓存技术加速访问等。</li>
+<li><strong>测试与验证</strong>：彻底测试您的接口在各种条件下的表现，确保数据的完整性和可靠性。</li>
 </ol>
-<p>所以，我们不用担心回写导致flash错误的问题，这些都是通过文件管理系统区处理。</p>
-<h5 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h5><p>数据流是一个非常迷糊的概念，只有使用open才会打开，使用close和fflush才会刷新保存，所以，如果在close和fflush之前电脑停电、蓝屏、死掉了等。哦吼，数据流就随着RAM一起没啦！此时就没了通过文件管理系统回写这个操作了。这个时候追悔莫及了，一无所有啦。</p>
+<p>现代文件系统通过维护元数据来跟踪文件的分配情况，通过多种机制确保数据一致性和空间的有效管理，同时提供给上层应用接口以实现并发访问控制和空间的精确计算。</p>
+<p>其实就是一句话，文件系统给了需要接口，我们就得从底层提供api比如多大，读写操作api，空间使用等。然后文件系统就会自己去处理和判断空间剩余，空间使用，然后再封装api就可以进行文件io的操作了。</p>
+<h5 id="虚拟文件系统（Virtual-File-System-VFS）"><a href="#虚拟文件系统（Virtual-File-System-VFS）" class="headerlink" title="虚拟文件系统（Virtual File System, VFS）"></a>虚拟文件系统（Virtual File System, VFS）</h5><p>现代操作系统内核中的一个重要组件，它提供了一个抽象层，使得操作系统和上层应用程序可以以统一的方式访问不同类型的文件系统，而无需关注底层文件系统的具体实现细节。VFS在处理并发访问和空间管理时，也遵循类似的原理，但其作用范围和方式更为通用和抽象。</p>
+<h6 id="并发访问控制"><a href="#并发访问控制" class="headerlink" title="并发访问控制"></a>并发访问控制</h6><p>在VFS层面处理并发访问，主要是通过文件描述符、文件句柄以及与之相关的锁机制来实现的。当多个进程或线程试图访问同一个文件时，VFS会确保通过以下方式避免冲突：</p>
+<ul>
+<li><strong>文件描述符表</strong>：每个进程都有一个文件描述符表，其中包含了指向内核中打开文件结构的指针。这些结构包含了锁和其他同步机制，以保护文件的并发访问。</li>
+<li><strong>锁机制</strong>：VFS支持不同类型的锁，如读锁和写锁，来控制文件的访问权限。这些锁可以是进程间共享的，也可以是独占的，确保了读取和写入操作的原子性和一致性。</li>
+<li><strong>同步原语</strong>：操作系统提供的同步原语（如信号量、互斥锁等）同样可用于VFS层面的同步控制，尤其是在涉及更复杂的并发控制策略时。</li>
+</ul>
+<p>空间管理</p>
+<p>VFS不仅管理文件的逻辑表示，还间接参与空间的管理，尽管具体的磁盘块分配和空闲空间跟踪通常由下层的文件系统实现：</p>
+<ul>
+<li><strong>元数据抽象</strong>：VFS定义了统一的元数据接口，允许上层查询文件大小、链接数等信息，而底层文件系统负责实际的物理空间分配和释放。</li>
+<li><strong>空间分配策略</strong>：虽然具体的块分配算法（如位图、B树等）由具体文件系统实现，VFS确保了上层应用可以通过标准接口请求和释放空间，而不必关心底层细节。</li>
+<li><strong>跨文件系统操作</strong>：VFS使得不同文件系统可以挂载在同一目录树下，每个文件系统独立管理自己的空间，VFS提供了一个统一的视角，让上层可以透明地访问和管理这些不同文件系统中的文件。</li>
+</ul>
+<p>总之，虚拟文件系统通过提供统一的接口和抽象，简化了对文件系统多样性的管理，同时也为并发访问控制和空间管理提供了一个基础框架，确保了操作的高效和一致性。</p>
+<h5 id="FLASH应用层"><a href="#FLASH应用层" class="headerlink" title="FLASH应用层"></a>FLASH应用层</h5><p>这个应用层是给到程序员的啊，一般都是在文件系统之上使用文件io去操作和处理很多事情，增删查改；还有使用数据库、日志等操作，这些操作都是看起来简答的api调用，实际上是底层驱动和文件系统做了很多处理的。写好应用层就可以给用户使用啦，这里要多注意判断的判断、纠错、校验、以及用户体验等问题。</p>
+<h5 id="FLAS用户层"><a href="#FLAS用户层" class="headerlink" title="FLAS用户层"></a>FLAS用户层</h5><p>就是用户看到的数据啦，我们使用文件管理系统就可以知道当前的状态了，此时可以使用上位机的办法或者指令的办法去固态进行处理和操作，其实就是对文件系统的那些io操作进行处理而已。比如打开我的电脑，就可以直接看到固态空间和使用情况，还可以直接进行修改，这个就是一个非常简单的使用了，已经是高度封装和抽象了。</p>
+<h5 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h5><p>FLASH的原理和使用是简单的，如果直接为了实现通信和简单交互，其实是很简单的，但是现实是，用户是要体验的，要速率的，要稳定性，要可靠安全高效的，这个时候就要文件系统做非常大的校验和判断，还有底层的代码要不断优化，增加校验，增加纠错，增加速率，甚至修改通信协议等诸多问题，来给用户带来超棒的体验。</p>
 
       
     </div>
@@ -544,7 +650,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2024/05/06/%E7%BB%9F%E4%B8%80%E7%BC%96%E5%9D%80%E5%92%8CIO%E7%8B%AC%E7%AB%8B%E7%BC%96%E5%9D%80/">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2024/06/12/%E7%A5%9B%E9%AD%85%E2%80%94%E2%80%94%E6%8A%80%E6%9C%AF%E7%9A%84%E9%99%B7%E9%98%B1/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/csm.png">
@@ -558,7 +664,7 @@
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
           
-            <a href="/2024/05/06/%E7%BB%9F%E4%B8%80%E7%BC%96%E5%9D%80%E5%92%8CIO%E7%8B%AC%E7%AB%8B%E7%BC%96%E5%9D%80/" class="post-title-link" itemprop="url">统一编址和IO独立编址</a>
+            <a href="/2024/06/12/%E7%A5%9B%E9%AD%85%E2%80%94%E2%80%94%E6%8A%80%E6%9C%AF%E7%9A%84%E9%99%B7%E9%98%B1/" class="post-title-link" itemprop="url">祛魅——技术的陷阱</a>
         </h2>
 
         <div class="post-meta">
@@ -568,73 +674,14 @@
               </span>
               <span class="post-meta-item-text">发表于</span>
 
-              <time title="创建时间：2024-05-06 22:20:21" itemprop="dateCreated datePublished" datetime="2024-05-06T22:20:21+08:00">2024-05-06</time>
-            </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          
-      
-    </div>
-
-    
-    
-    
-
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2024/04/28/linux%E7%9A%84ipc/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/csm.png">
-      <meta itemprop="name" content="CSM">
-      <meta itemprop="description" content="应用是应用，驱动是驱动！你要是偏要应用干驱动，哥们，你怎么不直接薪资翻倍啊！[🦀]">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="我要成为嵌入式高手[doge]">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2024/04/28/linux%E7%9A%84ipc/" class="post-title-link" itemprop="url">linux的ipc</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              <time title="创建时间：2024-04-28 23:00:19" itemprop="dateCreated datePublished" datetime="2024-04-28T23:00:19+08:00">2024-04-28</time>
+              <time title="创建时间：2024-06-12 23:22:50" itemprop="dateCreated datePublished" datetime="2024-06-12T23:22:50+08:00">2024-06-12</time>
             </span>
               <span class="post-meta-item">
                 <span class="post-meta-item-icon">
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2024-06-03 22:56:21" itemprop="dateModified" datetime="2024-06-03T22:56:21+08:00">2024-06-03</time>
+                <time title="修改时间：2024-07-01 23:52:40" itemprop="dateModified" datetime="2024-07-01T23:52:40+08:00">2024-07-01</time>
               </span>
 
           
@@ -648,193 +695,42 @@
     <div class="post-body" itemprop="articleBody">
 
       
-          <h5 id="IPC"><a href="#IPC" class="headerlink" title="IPC"></a>IPC</h5><p>IPC是什么呢？网络摄像头？我们在linux中，所以只能使用进程间通信啦</p>
-<h5 id="IPC原理"><a href="#IPC原理" class="headerlink" title="IPC原理"></a>IPC原理</h5><h5 id="IPC操作"><a href="#IPC操作" class="headerlink" title="IPC操作"></a>IPC操作</h5><h5 id="IPC内核过程"><a href="#IPC内核过程" class="headerlink" title="IPC内核过程"></a>IPC内核过程</h5><h5 id="IPC特性"><a href="#IPC特性" class="headerlink" title="IPC特性"></a>IPC特性</h5><h5 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h5>
-      
-    </div>
+          <h2 align = "center">祛魅</h2>
 
-    
-    
-    
-
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2024/04/28/linux%E4%B8%ADrust%E4%BD%9C%E7%94%A8/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/csm.png">
-      <meta itemprop="name" content="CSM">
-      <meta itemprop="description" content="应用是应用，驱动是驱动！你要是偏要应用干驱动，哥们，你怎么不直接薪资翻倍啊！[🦀]">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="我要成为嵌入式高手[doge]">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2024/04/28/linux%E4%B8%ADrust%E4%BD%9C%E7%94%A8/" class="post-title-link" itemprop="url">linux中rust作用</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              <time title="创建时间：2024-04-28 23:00:00" itemprop="dateCreated datePublished" datetime="2024-04-28T23:00:00+08:00">2024-04-28</time>
-            </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          
-      
-    </div>
-
-    
-    
-    
-
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2024/04/28/%E8%AE%BE%E5%A4%87%E6%A0%91/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/csm.png">
-      <meta itemprop="name" content="CSM">
-      <meta itemprop="description" content="应用是应用，驱动是驱动！你要是偏要应用干驱动，哥们，你怎么不直接薪资翻倍啊！[🦀]">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="我要成为嵌入式高手[doge]">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2024/04/28/%E8%AE%BE%E5%A4%87%E6%A0%91/" class="post-title-link" itemprop="url">设备树</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              <time title="创建时间：2024-04-28 22:54:07" itemprop="dateCreated datePublished" datetime="2024-04-28T22:54:07+08:00">2024-04-28</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2024-07-29 20:55:49" itemprop="dateModified" datetime="2024-07-29T20:55:49+08:00">2024-07-29</time>
-              </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <h5 id="设备树"><a href="#设备树" class="headerlink" title="设备树"></a>设备树</h5><p>这个不是linus设计的，是linus借鉴别人的。这个是Open Firmware的设计，常见于powerPC等架构中，linus觉得很好，就把他引进到了linux中了，使用它的目的，也是为了统一管理和分配硬件，减少代码量。所以，遇到哪个of开头的文件和api，因为它来自Open Firmware哦。</p>
-<p>使用设备树的时候，先看看uboot是否支持设备树，不支持就找打uboot的一些头文件增加#define CONFIG_OF_LIBFDT &#x2F;* Device Tress support *&#x2F;试试</p>
-<p>再看看菜单中是否开启了设备树功能，在cpu.c中引用了头文件 。比如kernel&#x2F;arch&#x2F;arm&#x2F;mach-s5p6818&#x2F;cpu.c。</p>
-<p>#include &lt;linux&#x2F;of.h&gt;</p>
-<p>#include &lt;linux&#x2F;of_address.h&gt;</p>
-<p>#include &lt;linux&#x2F;of_fdt.h&gt;</p>
-<p>#include &lt;linux&#x2F;of_platform.h&gt;</p>
-<p>在cpu_init_machine添加“加载设备树函数of_platform_populate”</p>
-<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">const</span> <span class="class"><span class="keyword">struct</span> <span class="title">of_device_id</span> <span class="title">of_default_bus_match_table</span>[] =</span> &#123;</span><br><span class="line">&#123; .compatible = <span class="string">&quot;simple-bus&quot;</span>, &#125;,</span><br><span class="line"><span class="meta">#<span class="keyword">ifdef</span> CONFIG_ARM_AMBA</span></span><br><span class="line">&#123; .compatible = <span class="string">&quot;arm,amba-bus&quot;</span>, &#125;,</span><br><span class="line"><span class="meta">#<span class="keyword">endif</span> <span class="comment">/* CONFIG_ARM_AMBA */</span></span></span><br><span class="line">&#123;&#125; <span class="comment">/* Empty terminated list */</span></span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="type">static</span> <span class="type">void</span> __init <span class="title function_">cpu_init_machine</span><span class="params">(<span class="type">void</span>)</span></span><br><span class="line">&#123;</span><br><span class="line"><span class="comment">/* set shutdown */</span></span><br><span class="line">pm_power_off = nxp_cpu_shutdown;</span><br><span class="line">arm_pm_restart = nxp_cpu_reset;</span><br><span class="line"><span class="comment">/*</span></span><br><span class="line"><span class="comment">* register platform device</span></span><br><span class="line"><span class="comment">*/</span></span><br><span class="line">nxp_cpu_devs_register();</span><br><span class="line">nxp_board_devs_register();</span><br><span class="line"></span><br><span class="line"><span class="comment">//加载设备树</span></span><br><span class="line">of_platform_populate(<span class="literal">NULL</span>, of_default_bus_match_table, <span class="literal">NULL</span>, <span class="literal">NULL</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p>在比较新的linux内核中，设备树dts已经取代了传统的machine board device description，dts</p>
-<p>在内核中以各种device node的形式存在，而这些device node对于大部分的内核驱动模块</p>
-<p>platform_driver来说，最终需要有对应的platform device来与他匹配才可以完成一次device和</p>
-<p>driver的probe过程。</p>
-<p>所有有必要将dts中需要加载为device的device node转为platform device，而这个过程是交给</p>
-<p>of_platform_populate来完成的（dts相关的device node tree是在main.c中的start_kernel-</p>
-<p>&gt;setup_arch-&gt;unflatten_device_tree来加载dtb并解析）。</p>
-<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">void</span> __init <span class="title function_">unflatten_device_tree</span><span class="params">(<span class="type">void</span>)</span></span><br><span class="line"></span><br><span class="line">&#123;</span><br><span class="line">__unflatten_device_tree(initial_boot_params,</span><br><span class="line"></span><br><span class="line">&amp;allnodes,early_init_dt_alloc_memory_arch);</span><br><span class="line"></span><br><span class="line"><span class="comment">/* Get pointer to &quot;/chosen&quot; and &quot;/aliasas&quot; nodes for use everywhere */</span></span><br><span class="line"></span><br><span class="line">of_alias_scan(early_init_dt_alloc_memory_arch);</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p>MACHINE_START 改为DT_MACHINE_START，并在其中增加设备树匹配信息。</p>
-<h5 id="设备树文件"><a href="#设备树文件" class="headerlink" title="设备树文件"></a>设备树文件</h5><p>DTS  、DTC、DTB、</p>
-<p>DTS是设备树源码，就是描绘了硬件的配置；如地址、大小、种类、外设配置等</p>
-<p>DTC是编译设备树的编译工具，这个需要install下单编译器</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#dtc 工具安装：</span></span><br><span class="line">sudo apt-get install device-tree-compiler</span><br><span class="line"></span><br><span class="line"><span class="comment">#编译设备树</span></span><br><span class="line">dtc -I dts -O dtb -o xxx.dtb xxx.dts</span><br><span class="line"></span><br><span class="line"><span class="comment">#编译设备树插件</span></span><br><span class="line">dtc -I dts -O dtb -o xxx.dtbo xxx.dts</span><br><span class="line"></span><br><span class="line"><span class="comment">#设备树反汇编</span></span><br><span class="line">dtc -I dtb -O dts -o xxx.dts xxx.dtb</span><br></pre></td></tr></table></figure>
-
-<p>DTB是可执行文件，经过上面的编译之后，可以被编译器识别的文件。可以加到特定位置同内核一起运行，也可以加到内核所在设备树目录中一起编译到内核之中。</p>
-<h5 id="设备树语法"><a href="#设备树语法" class="headerlink" title="设备树语法"></a>设备树语法</h5><p>设备树该怎么写呢？首先，一个树肯定就是有主干，这个主干，不是我们这些小卡拉米写的，所以，顶多是在芯片原厂的基础上增加一些自己的设备。</p>
-<p>枝叶这个该怎么写呢？首先，你得让编译器和主干识别到我这个枝叶吧，这就像一个叶子，一定有叶柄才能和主干连接，而我们修改不过是叶子的形状和功能，所以，开头一定要有一个和主干一模一样的开头。这个就是叶柄了。如下面这种结构：</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line">/*</span><br><span class="line"> * Copyright (c) 2012 Samsung Electronics Co., Ltd.</span><br><span class="line"> * http://www.samsung.com</span><br><span class="line"> ** This program is free software; you can redistribute it and/or modify</span><br><span class="line"> * it under the terms of the GNU General Public License version 2 as</span><br><span class="line"> * published by the Free Software Foundation.</span><br><span class="line"> */</span><br><span class="line"> </span><br><span class="line">/dts-v1/;</span><br><span class="line"></span><br><span class="line">/ &#123;</span><br><span class="line">	model = &quot;csm6818 based on Samsung s5p6818&quot;;					/*这一段就是叶柄了，有了它才能正常工作*/</span><br><span class="line">	compatible = &quot;csm,s5p6818&quot;;</span><br><span class="line">	chosen &#123;</span><br><span class="line">		compatible = &quot;gec,chosen&quot;;</span><br><span class="line">		bootargs = &quot;lcd=at070tn92 tp=gslx680-linux root=/dev/mmcblk0p2 rootfstype=ext4 rw &quot;;</span><br><span class="line">	&#125;;</span><br><span class="line"></span><br><span class="line">																/*这下面此时就是叶子了，可以随意定义*/	</span><br><span class="line">	myled&#123;	</span><br><span class="line">		compatible = &quot;csm,myled&quot;;								/*这个compatible不要改，也算是开头和索引号，后面的随便改都行*/</span><br><span class="line">		led-num   = &lt;4&gt;;										/*这个led-num是自定义的，可以修改哦。比如led-nums*/</span><br><span class="line">		led-names =&quot;led-d7&quot;,&quot;led-d8&quot;,&quot;led-d9&quot;,&quot;led-d10&quot;;		/*字符串*/</span><br><span class="line">		led-gpios = &lt;141 81 72 71&gt;;								/*数据*/</span><br><span class="line">		default-state = &quot;off&quot;;									/*字符串 表示状态，当然用数据也行*/</span><br><span class="line">	&#125;;</span><br><span class="line"></span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
-
-<p>语法开始：这个就简单的说一下设备树语法，只有使用的时候再去仔细看一下需要的。</p>
-<p><a target="_blank" rel="noopener" href="https://blog.csdn.net/qq_35031421/article/details/105002645">Linux设备树学习笔记(一、设备树语法规范)_reg &#x3D; &lt;0x00 0x80000000 0x00 0x60000000&gt;;-CSDN博客</a></p>
-<h5 id="设备树5个使用方法"><a href="#设备树5个使用方法" class="headerlink" title="设备树5个使用方法"></a>设备树5个使用方法</h5><h6 id="1-将dtb文件拷贝到根文件系统（推荐，利于调试）"><a href="#1-将dtb文件拷贝到根文件系统（推荐，利于调试）" class="headerlink" title="1.将dtb文件拷贝到根文件系统（推荐，利于调试）"></a>1.将dtb文件拷贝到根文件系统（推荐，利于调试）</h6><p>&#x2F;* 从根文件系统拷贝dtb文件，更方便，更利于调试 *&#x2F;</p>
-<p>setenv bootcmd ext4load mmc 2:2 0x42000000 gec6818.dtb ;ext4load mmc 2:1 0x48000000</p>
-<p>uImage ;bootm 0x48000000 - 0x42000000</p>
-<p>saveenv</p>
-<h6 id="2-挂载开发板内核镜像分区，将dtb拷贝到该分区（安全性高，用户不能随意修改或删除）"><a href="#2-挂载开发板内核镜像分区，将dtb拷贝到该分区（安全性高，用户不能随意修改或删除）" class="headerlink" title="2.挂载开发板内核镜像分区，将dtb拷贝到该分区（安全性高，用户不能随意修改或删除）"></a>2.挂载开发板内核镜像分区，将dtb拷贝到该分区（安全性高，用户不能随意修改或删除）</h6><p>mount -t ext4 &#x2F;dev&#x2F;mmcblk0p1 &#x2F;mnt</p>
-<p>cp gec6818.dtb &#x2F;mnt</p>
-<p>umount &#x2F;mnt</p>
-<p>&#x2F;* 拷贝到内核镜像的分区 *&#x2F;</p>
-<p>setenv bootcmd ext4load mmc 2:1 0x42000000 gec6818.dtb ;ext4load mmc 2:1 0x48000000</p>
-<p>uImage ;bootm 0x48000000 - 0x42000000</p>
-<p>saveenv</p>
-<h6 id="3-使用网络，配置uboot环境变量。"><a href="#3-使用网络，配置uboot环境变量。" class="headerlink" title="3.使用网络，配置uboot环境变量。"></a>3.使用网络，配置uboot环境变量。</h6><p>setenv bootcmd tftp 0x42000000 gec6818.dtb ; ext4load mmc 2:1 0x48000000 uImage ;</p>
-<p>bootm 0x48000000 - 0x42000000</p>
-<h6 id="4-不使用网络，可以使用串口下载dtb文件到内存地址0x42000000。"><a href="#4-不使用网络，可以使用串口下载dtb文件到内存地址0x42000000。" class="headerlink" title="4.不使用网络，可以使用串口下载dtb文件到内存地址0x42000000。"></a>4.不使用网络，可以使用串口下载dtb文件到内存地址0x42000000。</h6><p>loady 0x42000000</p>
-<p>setenv bootcmd ext4load mmc 2:1 0x48000000 uImage ; bootm 0x48000000 - 0x42000000</p>
-<p>saveenv</p>
-<h6 id="5-将dtb文件编译到boot-img，重新烧录内核。"><a href="#5-将dtb文件编译到boot-img，重新烧录内核。" class="headerlink" title="5.将dtb文件编译到boot.img，重新烧录内核。"></a>5.将dtb文件编译到boot.img，重新烧录内核。</h6><p>在ubuntu中</p>
-<p>将文件拷贝到一个&#x2F;target&#x2F;product&#x2F;6818&#x2F;boot的目录之下</p>
-<p>.&#x2F;mk -k</p>
-<p>在uboot中</p>
-<p>setenv bootcmd ext4load mmc 2:1 0x42000000 gec6818.dtb ;ext4load mmc 2:1 0x48000000</p>
-<p>uImage ;bootm 0x48000000 - 0x42000000</p>
-<h5 id="驱动使用设备树节点"><a href="#驱动使用设备树节点" class="headerlink" title="驱动使用设备树节点"></a>驱动使用设备树节点</h5><p>驱动想要使用设备树，只能使用平台设备方法的，此时平台设备platform_driver中的dirver结构体中的of_match_table这个就要指向所满足需求的</p>
-<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">static</span> <span class="type">const</span> <span class="class"><span class="keyword">struct</span> <span class="title">of_device_id</span> <span class="title">of_led_match</span>[]=</span>&#123;</span><br><span class="line">	&#123;.compatible=<span class="string">&quot;gec,myled&quot;</span>,&#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="type">static</span> <span class="keyword">struct</span> platform_driver led_plat_driver = &#123;</span><br><span class="line">	.probe = myled_probe,</span><br><span class="line">	.remove = __devexit_p(myled_remove),</span><br><span class="line">	.driver = &#123;</span><br><span class="line">		.name = <span class="string">&quot;myled&quot;</span>,</span><br><span class="line">		.onwer = THIS_MODULE,</span><br><span class="line">		.of_match_table = of_led_match,	<span class="comment">//指针指向</span></span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p>此时，这个驱动就知道，该找到compatible&#x3D;”gec,myled”的要求的设备树节点，读取这个节点上面的数据(引脚号和介绍)，此时驱动就知道有这个led设备了，就可以控制对应的GPIO引脚的高低电平。</p>
-<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">platform_device</span> *<span class="title">pdev</span>;</span><span class="comment">//已经对应上的平台设备</span></span><br><span class="line"></span><br><span class="line"><span class="comment">/* init  */</span></span><br><span class="line"></span><br><span class="line"><span class="type">char</span> Buff[<span class="number">30</span>]=&#123;<span class="number">0</span>&#125;;</span><br><span class="line"><span class="comment">//设置节点指向</span></span><br><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">device_node</span> * <span class="title">pdevnode</span> =</span> pdev-&gt;dev.of_node;</span><br><span class="line"></span><br><span class="line"><span class="comment">//混杂设备注册</span></span><br><span class="line"></span><br><span class="line"><span class="comment">//申请gpio设备</span></span><br><span class="line"></span><br><span class="line"><span class="comment">//调用读取节点字符串函数</span></span><br><span class="line">of_property_read_string(pdevnode,<span class="string">&quot;目标&quot;</span>，&amp;Buff);</span><br><span class="line">of_property_read_string_index(pdevnode,<span class="string">&quot;目标&quot;</span>，&amp;Buff);  <span class="comment">//出现 &quot;xxx&quot;,&quot;yyy&quot;,&quot;zzz&quot;的时候</span></span><br><span class="line"><span class="comment">//Buff就是目标字符串了  目标可以是名字介绍，这个是设备树中自定义的</span></span><br><span class="line"></span><br><span class="line"><span class="comment">//调用读取节点数据函数</span></span><br><span class="line">of_property_read_u8_array(pdevnode,<span class="string">&quot;目标&quot;</span>，Buff,Numsize);</span><br><span class="line"><span class="comment">//Buff就是目标数据了,Numsize就是个数</span></span><br><span class="line"><span class="comment">/*还有of_property_read_u16_array；of_property_read_u32_array；</span></span><br><span class="line"><span class="comment">of_property_read_u64_array*/</span></span><br><span class="line"></span><br><span class="line"><span class="comment">//得到了所需要的数据，就可以写对应的驱动了</span></span><br><span class="line"><span class="comment">//gpio操作</span></span><br><span class="line"></span><br><span class="line"><span class="comment">/* init结束 */</span></span><br></pre></td></tr></table></figure>
-
-<h5 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h5><p>设备树，就是省去了，对硬件的描述的复杂和多种写法，统一写法，节约空间和利于管理。</p>
+<pre><code>    这篇博客，是一个自我认知和自我醒悟的过程和思考的记录。脱离技术包袱，逃离思想束缚。		
+</code></pre>
+<p>​		首先，我们要知道祛魅是什么？我的理解就是将一个被神话的东西理解透彻。这个是什么意思呢？很多东西被大家吹的太夸张了，但是，如果愿意花上最多100+小时的学习，就能入门，而不是大家所说高不可攀。因为，对于这些事物的不断逃避，我们不断道听途说那些被神话的技术和知识，所以，就盲目以为那些非常难做，非常牛逼，觉得自己不行，觉得它好厉害，狂拽酷霸吊炸天。但是，一旦入行，我们就会明白，其实就是那样，没啥了不起的。</p>
+<p>​		技术就是大家不断试错和大家统一的约定，比如协议，这个就是大家都是这样约定的，所以就有通信技术和通信协议；比如尺寸，也是大家经过不断试错，发现这个是最合适，所以就定这个了；比如开发流程，也是一样的，为什么要开发模型，为什么要架构，为什么要设备树，为什么要驱动平台，为什么要统一驱动写法，为什么要meunconfig？这些不都是大家一起约定俗称的东西，就是入门太难了，所以，给人一种高级感，一种神奇的魅力。<strong>但是，它的本质就是大家的约定俗成的协议和流程。</strong>科研的话，那个没涉及，不过，我感觉科研方面也有很多人深深陷入神话的传说之中了。牛顿晚年都信神学了。</p>
+<p>​      之前，我就陷入这种对于技术的崇拜，疯狂学习，疯狂思考。但是，我有一整子休息了一下，看了一些管理和资本家视频我才醒悟过来。编码技术再牛逼又如何？会的编程语言再多再熟练又如何？项目开发又快又多又如何？我们在不断钻研技术，却是陷入了资本家的陷阱。大家都说工匠精神，但是，资本家喜欢的就是这种只知道听话和干事的牛马。他们天天只喜欢技术，对于技术有一种莫名其妙的优越感。但是，在老板眼里，就是牛马，只不过是厉害的牛马。所以，大家对于技术千万不要过度崇拜，而是要学会管理和统筹规划。任何一个刚毕业的大学生都可以使用C语言在一定时期内完成一个功能，但是怎么把功能整合起来，怎么去管理，怎么去维护，怎么去分配任务，这个才是最重要的，才是最可能在未来实现独立和创业的。</p>
+<p>​      肯定要反驳我，说不会技术怎么创业啊？首先，要知道技术是一定要会的，因为我们很多人都是没有资本的，所以，只能靠技术来给自己建造城墙，但是会编程，会应用是真的没用的。会带队，会分配，会管理，会思考，会统筹。你会想这是cto的事情啊，所以，我们就要去学习去有目的的思考，系统的去思考。在日常工作中，把眼界跳出自己的目前的工作，去想想如果这个项目给到自己，自己该干什么？不要总是钻研技术，技术是最难赚钱，最难实现自由的，尤其是大厂，越大分的越细，虽然整体很美观很规范。</p>
+<p>​     想起来一个段子，一个老板问程序员还要多久完成项目。程序员说一个月左右。老板说再加一个人呢？那就要两个月了。再加一个人呢？那就不知道了。</p>
+<p>​    这个段子，其实就是说了一件事情，人越多它的效率其实是越低的，但是好处就是它可以可重复使用和相互配合，可以摆脱因为员工离职导致的问题。</p>
+<p>​    对了，大家写代码和和钻研技术的时候，一定要学会模块化，一定要想办法做可重复使用的事情，做一些关联的事情。比如一个模拟spi，这个代码，只需要改引脚(还有位带、输入输出模式、反正就是电平变化的函数等)，就可以实现快速移植和反复使用了，这里就有一个就是规划了，你未来想要干嘛，你现在做的事情对于未来有帮助吗？就像未来想搞linux驱动，但是现在在搞前端开发，那有用吗？完全没有一点可重复使用性。</p>
+<p>​     有点偏题了，祛魅只是一个引子，主要是告诉大家，不要对技术有莫名其妙的崇拜和神话，我们要站在更高的角度和看待项目的过程。去思考一个人的时候怎么完成，去想想现在干的事情对于未来有没有用。不要今天学了modbus，明天就学can，然后洋洋得意，觉得我今天又学到了新的技术。</p>
+<p>​     这有用吗？肯定有用啊，老板最喜欢这样的牛马了，35岁之后直接踢了，脑子只有技术的人，怎么带队啊，后面还不听管教，自以为有技术了不起的人多的是。</p>
+<p>​    我们其实不需要太多太牛逼的技术，很多东西，都是有库的啊，有人写好的驱动的啊，为什么还要去干这些事情呢？我们只要有中等水平的编程能力，有高级水平的思考和架构能力就够了啊。具体实现，真的只要会c语言，啥功能都能实现的。只是效率和大小的问题，这个丢给大学生最好了，他们最喜欢干这种事情了。</p>
+<p>​     然后，肯定就有人想问，怎么站在高处看待这些东西呢？我这里就给出一个简单的模型吧。归纳、思考、用途、设计、诞生因素、解决了什么、整体思路、行为定性等。</p>
+<h5 id="1-学习归纳、整体思路、思考。"><a href="#1-学习归纳、整体思路、思考。" class="headerlink" title="1.学习归纳、整体思路、思考。"></a>1.学习归纳、整体思路、思考。</h5><p>​		我们用MCU举例子，MCU就是主控，好了，完了。那些DMA，USART、CAN、IIC、SPI、是不是就是为了和主从机通信？TIM 、VNIC、Callback是不是为了实现内部事件处理？内核指令需要吗？那些关中断、关事件、汇编代码，需要吗？系统一定是刚需吗？上系统带来什么好处？上系统解决那些多任务？那些是实现啊，给一个嵌入式毕业的会mcu的他自己会去实现的啊。</p>
+<p>​       是不是每一个MCU都是这样的操作，不同的就是有一些HAL，有一些标准库，有些自己的库，但是。他们的实现都是一样的，实现开启时钟，然后结构体进行初始化，绑定和复用功能，配置复用和绑定功能的配置，初始化复用和绑定功能，开启功能完事，有中断写中断回调。</p>
+<p>​      那我们学会了每一种MCU，看了一堆的数据手册。是不是我们就变得抢手？有用吗？CH32、GD32、AT32、STM32、瑞昱、TI、APT32、HC32够吗，孩子？学完了然后学thread-x 、freertos、ucos、rt-thread等够吗？他们是不是都是一样的思路，所以，我们学习的时候就要归纳去思考，去站在高处看待他们的流程和相似之处。</p>
+<h5 id="2-学习设计、解决问题。"><a href="#2-学习设计、解决问题。" class="headerlink" title="2.学习设计、解决问题。"></a>2.学习设计、解决问题。</h5><p>​       我问一下，是怎么看待协议的，比如spi、https、dns、iic、modbus、udp、tcp等。是不是有点懵，因为，你只是见一个协议就用一个协议，你知道这个从机是这个协议通信，但是，那个从机设计的工程师为什么选择这个协议，因为好玩吗？我们要打开iso那个7层协议啦，别怀疑，就是这个。我们使用pcie举例子，我们要知道pcie是占据3层的，是物理层、数据链路层、事务层。三层，前面物理层和数据链路层，我们就看到是接口就完事了。pcie是多个物理接口，而且还有电平需求，然后上面还有版本需求，不同版本之间可能还要向下兼容。但是我们可以完全只是用物理层和数据链路层，就是写自己的pcie接口，电路自己设计，这样就利用了pcie的防呆口设计了一个好的电路，至于内部的走线就可以完全使用自己的协议了。所以，协议不是死的，是有目的的使用。</p>
+<p>​       所以，就可以把协议分一下，有纯软件上位的，比如https、dns、pop、tfpt、fpt、mqtt等；还可以分成纯硬件的iic、 spi、485；接着就是软硬件结合的，can  modbus，Lin、PCIE 、USB等。</p>
+<p>​      然后就是不同协议之间的电气特性，传输距离，传输成本，传输速率，传输可靠性，这些很多时候，大家开发软件的时候都不会去在意的。这有点硬件工程师的味道了，但是软件要跳出软件的范畴，要去理解硬件的工作原理，知道所有流程，知道代码怎么走的，知道代码是否能够顺利执行任务。我们要想想为什么要这个，这个可以带来什么，换掉会怎么样。所以，这个设计不但是设计，还是整个项目的统筹。我们也可以系统的学习，去明白这些设计的本质，设计的意义和为什么这样设计。</p>
+<h5 id="3-用途和诞生因素"><a href="#3-用途和诞生因素" class="headerlink" title="3.用途和诞生因素"></a>3.用途和诞生因素</h5><p>​       这个就比较杂了，你可以说我项目的用途，可以是技术的用途。但是要明白一点，你做的所有事情都是为了它的诞生因素，就是它存在的意义是什么？这话怎么理解？周鸿祎在他的视频里说过一句话，就是开发者很容易陷入疯狂的自嗨。这句话我是比较认可的，开发者总是因为自己搞出来一些牛逼的东西就很高兴很了不起，但是你干的这些事情真的有用吗？自然，自己干着玩当然没问题。但是在项目和未来创业上面，是千万不可以的，用户是不知道你为什么自嗨的，这样只会增加成本和无意义的开发浪费，这个不是预研而是自嗨，就是一堆人脱离实际的自嗨，到头来一事无成，市场根本不鸟自己，然后就乌拉（无啦）。</p>
+<p>​        不要，天天写代码，知道现在世界上的科技走向，看看人们需要什么，预测未来的可能有的风口，而不是傻乎乎的写代码，要知道自己的做的这些事情有没有诞生的因素，再说一遍做着玩是完全没问题的，但是想要创业和工作室，就千万不要随随便便搞这些，严格按照市场调研和开发计划做才是最合理的。</p>
+<p>​    所以，这里就有一个调研和思考，数据等诸多问题，这个才是一个工作室一个创业是否能成功的重要因素，就是一句话，有没有人买账！你的代码值不值钱？你的代码用途是什么？它诞生的意义是什么？是玩，还是赚钱？</p>
+<h5 id="4-行为定性"><a href="#4-行为定性" class="headerlink" title="4.行为定性"></a>4.行为定性</h5><p>   你要知道你做的事情，是为了什么，你做这个动作，这个行为是为了什么，不要感性的认识，更不要过度理性看待。你能控制自己的行为，知道自己行为可以带来什么，可以提供什么。说人话就是知道自己在干嘛。</p>
+<p>   注意了，有一点非常重要，<strong>就是千万不要用自己的标准去要求别人</strong>，尤其是，<strong>”为什么我可以你不可以“</strong>这种话，千万不要说，因为人与人之间本就是不对等的。知道自己说了什么，知道自己做了什么，做事情之前，问一下自己为什么要做？下决定之前，换一种语言来再次确认一篇，比如在心中用英语问自己一遍是否真的可以做这个决定。</p>
+<p>   还有就是别活得太束缚了，人不是理性的动物，人是感性的，人们喜欢骗自己是理性的，但是一切都是因为感性而发生剧变。我们要学会说废话，学会接触无用社交(不是狐朋狗友，而是可能不会带来利益的社交，但是不要过度损伤自身利益、合法的社交)，给自己释放压力，不要把商业机密告诉任何非合作伙伴，因为外人是不会在乎你的利益的，只会在乎快乐，而合作伙伴之间是有利益链的。</p>
+<p>​    这个就是你要对自己的行为下定义，为了社交，为了娱乐，为了效率，为了工作，为了生活，为了金钱，为了家人，为了事业等。千万不要活的迷迷糊糊，到最后，很多东西都会因为自己的无心之过而丢失哦。找几个好兄弟，在一个大排档喝上一顿吃上一餐，真的很快乐哦。可能会很累，但是，无权无利，真的很尴尬，一切都要以自己为重中之重，一切都要以家人整体利益为先，好兄弟，肯定可以两刃插刀。</p>
+<p>​       说白了，是愿意成为自己人生的主导者，还是任劳任怨的牛马，其实都是一种活法，自然两个角度的思考、所承担的风险、难度也都是不一样的。活着累，是一种活法，活着轻松也是一种活法，因为我们都只有那么点时间和寿命的。及时行乐也是一种美丽的人生。</p>
+<hr>
+<p>​		上面都是一些我个人的观点，肯定是有错误和偏见的，所以，大家千万不要带入去看，更不要看完就有啥大情绪和思想的波动，而是换位思考，批判思考，对自己的当前状态的考量，年龄，资本，技术，人脉等诸多情况。</p>
+<p>​		这里，再阐述一下我的观点：<strong>千万不要陷入技术的黑窟窿之中，技术是学不完的，更加不要指望老板会养自己一辈子。</strong>人是活的，不是死的。如果宁愿当一潭死水，我是劝不动，但是，愿意走向大海的人，一定会有自己的行动。崇拜技术是大部分人、初出茅庐、老一辈的思想，千万千万千万千万不要只会写代码，写代码真的是在未来是人人具备的能力，因为AI已经开始可以根据上下文自动补全代码了，真的只会写代码，是真牛马。但是，所有代码都要有人审核、管理、运维。</p>
+<p>​      所以，大家要么冲着CTO出发，那可以多学一点技术，但是一定要学管理和分配，还要跟对公司和老板，多关注市场和调研；要么就是自行创业、接单(咸鱼、小红书等商单私单)、外包(是你以工作室的名义去接单)、设计、方案提供等，这个时候就要多了解市场和未来了，这个肯定是赚的更多的，亏得也更多，更不确定的事情也多，很可能是独立开发者，也可能是一个小团队，这样的日子，可能会孤独，可能会快乐，可能会到头来一无所有。</p>
+<p>​        如果，真的只是赚了最多10年的钱，就去卖炒饭，开个小店，做那些完全没涉及的行业，你觉得你能成功的话，你就继续给老板打工，做原始积累吧。其实打工也是有技巧的，打工也是有未来的，但是一定要公司有未来才行，然后深耕，一定一定一定要得到股份，一定要有分红，没有的话，立刻走，自己找后路。因为，在老板眼里，就是35岁立刻开除的牛马。<strong>未来是自己的，每一个人都是不一样的，这个没有老师，只有现实会不断教你做人。</strong></p>
+<p>​        所以，千万千万千万千万不要陷入只知道技术，得到技术就高高在上了，你会发现一下子就到了35岁了，但是自己都不知道该怎么办了。如果你能刚毕业就有一个规划，比如去那些公司学什么技术，然后去哪一家，或者深耕变成管理等都是可以的哦。<strong>别傻乎乎的只知道写代码和学技术，多思考，多想想未来，不要被当前的美好和高工资迷惑了双眼。</strong>读书和学习的过程就是一个祛魅的过程！不要高高在上了。</p>
+<p>​		<strong>美好的童年快乐一下就没了，小学也是，初中，高中大学都是，虽然当时的我是一个彻头彻尾的屌丝和逗逼，但那些都是最真实的我啊。现在的我，一定会被儿时的自己所讨厌吧！</strong></p>
 
       
     </div>
@@ -856,7 +752,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2024/04/28/linux%E7%9A%84%E5%B9%B3%E5%8F%B0%E8%AE%BE%E5%A4%87/">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2024/06/12/%E8%84%9A%E6%9C%AC%E5%B0%8F%E5%AD%90/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/csm.png">
@@ -870,7 +766,7 @@
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
           
-            <a href="/2024/04/28/linux%E7%9A%84%E5%B9%B3%E5%8F%B0%E8%AE%BE%E5%A4%87/" class="post-title-link" itemprop="url">linux的平台设备</a>
+            <a href="/2024/06/12/%E8%84%9A%E6%9C%AC%E5%B0%8F%E5%AD%90/" class="post-title-link" itemprop="url">脚本小子</a>
         </h2>
 
         <div class="post-meta">
@@ -880,15 +776,8 @@
               </span>
               <span class="post-meta-item-text">发表于</span>
 
-              <time title="创建时间：2024-04-28 22:53:59" itemprop="dateCreated datePublished" datetime="2024-04-28T22:53:59+08:00">2024-04-28</time>
+              <time title="创建时间：2024-06-12 23:22:17" itemprop="dateCreated datePublished" datetime="2024-06-12T23:22:17+08:00">2024-06-12</time>
             </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2024-06-03 23:00:21" itemprop="dateModified" datetime="2024-06-03T23:00:21+08:00">2024-06-03</time>
-              </span>
 
           
 
@@ -901,8 +790,7 @@
     <div class="post-body" itemprop="articleBody">
 
       
-          <h5 id="平台"><a href="#平台" class="headerlink" title="平台"></a>平台</h5><p>我们经常可以看到短视频平台，直播平台，购物平台，那么此时，这个平台的作用是什么？就是不论你是干什么的，你是卖什么的，我都给你一个店铺，你把你的服务和你的物品端上来，这是不是就是平台啊？没错，那对于我们消费者和管理者来说，我们是不是不需要就不需要去分类那么形形色色的货物了，我们还可以细分和归纳合并，这样可以分成平台中卖水果平台，这样是不是就把苹果香蕉梨那些都汇聚到一起了，而且他们用的都是一样的店铺。</p>
-<h5 id="驱动"><a href="#驱动" class="headerlink" title="驱动"></a>驱动</h5><h5 id="平台设备"><a href="#平台设备" class="headerlink" title="平台设备"></a>平台设备</h5><h5 id="平台设备应用"><a href="#平台设备应用" class="headerlink" title="平台设备应用"></a>平台设备应用</h5><h5 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h5>
+          
       
     </div>
 
@@ -923,7 +811,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2024/04/25/j-link%E5%85%A8%E5%AE%B6%E6%A1%B6/">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2024/06/12/%E6%9C%8D%E5%8A%A1%E5%99%A8%E8%BF%9C%E7%A8%8B%E5%8A%9E%E5%85%AC/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/csm.png">
@@ -937,7 +825,7 @@
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
           
-            <a href="/2024/04/25/j-link%E5%85%A8%E5%AE%B6%E6%A1%B6/" class="post-title-link" itemprop="url">j-link全家桶</a>
+            <a href="/2024/06/12/%E6%9C%8D%E5%8A%A1%E5%99%A8%E8%BF%9C%E7%A8%8B%E5%8A%9E%E5%85%AC/" class="post-title-link" itemprop="url">服务器远程办公</a>
         </h2>
 
         <div class="post-meta">
@@ -947,23 +835,7 @@
               </span>
               <span class="post-meta-item-text">发表于</span>
 
-              <time title="创建时间：2024-04-25 23:25:52" itemprop="dateCreated datePublished" datetime="2024-04-25T23:25:52+08:00">2024-04-25</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2024-05-08 21:02:01" itemprop="dateModified" datetime="2024-05-08T21:02:01+08:00">2024-05-08</time>
-              </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/MCU/" itemprop="url" rel="index"><span itemprop="name">MCU</span></a>
-                </span>
+              <time title="创建时间：2024-06-12 23:21:45" itemprop="dateCreated datePublished" datetime="2024-06-12T23:21:45+08:00">2024-06-12</time>
             </span>
 
           
@@ -977,24 +849,66 @@
     <div class="post-body" itemprop="articleBody">
 
       
-          <h5 id="J-link全家桶"><a href="#J-link全家桶" class="headerlink" title="J-link全家桶"></a>J-link全家桶</h5><p>  什么是j-link全家桶呢？我们下载好j-link的驱动之后，一般还会顺便下载j-link的sdk，这些sdk就是j-link全家桶啦这是干嘛的？说白了，就是为了方便用户下载和调试代码的。只是如果没用过，一开始会用点懵逼，啊！那么多sdk我怎么用啊？我拿头玩？所以，很多时候就没管它，其实，他是一个非常牛逼的东西哦！下面就大致说一下这个sdk的作用。</p>
-<h5 id="J-flash"><a href="#J-flash" class="headerlink" title="J-flash"></a>J-flash</h5><p>  这个是j-link其中的一种，一般可以看到它有啥j-flash-spi、j-flash反正都是一个目的就是下载代码。我们这里使用j-flash举例子，打开之后，就会显示一个操作界面，这个界面可以选择打开下载文件，可以选择烧录的mcu型号和初始地址，所以，这样还可以依靠bootloader跳转到其他地方执行我下载的这个函数。选择swd下载，连接，清空flash，任何下载即可。</p>
-<h5 id="J-mem"><a href="#J-mem" class="headerlink" title="J-mem"></a>J-mem</h5><p>  看名字大概就知道是干嘛得了吧，没错就是修改和查看内存的。J-Mem 是一个 GUI 应用程序，用于在目标运行时显示和修改目标系统的 RAM 和 SFR（特殊功能寄存器）。打开之后也是一个类似于j-flash的页面，可以选择读取特定地址的内容，查看和保持甚至是修改内容，这个还是不错的，可以用来后续的一些序列号的烧录呢，设置周期性刷新显示的内存内容。逆向的话这应该有可能吧。</p>
-<h5 id="J-Link-command"><a href="#J-Link-command" class="headerlink" title="J-Link  command"></a>J-Link  command</h5><p>  看名字又知道是什么意思了，命令行操作，这个就有点像debug操作了，可以通过命令来进行pc指针和运行过程的跳转，hold内核、单步、全速、设置断点、查看内核和外设寄存器、读取flash代码等等，方便大家拥有最高的权限查看在运行中的MCU情况，查找非IDE仿真情况下，MCU运行异常的原因。</p>
-<p><a target="_blank" rel="noopener" href="https://blog.csdn.net/qq_30095921/article/details/128311887">Jlink commander使用方法（附指令大全）-CSDN博客</a></p>
-<p>可以参考这个博客哦。</p>
-<h5 id="J-Link-GDB"><a href="#J-Link-GDB" class="headerlink" title="J-Link GDB"></a>J-Link GDB</h5><p>  GNU 项目调试器 （GDB） 是一个免费提供的开源调试器，根据 GPL 条款分发。 它可以在命令行模式下使用，这个原本是linux环境下的debug调试器，现在用了这个gdb，就可以调用和操作了，但是这个东西真的不如keil自身的debug，不够如果使用的其他ide装备了GBD，那没办法了，只能靠这个使用了，毕竟keil界面确实老了。</p>
-<h5 id="J-Scope"><a href="#J-Scope" class="headerlink" title="J-Scope"></a>J-Scope</h5><p>  这个就是一个图形显示，可视化可在目标运行时实时分析和可视化微控制器上的数据。就是说，项目通过特定的函数来实现发送任何这个应用接受之后就会显示在UI上面，可以就是一个示波器的作用。具体怎么使用呢？找到Scope的安装位置，找到sample中就可以看到很多没有解压的包了，还包括下面的rtt的包，把它解压了，把c和h文件复制到项目中。进行一些配置和处理，在项目中使用这些c文件中的api就可以进行向这个应用发送波形啦。其实本质就是调用api，配置好对应的宏，J-Scope进行捕捉显示罢了。</p>
-<p><img src="/../Blogas_images/j-Scope.png"></p>
-<p><a target="_blank" rel="noopener" href="https://blog.csdn.net/zhengnianli/article/details/106684345">工具 | 教你使用Jlink+JScope显示波形_j-scopev7.66a怎么打印正弦波-CSDN博客</a></p>
-<p>可以参考这个博客哦。</p>
-<h5 id="J-Link-RTT"><a href="#J-Link-RTT" class="headerlink" title="J-Link RTT"></a>J-Link RTT</h5><p>  RTT全称是Real Time Transmit（实时传输）是Segger公司推出的调试手段之一。它是一种用于嵌入式中与用户进行交互的技术。这个就是一个互通手段而已，因为要知道swd是串行调试接口，本来就是可以双向通信的，所以还是和上面一样的操作，进行一些ch添加到项目，配置config属性，调用api进行读取和发送就实现了。其实直接使用打印也是一个好办法呢！不过这个方法省了一个串口还是不错的哦。</p>
-<p><a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/466586992">详解J-Link RTT打印 - 知乎 (zhihu.com)</a></p>
-<p>可以参考这个博客哦。</p>
-<h5 id="结语"><a href="#结语" class="headerlink" title="结语"></a>结语</h5><p>下面这个是j-link官方文档的地址，有什么疑惑或者歧义，我i们都应该以官方文档为标准，以实际开发中的现象为依据。其实功能不止那么点，只是说了一下常用的，更多功能可以到官网去查看使用哦。官方有api调用实例，可以参考分析哦。</p>
-<p><a target="_blank" rel="noopener" href="https://wiki.segger.com/UM08001_J-Link_/_J-Trace_User_Guide">UM08001 J-Link &#x2F; J-Trace User Guide - SEGGER Wiki</a></p>
-<p>  这个是一个很好用的工具，但是这个有和没有都不会对项目开发有什么致命影响，就是开发效率的作用，一个好的工程师，肯定会借助多个工具。正所谓，君子生非异也，善假于物也。</p>
+          
+      
+    </div>
 
+    
+    
+    
+
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2024/06/12/linux%E5%B8%B8%E7%94%A8%E8%BD%AF%E4%BB%B6%E5%92%8C%E6%8F%92%E4%BB%B6/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/csm.png">
+      <meta itemprop="name" content="CSM">
+      <meta itemprop="description" content="应用是应用，驱动是驱动！你要是偏要应用干驱动，哥们，你怎么不直接薪资翻倍啊！[🦀]">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="我要成为嵌入式高手[doge]">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2024/06/12/linux%E5%B8%B8%E7%94%A8%E8%BD%AF%E4%BB%B6%E5%92%8C%E6%8F%92%E4%BB%B6/" class="post-title-link" itemprop="url">linux常用软件和插件</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2024-06-12 23:21:30" itemprop="dateCreated datePublished" datetime="2024-06-12T23:21:30+08:00">2024-06-12</time>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          
       
     </div>
 
@@ -1014,7 +928,7 @@
 
   
   <nav class="pagination">
-    <a class="extend prev" rel="prev" href="/page/3/"><i class="fa fa-angle-left" aria-label="上一页"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/3/">3</a><span class="page-number current">4</span><a class="page-number" href="/page/5/">5</a><span class="space">&hellip;</span><a class="page-number" href="/page/8/">8</a><a class="extend next" rel="next" href="/page/5/"><i class="fa fa-angle-right" aria-label="下一页"></i></a>
+    <a class="extend prev" rel="prev" href="/page/3/"><i class="fa fa-angle-left" aria-label="上一页"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/3/">3</a><span class="page-number current">4</span><a class="page-number" href="/page/5/">5</a><span class="space">&hellip;</span><a class="page-number" href="/page/10/">10</a><a class="extend next" rel="next" href="/page/5/"><i class="fa fa-angle-right" aria-label="下一页"></i></a>
   </nav>
 
 
@@ -1082,7 +996,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">72</span>
+          <span class="site-state-item-count">97</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -1157,7 +1071,7 @@
 
  <div class="theme-info">
   <div class="powered-by"></div>
-  <span class="post-count">博客全站共64k字</span>
+  <span class="post-count">博客全站共64.1k字</span>
 </div>
 
         

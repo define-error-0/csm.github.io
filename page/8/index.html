@@ -134,7 +134,7 @@
   </li>
         <li class="menu-item menu-item-archives">
 
-    <a href="/archives/" rel="section"><i class="archive fa-fw"></i>归档<span class="badge">72</span></a>
+    <a href="/archives/" rel="section"><i class="archive fa-fw"></i>归档<span class="badge">97</span></a>
 
   </li>
         <li class="menu-item menu-item-resources">
@@ -174,7 +174,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2024/03/02/%E6%8C%87%E9%92%88%E5%92%8C%E5%AD%97%E7%AC%A6%E4%B8%B2/">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2024/04/11/%E8%99%9A%E6%8B%9F%E6%96%87%E4%BB%B6%E7%B3%BB%E7%BB%9F/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/csm.png">
@@ -188,7 +188,7 @@
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
           
-            <a href="/2024/03/02/%E6%8C%87%E9%92%88%E5%92%8C%E5%AD%97%E7%AC%A6%E4%B8%B2/" class="post-title-link" itemprop="url">指针和字符串</a>
+            <a href="/2024/04/11/%E8%99%9A%E6%8B%9F%E6%96%87%E4%BB%B6%E7%B3%BB%E7%BB%9F/" class="post-title-link" itemprop="url">虚拟文件系统</a>
         </h2>
 
         <div class="post-meta">
@@ -198,14 +198,14 @@
               </span>
               <span class="post-meta-item-text">发表于</span>
 
-              <time title="创建时间：2024-03-02 20:01:08" itemprop="dateCreated datePublished" datetime="2024-03-02T20:01:08+08:00">2024-03-02</time>
+              <time title="创建时间：2024-04-11 20:59:10" itemprop="dateCreated datePublished" datetime="2024-04-11T20:59:10+08:00">2024-04-11</time>
             </span>
               <span class="post-meta-item">
                 <span class="post-meta-item-icon">
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2024-05-08 21:09:18" itemprop="dateModified" datetime="2024-05-08T21:09:18+08:00">2024-05-08</time>
+                <time title="修改时间：2024-08-07 23:58:52" itemprop="dateModified" datetime="2024-08-07T23:58:52+08:00">2024-08-07</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -213,7 +213,7 @@
               </span>
               <span class="post-meta-item-text">分类于</span>
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/CPP-C/" itemprop="url" rel="index"><span itemprop="name">CPP/C</span></a>
+                  <a href="/categories/OS/" itemprop="url" rel="index"><span itemprop="name">OS</span></a>
                 </span>
             </span>
 
@@ -228,19 +228,13 @@
     <div class="post-body" itemprop="articleBody">
 
       
-          <p>这是一篇关于我刚学习C语言和C++的时候留下来的关于字符串、数组、指针的问题</p>
-<h3 id="起因"><a href="#起因" class="headerlink" title="起因"></a>起因</h3><p>今天在看python的时候看到一个表达式字符串，这个东西呢，非常奇妙。<br>举个例子python里面的字符串有</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">str1 = <span class="string">&quot; csmznbo &quot;</span></span><br><span class="line">str2 = <span class="string">&#x27; csmznbo &#x27;</span></span><br></pre></td></tr></table></figure>
-
-<p>可以看到此时的字符串都是有空格，所以下面的那个单引号的明显不对劲，对了。<br>这个就是shell脚本里面类似的原样输出<br>特殊字符串。如下例子</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#bash</span></span><br><span class="line">str3=<span class="string">&#x27;The time now is `data`&#x27;</span></span><br><span class="line"><span class="comment">#python</span></span><br><span class="line">str3=<span class="string">&#x27;The time now is data&#x27;</span>.replace(<span class="string">&#x27;data&#x27;</span>,<span class="built_in">str</span>(time.localtime(time.time())))</span><br></pre></td></tr></table></figure>
-
-<p>其实python的””格式的字符串也是可以做到输出像上面的东西的，f”{}”也是可以的(format)<br>bash的例子只是引出这种字符串的特殊用法原样输出。下面的替换输出，虽然不是同一<br>功能，但是也能知道遇到这奇奇怪怪的字符串的时候可以联想起来好玩的东西。</p>
-<p>但是这个不是今天的主角。</p>
-<h3 id="填坑"><a href="#填坑" class="headerlink" title="填坑"></a>填坑</h3><p>这个帖子，主要是为了记录我对指针数组还有字符串的理解。首先呢，我之前总是不理解为什么字符串是不可写和不可修改现在知道了，因为它存在静态区中。但是我学了几个月的C语言我才知道了指针不等于字符串，我当时写那些拼接函数，比较函数，裁剪那些，我都是用数组去实现的。但是学的懵懵懂懂的，我甚至都把数组等于字符串，字符串又等于指针去了，因为用起来真的差不多。其实是错误的，虽然汇编是一样当写关于字符串的函数的的时候，传参指针，返回值那些都是天坑。要知道字符串是不能修改的，所以返回值只能是数组和指针，还有就是指针传参就会导致一些问题。比如不知道数据长度等问题。</p>
-<h3 id="关系"><a href="#关系" class="headerlink" title="关系"></a>关系</h3><p>指针就是指针，指向一个地址，自己指针又有一个属于自己的地址。大小看处理器位数数组就是连续地址的元素组成，可以装指针，数组，结构体，函数等等</p>
-<p>C语言中，字符串就是字符串，没别的东西就是全局区的data段中，不可修改的。当时第一次学cpp的时候，把String当成字符串了，当时也好奇为什么字符串又可以删减修改了，其实就是一个容器，不是字符串，你可以认为里面就是一个数组真正的字符串还是””这个，这个还是不能修改即便是cpp。python中字符串也是不能修改的，每一次的修改，都只是新生成一个字符串。并没有修改原本字符串</p>
-<h3 id="结语"><a href="#结语" class="headerlink" title="结语"></a>结语</h3><p>这次就是一个知识的填坑和巩固罢了果然基础不牢地动山摇。很多时候都是简单的东西罢了。拜拜，下次继续</p>
+          <h5 id="文件系统"><a href="#文件系统" class="headerlink" title="文件系统"></a>文件系统</h5><p>文件系统，就是来管理物理层面的硬盘，cd，u盘等存储设备，常见的spi，qspi，iic来读取flash和eeporm那些存储设备，这些空间的管理就需要文件系统了，这样可以方便用户知道剩余空间和打开文件。比如有NTFS、FATFS、FAT32等</p>
+<h5 id="文件io"><a href="#文件io" class="headerlink" title="文件io"></a>文件io</h5><p>我们也知道，我们在开发程序的时候，也是少不了open close write read这些文件io的，还有目录io，不过，为什么我可以使用这些api开发不出现问题呢？</p>
+<p>不同的文件系统，它的分配、api、属性、特性都不一样，总不能开发的时候，还一个一个对着这些不同文件系统的api来进行处理吧？</p>
+<p>换个思路理解，此时我有一个u盘，我插到linux开发板中，此时就会系统就会识别到一个存储设备，就会自动配置一个设备符，&#x2F;dev&#x2F;sda1，此时就可以mount挂载在特定的目录中，此时就可以读取了。此时，可以发现，不论u盘是什么属性什么系统，只要mount挂载上来就可以被读取，这就是虚拟文件系统帮的忙。</p>
+<h5 id="虚拟文件系统"><a href="#虚拟文件系统" class="headerlink" title="虚拟文件系统"></a>虚拟文件系统</h5><p>一个系统不可能只有一个文件系统的，大家安装固态的时候，分区的时候，肯定就会选择一个文件系统进行格式化比如NTFS，这个时候，这个固态的文件系统就是NTFS了，同时还有一个大小、速率等属性就被系统读取到了，此时，只有把分区执行完毕才能在我的电脑中看到新增加的分盘。这和上面哪个挂载是一个原理。</p>
+<p>有了这个虚拟文件系统，就可以极大的方便用户层的开发、使用和管理。本质上就是对多层的文件系统进行一次统一的封装，封装完毕之后，就可以方便上层开发了，所以，哪怕我只有一个2t的固态，我也可以分为1个E盘，一个F盘，至于这个E和F就是虚拟文件系统分出来的东西，实际上的空间就是这个2t的NTFS的固态啦。</p>
+<h5 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h5><p>虚拟文件系统，只是一个对多个文件系统的api的一次封装，所有文件系统在接入系统的时候，都要主动去对接这个虚拟系统所提供的api，可以认为就是把函数对准虚拟文件系统的函数指针来，然后通过虚拟文件系统的封装，就可以提供给上层开发和管理啦。</p>
 
       
     </div>
@@ -262,7 +256,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2024/03/01/FristBlog-STM32%E8%B6%85%E9%A2%91%E8%BF%87%E5%A4%B4%E8%8A%AF%E7%89%87%E9%94%81%E6%AD%BB/">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2024/04/11/%E6%A0%BC%E5%BC%8F%E7%BC%96%E7%A0%81/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/csm.png">
@@ -276,7 +270,7 @@
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
           
-            <a href="/2024/03/01/FristBlog-STM32%E8%B6%85%E9%A2%91%E8%BF%87%E5%A4%B4%E8%8A%AF%E7%89%87%E9%94%81%E6%AD%BB/" class="post-title-link" itemprop="url">frist STM32超频过头芯片锁死</a>
+            <a href="/2024/04/11/%E6%A0%BC%E5%BC%8F%E7%BC%96%E7%A0%81/" class="post-title-link" itemprop="url">格式编码</a>
         </h2>
 
         <div class="post-meta">
@@ -286,14 +280,338 @@
               </span>
               <span class="post-meta-item-text">发表于</span>
 
-              <time title="创建时间：2024-03-01 20:21:25" itemprop="dateCreated datePublished" datetime="2024-03-01T20:21:25+08:00">2024-03-01</time>
+              <time title="创建时间：2024-04-11 20:58:58" itemprop="dateCreated datePublished" datetime="2024-04-11T20:58:58+08:00">2024-04-11</time>
             </span>
               <span class="post-meta-item">
                 <span class="post-meta-item-icon">
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2024-05-08 20:53:02" itemprop="dateModified" datetime="2024-05-08T20:53:02+08:00">2024-05-08</time>
+                <time title="修改时间：2024-05-07 21:40:11" itemprop="dateModified" datetime="2024-05-07T21:40:11+08:00">2024-05-07</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/OS/" itemprop="url" rel="index"><span itemprop="name">OS</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h5 id="编码"><a href="#编码" class="headerlink" title="编码"></a>编码</h5><p>​     什么是编码啊？我们都是adc有，采样量化编码(实际操作种还有滤波)，它就是用来保存实际生活中的数据。人类是无法完美实现现实的情形，所以，模电转数电，一定就是经历了抽样，就是丢失，采样率越高就越接近实际但是，采样成功了，就需要输出出来，所以，此时就是依赖编码使用数字信号的方法存下来，然后输出出去。我们日常生活中，最常见的就是图片，视频，音频，字符，压缩.这个博客，只是提一下有什么常见编码，用到的时候再去学习。在这里总结一下，所谓的编码就是将信息或数据转换成特定格式或代码的过程，以便于存储、传输或处理。编码可以应用于各种数据类型，包括图片、视频、音频以及其他形式的数据，它们都是将一种形式的数据或信息转换为另一种形式，以实现特定的功能或目标。</p>
+<h5 id="图片格式编码"><a href="#图片格式编码" class="headerlink" title="图片格式编码"></a>图片格式编码</h5><p>这个图片的编码模式就太多太多了，多的吓人</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">jpeg、png、gif、bmp、svg、pcx、tga、exif、fpx、psd、cdr、pcd、ufp、eps、ai、raw、WMF等</span><br></pre></td></tr></table></figure>
+
+<h5 id="音频格式编码"><a href="#音频格式编码" class="headerlink" title="音频格式编码"></a>音频格式编码</h5><p><a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/499760382">音频编码：入门看这篇就够了丨音视频基础 - 知乎 (zhihu.com)</a></p>
+<p>可以参考这个博客</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">主要目的是为了下面三个</span><br><span class="line">1）时域冗余</span><br><span class="line">2）频域冗余</span><br><span class="line">3）听觉冗余</span><br><span class="line"></span><br><span class="line">常见编码有</span><br><span class="line">PCM 编码   脉冲编码调制（Pulse Code Modulation）</span><br><span class="line">AAC 编码    Advanced Audio Coding</span><br></pre></td></tr></table></figure>
+
+<h5 id="视频格式编码"><a href="#视频格式编码" class="headerlink" title="视频格式编码"></a>视频格式编码</h5><p><a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/516515445">视频编码格式全面解析 - 知乎 (zhihu.com)</a></p>
+<p>可以参考这个博客</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">ffmpeg</span><br><span class="line">H.264</span><br><span class="line">VC-1是软件巨头微软力推</span><br><span class="line">MPEG-7致力于视听数据信息编码的表达</span><br><span class="line">新势力的WebM</span><br><span class="line">MPEG-2和MPEG -1</span><br><span class="line">MPEG -4</span><br></pre></td></tr></table></figure>
+
+<h5 id="字符格式编码"><a href="#字符格式编码" class="headerlink" title="字符格式编码"></a>字符格式编码</h5><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">Unicode 就是 UTF-8、UTF-16、UTF-32  （Unicode Transformation Format） 二进制格式来表示 Unicode 字符</span><br><span class="line">BOM  就是byte-order mark 的缩写，是 &quot;字节序标记&quot; 的意思</span><br><span class="line">ASCII</span><br><span class="line">GB2312`、`GB18030 、GBK</span><br><span class="line">常用也就是utf-8，GBK 、BG2312，有的时候不支持这个编码就需要使用api来进行编码切换了，这个在python很常见的</span><br></pre></td></tr></table></figure>
+
+<h5 id="信号编码"><a href="#信号编码" class="headerlink" title="信号编码"></a>信号编码</h5><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">极化码</span><br><span class="line">卷积码</span><br><span class="line">PCM</span><br><span class="line">Polar码</span><br><span class="line">LDPC码</span><br><span class="line">Turbo码</span><br></pre></td></tr></table></figure>
+
+<h5 id="校验编码"><a href="#校验编码" class="headerlink" title="校验编码"></a>校验编码</h5><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">纠错编码</span><br><span class="line">汉明码</span><br><span class="line">里德所罗门编码</span><br><span class="line">低密度奇偶校验码</span><br><span class="line">涡轮码</span><br><span class="line">CRC</span><br></pre></td></tr></table></figure>
+
+<h5 id="加密编码"><a href="#加密编码" class="headerlink" title="加密编码"></a>加密编码</h5><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">对称加密编码</span><br><span class="line">非对称加密编码</span><br><span class="line">数字签名</span><br><span class="line">MD5、SHA 系列、HMAC 系列、RSA、AES、DES、3DES、RC4、Rabbit、SM 系列</span><br><span class="line">恺撒密码、栅栏密码、猪圈密码、摩斯密码、培根密码、维吉尼亚密码、与佛论禅、当铺密码</span><br><span class="line">那些密码本都算</span><br></pre></td></tr></table></figure>
+
+<h5 id="压缩编码"><a href="#压缩编码" class="headerlink" title="压缩编码"></a>压缩编码</h5><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">哈夫曼编码</span><br><span class="line">LZ编码  LZ77</span><br></pre></td></tr></table></figure>
+
+<h5 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h5><p>  可能大家觉得这期博客很水，是因为我本人其实对这些编码确实是不熟的，但是如果实际开发中，连编码都不知道的话，那么是很费力，尤其是像方案和创新的时候，不是说记得多少，有多少知识就有用了，任何一件事情，只要学习百分之60或者有一个正确的概念，在实现的时候再去学习，这才是有用的，一直基于理论的学习是没有重要意义的。编码终究是协议来着，就算使用也是调用库，调用api，所以，我们只要知道这是什么编码，什么地方可以用到编码，可能用到什么编码，我有没有可能在工程中使用到或者切换编码。不会真想看着编码规则，手搓代码吧？那是最愚蠢的行为，花费巨量时间，干着已经成熟的事，别人甚至连优化都做好了，难道硬要用自己手搓的吗？</p>
+
+      
+    </div>
+
+    
+    
+    
+
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2024/04/11/%E8%BF%90%E7%AE%97%E6%94%BE%E5%A4%A7%E5%99%A8/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/csm.png">
+      <meta itemprop="name" content="CSM">
+      <meta itemprop="description" content="应用是应用，驱动是驱动！你要是偏要应用干驱动，哥们，你怎么不直接薪资翻倍啊！[🦀]">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="我要成为嵌入式高手[doge]">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2024/04/11/%E8%BF%90%E7%AE%97%E6%94%BE%E5%A4%A7%E5%99%A8/" class="post-title-link" itemprop="url">运算放大器</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+              
+
+              <time title="创建时间：2024-04-11 20:58:40 / 修改时间：21:26:24" itemprop="dateCreated datePublished" datetime="2024-04-11T20:58:40+08:00">2024-04-11</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E6%A8%A1%E7%94%B5/" itemprop="url" rel="index"><span itemprop="name">模电</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          
+      
+    </div>
+
+    
+    
+    
+
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2024/04/11/%E7%BC%93%E5%86%B2%E5%8C%BA/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/csm.png">
+      <meta itemprop="name" content="CSM">
+      <meta itemprop="description" content="应用是应用，驱动是驱动！你要是偏要应用干驱动，哥们，你怎么不直接薪资翻倍啊！[🦀]">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="我要成为嵌入式高手[doge]">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2024/04/11/%E7%BC%93%E5%86%B2%E5%8C%BA/" class="post-title-link" itemprop="url">缓冲区</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2024-04-11 20:57:40" itemprop="dateCreated datePublished" datetime="2024-04-11T20:57:40+08:00">2024-04-11</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2024-05-30 00:07:04" itemprop="dateModified" datetime="2024-05-30T00:07:04+08:00">2024-05-30</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/OS/" itemprop="url" rel="index"><span itemprop="name">OS</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h5 id="起因"><a href="#起因" class="headerlink" title="起因"></a>起因</h5><p>今天复习了一下网络编程，里面就有一个然后复习一下多路复用。突然，我想到了一件事情，多路复用，肯定就要对存储了套接字的数据类型进行遍历，如链表数组二叉树等。但是遍历过程，就无法实现像tcp和udp那样堵塞等待了啊！那么怎么还能正常实现网络通讯呢！突然我想起来了，我刚学c语言的时候的烦恼。缓冲区！</p>
+<h5 id="缓冲区"><a href="#缓冲区" class="headerlink" title="缓冲区"></a>缓冲区</h5><p>顾名思义，就是作为数据缓冲，常见于输入和输出中，还记得刚学c语言的时候，printf scanf fput啥的，遇到\n清空缓冲区，刷新缓冲区等东西，都是的。当时就是，非常恼火，为啥要这个破缓冲区啊！现在，就明白，缓冲区是一个非常好的东西。</p>
+<h5 id="缓冲区基础作用"><a href="#缓冲区基础作用" class="headerlink" title="缓冲区基础作用"></a>缓冲区基础作用</h5><p>缓冲区，最基础的作用就是<br>输入方面，临时存放数据并告诉cpu来执行中断，防止cpu因为有高优先级任务导致数据丢失。<br>输出方面，快速连贯的发送，不需要来回执行发送，可以一步到位批量处理，减少硬件资源的消耗。<br>接收方面，甚至说还可以实现因为两者速率不对等，可以实现一个速率的缓冲，平衡速度差异。<br>比如两者都是9600波特率，但是硬件的时钟肯定是不可能都一致的。所以数据就可以全部存到缓冲区<br>等cpu过来拿就好了，哪怕多了一两帧也可以实现速率通信，注意不要太离谱了，而且接收端要采用定期拿走、中断空闲一次性接收拿走、轮询提取等方法。不然可能会导致通信堵塞卡死，数据丢失等诸多问题。</p>
+<h5 id="缓冲区系统层面作用"><a href="#缓冲区系统层面作用" class="headerlink" title="缓冲区系统层面作用"></a>缓冲区系统层面作用</h5><p>   自然我们是离不开系统来分析的，其实缓冲区还有一点就是为了防止内核的多次调用了。我们的应用层一般是处于<br>用户状态，除了用户状态所有都是特权状态，此时用户状态是无法进行任何底层操作的，只有通过系统调用，软中<br>断，异常才能让cpu变为特权模式，此时才能去调用底层。<br>    一般系统都是要防止，应用层随意调用底层，所以，容易出现很多段错误，总线错误等，就是为了保护底层，这也<br>是为了系统的稳定和文件系统的稳定，是非常合理的。所以应用层必须想要发送数据，那么就要使用系统调用，不<br>可能发一个字节，就调用一次系统调用，那么效率肯定是大打折扣的。同理接收也是这道理。<br>arm的特权一共有7种，如下图所示:</p>
+<p><img src="/../Blogas_images/%E7%89%B9%E6%9D%83%E5%92%8C%E7%94%A8%E6%88%B7.png"></p>
+<p>每次触发大量的接收，就会导致cpu被直接调度到特权模式，此时对于资源是一种极大的浪费，导致系统需要在两个状态反复切换，极大影响效率。所以引入缓冲区之后，输出可以一连串发送出去，这样进入内核的时候就少了，输入也是，可以选择空闲状态接收或者dma接收，这样就可以实现缓冲区收发，牺牲一些实时性，来换取效率和资源，是很赚的。</p>
+<h5 id="结语"><a href="#结语" class="headerlink" title="结语"></a>结语</h5><p>因为有了缓冲区的存在，系统的资源和调度变得更好管理，效率和资源利用率也得到了提高，但是可不避免的损失了实时性。这也解决了很多因为cpu无法及时到来导致数据丢失问题。cpu毕竟是大家的。所以一开始的多路复用的问题也就是迎刃而解了</p>
+
+      
+    </div>
+
+    
+    
+    
+
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2024/04/11/%E7%BD%91%E7%BB%9C%E5%8D%8F%E8%AE%AE%E5%85%A5%E9%97%A8/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/csm.png">
+      <meta itemprop="name" content="CSM">
+      <meta itemprop="description" content="应用是应用，驱动是驱动！你要是偏要应用干驱动，哥们，你怎么不直接薪资翻倍啊！[🦀]">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="我要成为嵌入式高手[doge]">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2024/04/11/%E7%BD%91%E7%BB%9C%E5%8D%8F%E8%AE%AE%E5%85%A5%E9%97%A8/" class="post-title-link" itemprop="url">网络协议入门</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2024-04-11 00:37:20" itemprop="dateCreated datePublished" datetime="2024-04-11T00:37:20+08:00">2024-04-11</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2024-06-03 23:51:00" itemprop="dateModified" datetime="2024-06-03T23:51:00+08:00">2024-06-03</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/NET/" itemprop="url" rel="index"><span itemprop="name">NET</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h5 id="TCP-IP"><a href="#TCP-IP" class="headerlink" title="TCP&#x2F;IP"></a>TCP&#x2F;IP</h5><h5 id="UDP"><a href="#UDP" class="headerlink" title="UDP"></a>UDP</h5><h5 id="HTTP"><a href="#HTTP" class="headerlink" title="HTTP"></a>HTTP</h5><h5 id="DNS"><a href="#DNS" class="headerlink" title="DNS"></a>DNS</h5><h5 id="HTTPS"><a href="#HTTPS" class="headerlink" title="HTTPS"></a>HTTPS</h5><h5 id="SNMP"><a href="#SNMP" class="headerlink" title="SNMP"></a>SNMP</h5><h5 id="STMP"><a href="#STMP" class="headerlink" title="STMP"></a>STMP</h5><h5 id="SSH"><a href="#SSH" class="headerlink" title="SSH"></a>SSH</h5><h5 id="SSL"><a href="#SSL" class="headerlink" title="SSL"></a>SSL</h5><h5 id="POP"><a href="#POP" class="headerlink" title="POP"></a>POP</h5><h5 id="IMAP"><a href="#IMAP" class="headerlink" title="IMAP"></a>IMAP</h5><h5 id="MIME"><a href="#MIME" class="headerlink" title="MIME"></a>MIME</h5><h5 id="TELNET"><a href="#TELNET" class="headerlink" title="TELNET"></a>TELNET</h5><h5 id="IGMP"><a href="#IGMP" class="headerlink" title="IGMP"></a>IGMP</h5><h5 id="TFTP"><a href="#TFTP" class="headerlink" title="TFTP"></a>TFTP</h5><h5 id="FTP"><a href="#FTP" class="headerlink" title="FTP"></a>FTP</h5><h5 id="ICMP"><a href="#ICMP" class="headerlink" title="ICMP"></a>ICMP</h5><h5 id="DHCP"><a href="#DHCP" class="headerlink" title="DHCP"></a>DHCP</h5><h5 id="TLS"><a href="#TLS" class="headerlink" title="TLS"></a>TLS</h5><h5 id="PPPoE"><a href="#PPPoE" class="headerlink" title="PPPoE"></a>PPPoE</h5><h5 id="PPP"><a href="#PPP" class="headerlink" title="PPP"></a>PPP</h5><h5 id="dhcp"><a href="#dhcp" class="headerlink" title="dhcp"></a>dhcp</h5><h5 id="static"><a href="#static" class="headerlink" title="static"></a>static</h5><h5 id="PPPoA"><a href="#PPPoA" class="headerlink" title="PPPoA"></a>PPPoA</h5><h5 id="3g-PPP-over-EV-DO-CDMA-UMTS-or-GRPS"><a href="#3g-PPP-over-EV-DO-CDMA-UMTS-or-GRPS" class="headerlink" title="3g(PPP over EV-DO,  CDMA, UMTS or GRPS )"></a>3g(PPP over EV-DO,  CDMA, UMTS or GRPS )</h5><h5 id="PPtP-Point-to-Point-Tunneling-Protocol"><a href="#PPtP-Point-to-Point-Tunneling-Protocol" class="headerlink" title="PPtP(Point-to-Point Tunneling Protocol)"></a>PPtP(Point-to-Point Tunneling Protocol)</h5><h5 id="IGRP"><a href="#IGRP" class="headerlink" title="IGRP"></a>IGRP</h5><h5 id="RIP"><a href="#RIP" class="headerlink" title="RIP"></a>RIP</h5><h5 id="OSPF"><a href="#OSPF" class="headerlink" title="OSPF"></a>OSPF</h5><h5 id="EIGRP"><a href="#EIGRP" class="headerlink" title="EIGRP"></a>EIGRP</h5><h5 id="EGP"><a href="#EGP" class="headerlink" title="EGP"></a>EGP</h5><h5 id="BGP"><a href="#BGP" class="headerlink" title="BGP"></a>BGP</h5><h5 id="IS-IS"><a href="#IS-IS" class="headerlink" title="IS-IS"></a>IS-IS</h5>
+      
+    </div>
+
+    
+    
+    
+
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2024/04/11/CAN%E5%92%8CMODBUS/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/csm.png">
+      <meta itemprop="name" content="CSM">
+      <meta itemprop="description" content="应用是应用，驱动是驱动！你要是偏要应用干驱动，哥们，你怎么不直接薪资翻倍啊！[🦀]">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="我要成为嵌入式高手[doge]">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2024/04/11/CAN%E5%92%8CMODBUS/" class="post-title-link" itemprop="url">CAN和MODBUS</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2024-04-11 00:34:41" itemprop="dateCreated datePublished" datetime="2024-04-11T00:34:41+08:00">2024-04-11</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2024-06-12 23:15:32" itemprop="dateModified" datetime="2024-06-12T23:15:32+08:00">2024-06-12</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -316,20 +634,356 @@
     <div class="post-body" itemprop="articleBody">
 
       
-          <p>这是第一篇关于stm32超频芯片锁死的博客</p>
-<h5 id="起因"><a href="#起因" class="headerlink" title="起因"></a>起因</h5><p>我公司的两个stm32f103芯片板子的晶振不同，我在使用cubeMX生成代码的时候，修改时钟树的时候，没有回车。导致时钟树代码还没配置好，我就直接生成代码了，导致，频率一下子就超了。</p>
-<h5 id="后果"><a href="#后果" class="headerlink" title="后果"></a>后果</h5><p>代码下载进去之后，就无法使用jflash和vs的debug功能了，就会显示芯片内存不可读取。</p>
-<h5 id="修复办法"><a href="#修复办法" class="headerlink" title="修复办法"></a>修复办法</h5><p>boot0设为1，boot1设为0.，此时就会进入系统存储器的空间，这里有一段引导程序，而且这段程<br>序本来就是不可读ROM从一开始就是ST公司写死的东西。然后就奇迹般的发现，flash可以读取了。<br>然后选择jflash里面的擦除功能把整个芯片删除干净，然后再把boot0设为0就可以了。这个时候代<br>码可以下载和debug了哦。</p>
-<h5 id="读保护和写保护"><a href="#读保护和写保护" class="headerlink" title="读保护和写保护"></a>读保护和写保护</h5><p>这个可以代码进行编写，也可以使用ST官方的link软件来进行保护，注意了不要随便使用最高级的都保护哦，一旦操作了就没有回头路了。还可以使用j-flash进行读保护，这个读保护等级是2的，可以多次使用哦。</p>
-<h5 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h5><p>链接: <a target="_blank" rel="noopener" href="https://blog.csdn.net/qq_33559992/article/details/105487168">https://blog.csdn.net/qq_33559992/article/details/105487168</a></p>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/2024/03/01/FristBlog-STM32%E8%B6%85%E9%A2%91%E8%BF%87%E5%A4%B4%E8%8A%AF%E7%89%87%E9%94%81%E6%AD%BB/#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
+          <h5 id="起因"><a href="#起因" class="headerlink" title="起因"></a>起因</h5><p>之前一直没搞懂，这两个的区别，甚至以为可以一起使用，哈哈哈，两个还是有很大的本质区别的。首先就是实时性了。还有成本，效率，使用场景都是不同的。</p>
+<h5 id="性质"><a href="#性质" class="headerlink" title="性质"></a>性质</h5><p>都是基于差分信号来实现的，数据发送和传输，所以，它们有着一样的电气特性。但是，他们的数据和工作原理是完全不同的。最直接比较吧，CAN是全主机，MODBUS是一主多从。因为CAN有线与操作，所以，0电平就会被当成显性电平，从而获得话语权。显性电平和隐性电平也是can独有的。而MODBUS就是在485的技术上，增加一些对于帧的要求，对于时序的要求。相比起CAN来说，数据帧和查错能力完全不能比</p>
+<h5 id="MODBUS"><a href="#MODBUS" class="headerlink" title="MODBUS"></a>MODBUS</h5><h5 id="CAN"><a href="#CAN" class="headerlink" title="CAN"></a>CAN</h5><h5 id="LIN"><a href="#LIN" class="headerlink" title="LIN"></a>LIN</h5><h5 id="使用场景"><a href="#使用场景" class="headerlink" title="使用场景"></a>使用场景</h5><p>首先呢，CAN是多主机的，而且MODBUS只有一个主机，所以MODBUS同一时刻只能有一个设备在发送数据。但是很多时候，有些设备是高优先级的，他必须要得到发言，不可能等待其他人执行完毕，而且还要满足大家都发送，所以这个时候线与的作用就出来了，可以多主机仲裁，而且可靠，很多时候好像确实是CAN更好更更可靠，但是CAN更贵，配置也更难，工控的话MDOBUS就足够了。</p>
+<h5 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h5>
+      
+    </div>
+
+    
+    
+    
+
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2024/04/10/%E5%A4%9A%E7%BA%A7%E7%BC%93%E5%AD%98/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/csm.png">
+      <meta itemprop="name" content="CSM">
+      <meta itemprop="description" content="应用是应用，驱动是驱动！你要是偏要应用干驱动，哥们，你怎么不直接薪资翻倍啊！[🦀]">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="我要成为嵌入式高手[doge]">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2024/04/10/%E5%A4%9A%E7%BA%A7%E7%BC%93%E5%AD%98/" class="post-title-link" itemprop="url">多级缓存</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2024-04-10 20:12:05" itemprop="dateCreated datePublished" datetime="2024-04-10T20:12:05+08:00">2024-04-10</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2024-05-08 21:27:24" itemprop="dateModified" datetime="2024-05-08T21:27:24+08:00">2024-05-08</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/OS/" itemprop="url" rel="index"><span itemprop="name">OS</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h5 id="CPU多级缓存"><a href="#CPU多级缓存" class="headerlink" title="CPU多级缓存"></a>CPU多级缓存</h5><p>为什么需要多级缓存的存在呢？因为，内存太大了，不论是固态还是机械去读取都太慢了，但是cpu的频率又高的吓人，还有多级流水和，流水线设计方案等(比如结构冒险，数据冒险，时间冒险等方案，所以处理起来相当迅速)。所以，总不能让cpu在原地急得跺脚吧，这纯纯浪费资源呢，所以，就想到缓存操作。</p>
+<h5 id="cache高速缓存"><a href="#cache高速缓存" class="headerlink" title="cache高速缓存"></a>cache高速缓存</h5><p>这个，就是直接与cpu连接的一个缓存了，也可以说是速度最快的缓存了，他会提前把需要的数据从内存中提取出来，等待cpu调度和使用，这个非常好用，非常nice了，这就让cpu有的忙了，但是，问题因此来了，为什么cache快呢？就是因为它小啊，而且距离近。cpu处理任务是需要得到所有数据的，cache不可能存放所有数据的，这就来了一个cache命中率问题了。cache命中率越高，就说明了，cpu可以直接cache中得到数据，这是最好最快的。超出cache的就得去内存中找了。</p>
+<h5 id="一级缓存"><a href="#一级缓存" class="headerlink" title="一级缓存"></a>一级缓存</h5><p>上面的cache没捕获到，就到一级缓存中去找，这个就是离cpu第二远的了，因此内存也更大，执行的事情同上面差不多的。</p>
+<p>比如 AMD一级数据缓存设计 AMD采用的一级缓存设计属于传统的“实数据读写缓存”设计。基于该架构的一级数据缓存主要用于存储CPU最先读取的数据；而更多的读取数据则分别存储在二级缓存和系统内存当中。<br>比如Intel 也有的一级缓存不存储数据，而是存储这些数据在二级缓存中的指令代码，这样就可以间接去找到来自二级缓存的数据，而且可以增加一级缓存的容量。</p>
+<p>所以，不同的策略和设计方案，对于cpu来说，效果的好坏其实也是看实际情况的，不论是直接找数据，还是间接找指令跳转到数据，都是一种权衡之后的方案和策略，都是可行而且可靠的至于效果，只能实际测试才知道了。</p>
+<h5 id="二级缓存"><a href="#二级缓存" class="headerlink" title="二级缓存"></a>二级缓存</h5><p>二级缓存就是一级缓存的缓冲器：一级缓存制造成本很高因此它的容量有限，二级缓存的作用就是存储那些CPU处理时需要用到、一级缓存又无法存储的数据。</p>
+<h5 id="三级缓存"><a href="#三级缓存" class="headerlink" title="三级缓存"></a>三级缓存</h5><p>同样道理，三级缓存和内存可以看作是二级缓存的缓冲器，它们的容量递增，但单位制造成本却递减。</p>
+<h5 id="主存-硬盘"><a href="#主存-硬盘" class="headerlink" title="主存(硬盘)"></a>主存(硬盘)</h5><p>到了这一步，说明上面都没成功的捕捉到cpu所需要的数据，只能从内存中读取了，这就效率非常低下了，这个是尽量要减少，但是避免不了的，当然这东西，我肯定设计不来，我也只会纸上谈兵。</p>
+<h5 id="局限性"><a href="#局限性" class="headerlink" title="局限性"></a>局限性</h5><p>这个就有必要说一说，为什么要谈这个呢？因为，我们写代码的时候，就知道，其实，我们的数据是一般都是在一块地方的，比如一个数组，比如一堆全局变量啥的，我们看他们的地址，其实都是连起来的，所以，执行一个应用和任务的时候，就可以猜出来这附近的地址可能都是需要的数据或者代码，所以，就有局限性，这也是符合编程和存储的。就像我们学习和使用mcu的时候，避免不了就是while死循环了，这极大可能就是反复用到同一个数据，所以，一个数据被使用，是不是就意味着它接着可以继续被使用呢？</p>
+<p><strong>1.时间局限性</strong>：如果某数据被访问过，在未来的一段时间内，我们可能还会使用到这个数据，所以缓存就提前把这个数据加载进来并留着，这样就可以让cpu调用的时候，快速去读取。</p>
+<p><strong>2.空间局限性</strong>：这个就是上面说，只要读取了一块地址，是不是就说明附近的地址都可能是应用和任务所需要的数据和内容呢？所以，宁可错杀一万，不可放过一人。</p>
+<p>这些都是缓存读取的方案，自然还有更好的，都是看厂商的想法和设计了。</p>
+<h5 id="内存映射"><a href="#内存映射" class="headerlink" title="内存映射"></a>内存映射</h5><p>这个就是把内存直接映射到缓存之中的方法，一般是直接映射到cache中的。</p>
+<p><strong>1.全相联映射：</strong>所有行均可用于存放主存任何一块数据</p>
+<p>缺点：查找最慢，当cache块装满的时候，可能需要遍历所有的cache行</p>
+<p><strong>正常情况下我们并不限定位置，大家随便坐，先到先得。老师如果想检查一个同学的作业的话，也可以一个一个来找，即线性搜索，当然此举必然花费老师很多时间。另外一点需要强调，学生并不是老老实实坐在座位上的，不断会有学生进来或离开，也会有同学出去后又进来但前后的坐位并不相同的情况，这样的话“线性搜索”将不再可能。</strong></p>
+<p><strong>2.直接映射：</strong>每个主存块只能放到某个固定的cache行，每个主存块所属的cahe行是 主存块号 % cache总行数</p>
+<p><strong>假设上面例子中的教室只有20个座位，编号为0-19，全校共有400名学生，学号分别为0-399。直接映射方式的求是座位不能随便选择，而是通过学号和所有座位数的余数决定，即学号为0、20、40、60…的同学只能坐在0号座位上，同样学号为1、21、41、61…的同学只能争1号座位，后来的同学会将正坐在位置上的同学挤出去，如果1号和21号同学都要来教室的话就会发生两人不断被挤出去的情况，这就是Cache的颠簸效应（Cache Thrashing）。</strong></p>
+<p><strong>3.组组相联映射：</strong>首先要对所有的cache行进行分组，每个主存块只能放到固定的cache组，每个主存块所属的cahe组是 主存块号 % cache总组数，这个就是上面的组合拳头。</p>
+<p><strong>为了解决直接映射的颠簸效应，遂引入了组相联映射。假设学校共有5个系，每个系均有80名学生，那我们可以这样安排座位，一系的学生只能选择0&#x2F;5&#x2F;10&#x2F;15这4个座，二系则是1&#x2F;6&#x2F;11&#x2F;16，依次类推，如下图所示：每个系有4个座位，这4个座位是没有顺序的，即本系的学生随意坐，但全系的80名学生将争抢这4个座位，这种分为5组的映射方式就是4路组相连映射，4路的意思是每组中有4个座位，即4个CacheLine。</strong></p>
+<h5 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h5><p>存储内存，一般有段式，页式，段页式存储方法，同理缓存也有多个方案，没有绝对的方案，都是合适是最好的，一般都会使用折中方案比如段页式。<strong>虽然，我们百分之99的概率遇不上这些工作和研发</strong>，但是充分理解底层，选择合适的内存管理和分配是我们可以控制，理解cpu的调度方案和原理，其实，选择一个好的文件管理系统和内存分配方案，确实可以一定程度的提高速度，自然都是理论上，一切都是以实际为主，代码和人可以跑一个就非常鸟不起啊！</p>
+
+      
+    </div>
+
+    
+    
+    
+
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2024/04/10/%E5%86%85%E5%AD%98%E6%9F%A5%E6%89%BE/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/csm.png">
+      <meta itemprop="name" content="CSM">
+      <meta itemprop="description" content="应用是应用，驱动是驱动！你要是偏要应用干驱动，哥们，你怎么不直接薪资翻倍啊！[🦀]">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="我要成为嵌入式高手[doge]">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2024/04/10/%E5%86%85%E5%AD%98%E6%9F%A5%E6%89%BE/" class="post-title-link" itemprop="url">内存查找</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2024-04-10 20:11:56" itemprop="dateCreated datePublished" datetime="2024-04-10T20:11:56+08:00">2024-04-10</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2024-04-11 21:25:29" itemprop="dateModified" datetime="2024-04-11T21:25:29+08:00">2024-04-11</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/OS/" itemprop="url" rel="index"><span itemprop="name">OS</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          
+      
+    </div>
+
+    
+    
+    
+
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2024/04/10/%E5%86%85%E5%AD%98%E7%AE%A1%E7%90%86/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/csm.png">
+      <meta itemprop="name" content="CSM">
+      <meta itemprop="description" content="应用是应用，驱动是驱动！你要是偏要应用干驱动，哥们，你怎么不直接薪资翻倍啊！[🦀]">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="我要成为嵌入式高手[doge]">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2024/04/10/%E5%86%85%E5%AD%98%E7%AE%A1%E7%90%86/" class="post-title-link" itemprop="url">内存管理</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2024-04-10 20:11:46" itemprop="dateCreated datePublished" datetime="2024-04-10T20:11:46+08:00">2024-04-10</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2024-04-11 21:25:36" itemprop="dateModified" datetime="2024-04-11T21:25:36+08:00">2024-04-11</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/OS/" itemprop="url" rel="index"><span itemprop="name">OS</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          
+      
+    </div>
+
+    
+    
+    
+
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2024/04/10/%E6%B7%B7%E5%90%88%E7%BC%96%E7%A8%8B/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/csm.png">
+      <meta itemprop="name" content="CSM">
+      <meta itemprop="description" content="应用是应用，驱动是驱动！你要是偏要应用干驱动，哥们，你怎么不直接薪资翻倍啊！[🦀]">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="我要成为嵌入式高手[doge]">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2024/04/10/%E6%B7%B7%E5%90%88%E7%BC%96%E7%A8%8B/" class="post-title-link" itemprop="url">混合编程</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2024-04-10 20:04:22" itemprop="dateCreated datePublished" datetime="2024-04-10T20:04:22+08:00">2024-04-10</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2024-05-08 21:18:15" itemprop="dateModified" datetime="2024-05-08T21:18:15+08:00">2024-05-08</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/CPP-C/" itemprop="url" rel="index"><span itemprop="name">CPP/C</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h5 id="混合编程"><a href="#混合编程" class="headerlink" title="混合编程"></a>混合编程</h5><p>什么是混合编程啊。就是不止一种语言的编程。额，这不等于废话。常见就是c调用c++，c++调用c。这就是最常见的混合编程，这是因为面向对象和面向过程都各有千秋，而且cpp的变量类型要求更大，所以更可靠点，c的话，小巧高效但是限制太少了，很容易越界，数据类型错误等。主要还是c使用面向过程的方法的话，是非常利于维护的</p>
+<h5 id="C调用CPP"><a href="#C调用CPP" class="headerlink" title="C调用CPP"></a>C调用CPP</h5><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//c调用cpp是不能直接使用cpp的类的，也不能直接使用cpp的函数，必须使用extern &quot;C&quot;&#123;&#125; //Cpp的头文件</span></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">testCLASS</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="keyword">public</span>:</span><br><span class="line">    	<span class="function"><span class="type">static</span> <span class="type">void</span> <span class="title">funTest</span><span class="params">(<span class="type">void</span>)</span></span>;</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">outFun</span><span class="params">(<span class="type">void</span>)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    testCLASS::<span class="built_in">funTest</span>();</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">extern</span> <span class="string">&quot;C&quot;</span> <span class="function"><span class="type">void</span> <span class="title">outFun</span><span class="params">()</span></span>;</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&quot;testFUN.h&quot;</span> </span></span><br><span class="line"></span><br><span class="line"><span class="function">testCLASS::<span class="type">static</span> <span class="type">void</span> <span class="title">funTest</span><span class="params">(<span class="type">void</span>)</span>					<span class="comment">//Cpp文件</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    std::cout&lt;&lt;<span class="string">&quot;OK&quot;</span>&lt;&lt;std::endl;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&quot;testFUN.h&quot;</span> 	<span class="comment">//Cpp的头文件</span></span></span><br><span class="line"></span><br><span class="line"><span class="type">int</span> <span class="title function_">main</span><span class="params">()</span></span><br><span class="line">&#123;</span><br><span class="line">	outFun();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>这样就是一个最简单最简单的使用了，一般都是c来调用cpp，cpp很多情况都是可以直接调用c，只有部分，因为关键字<br>和数据结构体的问题等才会出现奇奇怪怪的bug。</p>
+<h5 id="C-CPP-调用Python"><a href="#C-CPP-调用Python" class="headerlink" title="C&#x2F;CPP 调用Python"></a>C&#x2F;CPP 调用Python</h5><p>想不到吧，还能调用python呢，这个跟python版本有点关系，在python 3.12的官方手册中，有一个c扩展的功能，也就是通过调用Python.h来实现，对python函数的使用，那为什么可以实现这种情况呢。Python 本身就是一个C库。你所看到的可执行体python只不过是个stub。真正的python实体在动态链接库里实现，在Windows平台上，这个文件位于 %SystemRoot%\System32\python27.dll。</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;Python.h&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">(<span class="type">int</span> argc, <span class="type">char</span> *argv[])</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">  <span class="built_in">Py_SetProgramName</span>(argv[<span class="number">0</span>]);</span><br><span class="line">  <span class="built_in">Py_Initialize</span>();</span><br><span class="line">  <span class="built_in">PyRun_SimpleString</span>(<span class="string">&quot;print &#x27;Hello Python!&#x27;\n&quot;</span>);</span><br><span class="line">  <span class="built_in">Py_Finalize</span>();</span><br><span class="line">  <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>不过编译方法不是直接编译运行</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#可以选择是devC++或者vs那种有命令行的ide</span></span><br><span class="line">cl my_python.c -IC:\Python27\include C:\Python27\libs\python27.lib</span><br><span class="line"><span class="comment">#linux的话就是gcc操作</span></span><br><span class="line">gcc my_python.c -o my_python -I/usr/include/python2.7/ -lpython2.7</span><br><span class="line"><span class="comment">#还可以使用Cython的方法，这个自行搜索吧</span></span><br></pre></td></tr></table></figure>
+
+<p>然后直接使用可执行文件即可</p>
+<p>其实c和cpp调用python其实是多此一举的，性能又低，又不是我自己实现不了，cpp也是高级语言啊，cpp也有很多生态。<br>而且还有万能的指针，python就是看着舒服，简洁高效，模块化，效率和大小令人堪忧</p>
+<h5 id="Python调用C-CPP"><a href="#Python调用C-CPP" class="headerlink" title="Python调用C&#x2F;CPP"></a>Python调用C&#x2F;CPP</h5><p>直接使用Python的API，可以称之为最终解决方案。Cython, SWIG, SIP的接口文件转换后所生成的C&#x2F;C++代码实际上都使用Python的API。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 定义参数类型与函数名称</span></span><br><span class="line"><span class="keyword">import</span> ctypes</span><br><span class="line"><span class="keyword">from</span> ctypes.wintypes <span class="keyword">import</span> UINT, DWORD</span><br><span class="line"></span><br><span class="line">GetLastInputInfo = ctypes.windll.user32.GetLastInputInfo</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">LASTINPUTINFO</span>(ctypes.Structure):</span><br><span class="line">    _fields_ = [(<span class="string">&quot;cbSize&quot;</span>, UINT), (<span class="string">&quot;dwTime&quot;</span>, DWORD)]</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment"># 开始调用DLL导出的函数</span></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">getLastInputTime_nt</span>():</span><br><span class="line">    info = LASTINPUTINFO()</span><br><span class="line">    info.cbSize = ctypes.sizeof(info)</span><br><span class="line">    info.dwTime = <span class="number">0</span></span><br><span class="line">    <span class="keyword">if</span> <span class="keyword">not</span> GetLastInputInfo(ctypes.byref(info)):</span><br><span class="line">        <span class="keyword">raise</span> WindowsError(<span class="string">&quot;&quot;</span>)</span><br><span class="line"><span class="keyword">return</span> info.dwTime</span><br><span class="line"></span><br><span class="line"><span class="built_in">print</span>(getLastInputTime_nt())</span><br></pre></td></tr></table></figure>
+
+<p><a target="_blank" rel="noopener" href="https://blog.csdn.net/m0_37816922/article/details/121127760">效率提升二十倍：Python和C的混合编程_python和c混合编程-CSDN博客</a></p>
+<p>上面这个博客，是把cpp编译成dll和lib文件，然后让python来直接调用，这也算吧，说白，这就是库的思想，你就说是不是混合编程嘛。<br>而且它有关于c的语言的特殊的数据类型库，python本身是没有数据类型的，只有容器哦</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> ctypes</span><br></pre></td></tr></table></figure>
+
+<p><img src="/../Blogas_images/ctype.png"></p>
+<h5 id="rust调用c"><a href="#rust调用c" class="headerlink" title="rust调用c"></a>rust调用c</h5><h5 id="c调用rust"><a href="#c调用rust" class="headerlink" title="c调用rust"></a>c调用rust</h5><h5 id="结语"><a href="#结语" class="headerlink" title="结语"></a>结语</h5><p>要说用的多，还是python调用cpp写好的库，这个多实在啊，方便简单。还有就是c调用cpp间接封装好的类接口。混合编程其实就是为了利用各种语言之间的便捷性来实现互通互补，你说c语言可以不可以搞定一切，那肯定可以啊，那时间呢？效率呢？难易程度呢？这些都是我们想要考虑的情况，尤其是python，它有非常庞大的生态，很多库python都是有的，难道c要一个一个写？还是直接使用python来实现混合编程？答案就一目了然了</p>
+
       
     </div>
 
@@ -349,7 +1003,7 @@
 
   
   <nav class="pagination">
-    <a class="extend prev" rel="prev" href="/page/7/"><i class="fa fa-angle-left" aria-label="上一页"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/7/">7</a><span class="page-number current">8</span>
+    <a class="extend prev" rel="prev" href="/page/7/"><i class="fa fa-angle-left" aria-label="上一页"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/7/">7</a><span class="page-number current">8</span><a class="page-number" href="/page/9/">9</a><a class="page-number" href="/page/10/">10</a><a class="extend next" rel="next" href="/page/9/"><i class="fa fa-angle-right" aria-label="下一页"></i></a>
   </nav>
 
 
@@ -417,7 +1071,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">72</span>
+          <span class="site-state-item-count">97</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -492,7 +1146,7 @@
 
  <div class="theme-info">
   <div class="powered-by"></div>
-  <span class="post-count">博客全站共64k字</span>
+  <span class="post-count">博客全站共64.1k字</span>
 </div>
 
         
