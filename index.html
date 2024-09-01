@@ -124,7 +124,7 @@
   </li>
         <li class="menu-item menu-item-tags">
 
-    <a href="/tags/" rel="section"><i class="tags fa-fw"></i>标签<span class="badge">29</span></a>
+    <a href="/tags/" rel="section"><i class="tags fa-fw"></i>标签<span class="badge">30</span></a>
 
   </li>
         <li class="menu-item menu-item-categories">
@@ -495,6 +495,13 @@
 
               <time title="创建时间：2024-08-28 23:30:36" itemprop="dateCreated datePublished" datetime="2024-08-28T23:30:36+08:00">2024-08-28</time>
             </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2024-09-01 19:41:39" itemprop="dateModified" datetime="2024-09-01T19:41:39+08:00">2024-09-01</time>
+              </span>
 
           
 
@@ -507,7 +514,20 @@
     <div class="post-body" itemprop="articleBody">
 
       
-          
+          <h5 id="BSDiff"><a href="#BSDiff" class="headerlink" title="BSDiff"></a>BSDiff</h5><p>BSDiff是一种可执行文件的<a target="_blank" rel="noopener" href="https://so.csdn.net/so/search?q=%E4%BA%8C%E8%BF%9B%E5%88%B6&spm=1001.2101.3001.7020">二进制</a>差异构建和应用修补工具。</p>
+<p>作者为Colin Percival，早在2003年就已经写好了这个工具。官网是<a target="_blank" rel="noopener" href="http://www.daemonology.net/bsdiff/">Binary diff</a>，不过看来已经下载不到资源，处于不维护的状态。这个可以说是非常非常老的东西了，不过已经稳定的东西，就不用修改了，这世上的屎山可不少，维护的人却是越来越少了，只要它是稳定独立的、模块化的，大家也就都不会去动他。</p>
+<h5 id="增量更新BSDiff算法溯源和原理解析"><a href="#增量更新BSDiff算法溯源和原理解析" class="headerlink" title="增量更新BSDiff算法溯源和原理解析"></a>增量更新BSDiff算法溯源和原理解析</h5><p>就是类似于linux、windows的那些补丁一样，linux本身也是有利用补丁来实现替换，这样就不用修改整个文件，只需要修改差异化部分进行替换就好了。</p>
+<h5 id="为什么要BSDiff"><a href="#为什么要BSDiff" class="headerlink" title="为什么要BSDiff"></a>为什么要BSDiff</h5><p>我们常见的OTA，都是把整个bin都传过去，或者自己的一些压缩算法，帧头帧位，组包，校验、MD5等方法，保证整个文件的完全传输，有的时候固件很大很大，上百上千KB的时候，不论是用tcp还是udp传输都是有大小传输限制的，大概也就是1000个字节左右，所以，就会有多个包，还要加上自定义的协议等操作，中间只要出现网络的问题，很可能就会导致下载失败，然后bootloader就直接丢弃了下载数据。</p>
+<p>总的来就是，尽量减少对外通信的时间，不要过度依赖外部网络，因为物联网设备工作在什么场景都可能的，不是说在实验室和公司的那种环境，所以，传输的数据越短越少，就越稳定越可靠，然后通过主控、处理器自己去处理这个差异补丁，反过来得到固件。在主控、处理器内部进行拷贝覆盖原本应用，校验、测试处理等。</p>
+<h5 id="MCU实现"><a href="#MCU实现" class="headerlink" title="MCU实现"></a>MCU实现</h5><p>我也是参考了下面这个博客才有的想法，确实是一个很好的开源项目，总的来说，原理就是调用BSDiff算法库(就算是源码，我估计你也不愿意看的，稳定的东西，用就好了，肯定涉及很多内存方面的东西，估计跟FS有的一比)，对更新好的数据，进行处理。</p>
+<p><a target="_blank" rel="noopener" href="https://blog.csdn.net/xin3684/article/details/124252831">在STM32中使用bsdiff算法实现差分升级（bootloader）_差分升级算法-CSDN博客</a></p>
+<h5 id="linux实现"><a href="#linux实现" class="headerlink" title="linux实现"></a>linux实现</h5><p>linux补丁指令入门</p>
+<p><a target="_blank" rel="noopener" href="https://blog.csdn.net/u012964600/article/details/135846269">Linux patch命令教程：如何在Linux中应用和创建补丁（附实例详解和注意事项）-CSDN博客</a></p>
+<p>这个实现可以查考下面这个博客，不过就是一些命令行操作了，就更见简单了，其实就是文件系统那一套设计思路，进行对应数据修改+索引追加和指向，然后最后重新生成差分包，算法得到这个生成的差分包，就知道该怎么修改了，有点簇的味道了。</p>
+<p><a target="_blank" rel="noopener" href="https://blog.csdn.net/cplasf2012/article/details/117769624">增量更新BSDiff算法溯源和原理解析_bsdiff原理-CSDN博客</a></p>
+<h5 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h5><p>BSDiff的原理和技术非常成熟，可以用于apk的差分，不过在mcu之中也是可以使用这种方法，把这个功能写到引导之中，通过BSDiff算来就可以做到，只下载差异化部分，然后自动更新固件的功能。自然不可能只有BSDiff，如下博客，还有其他的方法，本质都是差不多的原理，通过差异化来生成文件，进行替换。</p>
+<p><a target="_blank" rel="noopener" href="https://blog.csdn.net/shangyexin/article/details/82885583">Xdelta3 bsdiff Courgette三种差分算法比较-CSDN博客</a></p>
+
       
     </div>
 
@@ -844,7 +864,7 @@
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">29</span>
+        <span class="site-state-item-count">30</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>
@@ -906,7 +926,7 @@
 
  <div class="theme-info">
   <div class="powered-by"></div>
-  <span class="post-count">博客全站共65.1k字</span>
+  <span class="post-count">博客全站共66k字</span>
 </div>
 
         
