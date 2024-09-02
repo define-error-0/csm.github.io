@@ -124,7 +124,7 @@
   </li>
         <li class="menu-item menu-item-tags">
 
-    <a href="/tags/" rel="section"><i class="tags fa-fw"></i>标签<span class="badge">31</span></a>
+    <a href="/tags/" rel="section"><i class="tags fa-fw"></i>标签<span class="badge">32</span></a>
 
   </li>
         <li class="menu-item menu-item-categories">
@@ -134,7 +134,7 @@
   </li>
         <li class="menu-item menu-item-archives">
 
-    <a href="/archives/" rel="section"><i class="archive fa-fw"></i>归档<span class="badge">109</span></a>
+    <a href="/archives/" rel="section"><i class="archive fa-fw"></i>归档<span class="badge">110</span></a>
 
   </li>
         <li class="menu-item menu-item-resources">
@@ -174,6 +174,65 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2024/06/12/%E8%84%9A%E6%9C%AC%E5%B0%8F%E5%AD%90/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/csm.png">
+      <meta itemprop="name" content="CSM">
+      <meta itemprop="description" content="应用是应用，驱动是驱动！你要是偏要应用干驱动，哥们，你怎么不直接薪资翻倍啊！[🦀]">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="我要成为嵌入式高手[doge]">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2024/06/12/%E8%84%9A%E6%9C%AC%E5%B0%8F%E5%AD%90/" class="post-title-link" itemprop="url">脚本小子</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2024-06-12 23:22:17" itemprop="dateCreated datePublished" datetime="2024-06-12T23:22:17+08:00">2024-06-12</time>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          
+      
+    </div>
+
+    
+    
+    
+
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
     <link itemprop="mainEntityOfPage" href="http://example.com/2024/06/12/%E6%9C%8D%E5%8A%A1%E5%99%A8%E8%BF%9C%E7%A8%8B%E5%8A%9E%E5%85%AC/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -200,6 +259,13 @@
 
               <time title="创建时间：2024-06-12 23:21:45" itemprop="dateCreated datePublished" datetime="2024-06-12T23:21:45+08:00">2024-06-12</time>
             </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2024-09-03 00:25:44" itemprop="dateModified" datetime="2024-09-03T00:25:44+08:00">2024-09-03</time>
+              </span>
 
           
 
@@ -212,7 +278,41 @@
     <div class="post-body" itemprop="articleBody">
 
       
-          
+          <h5 id="用途"><a href="#用途" class="headerlink" title="用途"></a>用途</h5><p>很多时候，公司电脑都是用于开发的，当中自然有很多数据和配置好的环境，操作起来非常方便，但是，我们不可能天天在屏幕前啊，一定会离开岗位的，我之前就因为要去工厂实地查看电机生产，现场改测试，现场测试，现场编程，还好我有个笔记本，可以直接远程办公快速实现，这个功能，确实不错的。还有就是编译内核的时候，几个小时都常态，所以，ssh登录挂着就好了，编译完就走了，虽然应该都是服务器去编译的。</p>
+<h5 id="SSH登录"><a href="#SSH登录" class="headerlink" title="SSH登录"></a>SSH登录</h5><p>说到ssh，肯定都熟悉了，毕竟搞linux，搞git都或多或少用过，这个稳定可靠安全的通信协议。Secure Shell(SSH) 是由 IETF(The Internet Engineering Task Force) 制定的建立在应用层基础上的安全网络通信，它是专为远程登录会话(甚至可以用Windows远程登录Linux服务器进行文件互传)和其他网络服务提供安全性的协议，可有效弥补网络中的漏洞。通过SSH，可以把所有传输的数据进行加密，也能够防止DNS欺骗和IP欺骗。还有一个额外的好处就是传输的数据是经过压缩的，所以可以加快传输的速度。</p>
+<p>实现原理就是非对称加密RSA了。所以私钥千万不要随便给别人，公钥可以公开哦。</p>
+<p>ssh登录是干嘛，因为linux这种服务器系统，或者换个名称，应该是批处理系统，因为它是有多个用户的，所以每次ssh登录其实就是开辟了一个tty终端，这个终端给到我这个用户而已。ssh就干了这件事。</p>
+<p>登录方法1：</p>
+<p>指令行咯，前提就是双方都要ssh这个功能，都得提前安装ssh服务器。而且都启动了才行</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">//ssh 客户端用户名@服务器ip地址</span><br><span class="line">ssh csm@192.168.1.1</span><br></pre></td></tr></table></figure>
+
+<p>这个最好固定ip比较好。</p>
+<p>登录方法2：</p>
+<p>公钥登录</p>
+<p>本地生成ssh，然后把公钥发给远程主机，自己保留私钥，通过这个私钥来解密登录。</p>
+<p><strong>其实用过github就知道了，其实就是github里面的令牌登录和ssh公私钥匙而已。</strong></p>
+<h5 id="远程主机控制"><a href="#远程主机控制" class="headerlink" title="远程主机控制"></a>远程主机控制</h5><p>其实，看到上面这个发现了端倪，上面的其实是生成一个伪tty终端，一个终端是不能代表这个主机，现在网上有非常多维修电脑的工程师都是远程控制电脑的，对的，这就是区别，别人远程控制是整个电脑啊。</p>
+<p>这里我就来给大家提供一个好东西，向日葵远程控制，这个确实不错的。如下图所示，这个远程协助的时候就是从机啦，下面那个设备列表就是主机，同一时刻只能有一个主机，它可以控制其他从机，注意设备从机密码。还可以通过识别码和验证码实现远程协助办公哦。</p>
+<p><img src="/../Blogas_images/%E6%9C%8D%E5%8A%A1%E5%99%A8%E8%BF%9C%E7%A8%8B%E5%8A%9E%E5%85%AC.png"></p>
+<h5 id="远程开机"><a href="#远程开机" class="headerlink" title="远程开机"></a>远程开机</h5><p>这个就是是一个非常麻烦的东西了，现在的方案有很多。</p>
+<ul>
+<li><p>有智能云开关</p>
+</li>
+<li><p>有智能云排插</p>
+</li>
+<li><p>有调用windows本身实现网络唤醒，也就是利用了wake-on-LAN技术</p>
+<p><a target="_blank" rel="noopener" href="https://blog.csdn.net/dazhisir/article/details/124871469">【超详细】Windows设置远程唤醒WOL+远程连接（远程开机）-CSDN博客</a></p>
+</li>
+<li><p>短接开关，实现远程控制关机</p>
+</li>
+<li><p><a target="_blank" rel="noopener" href="https://blog.51cto.com/u_9843231/5080380">5个远程开机的方案（无线唤醒电脑保姆教程）_51CTO博客_电脑远程开机和唤醒</a></p>
+</li>
+<li><p>有些不愿意捣鼓，想快速实现就可以使用 “ToDesk”这个软件就是可以直接满足一键配置，一键开机的功能啦，和向日葵很相似，都是运维常用的工具。</p>
+</li>
+</ul>
+<p>想玩的，可以自己去尝试一下，确实挺不错的。</p>
+<h5 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h5><p>这个就是为了方便自己搭建服务器，方便自己远程控制和出差在外，却需要一台电脑进行开发测试，都可以选择这个好方法，远程就让有了很多方法和手段，你也可以不用跑到别人公司去实地了解情况，说不定简单线上测试就能解决呢。</p>
+
       
     </div>
 
@@ -392,6 +492,13 @@
 
               <time title="创建时间：2024-05-31 21:19:39" itemprop="dateCreated datePublished" datetime="2024-05-31T21:19:39+08:00">2024-05-31</time>
             </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2024-09-02 22:58:24" itemprop="dateModified" datetime="2024-09-02T22:58:24+08:00">2024-09-02</time>
+              </span>
 
           
 
@@ -404,7 +511,8 @@
     <div class="post-body" itemprop="articleBody">
 
       
-          
+          <p>PLM</p>
+
       
     </div>
 
@@ -781,65 +889,6 @@
   
   
 
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2024/05/29/Linux%E7%9A%84USB%E5%BA%94%E7%94%A8%E5%BC%80%E5%8F%91/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/csm.png">
-      <meta itemprop="name" content="CSM">
-      <meta itemprop="description" content="应用是应用，驱动是驱动！你要是偏要应用干驱动，哥们，你怎么不直接薪资翻倍啊！[🦀]">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="我要成为嵌入式高手[doge]">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2024/05/29/Linux%E7%9A%84USB%E5%BA%94%E7%94%A8%E5%BC%80%E5%8F%91/" class="post-title-link" itemprop="url">Linux的USB应用开发</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              <time title="创建时间：2024-05-29 23:54:15" itemprop="dateCreated datePublished" datetime="2024-05-29T23:54:15+08:00">2024-05-29</time>
-            </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          
-      
-    </div>
-
-    
-    
-    
-
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
 
   
   <nav class="pagination">
@@ -911,7 +960,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">109</span>
+          <span class="site-state-item-count">110</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -924,7 +973,7 @@
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">31</span>
+        <span class="site-state-item-count">32</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>
@@ -986,7 +1035,7 @@
 
  <div class="theme-info">
   <div class="powered-by"></div>
-  <span class="post-count">博客全站共66.8k字</span>
+  <span class="post-count">博客全站共69.3k字</span>
 </div>
 
         
