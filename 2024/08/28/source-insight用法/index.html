@@ -22,16 +22,17 @@
     var CONFIG = {"hostname":"example.com","root":"/","scheme":"Pisces","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
   </script>
 
-  <meta name="description" content="应用是应用，驱动是驱动！你要是偏要应用干驱动，哥们，你怎么不直接薪资翻倍啊！[🦀]">
+  <meta name="description" content="source insightSourceinsight（以下简称SI）是良许使用过的最好用，最顺手，最强大的编辑器，没有之一！它几乎支持所有的语言，包括：C，C++，ASM，HTML等等，能够自动创建并维护它自己高性能的符号数据库，包括函数、method、全局变量、结构、类和工程源文件里定义的其它类型的符号，对于大工程的源码阅读非常方便。 但是，作为Linux程序员，我们的代码一般放在Linux电">
 <meta property="og:type" content="article">
 <meta property="og:title" content="source insight用法">
 <meta property="og:url" content="http://example.com/2024/08/28/source-insight%E7%94%A8%E6%B3%95/index.html">
 <meta property="og:site_name" content="我要成为嵌入式高手[doge]">
-<meta property="og:description" content="应用是应用，驱动是驱动！你要是偏要应用干驱动，哥们，你怎么不直接薪资翻倍啊！[🦀]">
+<meta property="og:description" content="source insightSourceinsight（以下简称SI）是良许使用过的最好用，最顺手，最强大的编辑器，没有之一！它几乎支持所有的语言，包括：C，C++，ASM，HTML等等，能够自动创建并维护它自己高性能的符号数据库，包括函数、method、全局变量、结构、类和工程源文件里定义的其它类型的符号，对于大工程的源码阅读非常方便。 但是，作为Linux程序员，我们的代码一般放在Linux电">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2024-08-28T15:36:06.000Z">
-<meta property="article:modified_time" content="2024-08-28T15:36:06.667Z">
+<meta property="article:modified_time" content="2024-09-03T16:14:50.144Z">
 <meta property="article:author" content="CSM">
+<meta property="article:tag" content="ide">
 <meta name="twitter:card" content="summary">
 
 <link rel="canonical" href="http://example.com/2024/08/28/source-insight%E7%94%A8%E6%B3%95/">
@@ -126,7 +127,7 @@
   </li>
         <li class="menu-item menu-item-tags">
 
-    <a href="/tags/" rel="section"><i class="tags fa-fw"></i>标签<span class="badge">32</span></a>
+    <a href="/tags/" rel="section"><i class="tags fa-fw"></i>标签<span class="badge">33</span></a>
 
   </li>
         <li class="menu-item menu-item-categories">
@@ -202,6 +203,13 @@
 
               <time title="创建时间：2024-08-28 23:36:06" itemprop="dateCreated datePublished" datetime="2024-08-28T23:36:06+08:00">2024-08-28</time>
             </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2024-09-04 00:14:50" itemprop="dateModified" datetime="2024-09-04T00:14:50+08:00">2024-09-04</time>
+              </span>
 
           
 
@@ -214,7 +222,11 @@
     <div class="post-body" itemprop="articleBody">
 
       
-        
+        <h5 id="source-insight"><a href="#source-insight" class="headerlink" title="source insight"></a>source insight</h5><p>Sourceinsight（以下简称<strong>SI</strong>）是良许使用过的最好用，最顺手，最强大的编辑器，没有之一！它几乎支持所有的语言，包括：C，C++，ASM，HTML等等，能够自动创建并维护它自己高性能的符号数据库，包括函数、method、全局变量、结构、类和工程<a target="_blank" rel="noopener" href="https://zhida.zhihu.com/search?q=%E6%BA%90%E6%96%87%E4%BB%B6&zhida_source=entity&is_preview=1">源文件</a>里定义的其它类型的符号，对于大工程的源码阅读非常方便。</p>
+<p>但是，作为Linux程序员，我们的代码一般放在Linux电脑里。Linux里也有一些好用的代码查看工具，比如sublime，以及著名的Vim。SI什么都好，但就是没有Linux版。如果我们一定要用前文介绍过的<a target="_blank" rel="noopener" href="https://zhida.zhihu.com/search?q=%E5%85%B1%E4%BA%AB%E6%96%87%E4%BB%B6%E5%A4%B9&zhida_source=entity&is_preview=1">共享文件夹</a>来实现。</p>
+<h5 id="为什么不用vs-code？"><a href="#为什么不用vs-code？" class="headerlink" title="为什么不用vs code？"></a>为什么不用vs code？</h5><p>vscode就是出了名的好用，这个好用不是说它特别厉害，而是特别好上手，好上手不代表它好用。有些东西是需要适应的，不是说，不好用就逃避，尤其看linux内核源码的时候，不用这个的话，真的会绝望的。</p>
+<p><a target="_blank" rel="noopener" href="https://blog.csdn.net/Mculover666/article/details/104522295">VScode和SourceInsight，到底哪个看源码爽？_vscode和source那个好用-CSDN博客</a></p>
+<h5 id="source-insight用法"><a href="#source-insight用法" class="headerlink" title="source insight用法"></a>source insight用法</h5><h5 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h5>
     </div>
 
     
@@ -249,6 +261,9 @@
 
 
       <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/ide/" rel="tag"># ide</a>
+          </div>
 
         
 
@@ -321,6 +336,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-5"><a class="nav-link" href="#source-insight"><span class="nav-number">1.</span> <span class="nav-text">source insight</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E4%B8%BA%E4%BB%80%E4%B9%88%E4%B8%8D%E7%94%A8vs-code%EF%BC%9F"><span class="nav-number">2.</span> <span class="nav-text">为什么不用vs code？</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#source-insight%E7%94%A8%E6%B3%95"><span class="nav-number">3.</span> <span class="nav-text">source insight用法</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E6%80%BB%E7%BB%93"><span class="nav-number">4.</span> <span class="nav-text">总结</span></a></li></ol></div>
       </div>
       <!--/noindex-->
 
@@ -349,7 +365,7 @@
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">32</span>
+        <span class="site-state-item-count">33</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>
@@ -411,7 +427,7 @@
 
  <div class="theme-info">
   <div class="powered-by"></div>
-  <span class="post-count">博客全站共70.1k字</span>
+  <span class="post-count">博客全站共70.5k字</span>
 </div>
 
         
