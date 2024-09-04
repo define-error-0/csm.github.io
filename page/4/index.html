@@ -124,7 +124,7 @@
   </li>
         <li class="menu-item menu-item-tags">
 
-    <a href="/tags/" rel="section"><i class="tags fa-fw"></i>标签<span class="badge">33</span></a>
+    <a href="/tags/" rel="section"><i class="tags fa-fw"></i>标签<span class="badge">34</span></a>
 
   </li>
         <li class="menu-item menu-item-categories">
@@ -134,7 +134,7 @@
   </li>
         <li class="menu-item menu-item-archives">
 
-    <a href="/archives/" rel="section"><i class="archive fa-fw"></i>归档<span class="badge">110</span></a>
+    <a href="/archives/" rel="section"><i class="archive fa-fw"></i>归档<span class="badge">111</span></a>
 
   </li>
         <li class="menu-item menu-item-resources">
@@ -170,6 +170,65 @@
 
           <div class="content index posts-expand">
             
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2024/08/14/VPN%E5%8E%9F%E7%90%86/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/csm.png">
+      <meta itemprop="name" content="CSM">
+      <meta itemprop="description" content="应用是应用，驱动是驱动！你要是偏要应用干驱动，哥们，你怎么不直接薪资翻倍啊！[🦀]">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="我要成为嵌入式高手[doge]">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2024/08/14/VPN%E5%8E%9F%E7%90%86/" class="post-title-link" itemprop="url">VPN原理</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2024-08-14 23:35:41" itemprop="dateCreated datePublished" datetime="2024-08-14T23:35:41+08:00">2024-08-14</time>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          
+      
+    </div>
+
+    
+    
+    
+
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
       
   
   
@@ -704,78 +763,10 @@
   
   
 
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2024/07/16/tty%E7%BB%88%E7%AB%AF/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/csm.png">
-      <meta itemprop="name" content="CSM">
-      <meta itemprop="description" content="应用是应用，驱动是驱动！你要是偏要应用干驱动，哥们，你怎么不直接薪资翻倍啊！[🦀]">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="我要成为嵌入式高手[doge]">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2024/07/16/tty%E7%BB%88%E7%AB%AF/" class="post-title-link" itemprop="url">tty终端</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-              
-
-              <time title="创建时间：2024-07-16 22:53:49 / 修改时间：23:39:59" itemprop="dateCreated datePublished" datetime="2024-07-16T22:53:49+08:00">2024-07-16</time>
-            </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <h5 id="起因"><a href="#起因" class="headerlink" title="起因"></a>起因</h5><p>无聊摸鱼，突然看到一个进度条一样。我就想到了这个进度条是怎么实现的呢？我们下载软件，下载插件，下载东西，编译的时候都可能会出现tty终端的进度条。我就好奇了，cmd和shell那些终端这个命令行不应该是输出一行的吗？就像我串口打印出来的东西，不可能把我已经输出的东西，在显示端删掉啊，在重新打印一边的，肯定就是换行处理了，这个不换行又覆盖打印是怎么做到的呢？</p>
-<h5 id="区别"><a href="#区别" class="headerlink" title="区别"></a>区别</h5><p>我们一般进行调试，有232也有串口进行对MCU、MPU、ARM-A板子的串口调试，这个时候，处理器是直接使用串口打印的，就是把串口缓冲区立马的数据输出出来，发送给我，而我在把他显示出来，因为，显示肯定是不能丢失接收数据和信息，所以，就会全部打印，换行打印。所以来一条打印一下，显示一条符合要求和调试。</p>
-<p>这里就有一个误区了，因为我们使用tty的时候，还没输出出去哦！</p>
-<p>这个什么意思呢？意思就是我们这个系统还没对外输出而是内部操作，此时tty不是一个串口输出的过程，而是，直接读取一个缓冲区内部的数据。没错，tty就是一个缓冲区，它不是日志系统，不会记录所有操作，记录操作是其他功能做的，它就是一个缓冲区，也就是说，我们做的一大堆操作，其实都是在缓冲区里进行的操作，此时都没对外输出，当然可以覆盖自己缓冲区数据，然后tty显示这个缓冲区数据。当然，其他的打印和日志系统就会把每个操作，每个情况，每个数据都记录下来啊。</p>
-<h5 id="实现"><a href="#实现" class="headerlink" title="实现"></a>实现</h5><p>此时直接使用回车就可以，清空本行，重新覆盖输出了，就可以实现进度条的操作了。<br>这里还有一点就是回车和换行，回车是\r  换行是\n;<br>我们在学c语言的时候，肯定打印函数和输入函数也即是scanf和printf这两里面用了很多换行，也经常会发现他们两个的效果是很相似。这是因为发送完毕，换行会直接清空缓冲区，而回车是回到首行开头，这个就有点文件io的光标的味道了，缓冲区清空了，这个时候回车肯定就是原地蹦一下而已嘛。</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#!/bin/bash</span></span><br><span class="line"></span><br><span class="line">mark=<span class="string">&#x27;&#x27;</span></span><br><span class="line"><span class="keyword">for</span> ((ratio=<span class="number">0</span>;<span class="variable">$&#123;ratio&#125;</span>&lt;=<span class="number">100</span>;ratio+=<span class="number">5</span>))</span><br><span class="line"><span class="keyword">do</span></span><br><span class="line">        <span class="built_in">sleep</span> 0.2</span><br><span class="line">        <span class="built_in">printf</span> <span class="string">&quot;progress:[%-40s]%d%%\r&quot;</span> <span class="string">&quot;<span class="variable">$&#123;mark&#125;</span>&quot;</span> <span class="string">&quot;<span class="variable">$&#123;ratio&#125;</span>&quot;</span></span><br><span class="line">        mark=<span class="string">&quot;##<span class="variable">$&#123;mark&#125;</span>&quot;</span></span><br><span class="line"><span class="keyword">done</span></span><br><span class="line"><span class="built_in">echo</span></span><br><span class="line"></span><br></pre></td></tr></table></figure>
-
-<h5 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h5><p>tty终端不是日志系统，它是一个收发缓冲区，它显示的内容是它缓冲区的内容，此时都没对外输出，所以它不会显示所有情况、数据、消息，只会显示缓冲区里有东西。此时，想要覆盖上一次的结果，echo就不要换行 -ne 此时直接回车到开头，然后清空本行，输出就好了，这个是只能在终端才能实现的哦。如果使用那种rt-thread那种FinSH控制台，这个就是串口输出啦，就是对外输出了，此时修改缓冲区是亡羊补牢了，因为缓冲区的数据已经被打印出来了，自然在显示端就会出现换行，而且无法覆盖上一行的操作，也无法实现进度条了捏，呜呜呜。</p>
-
-      
-    </div>
-
-    
-    
-    
-
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
 
   
   <nav class="pagination">
-    <a class="extend prev" rel="prev" href="/page/3/"><i class="fa fa-angle-left" aria-label="上一页"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/3/">3</a><span class="page-number current">4</span><a class="page-number" href="/page/5/">5</a><span class="space">&hellip;</span><a class="page-number" href="/page/11/">11</a><a class="extend next" rel="next" href="/page/5/"><i class="fa fa-angle-right" aria-label="下一页"></i></a>
+    <a class="extend prev" rel="prev" href="/page/3/"><i class="fa fa-angle-left" aria-label="上一页"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/3/">3</a><span class="page-number current">4</span><a class="page-number" href="/page/5/">5</a><span class="space">&hellip;</span><a class="page-number" href="/page/12/">12</a><a class="extend next" rel="next" href="/page/5/"><i class="fa fa-angle-right" aria-label="下一页"></i></a>
   </nav>
 
 
@@ -843,7 +834,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">110</span>
+          <span class="site-state-item-count">111</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -856,7 +847,7 @@
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">33</span>
+        <span class="site-state-item-count">34</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>
@@ -918,7 +909,7 @@
 
  <div class="theme-info">
   <div class="powered-by"></div>
-  <span class="post-count">博客全站共70.5k字</span>
+  <span class="post-count">博客全站共71k字</span>
 </div>
 
         

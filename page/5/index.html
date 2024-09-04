@@ -124,7 +124,7 @@
   </li>
         <li class="menu-item menu-item-tags">
 
-    <a href="/tags/" rel="section"><i class="tags fa-fw"></i>标签<span class="badge">33</span></a>
+    <a href="/tags/" rel="section"><i class="tags fa-fw"></i>标签<span class="badge">34</span></a>
 
   </li>
         <li class="menu-item menu-item-categories">
@@ -134,7 +134,7 @@
   </li>
         <li class="menu-item menu-item-archives">
 
-    <a href="/archives/" rel="section"><i class="archive fa-fw"></i>归档<span class="badge">110</span></a>
+    <a href="/archives/" rel="section"><i class="archive fa-fw"></i>归档<span class="badge">111</span></a>
 
   </li>
         <li class="menu-item menu-item-resources">
@@ -170,6 +170,74 @@
 
           <div class="content index posts-expand">
             
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2024/07/16/tty%E7%BB%88%E7%AB%AF/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/csm.png">
+      <meta itemprop="name" content="CSM">
+      <meta itemprop="description" content="应用是应用，驱动是驱动！你要是偏要应用干驱动，哥们，你怎么不直接薪资翻倍啊！[🦀]">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="我要成为嵌入式高手[doge]">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2024/07/16/tty%E7%BB%88%E7%AB%AF/" class="post-title-link" itemprop="url">tty终端</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+              
+
+              <time title="创建时间：2024-07-16 22:53:49 / 修改时间：23:39:59" itemprop="dateCreated datePublished" datetime="2024-07-16T22:53:49+08:00">2024-07-16</time>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h5 id="起因"><a href="#起因" class="headerlink" title="起因"></a>起因</h5><p>无聊摸鱼，突然看到一个进度条一样。我就想到了这个进度条是怎么实现的呢？我们下载软件，下载插件，下载东西，编译的时候都可能会出现tty终端的进度条。我就好奇了，cmd和shell那些终端这个命令行不应该是输出一行的吗？就像我串口打印出来的东西，不可能把我已经输出的东西，在显示端删掉啊，在重新打印一边的，肯定就是换行处理了，这个不换行又覆盖打印是怎么做到的呢？</p>
+<h5 id="区别"><a href="#区别" class="headerlink" title="区别"></a>区别</h5><p>我们一般进行调试，有232也有串口进行对MCU、MPU、ARM-A板子的串口调试，这个时候，处理器是直接使用串口打印的，就是把串口缓冲区立马的数据输出出来，发送给我，而我在把他显示出来，因为，显示肯定是不能丢失接收数据和信息，所以，就会全部打印，换行打印。所以来一条打印一下，显示一条符合要求和调试。</p>
+<p>这里就有一个误区了，因为我们使用tty的时候，还没输出出去哦！</p>
+<p>这个什么意思呢？意思就是我们这个系统还没对外输出而是内部操作，此时tty不是一个串口输出的过程，而是，直接读取一个缓冲区内部的数据。没错，tty就是一个缓冲区，它不是日志系统，不会记录所有操作，记录操作是其他功能做的，它就是一个缓冲区，也就是说，我们做的一大堆操作，其实都是在缓冲区里进行的操作，此时都没对外输出，当然可以覆盖自己缓冲区数据，然后tty显示这个缓冲区数据。当然，其他的打印和日志系统就会把每个操作，每个情况，每个数据都记录下来啊。</p>
+<h5 id="实现"><a href="#实现" class="headerlink" title="实现"></a>实现</h5><p>此时直接使用回车就可以，清空本行，重新覆盖输出了，就可以实现进度条的操作了。<br>这里还有一点就是回车和换行，回车是\r  换行是\n;<br>我们在学c语言的时候，肯定打印函数和输入函数也即是scanf和printf这两里面用了很多换行，也经常会发现他们两个的效果是很相似。这是因为发送完毕，换行会直接清空缓冲区，而回车是回到首行开头，这个就有点文件io的光标的味道了，缓冲区清空了，这个时候回车肯定就是原地蹦一下而已嘛。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#!/bin/bash</span></span><br><span class="line"></span><br><span class="line">mark=<span class="string">&#x27;&#x27;</span></span><br><span class="line"><span class="keyword">for</span> ((ratio=<span class="number">0</span>;<span class="variable">$&#123;ratio&#125;</span>&lt;=<span class="number">100</span>;ratio+=<span class="number">5</span>))</span><br><span class="line"><span class="keyword">do</span></span><br><span class="line">        <span class="built_in">sleep</span> 0.2</span><br><span class="line">        <span class="built_in">printf</span> <span class="string">&quot;progress:[%-40s]%d%%\r&quot;</span> <span class="string">&quot;<span class="variable">$&#123;mark&#125;</span>&quot;</span> <span class="string">&quot;<span class="variable">$&#123;ratio&#125;</span>&quot;</span></span><br><span class="line">        mark=<span class="string">&quot;##<span class="variable">$&#123;mark&#125;</span>&quot;</span></span><br><span class="line"><span class="keyword">done</span></span><br><span class="line"><span class="built_in">echo</span></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<h5 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h5><p>tty终端不是日志系统，它是一个收发缓冲区，它显示的内容是它缓冲区的内容，此时都没对外输出，所以它不会显示所有情况、数据、消息，只会显示缓冲区里有东西。此时，想要覆盖上一次的结果，echo就不要换行 -ne 此时直接回车到开头，然后清空本行，输出就好了，这个是只能在终端才能实现的哦。如果使用那种rt-thread那种FinSH控制台，这个就是串口输出啦，就是对外输出了，此时修改缓冲区是亡羊补牢了，因为缓冲区的数据已经被打印出来了，自然在显示端就会出现换行，而且无法覆盖上一行的操作，也无法实现进度条了捏，呜呜呜。</p>
+
+      
+    </div>
+
+    
+    
+    
+
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
       
   
   
@@ -942,112 +1010,10 @@
   
   
 
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2024/06/12/%E7%A5%9B%E9%AD%85%E2%80%94%E2%80%94%E6%8A%80%E6%9C%AF%E7%9A%84%E9%99%B7%E9%98%B1/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/csm.png">
-      <meta itemprop="name" content="CSM">
-      <meta itemprop="description" content="应用是应用，驱动是驱动！你要是偏要应用干驱动，哥们，你怎么不直接薪资翻倍啊！[🦀]">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="我要成为嵌入式高手[doge]">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2024/06/12/%E7%A5%9B%E9%AD%85%E2%80%94%E2%80%94%E6%8A%80%E6%9C%AF%E7%9A%84%E9%99%B7%E9%98%B1/" class="post-title-link" itemprop="url">祛魅——技术的陷阱</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              <time title="创建时间：2024-06-12 23:22:50" itemprop="dateCreated datePublished" datetime="2024-06-12T23:22:50+08:00">2024-06-12</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2024-07-01 23:52:40" itemprop="dateModified" datetime="2024-07-01T23:52:40+08:00">2024-07-01</time>
-              </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <h2 align = "center">祛魅</h2>
-
-<pre><code>    这篇博客，是一个自我认知和自我醒悟的过程和思考的记录。脱离技术包袱，逃离思想束缚。		
-</code></pre>
-<p>​		首先，我们要知道祛魅是什么？我的理解就是将一个被神话的东西理解透彻。这个是什么意思呢？很多东西被大家吹的太夸张了，但是，如果愿意花上最多100+小时的学习，就能入门，而不是大家所说高不可攀。因为，对于这些事物的不断逃避，我们不断道听途说那些被神话的技术和知识，所以，就盲目以为那些非常难做，非常牛逼，觉得自己不行，觉得它好厉害，狂拽酷霸吊炸天。但是，一旦入行，我们就会明白，其实就是那样，没啥了不起的。</p>
-<p>​		技术就是大家不断试错和大家统一的约定，比如协议，这个就是大家都是这样约定的，所以就有通信技术和通信协议；比如尺寸，也是大家经过不断试错，发现这个是最合适，所以就定这个了；比如开发流程，也是一样的，为什么要开发模型，为什么要架构，为什么要设备树，为什么要驱动平台，为什么要统一驱动写法，为什么要meunconfig？这些不都是大家一起约定俗称的东西，就是入门太难了，所以，给人一种高级感，一种神奇的魅力。<strong>但是，它的本质就是大家的约定俗成的协议和流程。</strong>科研的话，那个没涉及，不过，我感觉科研方面也有很多人深深陷入神话的传说之中了。牛顿晚年都信神学了。</p>
-<p>​      之前，我就陷入这种对于技术的崇拜，疯狂学习，疯狂思考。但是，我有一整子休息了一下，看了一些管理和资本家视频我才醒悟过来。编码技术再牛逼又如何？会的编程语言再多再熟练又如何？项目开发又快又多又如何？我们在不断钻研技术，却是陷入了资本家的陷阱。大家都说工匠精神，但是，资本家喜欢的就是这种只知道听话和干事的牛马。他们天天只喜欢技术，对于技术有一种莫名其妙的优越感。但是，在老板眼里，就是牛马，只不过是厉害的牛马。所以，大家对于技术千万不要过度崇拜，而是要学会管理和统筹规划。任何一个刚毕业的大学生都可以使用C语言在一定时期内完成一个功能，但是怎么把功能整合起来，怎么去管理，怎么去维护，怎么去分配任务，这个才是最重要的，才是最可能在未来实现独立和创业的。</p>
-<p>​      肯定要反驳我，说不会技术怎么创业啊？首先，要知道技术是一定要会的，因为我们很多人都是没有资本的，所以，只能靠技术来给自己建造城墙，但是会编程，会应用是真的没用的。会带队，会分配，会管理，会思考，会统筹。你会想这是cto的事情啊，所以，我们就要去学习去有目的的思考，系统的去思考。在日常工作中，把眼界跳出自己的目前的工作，去想想如果这个项目给到自己，自己该干什么？不要总是钻研技术，技术是最难赚钱，最难实现自由的，尤其是大厂，越大分的越细，虽然整体很美观很规范。</p>
-<p>​     想起来一个段子，一个老板问程序员还要多久完成项目。程序员说一个月左右。老板说再加一个人呢？那就要两个月了。再加一个人呢？那就不知道了。</p>
-<p>​    这个段子，其实就是说了一件事情，人越多它的效率其实是越低的，但是好处就是它可以可重复使用和相互配合，可以摆脱因为员工离职导致的问题。</p>
-<p>​    对了，大家写代码和和钻研技术的时候，一定要学会模块化，一定要想办法做可重复使用的事情，做一些关联的事情。比如一个模拟spi，这个代码，只需要改引脚(还有位带、输入输出模式、反正就是电平变化的函数等)，就可以实现快速移植和反复使用了，这里就有一个就是规划了，你未来想要干嘛，你现在做的事情对于未来有帮助吗？就像未来想搞linux驱动，但是现在在搞前端开发，那有用吗？完全没有一点可重复使用性。</p>
-<p>​     有点偏题了，祛魅只是一个引子，主要是告诉大家，不要对技术有莫名其妙的崇拜和神话，我们要站在更高的角度和看待项目的过程。去思考一个人的时候怎么完成，去想想现在干的事情对于未来有没有用。不要今天学了modbus，明天就学can，然后洋洋得意，觉得我今天又学到了新的技术。</p>
-<p>​     这有用吗？肯定有用啊，老板最喜欢这样的牛马了，35岁之后直接踢了，脑子只有技术的人，怎么带队啊，后面还不听管教，自以为有技术了不起的人多的是。</p>
-<p>​    我们其实不需要太多太牛逼的技术，很多东西，都是有库的啊，有人写好的驱动的啊，为什么还要去干这些事情呢？我们只要有中等水平的编程能力，有高级水平的思考和架构能力就够了啊。具体实现，真的只要会c语言，啥功能都能实现的。只是效率和大小的问题，这个丢给大学生最好了，他们最喜欢干这种事情了。</p>
-<p>​     然后，肯定就有人想问，怎么站在高处看待这些东西呢？我这里就给出一个简单的模型吧。归纳、思考、用途、设计、诞生因素、解决了什么、整体思路、行为定性等。</p>
-<h5 id="1-学习归纳、整体思路、思考。"><a href="#1-学习归纳、整体思路、思考。" class="headerlink" title="1.学习归纳、整体思路、思考。"></a>1.学习归纳、整体思路、思考。</h5><p>​		我们用MCU举例子，MCU就是主控，好了，完了。那些DMA，USART、CAN、IIC、SPI、是不是就是为了和主从机通信？TIM 、VNIC、Callback是不是为了实现内部事件处理？内核指令需要吗？那些关中断、关事件、汇编代码，需要吗？系统一定是刚需吗？上系统带来什么好处？上系统解决那些多任务？那些是实现啊，给一个嵌入式毕业的会mcu的他自己会去实现的啊。</p>
-<p>​       是不是每一个MCU都是这样的操作，不同的就是有一些HAL，有一些标准库，有些自己的库，但是。他们的实现都是一样的，实现开启时钟，然后结构体进行初始化，绑定和复用功能，配置复用和绑定功能的配置，初始化复用和绑定功能，开启功能完事，有中断写中断回调。</p>
-<p>​      那我们学会了每一种MCU，看了一堆的数据手册。是不是我们就变得抢手？有用吗？CH32、GD32、AT32、STM32、瑞昱、TI、APT32、HC32够吗，孩子？学完了然后学thread-x 、freertos、ucos、rt-thread等够吗？他们是不是都是一样的思路，所以，我们学习的时候就要归纳去思考，去站在高处看待他们的流程和相似之处。</p>
-<h5 id="2-学习设计、解决问题。"><a href="#2-学习设计、解决问题。" class="headerlink" title="2.学习设计、解决问题。"></a>2.学习设计、解决问题。</h5><p>​       我问一下，是怎么看待协议的，比如spi、https、dns、iic、modbus、udp、tcp等。是不是有点懵，因为，你只是见一个协议就用一个协议，你知道这个从机是这个协议通信，但是，那个从机设计的工程师为什么选择这个协议，因为好玩吗？我们要打开iso那个7层协议啦，别怀疑，就是这个。我们使用pcie举例子，我们要知道pcie是占据3层的，是物理层、数据链路层、事务层。三层，前面物理层和数据链路层，我们就看到是接口就完事了。pcie是多个物理接口，而且还有电平需求，然后上面还有版本需求，不同版本之间可能还要向下兼容。但是我们可以完全只是用物理层和数据链路层，就是写自己的pcie接口，电路自己设计，这样就利用了pcie的防呆口设计了一个好的电路，至于内部的走线就可以完全使用自己的协议了。所以，协议不是死的，是有目的的使用。</p>
-<p>​       所以，就可以把协议分一下，有纯软件上位的，比如https、dns、pop、tfpt、fpt、mqtt等；还可以分成纯硬件的iic、 spi、485；接着就是软硬件结合的，can  modbus，Lin、PCIE 、USB等。</p>
-<p>​      然后就是不同协议之间的电气特性，传输距离，传输成本，传输速率，传输可靠性，这些很多时候，大家开发软件的时候都不会去在意的。这有点硬件工程师的味道了，但是软件要跳出软件的范畴，要去理解硬件的工作原理，知道所有流程，知道代码怎么走的，知道代码是否能够顺利执行任务。我们要想想为什么要这个，这个可以带来什么，换掉会怎么样。所以，这个设计不但是设计，还是整个项目的统筹。我们也可以系统的学习，去明白这些设计的本质，设计的意义和为什么这样设计。</p>
-<h5 id="3-用途和诞生因素"><a href="#3-用途和诞生因素" class="headerlink" title="3.用途和诞生因素"></a>3.用途和诞生因素</h5><p>​       这个就比较杂了，你可以说我项目的用途，可以是技术的用途。但是要明白一点，你做的所有事情都是为了它的诞生因素，就是它存在的意义是什么？这话怎么理解？周鸿祎在他的视频里说过一句话，就是开发者很容易陷入疯狂的自嗨。这句话我是比较认可的，开发者总是因为自己搞出来一些牛逼的东西就很高兴很了不起，但是你干的这些事情真的有用吗？自然，自己干着玩当然没问题。但是在项目和未来创业上面，是千万不可以的，用户是不知道你为什么自嗨的，这样只会增加成本和无意义的开发浪费，这个不是预研而是自嗨，就是一堆人脱离实际的自嗨，到头来一事无成，市场根本不鸟自己，然后就乌拉（无啦）。</p>
-<p>​        不要，天天写代码，知道现在世界上的科技走向，看看人们需要什么，预测未来的可能有的风口，而不是傻乎乎的写代码，要知道自己的做的这些事情有没有诞生的因素，再说一遍做着玩是完全没问题的，但是想要创业和工作室，就千万不要随随便便搞这些，严格按照市场调研和开发计划做才是最合理的。</p>
-<p>​    所以，这里就有一个调研和思考，数据等诸多问题，这个才是一个工作室一个创业是否能成功的重要因素，就是一句话，有没有人买账！你的代码值不值钱？你的代码用途是什么？它诞生的意义是什么？是玩，还是赚钱？</p>
-<h5 id="4-行为定性"><a href="#4-行为定性" class="headerlink" title="4.行为定性"></a>4.行为定性</h5><p>   你要知道你做的事情，是为了什么，你做这个动作，这个行为是为了什么，不要感性的认识，更不要过度理性看待。你能控制自己的行为，知道自己行为可以带来什么，可以提供什么。说人话就是知道自己在干嘛。</p>
-<p>   注意了，有一点非常重要，<strong>就是千万不要用自己的标准去要求别人</strong>，尤其是，<strong>”为什么我可以你不可以“</strong>这种话，千万不要说，因为人与人之间本就是不对等的。知道自己说了什么，知道自己做了什么，做事情之前，问一下自己为什么要做？下决定之前，换一种语言来再次确认一篇，比如在心中用英语问自己一遍是否真的可以做这个决定。</p>
-<p>   还有就是别活得太束缚了，人不是理性的动物，人是感性的，人们喜欢骗自己是理性的，但是一切都是因为感性而发生剧变。我们要学会说废话，学会接触无用社交(不是狐朋狗友，而是可能不会带来利益的社交，但是不要过度损伤自身利益、合法的社交)，给自己释放压力，不要把商业机密告诉任何非合作伙伴，因为外人是不会在乎你的利益的，只会在乎快乐，而合作伙伴之间是有利益链的。</p>
-<p>​    这个就是你要对自己的行为下定义，为了社交，为了娱乐，为了效率，为了工作，为了生活，为了金钱，为了家人，为了事业等。千万不要活的迷迷糊糊，到最后，很多东西都会因为自己的无心之过而丢失哦。找几个好兄弟，在一个大排档喝上一顿吃上一餐，真的很快乐哦。可能会很累，但是，无权无利，真的很尴尬，一切都要以自己为重中之重，一切都要以家人整体利益为先，好兄弟，肯定可以两刃插刀。</p>
-<p>​       说白了，是愿意成为自己人生的主导者，还是任劳任怨的牛马，其实都是一种活法，自然两个角度的思考、所承担的风险、难度也都是不一样的。活着累，是一种活法，活着轻松也是一种活法，因为我们都只有那么点时间和寿命的。及时行乐也是一种美丽的人生。</p>
-<hr>
-<p>​		上面都是一些我个人的观点，肯定是有错误和偏见的，所以，大家千万不要带入去看，更不要看完就有啥大情绪和思想的波动，而是换位思考，批判思考，对自己的当前状态的考量，年龄，资本，技术，人脉等诸多情况。</p>
-<p>​		这里，再阐述一下我的观点：<strong>千万不要陷入技术的黑窟窿之中，技术是学不完的，更加不要指望老板会养自己一辈子。</strong>人是活的，不是死的。如果宁愿当一潭死水，我是劝不动，但是，愿意走向大海的人，一定会有自己的行动。崇拜技术是大部分人、初出茅庐、老一辈的思想，千万千万千万千万不要只会写代码，写代码真的是在未来是人人具备的能力，因为AI已经开始可以根据上下文自动补全代码了，真的只会写代码，是真牛马。但是，所有代码都要有人审核、管理、运维。</p>
-<p>​      所以，大家要么冲着CTO出发，那可以多学一点技术，但是一定要学管理和分配，还要跟对公司和老板，多关注市场和调研；要么就是自行创业、接单(咸鱼、小红书等商单私单)、外包(是你以工作室的名义去接单)、设计、方案提供等，这个时候就要多了解市场和未来了，这个肯定是赚的更多的，亏得也更多，更不确定的事情也多，很可能是独立开发者，也可能是一个小团队，这样的日子，可能会孤独，可能会快乐，可能会到头来一无所有。</p>
-<p>​        如果，真的只是赚了最多10年的钱，就去卖炒饭，开个小店，做那些完全没涉及的行业，你觉得你能成功的话，你就继续给老板打工，做原始积累吧。其实打工也是有技巧的，打工也是有未来的，但是一定要公司有未来才行，然后深耕，一定一定一定要得到股份，一定要有分红，没有的话，立刻走，自己找后路。因为，在老板眼里，就是35岁立刻开除的牛马。<strong>未来是自己的，每一个人都是不一样的，这个没有老师，只有现实会不断教你做人。</strong></p>
-<p>​        所以，千万千万千万千万不要陷入只知道技术，得到技术就高高在上了，你会发现一下子就到了35岁了，但是自己都不知道该怎么办了。如果你能刚毕业就有一个规划，比如去那些公司学什么技术，然后去哪一家，或者深耕变成管理等都是可以的哦。<strong>别傻乎乎的只知道写代码和学技术，多思考，多想想未来，不要被当前的美好和高工资迷惑了双眼。</strong>读书和学习的过程就是一个祛魅的过程！不要高高在上了。</p>
-<p>​		<strong>美好的童年快乐一下就没了，小学也是，初中，高中大学都是，虽然当时的我是一个彻头彻尾的屌丝和逗逼，但那些都是最真实的我啊。现在的我，一定会被儿时的自己所讨厌吧！</strong></p>
-
-      
-    </div>
-
-    
-    
-    
-
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
 
   
   <nav class="pagination">
-    <a class="extend prev" rel="prev" href="/page/4/"><i class="fa fa-angle-left" aria-label="上一页"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/4/">4</a><span class="page-number current">5</span><a class="page-number" href="/page/6/">6</a><span class="space">&hellip;</span><a class="page-number" href="/page/11/">11</a><a class="extend next" rel="next" href="/page/6/"><i class="fa fa-angle-right" aria-label="下一页"></i></a>
+    <a class="extend prev" rel="prev" href="/page/4/"><i class="fa fa-angle-left" aria-label="上一页"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/4/">4</a><span class="page-number current">5</span><a class="page-number" href="/page/6/">6</a><span class="space">&hellip;</span><a class="page-number" href="/page/12/">12</a><a class="extend next" rel="next" href="/page/6/"><i class="fa fa-angle-right" aria-label="下一页"></i></a>
   </nav>
 
 
@@ -1115,7 +1081,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">110</span>
+          <span class="site-state-item-count">111</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -1128,7 +1094,7 @@
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">33</span>
+        <span class="site-state-item-count">34</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>
@@ -1190,7 +1156,7 @@
 
  <div class="theme-info">
   <div class="powered-by"></div>
-  <span class="post-count">博客全站共70.5k字</span>
+  <span class="post-count">博客全站共71k字</span>
 </div>
 
         
