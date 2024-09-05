@@ -134,7 +134,7 @@
   </li>
         <li class="menu-item menu-item-archives">
 
-    <a href="/archives/" rel="section"><i class="archive fa-fw"></i>归档<span class="badge">111</span></a>
+    <a href="/archives/" rel="section"><i class="archive fa-fw"></i>归档<span class="badge">112</span></a>
 
   </li>
         <li class="menu-item menu-item-resources">
@@ -170,6 +170,101 @@
 
           <div class="content index posts-expand">
             
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2024/04/11/CAN%E5%92%8CMODBUS/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/csm.png">
+      <meta itemprop="name" content="CSM">
+      <meta itemprop="description" content="应用是应用，驱动是驱动！你要是偏要应用干驱动，哥们，你怎么不直接薪资翻倍啊！[🦀]">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="我要成为嵌入式高手[doge]">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2024/04/11/CAN%E5%92%8CMODBUS/" class="post-title-link" itemprop="url">CAN和MODBUS</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2024-04-11 00:34:41" itemprop="dateCreated datePublished" datetime="2024-04-11T00:34:41+08:00">2024-04-11</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2024-09-03 00:24:02" itemprop="dateModified" datetime="2024-09-03T00:24:02+08:00">2024-09-03</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/MCU/" itemprop="url" rel="index"><span itemprop="name">MCU</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h5 id="起因"><a href="#起因" class="headerlink" title="起因"></a>起因</h5><p>之前一直没搞懂，这两个的区别，甚至以为可以一起使用，哈哈哈，两个还是有很大的本质区别的。首先就是实时性了。还有成本，效率，使用场景都是不同的。</p>
+<h5 id="性质"><a href="#性质" class="headerlink" title="性质"></a>性质</h5><p>都是基于差分信号来实现的，数据发送和传输，所以，它们有着一样的电气特性。但是，他们的数据和工作原理是完全不同的。最直接比较吧，CAN是全主机，MODBUS是一主多从。因为CAN有线与操作，所以，0电平就会被当成显性电平，从而获得话语权。显性电平和隐性电平也是can独有的。而MODBUS就是在485的技术上，增加一些对于帧的要求，对于时序的要求。相比起CAN来说，数据帧和查错能力完全不能比</p>
+<h5 id="MODBUS"><a href="#MODBUS" class="headerlink" title="MODBUS"></a>MODBUS</h5><p> Modbus协议是一种用于工业控制的网络通讯协议，可以片面的理解为，Modbus协议一种机器与机器之间进行数据、信息传递的一种格式规范。<br>        Modbus协议还遵循主从协议，支持单主机，多从机，最多支持247个从机设备。并且，在同一个通信线路上只会有一个主机，所有的通讯过程全部由主机主动发起，从机接收到主机请求后，会对请求做出响应。从机不会主动进行数据的发送，从机之间也不会有通讯过程。<br>Modbus的通讯方式有：串行通讯方式、以太网通讯方式、串行-以太网转换方式、无线通讯方式</p>
+<p>MODBUS确实可以用于网络tcp通信，不过这个我确实没用过，以后用到再补充。</p>
+<p>这边就说一下，串行链路吧，就是一个一主多从的模式，主机发送数据给特定从机，从机接收到进行通信，有点iic的味道，一般是建立在485上面的。在iso中属于第七层的应用层，所以，它是可以做到，只要从设备也好些对应从处理，就可以通过485网络实现地址访问和处理了，这其实就是一个广播，对应从机接收到就相应罢了。</p>
+<p>如果从机突然没了，主机也是会知道的，这个就看怎么处理了。也要知道一件事情，这个从机出问题是非常麻烦的，设置可能会破坏这个总线链路。</p>
+<h5 id="CAN"><a href="#CAN" class="headerlink" title="CAN"></a>CAN</h5><p>CAN，这个一看就是车载标配了，可以说，只要是车载就是CAN，基本没有modbus的事情，modbus都是工控那些为主，这是为什么呢？</p>
+<p>因为CAN没有主从之分，只有优先级之分，所有人有情况都要立刻反馈到总线之中，比如有刹车信号了，立刻发送到总线之后，此时刹车在发送信号之前就应该执行了，不过是通知总线而已，此时一些其他的制动设备就跟着一起运作，上位应用也因此响应。</p>
+<p>不同上面的modbus，它是一主多从，就导致了从机很多时候，是没有主动访问的权限，都是等待主机来一个个询问，这明显是不符合车载需要的，而且车载也确实需要优先级来做到一个先后问题，而且can更加严格，要求也更多，出现问题就多看错误码吧，这个没啥好说的，多调多试，看can手册就会了。而且一个从设备出问题，识别到多次错误还错就会把这个设备屏蔽，这个是一个非常厉害的功能。</p>
+<p>一般分为标准帧和扩展帧，看实际的id够不够用吧，一般都是够的。</p>
+<h5 id="LIN"><a href="#LIN" class="headerlink" title="LIN"></a>LIN</h5><p>LIN(Local Interconnect Network)总线是基于UART&#x2F;SCI(通用异步收发器&#x2F;串行接口)的低成本串行通讯协议。其目标定位于车身网络模块节点间的低端通信，主要用于智能传感器和执行器的串行通信，而这正是CAN总线的带宽和功能所不要求的部分。</p>
+<p>由于LIN网络在汽车中一般不独立存在，通常会与上层CAN网络相连，形成CAN-LIN网关节点。</p>
+<p><a target="_blank" rel="noopener" href="https://blog.csdn.net/DP29syM41zyGndVF/article/details/110297485">什么是LIN总线？高速CAN、容错CAN、LIN总线有什么区别？-CSDN博客</a></p>
+<p>所以就一个CAN-LIN节点挂载CAN总线上面，这个节点下面可以有多个从机，可以把这个节点当成一个主机来看待。</p>
+<p>这些从机中有只有一个主机，其他都是从机，一个LIN网络最多可以连接16个节点，也就是15个从机，从机也是智能老实等待主机发送指令，不能越界主动申请发言。</p>
+<p>LIN线在物理上是一个上拉到12V的集电极开漏总线，多个节点可以并联到同一根线上，与IIC的SDA类似，但其没有独立的时钟线，靠通信双方约定的波特率进行通信，与UART类似，但由于UART之处在于，其可以通过同步场进行时钟同步，使传输变得更可靠。这样与CAN总线的一对差分双绞线不同，其抗干扰能力大大减弱，通信速率最高只能20Kbps,而CAN可达1Mbps。</p>
+<p>LIN线拓扑结构是主从结构的星型模型，所有传输都是master发起，slave不可以主动发起请求。这个其实与modbus更类似。也可以把slave看做消息的发布者，master看成消息的订阅者，想要获取某个变量值，就需要不断问询对应节点对应的报文。这个结构就决定了LIN线传输的消息不可能太多，以保证消息更新的实时性，通常一条LIN线上定义的消息要比一条CAN线上定义的消息少一个数量级。</p>
+<p><a target="_blank" rel="noopener" href="https://www.ednchina.com/technews/12696.html">汽车LIN总线与CAN的区别是什么？-EDN 电子技术设计 (ednchina.com)</a></p>
+<h5 id="使用场景"><a href="#使用场景" class="headerlink" title="使用场景"></a>使用场景</h5><p>首先呢，CAN是多主机的，而且MODBUS只有一个主机，所以MODBUS同一时刻只能有一个设备在发送数据。但是很多时候，有些设备是高优先级的，他必须要得到发言，不可能等待其他人执行完毕，而且还要满足大家都发送，所以这个时候线与的作用就出来了，可以多主机仲裁，而且可靠，很多时候好像确实是CAN更好更更可靠，但是CAN更贵，配置也更难，工控的话MDOBUS就足够了。</p>
+<h5 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h5><p>CAN和MODBUS，各有各自的优劣，主要还是看开发项目的用途。车载终究是涉及到人生安全，标准要更高一点，没办法的，成本也是高的，可靠那些CAN收发器价格就知道了，尤其是车载MCU价格搞得吓人，就是CAN的收发器多。MODBUS，就成本低，更适合工控啦。</p>
+
+      
+    </div>
+
+    
+    
+    
+
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
       
   
   
@@ -943,104 +1038,6 @@
   
   
 
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2024/03/28/OS%E7%9A%84%E9%80%89%E6%8B%A9/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/csm.png">
-      <meta itemprop="name" content="CSM">
-      <meta itemprop="description" content="应用是应用，驱动是驱动！你要是偏要应用干驱动，哥们，你怎么不直接薪资翻倍啊！[🦀]">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="我要成为嵌入式高手[doge]">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2024/03/28/OS%E7%9A%84%E9%80%89%E6%8B%A9/" class="post-title-link" itemprop="url">OS的选择</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              <time title="创建时间：2024-03-28 22:25:10" itemprop="dateCreated datePublished" datetime="2024-03-28T22:25:10+08:00">2024-03-28</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2024-09-02 22:57:08" itemprop="dateModified" datetime="2024-09-02T22:57:08+08:00">2024-09-02</time>
-              </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/OS/" itemprop="url" rel="index"><span itemprop="name">OS</span></a>
-                </span>
-            </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <h5 id="OS是什么"><a href="#OS是什么" class="headerlink" title="OS是什么"></a>OS是什么</h5><p>OS就是operating system，就是操作系统。系统就是为了资源的充分利用，这个定义是非常含糊的，因为fat32文件系统，系统内核，电源管理系统，tcp\ip协议栈等，都可以算是资源的利用和管理，所以，嵌入式系统是需要裁剪和定制的。系统没有高低贵贱之分，只是是否合适，是否满足。当然，驾驭更高级的系统，肯定是要求比驾驭低级的系统需要更多知识点和技术的，需要知道更多原理和技术。<br>但是两者的本质和使命都是一样，能完成需求的系统就是好系统。虽然系统本身也会消耗资源，但是这是为了更好的分配和高效使用</p>
-<h5 id="OS的属性"><a href="#OS的属性" class="headerlink" title="OS的属性"></a>OS的属性</h5><p>OS有可抢占和非可抢占两种，可抢占就是，可以直接打断当前的任务，把状态保持到寄存器中去执行优先级高的任务。这就是抢占式的OS系统，实际上，大部分的RTOS都是抢占式系统，设置都没有响应优先级，全都是抢占优先级为主。因为实时真的太重要了。</p>
-<p>比如freertos，我们一般都是设为全抢占为主的，但是其实是可以设为响应的，这也有好处，有些任务确实优先级同级，但是不好中断。</p>
-<p>还有FCFS 先来先服务的OS，就是谁先到就绪列表，下一个就运行谁，这是有点前后台的味道了。这个就是开触发顺序来进行的任务排序，作为一些特殊的输入设备来说，可能有用吧。</p>
-<p>短任务有限算法，这个就是提前制定好所有任务的时间消耗，在当前任务运行完毕之后，在就绪列表中，找到耗时最短的任务有限调用。</p>
-<p>时间片调度，这个是作用于同优先级之间的，但是要注意切换中间也是会消耗大量资源的，所有想要权衡调度和时间之间的关系，看都运行都公平，真的值得消耗资源吗？</p>
-<h5 id="OS的种类"><a href="#OS的种类" class="headerlink" title="OS的种类"></a>OS的种类</h5><p>OS一般有分时系统，实时系统，批处理系统。</p>
-<p>分时系统就是多个用户，比如linux，windows。<br>实时系统就是rt-thread，ucos，freertos<br>批处理就是集群，大批量的服务器的OS。</p>
-<p>一般使用分时和实时系统，如下所示：</p>
-<p>以下是我个人觉得的难易程度进行分类<br>1.裸机<br>一般有MCU SOC 那些的裸机的开发，这些只适合简单，单一线程的工作</p>
-<p>2.RTOS<br>就连cube都支持直接使用freertos一键生成，还有ucos thread-x那些，本质还是调用API，是rtos接管了很多寄存器和上下文切换的那些中断操作等</p>
-<p>3.rt-thread<br>这个就有点难度了，它可以像freertos那样简单的就调用api实现线程，钩子，空间申请等。但是它有它们没有的，第一个就是BSP，第二个ENV第三个类linux系统，第四个串口操作这个BSP还是有点含金量的，很规范，对于移植来说，就是锦上添花的好东西啊。ENV，这个一下子就让整个编译BSP变得高大上了，还有menucofing呢类linux驱动开发，因为还有一堆宏操作，就是使用宏来把函数添加到列表中的操作等，对于没有接触过驱动开发的人来说，甚至没看懂这些宏定义为什么可以把函数添加进入模块。还有那些文件操作集那些。不得了，不得了，你使用rtt还能使用命令行操作，就是把上述模块添加之后，可以在打开特定连接的打印串口，实现串口输入指令来调用模块函数，这真的有操作的</p>
-<p>4.linux 主板OS(电脑主板，识别设备，调度起来)  树莓派<br>这个难度就非常吓人了，在rtt的基础上面还得学习设备树，字符设备，平台设备，混杂设备，主设备号，次设备号。而且你会发现一件事，rtt是没人写驱动因为驱动cube已经生成了，写好kconfig文件就可以了。但是linux不一样了，驱动得人来写才行得。rt-thread一般都是写好了国内大部分芯片的驱动的，照猫画虎就好了，设备树那些就只有smart版本才有了。</p>
-<p>5.IOS 安卓 鸿蒙 CUDE(GPU的那个系统)<br>可没说让你去搞应用开发，是去理解和写驱动那些，不同机型，底层得io，设备啥的都是不一样的，这个一般都是芯片厂商写的，如果以后进了芯片厂，这些就得要掌握了</p>
-<p>6.windows  Mac  Ubuntu等<br>这个别想了，多年高强度迭代、一个人不可能掌握，能熟练使用就非常了不起了，而且还有好多没开源，开源学习成本太高了，回报基本为0.</p>
-<h5 id="OS的选择"><a href="#OS的选择" class="headerlink" title="OS的选择"></a>OS的选择</h5><p>一定要明白一点，OS没有高低贵贱之分，在嵌入式里面没有优越，只有适合，只有满足即可，一切为了需求，一切够用即可。<br>MCU不是一定要上系统，难道只有几个功能，还要几个任务相互抢？浪费空间，这个适合都可以上51了。</p>
-<p>就算是SOC，去看厂商给的代码，大概率都是有一个rtos的demo，为什么？因为不见得一定要上类linux1或者linux那些系统啊，rtos就够用了啊！有的时候，想要的就是快速的无条件的实时响应！所以适合简单而好用的小设备，大设备因为太多硬件的，光用rtos很难<br>进行完美的资源控制和调度了，开发也困难。</p>
-<p>至于那些复杂，多应用的，这个时候就要利用mmu，来给空间进行更多操作，底层全部丢给系统，这样上层才可以随心所欲实现应用切换，应用下载的功能。虽然mcu也是可以实现动态加载模组(就是写一个可以控制sram的程序，把app下载到flash，使用的时候<br>，把代码拷贝到空余的sram空间，这就想手机一样，可以使用空间，可以释放空间，而且平时不占据sram，sram只有一个sram控制系统),但是，太复杂了，而且引脚躲起来了，完全就不是开发了，这点厂商也想到了。</p>
-<p>再高级一点的设备就上安卓，鸿蒙了，澎湃OS等了。再高级一点就是主机和pc端了啊，上linux，上windows等</p>
-<p>然后就是服务器了，这个不用考虑了，只能是linux系统了，可以Ubuntu，kail等</p>
-<p>note：优先级也是有动静态之分的，一般我们使用的rtos最好都是固定好优先级，不想那种linux高级os可以动态修改优先级，动态释放和调用资源，因为rtos本身就是为了高效、实时和稳定。功能越复杂，可能的问题就越多，这是无法避免的</p>
-<h5 id="结语"><a href="#结语" class="headerlink" title="结语"></a>结语</h5><p>千万不要神话系统和技术，觉得越高级系统就越神圣，其实不是的，我们一切都是为了需求，没有任何一个系统是完美的，都是在自己所在领域非常好用，作为嵌入式开发人员，也不要为此而产生过度的优越感，这样可能会让自己止步不前，从而顾此失彼，看不起其他技术。这一点就要牢牢铭记，沿用一段文章内容。如下</p>
-<p><img src="/../Blogas_images/%E6%8A%80%E6%9C%AF%E4%B8%8D%E6%98%AF%E9%AB%98%E4%BA%BA%E4%B8%80%E7%AD%89.jpg"></p>
-
-      
-    </div>
-
-    
-    
-    
-
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
 
   
   <nav class="pagination">
@@ -1112,7 +1109,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">111</span>
+          <span class="site-state-item-count">112</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
