@@ -22,15 +22,15 @@
     var CONFIG = {"hostname":"example.com","root":"/","scheme":"Pisces","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
   </script>
 
-  <meta name="description" content="linux设备启动过程ubootuboot使用uboot修改uboot和裸机的区别总结">
+  <meta name="description" content="linux设备启动过程一开始就是芯片厂商的引导程序了，然后就到uboot，接着加载内核和驱动，挂载根文件系统，加载虚拟文件系统，加载tty中断，自启动开机脚本和软件。 ubootuboot 属于bootloader的一种，是用来引导启动内核的，它的最终目的就是，从flash中读出内核，放到内存中，启动内核 所以，由上面描述的，就知道，UBOOT需要具有读写flash的能力。 uboot使用uboo">
 <meta property="og:type" content="article">
 <meta property="og:title" content="uboot">
 <meta property="og:url" content="http://example.com/2024/08/14/uboot/index.html">
 <meta property="og:site_name" content="我要成为嵌入式高手[doge]">
-<meta property="og:description" content="linux设备启动过程ubootuboot使用uboot修改uboot和裸机的区别总结">
+<meta property="og:description" content="linux设备启动过程一开始就是芯片厂商的引导程序了，然后就到uboot，接着加载内核和驱动，挂载根文件系统，加载虚拟文件系统，加载tty中断，自启动开机脚本和软件。 ubootuboot 属于bootloader的一种，是用来引导启动内核的，它的最终目的就是，从flash中读出内核，放到内存中，启动内核 所以，由上面描述的，就知道，UBOOT需要具有读写flash的能力。 uboot使用uboo">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2024-08-14T15:24:20.000Z">
-<meta property="article:modified_time" content="2024-09-04T16:22:20.039Z">
+<meta property="article:modified_time" content="2024-09-07T16:41:27.557Z">
 <meta property="article:author" content="CSM">
 <meta property="article:tag" content="linux">
 <meta name="twitter:card" content="summary">
@@ -137,7 +137,7 @@
   </li>
         <li class="menu-item menu-item-archives">
 
-    <a href="/archives/" rel="section"><i class="archive fa-fw"></i>归档<span class="badge">113</span></a>
+    <a href="/archives/" rel="section"><i class="archive fa-fw"></i>归档<span class="badge">114</span></a>
 
   </li>
         <li class="menu-item menu-item-resources">
@@ -208,7 +208,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2024-09-05 00:22:20" itemprop="dateModified" datetime="2024-09-05T00:22:20+08:00">2024-09-05</time>
+                <time title="修改时间：2024-09-08 00:41:27" itemprop="dateModified" datetime="2024-09-08T00:41:27+08:00">2024-09-08</time>
               </span>
 
           
@@ -222,7 +222,15 @@
     <div class="post-body" itemprop="articleBody">
 
       
-        <h5 id="linux设备启动过程"><a href="#linux设备启动过程" class="headerlink" title="linux设备启动过程"></a>linux设备启动过程</h5><h5 id="uboot"><a href="#uboot" class="headerlink" title="uboot"></a>uboot</h5><h5 id="uboot使用"><a href="#uboot使用" class="headerlink" title="uboot使用"></a>uboot使用</h5><h5 id="uboot修改"><a href="#uboot修改" class="headerlink" title="uboot修改"></a>uboot修改</h5><h5 id="uboot和裸机的区别"><a href="#uboot和裸机的区别" class="headerlink" title="uboot和裸机的区别"></a>uboot和裸机的区别</h5><h5 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h5>
+        <h5 id="linux设备启动过程"><a href="#linux设备启动过程" class="headerlink" title="linux设备启动过程"></a>linux设备启动过程</h5><p>一开始就是芯片厂商的引导程序了，然后就到uboot，接着加载内核和驱动，挂载根文件系统，加载虚拟文件系统，加载tty中断，自启动开机脚本和软件。</p>
+<h5 id="uboot"><a href="#uboot" class="headerlink" title="uboot"></a>uboot</h5><p>uboot 属于<a target="_blank" rel="noopener" href="https://www.baidu.com/s?wd=bootloader&tn=24004469_oem_dg&rsv_dl=gh_pl_sl_csd">bootloader</a>的一种，是用来引导启动内核的，它的最终目的就是，从flash中读出内核，放到内存中，启动内核</p>
+<p>所以，由上面描述的，就知道，UBOOT需要具有读写flash的能力。</p>
+<h5 id="uboot使用"><a href="#uboot使用" class="headerlink" title="uboot使用"></a>uboot使用</h5><p>uboot刚开始被放到flash中，板子上电后，会自动把其中的一部分代码拷到内存中执行，这部分代码负责把剩余的uboot代码拷到内存中，然后uboot代码再把<a target="_blank" rel="noopener" href="https://www.baidu.com/s?wd=kernel&tn=24004469_oem_dg&rsv_dl=gh_pl_sl_csd">kernel</a>部分代码也拷到内存中，并且启动，内核启动后，挂着根文件系统，执行应用程序。</p>
+<h5 id="为什么要uboot"><a href="#为什么要uboot" class="headerlink" title="为什么要uboot"></a>为什么要uboot</h5><p>1)uboot主要作用是用来启动<a target="_blank" rel="noopener" href="https://www.baidu.com/s?wd=%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E5%86%85%E6%A0%B8&tn=24004469_oem_dg&rsv_dl=gh_pl_sl_csd">操作系统内核</a>。体现在uboot最后一句代码就是启动内核。<br>2)uboot还要负责部署整个计算机系统。体现在uboot最后的传参。3)uboot中还有操作Flash等板子上硬件的驱动。例如串口要打印，ping网络成功，擦除、烧写flash是否成功等。<br>4)uboot还得提供一个命令行界面供人来操作。很简单，至少你能看到。</p>
+<p>计算机系统的组成部件非常多，不同的计算机系统组成部件也不同。但是所有的计算机系统运行时需要的主要核心部件都是3个东西：CPU + 外部存储器（Flash&#x2F;硬盘） + 内部存储器（DDR SDRAM&#x2F;SDRAM&#x2F;SRAM）。而一般的PC机启动过程为：PC上电后先执行BIOS程序（实际上PC的BIOS就是NorFlash），BIOS程序负责初始化DDR内存，负责初始化硬盘，然后从硬盘上将OS镜像读取到DDR中，然后跳转到DDR中去执行OS直到启动（OS启动后BIOS就无用了）。</p>
+<h5 id="uboot环境变量"><a href="#uboot环境变量" class="headerlink" title="uboot环境变量"></a>uboot环境变量</h5><h5 id="uboot修改"><a href="#uboot修改" class="headerlink" title="uboot修改"></a>uboot修改</h5><h5 id="uboot烧写"><a href="#uboot烧写" class="headerlink" title="uboot烧写"></a>uboot烧写</h5><h5 id="uboot和裸机"><a href="#uboot和裸机" class="headerlink" title="uboot和裸机"></a>uboot和裸机</h5><p>一般uboot都是有一个开机时间，也就是倒计时，这个期间进行任意键输入就会取消加载内核，从而变成变成裸机开发。</p>
+<p>此时就是跟51的单片机开发一样了，对着手册看着寄存器进行编写，然后把代码编译完毕，ftp传到特定地址，然后去运行那个地址的代码，就是裸机运行了，不过这个一般只是用来测试硬件的而已，不会真的裸机开发的。</p>
+<h5 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h5>
     </div>
 
     
@@ -332,7 +340,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-5"><a class="nav-link" href="#linux%E8%AE%BE%E5%A4%87%E5%90%AF%E5%8A%A8%E8%BF%87%E7%A8%8B"><span class="nav-number">1.</span> <span class="nav-text">linux设备启动过程</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#uboot"><span class="nav-number">2.</span> <span class="nav-text">uboot</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#uboot%E4%BD%BF%E7%94%A8"><span class="nav-number">3.</span> <span class="nav-text">uboot使用</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#uboot%E4%BF%AE%E6%94%B9"><span class="nav-number">4.</span> <span class="nav-text">uboot修改</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#uboot%E5%92%8C%E8%A3%B8%E6%9C%BA%E7%9A%84%E5%8C%BA%E5%88%AB"><span class="nav-number">5.</span> <span class="nav-text">uboot和裸机的区别</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E6%80%BB%E7%BB%93"><span class="nav-number">6.</span> <span class="nav-text">总结</span></a></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-5"><a class="nav-link" href="#linux%E8%AE%BE%E5%A4%87%E5%90%AF%E5%8A%A8%E8%BF%87%E7%A8%8B"><span class="nav-number">1.</span> <span class="nav-text">linux设备启动过程</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#uboot"><span class="nav-number">2.</span> <span class="nav-text">uboot</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#uboot%E4%BD%BF%E7%94%A8"><span class="nav-number">3.</span> <span class="nav-text">uboot使用</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E4%B8%BA%E4%BB%80%E4%B9%88%E8%A6%81uboot"><span class="nav-number">4.</span> <span class="nav-text">为什么要uboot</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#uboot%E7%8E%AF%E5%A2%83%E5%8F%98%E9%87%8F"><span class="nav-number">5.</span> <span class="nav-text">uboot环境变量</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#uboot%E4%BF%AE%E6%94%B9"><span class="nav-number">6.</span> <span class="nav-text">uboot修改</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#uboot%E7%83%A7%E5%86%99"><span class="nav-number">7.</span> <span class="nav-text">uboot烧写</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#uboot%E5%92%8C%E8%A3%B8%E6%9C%BA"><span class="nav-number">8.</span> <span class="nav-text">uboot和裸机</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E6%80%BB%E7%BB%93"><span class="nav-number">9.</span> <span class="nav-text">总结</span></a></li></ol></div>
       </div>
       <!--/noindex-->
 
@@ -348,7 +356,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">113</span>
+          <span class="site-state-item-count">114</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -423,7 +431,7 @@
 
  <div class="theme-info">
   <div class="powered-by"></div>
-  <span class="post-count">博客全站共72.7k字</span>
+  <span class="post-count">博客全站共73.3k字</span>
 </div>
 
         
