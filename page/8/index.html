@@ -134,7 +134,7 @@
   </li>
         <li class="menu-item menu-item-archives">
 
-    <a href="/archives/" rel="section"><i class="archive fa-fw"></i>归档<span class="badge">114</span></a>
+    <a href="/archives/" rel="section"><i class="archive fa-fw"></i>归档<span class="badge">119</span></a>
 
   </li>
         <li class="menu-item menu-item-resources">
@@ -170,6 +170,346 @@
 
           <div class="content index posts-expand">
             
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2024/05/29/Linux%E7%9A%84USB%E9%A9%B1%E5%8A%A8%E5%BC%80%E5%8F%91/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/csm.png">
+      <meta itemprop="name" content="CSM">
+      <meta itemprop="description" content="应用是应用，驱动是驱动！你要是偏要应用干驱动，哥们，你怎么不直接薪资翻倍啊！[🦀]">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="我要成为嵌入式高手[doge]">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2024/05/29/Linux%E7%9A%84USB%E9%A9%B1%E5%8A%A8%E5%BC%80%E5%8F%91/" class="post-title-link" itemprop="url">Linux的USB驱动开发</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2024-05-29 23:54:04" itemprop="dateCreated datePublished" datetime="2024-05-29T23:54:04+08:00">2024-05-29</time>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          
+      
+    </div>
+
+    
+    
+    
+
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2024/05/29/STM32USB%E5%BA%94%E7%94%A8%E5%BC%80%E5%8F%91/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/csm.png">
+      <meta itemprop="name" content="CSM">
+      <meta itemprop="description" content="应用是应用，驱动是驱动！你要是偏要应用干驱动，哥们，你怎么不直接薪资翻倍啊！[🦀]">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="我要成为嵌入式高手[doge]">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2024/05/29/STM32USB%E5%BA%94%E7%94%A8%E5%BC%80%E5%8F%91/" class="post-title-link" itemprop="url">STM32USB应用开发</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2024-05-29 23:53:26" itemprop="dateCreated datePublished" datetime="2024-05-29T23:53:26+08:00">2024-05-29</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2024-05-30 23:33:17" itemprop="dateModified" datetime="2024-05-30T23:33:17+08:00">2024-05-30</time>
+              </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h5 id="起因"><a href="#起因" class="headerlink" title="起因"></a>起因</h5><p>因为，我看到公司的bootloader竟然支持拖拽下载，所以就去了解一下usb设备，和一些协议。</p>
+<h5 id="开发"><a href="#开发" class="headerlink" title="开发"></a>开发</h5><p>这里打开cube，选择usb host模式，然后就可以在下面找到usb的功能选择，有MSC 也有HID等，这个就是ST官方帮我们封装好了USB库和驱动，方便我们可以快速实现应用层开发，只需要配置好，就可以模拟成对应的USB设备了，说白了就不用闭门造车了，确实快速，大家也千万别自己尝试去敲USB底层驱动代码，这个费力不讨好，而且还不一定能用，费时费力。</p>
+<h5 id="使用"><a href="#使用" class="headerlink" title="使用"></a>使用</h5><h5 id="HID协议"><a href="#HID协议" class="headerlink" title="HID协议"></a>HID协议</h5><h5 id="MSC特征和属性"><a href="#MSC特征和属性" class="headerlink" title="MSC特征和属性"></a>MSC特征和属性</h5><h5 id="AUDIO"><a href="#AUDIO" class="headerlink" title="AUDIO"></a>AUDIO</h5><h5 id="常见BUG"><a href="#常见BUG" class="headerlink" title="常见BUG"></a>常见BUG</h5><h5 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h5>
+      
+    </div>
+
+    
+    
+    
+
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2024/05/29/ISO%E4%B8%83%E5%B1%82%E6%9E%B6%E6%9E%84%E7%9A%84%E5%8D%8F%E8%AE%AE%E5%92%8C%E5%B7%A5%E4%BD%9C/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/csm.png">
+      <meta itemprop="name" content="CSM">
+      <meta itemprop="description" content="应用是应用，驱动是驱动！你要是偏要应用干驱动，哥们，你怎么不直接薪资翻倍啊！[🦀]">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="我要成为嵌入式高手[doge]">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2024/05/29/ISO%E4%B8%83%E5%B1%82%E6%9E%B6%E6%9E%84%E7%9A%84%E5%8D%8F%E8%AE%AE%E5%92%8C%E5%B7%A5%E4%BD%9C/" class="post-title-link" itemprop="url">ISO七层架构的协议和工作</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2024-05-29 23:52:27" itemprop="dateCreated datePublished" datetime="2024-05-29T23:52:27+08:00">2024-05-29</time>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          
+      
+    </div>
+
+    
+    
+    
+
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2024/05/28/git%E8%BF%9B%E9%98%B6%E6%93%8D%E4%BD%9C/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/csm.png">
+      <meta itemprop="name" content="CSM">
+      <meta itemprop="description" content="应用是应用，驱动是驱动！你要是偏要应用干驱动，哥们，你怎么不直接薪资翻倍啊！[🦀]">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="我要成为嵌入式高手[doge]">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2024/05/28/git%E8%BF%9B%E9%98%B6%E6%93%8D%E4%BD%9C/" class="post-title-link" itemprop="url">git进阶操作</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2024-05-28 23:30:56" itemprop="dateCreated datePublished" datetime="2024-05-28T23:30:56+08:00">2024-05-28</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2024-06-02 15:38:47" itemprop="dateModified" datetime="2024-06-02T15:38:47+08:00">2024-06-02</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Git/" itemprop="url" rel="index"><span itemprop="name">Git</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h5 id="起因"><a href="#起因" class="headerlink" title="起因"></a>起因</h5><p>好久没更新了，开更，也算是考完试了，终于有时间更新博客了，软考考砸了捏，呜呜呜。</p>
+<h5 id="git子模块"><a href="#git子模块" class="headerlink" title="git子模块"></a>git子模块</h5><p>这个什么是意思呢？就是字面意思，首先，我们当前的git仓库是一个主模块，但是，我不可能一个主模块可以实现所有功能的啊，这个时候就像项目需要调用其他模块和代码一样。主模块有时候也需要子模块，然后调用子模块才能正常工作。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">git submodule init</span><br><span class="line">git submodule add url</span><br><span class="line"><span class="comment">#初始化或者添加子模块</span></span><br><span class="line"></span><br><span class="line">git submodule update</span><br><span class="line">git submodule foreach <span class="string">&#x27;git pull origin master&#x27;</span></span><br><span class="line"><span class="comment">#更新子模块</span></span><br><span class="line"></span><br><span class="line">git submodule deinit name</span><br><span class="line"><span class="comment">#删除子模块，注意力，如果使用git bash的话，还得修改.git中的一些东西。删除子模块，这个只是开始，然后还得删除.git中的module中的模块，删除外面的模块文件夹，修改.git/config中关于子模块的地址和状态，删除外面gitmodule中子模块的地址，然后才算是删完，此时提交是ok的，不会冲突，也不需要git pull</span></span><br></pre></td></tr></table></figure>
+
+<h5 id="子模块提交和推送"><a href="#子模块提交和推送" class="headerlink" title="子模块提交和推送"></a>子模块提交和推送</h5><p>下载子模块很简单，切换子模块就是进入子模块目录就ok了。注意了，如果修改了子模块想要推送的话。就得进入子模块中，才能进行提交和推送，此时，你得有管理员权限或者提交权限才可以哦，不然是无法更新子模块的，你在主模块中的提交是不包括子模块的。</p>
+<h5 id="git子模块的致命问题"><a href="#git子模块的致命问题" class="headerlink" title="git子模块的致命问题"></a>git子模块的致命问题</h5><p>首先呢，.git文件是不允许随意修改的，这个在提交的时候很多东西不会提交，只会上传那些操作和提交记录等，本地就有很多脚本和hook。但是还有一个gitmodule的文件，这里包含了子模块的名称和url。因为主模块不知道子模块要些什么东西，所以给了比较大的权限。所以，如果下载到有病毒的子模块，那么就可以在下载子模块去修改主模块的钩子和脚本，等某个操作执行完毕就触发hook，去执行恶意代码。</p>
+<p>不过现在好像修复了，不过有些版本还是会有这个问题的。</p>
+<h5 id="github二级密码"><a href="#github二级密码" class="headerlink" title="github二级密码"></a>github二级密码</h5><p>现在登录github界面就可以看到要二级密码登录了。也就是<strong>2FA</strong>了，我感觉国内的gitee可能也要上这个，因为喜欢抄嘛。现在，我感觉是在观望github的二级密码怎么样。</p>
+<p>[<a target="_blank" rel="noopener" href="https://www.cnblogs.com/johnnyzen/p/17880870.html">Git] 一次搞定：Github 2FA(Two-Factor Authentication&#x2F;两因素认证) - 千千寰宇 - 博客园 (cnblogs.com)</a></p>
+<p>可以根据如上操作，进行绑定，至于软件，随便找一个2FA的软件就ok了。</p>
+<h5 id="管理员删库保护"><a href="#管理员删库保护" class="headerlink" title="管理员删库保护"></a>管理员删库保护</h5><p>这个就很简答了，在仓库设置中添加删除保护就好了。</p>
+<h5 id="管理员fork删库保护"><a href="#管理员fork删库保护" class="headerlink" title="管理员fork删库保护"></a>管理员fork删库保护</h5><p>这个问题，我也是第一次遇到，就是我在公司进入gitee的企业版嘛，我fork了一个项目，我却发现不能删除了，这个让我非常吃惊！我删除这个fork的库，竟然也要管理员同意，看来是对库进行额外的保护。</p>
+<h5 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h5><p>git确实厉害，已经离不开了，我想起来之前那个linux开源社区的大问题，有一个黑客Jia Tan，通过一个解压软件就实现了，入侵，它修改了脚本，让脚本在运行的时候，故意中断，这样就可以进入其他地方去工作了，因为脚本不想代码可以编译找出bug的，所以非常难以发现。所以，这些个开源软件，我只能说一定每一个后面都有后门，希望，这些bug早日修复，希望有更多人注意开源安全和网络安全。</p>
+
+      
+    </div>
+
+    
+    
+    
+
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2024/05/28/%E7%BD%91%E7%BB%9C%E6%8B%93%E6%89%91%E7%BB%93%E6%9E%84/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/csm.png">
+      <meta itemprop="name" content="CSM">
+      <meta itemprop="description" content="应用是应用，驱动是驱动！你要是偏要应用干驱动，哥们，你怎么不直接薪资翻倍啊！[🦀]">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="我要成为嵌入式高手[doge]">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2024/05/28/%E7%BD%91%E7%BB%9C%E6%8B%93%E6%89%91%E7%BB%93%E6%9E%84/" class="post-title-link" itemprop="url">网络拓扑结构</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2024-05-28 23:30:34" itemprop="dateCreated datePublished" datetime="2024-05-28T23:30:34+08:00">2024-05-28</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2024-06-02 15:19:47" itemprop="dateModified" datetime="2024-06-02T15:19:47+08:00">2024-06-02</time>
+              </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h5 id="网络结构"><a href="#网络结构" class="headerlink" title="网络结构"></a>网络结构</h5><h5 id="网络通信过程"><a href="#网络通信过程" class="headerlink" title="网络通信过程"></a>网络通信过程</h5><h5 id="VPN"><a href="#VPN" class="headerlink" title="VPN"></a>VPN</h5><h5 id="ISO的分别作用"><a href="#ISO的分别作用" class="headerlink" title="ISO的分别作用"></a>ISO的分别作用</h5><h5 id="中继器-网络-集线器-路由器"><a href="#中继器-网络-集线器-路由器" class="headerlink" title="中继器  网络  集线器  路由器"></a>中继器  网络  集线器  路由器</h5><h5 id="信号寿命"><a href="#信号寿命" class="headerlink" title="信号寿命"></a>信号寿命</h5><h5 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h5>
+      
+    </div>
+
+    
+    
+    
+
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
       
   
   
@@ -579,397 +919,6 @@
   
   
 
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2024/05/07/%E6%95%B0%E6%8D%AE%E6%B5%81%E7%9A%84%E6%A6%82%E5%BF%B5/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/csm.png">
-      <meta itemprop="name" content="CSM">
-      <meta itemprop="description" content="应用是应用，驱动是驱动！你要是偏要应用干驱动，哥们，你怎么不直接薪资翻倍啊！[🦀]">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="我要成为嵌入式高手[doge]">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2024/05/07/%E6%95%B0%E6%8D%AE%E6%B5%81%E7%9A%84%E6%A6%82%E5%BF%B5/" class="post-title-link" itemprop="url">数据流的概念</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              <time title="创建时间：2024-05-07 21:41:38" itemprop="dateCreated datePublished" datetime="2024-05-07T21:41:38+08:00">2024-05-07</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2024-06-03 22:26:28" itemprop="dateModified" datetime="2024-06-03T22:26:28+08:00">2024-06-03</time>
-              </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <h5 id="起因"><a href="#起因" class="headerlink" title="起因"></a>起因</h5><p>我当时学这个文件io的时候，也是懵懵懂懂的，就知道，open read write close lseek  fflush那些，其实也没明白是怎么回事。</p>
-<p>数据流是指在计算机系统中，程序与文件之间进行数据交换的过程。当你在程序中执行文件操作，如读取、写入、修改等，这些操作都涉及到数据在程序和文件之间的传输，这个过程就是文件IO的数据流。</p>
-<h5 id="文件管理系统"><a href="#文件管理系统" class="headerlink" title="文件管理系统"></a>文件管理系统</h5><p>自从学习了flash，我之前就好奇了，flash是可以作为一个管理空间，但是，对于一个文件来说，如果把数据存储在flash中，那么，如何进行精确的修改呢？这个flash肯定是要先刷新才能使用的啊，为什么好像使用这些文件io的时候，可以那么顺利呢？其实，如果是追加的话，其实还是可以理解的，就是通过系统去链接起来，调用系统的文件io就可以实现文件完整使用和读取，所以，哪怕文件不是连续地址，也可以实现文件追加。读就更容易了，写呢？如果在原有基础上写呢？所以，我就像这种情况肯定是要刷新flash的区块来实现的。恰好，我想起来了数据流的概念。</p>
-<h5 id="数据流"><a href="#数据流" class="headerlink" title="数据流"></a>数据流</h5><p>使用文件io的时候，就会到打开这个文件，同时把所有数据通过数据流的形式导出来，我们对着这个数据流进行修改。这个数据流，可以认为就是系统把这一段空间都读取出来了，我们对着这个字符串进行操作而已。</p>
-<p>在Flash存储中，当你需要修改一个文件时，操作系统和文件系统会采取一些策略来确保不会影响到其他文件：</p>
-<ol>
-<li><strong>写入时复制（Copy-on-Write）</strong>：在修改文件之前，系统会先将原始文件复制到另一个块，然后在新块上进行修改。这样，原始文件保持不变，新的修改内容存储在另一个块上。这种方法可以避免在修改过程中影响到其他文件。</li>
-<li><strong>垃圾回收（Garbage Collection）</strong>：随着文件的修改和删除，Flash存储上可能会产生一些不再使用的空间。这些空间被称为垃圾。垃圾回收机制会定期运行，将这些垃圾空间整理并合并，以便于未来的文件存储和修改。</li>
-<li><strong>磨损平衡（Wear Leveling）</strong>：Flash存储具有有限的写入次数，频繁写入同一块区域会导致磨损加速。为了避免这个问题，Flash存储控制器会实现磨损平衡策略，将写入操作分散到不同的块，以延长Flash存储的使用寿命。</li>
-<li><strong>日志结构（Log-Structured）文件系统</strong>：一些文件系统（如F2FS、Btrfs等）采用日志结构设计，将文件的元数据和实际数据分开存储。这种设计有助于减少对Flash存储的磨损，并提高文件系统的性能。</li>
-</ol>
-<p>所以，我们不用担心回写导致flash错误的问题，这些都是通过文件管理系统区处理。</p>
-<h5 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h5><p>数据流是一个非常迷糊的概念，只有使用open才会打开，使用close和fflush才会刷新保存，所以，如果在close和fflush之前电脑停电、蓝屏、死掉了等。哦吼，数据流就随着RAM一起没啦！此时就没了通过文件管理系统回写这个操作了。这个时候追悔莫及了，一无所有啦。</p>
-
-      
-    </div>
-
-    
-    
-    
-
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2024/05/06/%E7%BB%9F%E4%B8%80%E7%BC%96%E5%9D%80%E5%92%8CIO%E7%8B%AC%E7%AB%8B%E7%BC%96%E5%9D%80/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/csm.png">
-      <meta itemprop="name" content="CSM">
-      <meta itemprop="description" content="应用是应用，驱动是驱动！你要是偏要应用干驱动，哥们，你怎么不直接薪资翻倍啊！[🦀]">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="我要成为嵌入式高手[doge]">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2024/05/06/%E7%BB%9F%E4%B8%80%E7%BC%96%E5%9D%80%E5%92%8CIO%E7%8B%AC%E7%AB%8B%E7%BC%96%E5%9D%80/" class="post-title-link" itemprop="url">统一编址和IO独立编址</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              <time title="创建时间：2024-05-06 22:20:21" itemprop="dateCreated datePublished" datetime="2024-05-06T22:20:21+08:00">2024-05-06</time>
-            </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          
-      
-    </div>
-
-    
-    
-    
-
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2024/04/28/linux%E7%9A%84ipc/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/csm.png">
-      <meta itemprop="name" content="CSM">
-      <meta itemprop="description" content="应用是应用，驱动是驱动！你要是偏要应用干驱动，哥们，你怎么不直接薪资翻倍啊！[🦀]">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="我要成为嵌入式高手[doge]">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2024/04/28/linux%E7%9A%84ipc/" class="post-title-link" itemprop="url">linux的ipc</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              <time title="创建时间：2024-04-28 23:00:19" itemprop="dateCreated datePublished" datetime="2024-04-28T23:00:19+08:00">2024-04-28</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2024-06-03 22:56:21" itemprop="dateModified" datetime="2024-06-03T22:56:21+08:00">2024-06-03</time>
-              </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <h5 id="IPC"><a href="#IPC" class="headerlink" title="IPC"></a>IPC</h5><p>IPC是什么呢？网络摄像头？我们在linux中，所以只能使用进程间通信啦</p>
-<h5 id="IPC原理"><a href="#IPC原理" class="headerlink" title="IPC原理"></a>IPC原理</h5><h5 id="IPC操作"><a href="#IPC操作" class="headerlink" title="IPC操作"></a>IPC操作</h5><h5 id="IPC内核过程"><a href="#IPC内核过程" class="headerlink" title="IPC内核过程"></a>IPC内核过程</h5><h5 id="IPC特性"><a href="#IPC特性" class="headerlink" title="IPC特性"></a>IPC特性</h5><h5 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h5>
-      
-    </div>
-
-    
-    
-    
-
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2024/04/28/linux%E4%B8%ADrust%E4%BD%9C%E7%94%A8/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/csm.png">
-      <meta itemprop="name" content="CSM">
-      <meta itemprop="description" content="应用是应用，驱动是驱动！你要是偏要应用干驱动，哥们，你怎么不直接薪资翻倍啊！[🦀]">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="我要成为嵌入式高手[doge]">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2024/04/28/linux%E4%B8%ADrust%E4%BD%9C%E7%94%A8/" class="post-title-link" itemprop="url">linux中rust作用</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              <time title="创建时间：2024-04-28 23:00:00" itemprop="dateCreated datePublished" datetime="2024-04-28T23:00:00+08:00">2024-04-28</time>
-            </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          
-      
-    </div>
-
-    
-    
-    
-
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2024/04/28/%E8%AE%BE%E5%A4%87%E6%A0%91/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/csm.png">
-      <meta itemprop="name" content="CSM">
-      <meta itemprop="description" content="应用是应用，驱动是驱动！你要是偏要应用干驱动，哥们，你怎么不直接薪资翻倍啊！[🦀]">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="我要成为嵌入式高手[doge]">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2024/04/28/%E8%AE%BE%E5%A4%87%E6%A0%91/" class="post-title-link" itemprop="url">设备树</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              <time title="创建时间：2024-04-28 22:54:07" itemprop="dateCreated datePublished" datetime="2024-04-28T22:54:07+08:00">2024-04-28</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2024-07-29 20:55:49" itemprop="dateModified" datetime="2024-07-29T20:55:49+08:00">2024-07-29</time>
-              </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <h5 id="设备树"><a href="#设备树" class="headerlink" title="设备树"></a>设备树</h5><p>这个不是linus设计的，是linus借鉴别人的。这个是Open Firmware的设计，常见于powerPC等架构中，linus觉得很好，就把他引进到了linux中了，使用它的目的，也是为了统一管理和分配硬件，减少代码量。所以，遇到哪个of开头的文件和api，因为它来自Open Firmware哦。</p>
-<p>使用设备树的时候，先看看uboot是否支持设备树，不支持就找打uboot的一些头文件增加#define CONFIG_OF_LIBFDT &#x2F;* Device Tress support *&#x2F;试试</p>
-<p>再看看菜单中是否开启了设备树功能，在cpu.c中引用了头文件 。比如kernel&#x2F;arch&#x2F;arm&#x2F;mach-s5p6818&#x2F;cpu.c。</p>
-<p>#include &lt;linux&#x2F;of.h&gt;</p>
-<p>#include &lt;linux&#x2F;of_address.h&gt;</p>
-<p>#include &lt;linux&#x2F;of_fdt.h&gt;</p>
-<p>#include &lt;linux&#x2F;of_platform.h&gt;</p>
-<p>在cpu_init_machine添加“加载设备树函数of_platform_populate”</p>
-<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">const</span> <span class="class"><span class="keyword">struct</span> <span class="title">of_device_id</span> <span class="title">of_default_bus_match_table</span>[] =</span> &#123;</span><br><span class="line">&#123; .compatible = <span class="string">&quot;simple-bus&quot;</span>, &#125;,</span><br><span class="line"><span class="meta">#<span class="keyword">ifdef</span> CONFIG_ARM_AMBA</span></span><br><span class="line">&#123; .compatible = <span class="string">&quot;arm,amba-bus&quot;</span>, &#125;,</span><br><span class="line"><span class="meta">#<span class="keyword">endif</span> <span class="comment">/* CONFIG_ARM_AMBA */</span></span></span><br><span class="line">&#123;&#125; <span class="comment">/* Empty terminated list */</span></span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="type">static</span> <span class="type">void</span> __init <span class="title function_">cpu_init_machine</span><span class="params">(<span class="type">void</span>)</span></span><br><span class="line">&#123;</span><br><span class="line"><span class="comment">/* set shutdown */</span></span><br><span class="line">pm_power_off = nxp_cpu_shutdown;</span><br><span class="line">arm_pm_restart = nxp_cpu_reset;</span><br><span class="line"><span class="comment">/*</span></span><br><span class="line"><span class="comment">* register platform device</span></span><br><span class="line"><span class="comment">*/</span></span><br><span class="line">nxp_cpu_devs_register();</span><br><span class="line">nxp_board_devs_register();</span><br><span class="line"></span><br><span class="line"><span class="comment">//加载设备树</span></span><br><span class="line">of_platform_populate(<span class="literal">NULL</span>, of_default_bus_match_table, <span class="literal">NULL</span>, <span class="literal">NULL</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p>在比较新的linux内核中，设备树dts已经取代了传统的machine board device description，dts</p>
-<p>在内核中以各种device node的形式存在，而这些device node对于大部分的内核驱动模块</p>
-<p>platform_driver来说，最终需要有对应的platform device来与他匹配才可以完成一次device和</p>
-<p>driver的probe过程。</p>
-<p>所有有必要将dts中需要加载为device的device node转为platform device，而这个过程是交给</p>
-<p>of_platform_populate来完成的（dts相关的device node tree是在main.c中的start_kernel-</p>
-<p>&gt;setup_arch-&gt;unflatten_device_tree来加载dtb并解析）。</p>
-<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">void</span> __init <span class="title function_">unflatten_device_tree</span><span class="params">(<span class="type">void</span>)</span></span><br><span class="line"></span><br><span class="line">&#123;</span><br><span class="line">__unflatten_device_tree(initial_boot_params,</span><br><span class="line"></span><br><span class="line">&amp;allnodes,early_init_dt_alloc_memory_arch);</span><br><span class="line"></span><br><span class="line"><span class="comment">/* Get pointer to &quot;/chosen&quot; and &quot;/aliasas&quot; nodes for use everywhere */</span></span><br><span class="line"></span><br><span class="line">of_alias_scan(early_init_dt_alloc_memory_arch);</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p>MACHINE_START 改为DT_MACHINE_START，并在其中增加设备树匹配信息。</p>
-<h5 id="设备树文件"><a href="#设备树文件" class="headerlink" title="设备树文件"></a>设备树文件</h5><p>DTS  、DTC、DTB、</p>
-<p>DTS是设备树源码，就是描绘了硬件的配置；如地址、大小、种类、外设配置等</p>
-<p>DTC是编译设备树的编译工具，这个需要install下单编译器</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#dtc 工具安装：</span></span><br><span class="line">sudo apt-get install device-tree-compiler</span><br><span class="line"></span><br><span class="line"><span class="comment">#编译设备树</span></span><br><span class="line">dtc -I dts -O dtb -o xxx.dtb xxx.dts</span><br><span class="line"></span><br><span class="line"><span class="comment">#编译设备树插件</span></span><br><span class="line">dtc -I dts -O dtb -o xxx.dtbo xxx.dts</span><br><span class="line"></span><br><span class="line"><span class="comment">#设备树反汇编</span></span><br><span class="line">dtc -I dtb -O dts -o xxx.dts xxx.dtb</span><br></pre></td></tr></table></figure>
-
-<p>DTB是可执行文件，经过上面的编译之后，可以被编译器识别的文件。可以加到特定位置同内核一起运行，也可以加到内核所在设备树目录中一起编译到内核之中。</p>
-<h5 id="设备树语法"><a href="#设备树语法" class="headerlink" title="设备树语法"></a>设备树语法</h5><p>设备树该怎么写呢？首先，一个树肯定就是有主干，这个主干，不是我们这些小卡拉米写的，所以，顶多是在芯片原厂的基础上增加一些自己的设备。</p>
-<p>枝叶这个该怎么写呢？首先，你得让编译器和主干识别到我这个枝叶吧，这就像一个叶子，一定有叶柄才能和主干连接，而我们修改不过是叶子的形状和功能，所以，开头一定要有一个和主干一模一样的开头。这个就是叶柄了。如下面这种结构：</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line">/*</span><br><span class="line"> * Copyright (c) 2012 Samsung Electronics Co., Ltd.</span><br><span class="line"> * http://www.samsung.com</span><br><span class="line"> ** This program is free software; you can redistribute it and/or modify</span><br><span class="line"> * it under the terms of the GNU General Public License version 2 as</span><br><span class="line"> * published by the Free Software Foundation.</span><br><span class="line"> */</span><br><span class="line"> </span><br><span class="line">/dts-v1/;</span><br><span class="line"></span><br><span class="line">/ &#123;</span><br><span class="line">	model = &quot;csm6818 based on Samsung s5p6818&quot;;					/*这一段就是叶柄了，有了它才能正常工作*/</span><br><span class="line">	compatible = &quot;csm,s5p6818&quot;;</span><br><span class="line">	chosen &#123;</span><br><span class="line">		compatible = &quot;gec,chosen&quot;;</span><br><span class="line">		bootargs = &quot;lcd=at070tn92 tp=gslx680-linux root=/dev/mmcblk0p2 rootfstype=ext4 rw &quot;;</span><br><span class="line">	&#125;;</span><br><span class="line"></span><br><span class="line">																/*这下面此时就是叶子了，可以随意定义*/	</span><br><span class="line">	myled&#123;	</span><br><span class="line">		compatible = &quot;csm,myled&quot;;								/*这个compatible不要改，也算是开头和索引号，后面的随便改都行*/</span><br><span class="line">		led-num   = &lt;4&gt;;										/*这个led-num是自定义的，可以修改哦。比如led-nums*/</span><br><span class="line">		led-names =&quot;led-d7&quot;,&quot;led-d8&quot;,&quot;led-d9&quot;,&quot;led-d10&quot;;		/*字符串*/</span><br><span class="line">		led-gpios = &lt;141 81 72 71&gt;;								/*数据*/</span><br><span class="line">		default-state = &quot;off&quot;;									/*字符串 表示状态，当然用数据也行*/</span><br><span class="line">	&#125;;</span><br><span class="line"></span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
-
-<p>语法开始：这个就简单的说一下设备树语法，只有使用的时候再去仔细看一下需要的。</p>
-<p><a target="_blank" rel="noopener" href="https://blog.csdn.net/qq_35031421/article/details/105002645">Linux设备树学习笔记(一、设备树语法规范)_reg &#x3D; &lt;0x00 0x80000000 0x00 0x60000000&gt;;-CSDN博客</a></p>
-<h5 id="设备树5个使用方法"><a href="#设备树5个使用方法" class="headerlink" title="设备树5个使用方法"></a>设备树5个使用方法</h5><h6 id="1-将dtb文件拷贝到根文件系统（推荐，利于调试）"><a href="#1-将dtb文件拷贝到根文件系统（推荐，利于调试）" class="headerlink" title="1.将dtb文件拷贝到根文件系统（推荐，利于调试）"></a>1.将dtb文件拷贝到根文件系统（推荐，利于调试）</h6><p>&#x2F;* 从根文件系统拷贝dtb文件，更方便，更利于调试 *&#x2F;</p>
-<p>setenv bootcmd ext4load mmc 2:2 0x42000000 gec6818.dtb ;ext4load mmc 2:1 0x48000000</p>
-<p>uImage ;bootm 0x48000000 - 0x42000000</p>
-<p>saveenv</p>
-<h6 id="2-挂载开发板内核镜像分区，将dtb拷贝到该分区（安全性高，用户不能随意修改或删除）"><a href="#2-挂载开发板内核镜像分区，将dtb拷贝到该分区（安全性高，用户不能随意修改或删除）" class="headerlink" title="2.挂载开发板内核镜像分区，将dtb拷贝到该分区（安全性高，用户不能随意修改或删除）"></a>2.挂载开发板内核镜像分区，将dtb拷贝到该分区（安全性高，用户不能随意修改或删除）</h6><p>mount -t ext4 &#x2F;dev&#x2F;mmcblk0p1 &#x2F;mnt</p>
-<p>cp gec6818.dtb &#x2F;mnt</p>
-<p>umount &#x2F;mnt</p>
-<p>&#x2F;* 拷贝到内核镜像的分区 *&#x2F;</p>
-<p>setenv bootcmd ext4load mmc 2:1 0x42000000 gec6818.dtb ;ext4load mmc 2:1 0x48000000</p>
-<p>uImage ;bootm 0x48000000 - 0x42000000</p>
-<p>saveenv</p>
-<h6 id="3-使用网络，配置uboot环境变量。"><a href="#3-使用网络，配置uboot环境变量。" class="headerlink" title="3.使用网络，配置uboot环境变量。"></a>3.使用网络，配置uboot环境变量。</h6><p>setenv bootcmd tftp 0x42000000 gec6818.dtb ; ext4load mmc 2:1 0x48000000 uImage ;</p>
-<p>bootm 0x48000000 - 0x42000000</p>
-<h6 id="4-不使用网络，可以使用串口下载dtb文件到内存地址0x42000000。"><a href="#4-不使用网络，可以使用串口下载dtb文件到内存地址0x42000000。" class="headerlink" title="4.不使用网络，可以使用串口下载dtb文件到内存地址0x42000000。"></a>4.不使用网络，可以使用串口下载dtb文件到内存地址0x42000000。</h6><p>loady 0x42000000</p>
-<p>setenv bootcmd ext4load mmc 2:1 0x48000000 uImage ; bootm 0x48000000 - 0x42000000</p>
-<p>saveenv</p>
-<h6 id="5-将dtb文件编译到boot-img，重新烧录内核。"><a href="#5-将dtb文件编译到boot-img，重新烧录内核。" class="headerlink" title="5.将dtb文件编译到boot.img，重新烧录内核。"></a>5.将dtb文件编译到boot.img，重新烧录内核。</h6><p>在ubuntu中</p>
-<p>将文件拷贝到一个&#x2F;target&#x2F;product&#x2F;6818&#x2F;boot的目录之下</p>
-<p>.&#x2F;mk -k</p>
-<p>在uboot中</p>
-<p>setenv bootcmd ext4load mmc 2:1 0x42000000 gec6818.dtb ;ext4load mmc 2:1 0x48000000</p>
-<p>uImage ;bootm 0x48000000 - 0x42000000</p>
-<h5 id="驱动使用设备树节点"><a href="#驱动使用设备树节点" class="headerlink" title="驱动使用设备树节点"></a>驱动使用设备树节点</h5><p>驱动想要使用设备树，只能使用平台设备方法的，此时平台设备platform_driver中的dirver结构体中的of_match_table这个就要指向所满足需求的</p>
-<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">static</span> <span class="type">const</span> <span class="class"><span class="keyword">struct</span> <span class="title">of_device_id</span> <span class="title">of_led_match</span>[]=</span>&#123;</span><br><span class="line">	&#123;.compatible=<span class="string">&quot;gec,myled&quot;</span>,&#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="type">static</span> <span class="keyword">struct</span> platform_driver led_plat_driver = &#123;</span><br><span class="line">	.probe = myled_probe,</span><br><span class="line">	.remove = __devexit_p(myled_remove),</span><br><span class="line">	.driver = &#123;</span><br><span class="line">		.name = <span class="string">&quot;myled&quot;</span>,</span><br><span class="line">		.onwer = THIS_MODULE,</span><br><span class="line">		.of_match_table = of_led_match,	<span class="comment">//指针指向</span></span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p>此时，这个驱动就知道，该找到compatible&#x3D;”gec,myled”的要求的设备树节点，读取这个节点上面的数据(引脚号和介绍)，此时驱动就知道有这个led设备了，就可以控制对应的GPIO引脚的高低电平。</p>
-<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">platform_device</span> *<span class="title">pdev</span>;</span><span class="comment">//已经对应上的平台设备</span></span><br><span class="line"></span><br><span class="line"><span class="comment">/* init  */</span></span><br><span class="line"></span><br><span class="line"><span class="type">char</span> Buff[<span class="number">30</span>]=&#123;<span class="number">0</span>&#125;;</span><br><span class="line"><span class="comment">//设置节点指向</span></span><br><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">device_node</span> * <span class="title">pdevnode</span> =</span> pdev-&gt;dev.of_node;</span><br><span class="line"></span><br><span class="line"><span class="comment">//混杂设备注册</span></span><br><span class="line"></span><br><span class="line"><span class="comment">//申请gpio设备</span></span><br><span class="line"></span><br><span class="line"><span class="comment">//调用读取节点字符串函数</span></span><br><span class="line">of_property_read_string(pdevnode,<span class="string">&quot;目标&quot;</span>，&amp;Buff);</span><br><span class="line">of_property_read_string_index(pdevnode,<span class="string">&quot;目标&quot;</span>，&amp;Buff);  <span class="comment">//出现 &quot;xxx&quot;,&quot;yyy&quot;,&quot;zzz&quot;的时候</span></span><br><span class="line"><span class="comment">//Buff就是目标字符串了  目标可以是名字介绍，这个是设备树中自定义的</span></span><br><span class="line"></span><br><span class="line"><span class="comment">//调用读取节点数据函数</span></span><br><span class="line">of_property_read_u8_array(pdevnode,<span class="string">&quot;目标&quot;</span>，Buff,Numsize);</span><br><span class="line"><span class="comment">//Buff就是目标数据了,Numsize就是个数</span></span><br><span class="line"><span class="comment">/*还有of_property_read_u16_array；of_property_read_u32_array；</span></span><br><span class="line"><span class="comment">of_property_read_u64_array*/</span></span><br><span class="line"></span><br><span class="line"><span class="comment">//得到了所需要的数据，就可以写对应的驱动了</span></span><br><span class="line"><span class="comment">//gpio操作</span></span><br><span class="line"></span><br><span class="line"><span class="comment">/* init结束 */</span></span><br></pre></td></tr></table></figure>
-
-<h5 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h5><p>设备树，就是省去了，对硬件的描述的复杂和多种写法，统一写法，节约空间和利于管理。</p>
-
-      
-    </div>
-
-    
-    
-    
-
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
 
   
   <nav class="pagination">
@@ -1041,7 +990,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">114</span>
+          <span class="site-state-item-count">119</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
