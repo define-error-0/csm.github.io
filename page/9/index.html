@@ -134,7 +134,7 @@
   </li>
         <li class="menu-item menu-item-archives">
 
-    <a href="/archives/" rel="section"><i class="archive fa-fw"></i>归档<span class="badge">119</span></a>
+    <a href="/archives/" rel="section"><i class="archive fa-fw"></i>归档<span class="badge">120</span></a>
 
   </li>
         <li class="menu-item menu-item-resources">
@@ -170,6 +170,83 @@
 
           <div class="content index posts-expand">
             
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2024/05/07/linux%E4%B8%AD%E7%9A%84%E4%B8%80%E5%88%87%E7%9A%86%E6%96%87%E4%BB%B6/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/csm.png">
+      <meta itemprop="name" content="CSM">
+      <meta itemprop="description" content="应用是应用，驱动是驱动！你要是偏要应用干驱动，哥们，你怎么不直接薪资翻倍啊！[🦀]">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="我要成为嵌入式高手[doge]">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2024/05/07/linux%E4%B8%AD%E7%9A%84%E4%B8%80%E5%88%87%E7%9A%86%E6%96%87%E4%BB%B6/" class="post-title-link" itemprop="url">linux中的一切皆文件</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2024-05-07 21:42:29" itemprop="dateCreated datePublished" datetime="2024-05-07T21:42:29+08:00">2024-05-07</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2024-05-28 23:26:12" itemprop="dateModified" datetime="2024-05-28T23:26:12+08:00">2024-05-28</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/OS/" itemprop="url" rel="index"><span itemprop="name">OS</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h5 id="起因"><a href="#起因" class="headerlink" title="起因"></a>起因</h5><p>今天刷到一个视频。我们学习linux的时候就学到了一句话”一切皆是文件“，仔细看了一下他的看法和视频。确实很严谨。”一切皆是文件“是源于unix的，linux继承下来了，但是，不能这样理解。linus曾经解释过，一切皆字节流。我们实际使用一般都是使用api，所以，在api层面就该理解为，一切皆是文件描述符。</p>
+<h5 id="文件描述符"><a href="#文件描述符" class="headerlink" title="文件描述符"></a>文件描述符</h5><h5 id="文件类型"><a href="#文件类型" class="headerlink" title="文件类型"></a>文件类型</h5><h5 id="字符设备"><a href="#字符设备" class="headerlink" title="字符设备"></a>字符设备</h5><h5 id="块设备"><a href="#块设备" class="headerlink" title="块设备"></a>块设备</h5><h5 id="网络设备"><a href="#网络设备" class="headerlink" title="网络设备"></a>网络设备</h5><h5 id="总线设备"><a href="#总线设备" class="headerlink" title="总线设备"></a>总线设备</h5><p>别好奇，搞驱动不只是字符，块，网络。还有平台和总线设备驱动。比如usb，spi，iic。这些你说他们是什么设备？都不一定的。这个是开用途的，usb可以网口啊，usb可以u盘啊，usb可以键盘鼠标啊！所以，这些平台设备和总线设备是另一种驱动，这些是给上面三种驱动一个总线驱动和驱动方法，这些一般都是厂商写好的，usb只能通过调用linux内核中的api来实现usb驱动的编写，因为，高度封装了，想得到usb配置符，只能靠内核哦！</p>
+<h5 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h5>
+      
+    </div>
+
+    
+    
+    
+
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
       
   
   
@@ -942,65 +1019,6 @@
   
   
 
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2024/04/22/rust%E5%85%A5%E9%97%A8/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/csm.png">
-      <meta itemprop="name" content="CSM">
-      <meta itemprop="description" content="应用是应用，驱动是驱动！你要是偏要应用干驱动，哥们，你怎么不直接薪资翻倍啊！[🦀]">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="我要成为嵌入式高手[doge]">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2024/04/22/rust%E5%85%A5%E9%97%A8/" class="post-title-link" itemprop="url">rust入门</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              <time title="创建时间：2024-04-22 23:34:01" itemprop="dateCreated datePublished" datetime="2024-04-22T23:34:01+08:00">2024-04-22</time>
-            </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          
-      
-    </div>
-
-    
-    
-    
-
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
 
   
   <nav class="pagination">
@@ -1072,7 +1090,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">119</span>
+          <span class="site-state-item-count">120</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
