@@ -134,7 +134,7 @@
   </li>
         <li class="menu-item menu-item-archives">
 
-    <a href="/archives/" rel="section"><i class="archive fa-fw"></i>归档<span class="badge">120</span></a>
+    <a href="/archives/" rel="section"><i class="archive fa-fw"></i>归档<span class="badge">121</span></a>
 
   </li>
         <li class="menu-item menu-item-resources">
@@ -170,6 +170,97 @@
 
           <div class="content index posts-expand">
             
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2024/03/27/github%E7%AE%A1%E7%90%86/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/csm.png">
+      <meta itemprop="name" content="CSM">
+      <meta itemprop="description" content="应用是应用，驱动是驱动！你要是偏要应用干驱动，哥们，你怎么不直接薪资翻倍啊！[🦀]">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="我要成为嵌入式高手[doge]">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2024/03/27/github%E7%AE%A1%E7%90%86/" class="post-title-link" itemprop="url">github管理</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2024-03-27 20:40:37" itemprop="dateCreated datePublished" datetime="2024-03-27T20:40:37+08:00">2024-03-27</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2024-05-08 21:03:07" itemprop="dateModified" datetime="2024-05-08T21:03:07+08:00">2024-05-08</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Git/" itemprop="url" rel="index"><span itemprop="name">Git</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h5 id="git-管理"><a href="#git-管理" class="headerlink" title="git 管理"></a>git 管理</h5><p>git有啥东西？不就是add、commit、push 、 pull 、reset 、log 、reflog 、status  、tag、 branch  、checkout….<br>常用也就是这些了，但是，还有很多其他的操作，这些操作是更加面向团队和管理的首先，pr，还有分支管理和分支保护，管理员，fork，ssh</p>
+<h5 id="git-ssh"><a href="#git-ssh" class="headerlink" title="git ssh"></a>git ssh</h5><p>ssh就是建立一个安全的下载链接罢了，但是如果是下载私有仓库，那还是得进<br>行github登录才能实现下载，不是说有ssh就可以直接下载了</p>
+<h5 id="git-fork"><a href="#git-fork" class="headerlink" title="git fork"></a>git fork</h5><p>我们经常可以看到github上面好多代码贡献的，比如linux，这个提交量<br>非常大，而且fork数量也非常多。<br>fork不等于clone，更不等于zip下载。</p>
+<p>zip下载就是下载一个版本或者当前版本，常见就是Tag进行版本管理，这些是没有.git。</p>
+<p>clone和ssh就是把整个开发的过程的git都下载过来，这个，就是直接把开源库复制一份到自己的分布式主机上面。此时是无法通过push提交到原仓库的。那为什么gitee那些又可以拉人，又可以下载和提交呢，那是因为所有clone都是默认为不可push，只有管理员去修改我的访问和提交权限，我才能提交和修改。</p>
+<p>fork 这个就是不一样了，是自己生成一个仓库副本，就是在github上面直接生成这个这个仓库，此时，就要切换为一个新分支，然后，正常提交，然后push给新分支，然后选择pr就可以提交到原仓库中，然后等待原仓库管理员去解决冲突和选择、审批等。如下操作：<br>1.首先打开一个项目，然后直接fork，点击创造fork。这样就会在我的账户下面生成一个fork副本。<br>2.此时可以使用git clone 或者ssh来下载。<br>3.git remote add upstream <a target="_blank" rel="noopener" href="https://github.com/original-author/project-name.git">https://github.com/original-author/project-name.git</a><br>4.新建分支 git checkout -b feature-or-bugfix<br>5.修改和提交代码<br>6.推送分支 git push -u origin feature-or-bugfix<br>7.创建Pull Request (PR)  跟提交分支一样的操作是<br>8.等待原仓库管理人进行处理</p>
+<p>如果不想要fork，就进入到fork仓库，点击settings中的delete仓库，对，就是删库就好了。</p>
+<h5 id="git-branch保护"><a href="#git-branch保护" class="headerlink" title="git branch保护"></a>git branch保护</h5><p>为什么要分支保护啊？我们在看gitee一些项目，可以看到main分支上面有一把锁，这个时候就是管理员把main分支进行上锁，就是变为可读模式，此时就是无法修改。使用的是Lock branch这个一般是短期无需修改才会选择这个状态，这个是管理员随时可以修改得状态。</p>
+<p>一般常用就是Require a pull request before merging，就是只能通过pr合并来实现main分支的更新，不允许直接push提交，这样就可以让整个结构和流程更加简洁和方便管理，防止胡乱提交导致版本错误等诸多问题。</p>
+<p>此时还可以Require approvals，这个就是添加审核人，审核人必须发言和评价才能合并。</p>
+<p>使用Do not allow bypassing the above settings就是管理员和用户一视同仁，这个不建议勾选，因为管理员就是为了快速方便管理分支和仓库，只要管理员认真点，仔细点就行了，只要分支保护做的好，都是ok的</p>
+<h5 id="git-令牌-git-小组"><a href="#git-令牌-git-小组" class="headerlink" title="git 令牌  &amp; git 小组"></a>git 令牌  &amp; git 小组</h5><p>git 令牌<br>这个就是把我的私有仓库通过令牌的方式，给与他人使用权限。这个就是在个人然后点击settings，然后点击Developer settings，<br>然后选择token，两个都可以new和classic，无脑选择new就行了，然后就是权限限制读写操作，然后就仓库限制，时间天数限制。然后点击确认就是生成令牌。使用git 令牌下载只能使用https下载不能使用ssh下载。下载的时候，直接git clone 仓库，然后写上我的名字，然后就输入这个生成的token就可以下载，分享啦。</p>
+<p>git 小组<br>就是拉人到自己的仓库，一起创作进入仓库，点击settings，然后点击collaborators，添加用户的邮箱，然后进入即可，然后就是小组啦自然还有那些企业版啥的，我目前还没用过，我感觉大差不差应该都是这个原理，企业版就是，可以把所有人拉到一个开发组，然后方便拉近仓库和管理。</p>
+<p>git 小组踢人<br>就是在collaborators中，点击删除就好了</p>
+<p>git 小组主动退出<br>点击右上角的头像，点击setting，点击仓库，就可以看到共同工作的仓库，里面有leave按键，然后确认就好了</p>
+<h5 id="git总结"><a href="#git总结" class="headerlink" title="git总结"></a>git总结</h5><p>git一句话分布式管理，这个本质就是为了团队，大家一起工作，小公司可能用不到git，但是为了项目管理，为了整体发展git的重要性非常高。git只是自己一个人用，那么就是失去了分布式的意义了，这不就是变成了一个同步了吗？没用的!!!</p>
+
+      
+    </div>
+
+    
+    
+    
+
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
       
   
   
@@ -952,98 +1043,10 @@
   
   
 
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2024/03/01/FristBlog-STM32%E8%B6%85%E9%A2%91%E8%BF%87%E5%A4%B4%E8%8A%AF%E7%89%87%E9%94%81%E6%AD%BB/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/csm.png">
-      <meta itemprop="name" content="CSM">
-      <meta itemprop="description" content="应用是应用，驱动是驱动！你要是偏要应用干驱动，哥们，你怎么不直接薪资翻倍啊！[🦀]">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="我要成为嵌入式高手[doge]">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2024/03/01/FristBlog-STM32%E8%B6%85%E9%A2%91%E8%BF%87%E5%A4%B4%E8%8A%AF%E7%89%87%E9%94%81%E6%AD%BB/" class="post-title-link" itemprop="url">frist STM32超频过头芯片锁死</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              <time title="创建时间：2024-03-01 20:21:25" itemprop="dateCreated datePublished" datetime="2024-03-01T20:21:25+08:00">2024-03-01</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2024-05-08 20:53:02" itemprop="dateModified" datetime="2024-05-08T20:53:02+08:00">2024-05-08</time>
-              </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/MCU/" itemprop="url" rel="index"><span itemprop="name">MCU</span></a>
-                </span>
-            </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <p>这是第一篇关于stm32超频芯片锁死的博客</p>
-<h5 id="起因"><a href="#起因" class="headerlink" title="起因"></a>起因</h5><p>我公司的两个stm32f103芯片板子的晶振不同，我在使用cubeMX生成代码的时候，修改时钟树的时候，没有回车。导致时钟树代码还没配置好，我就直接生成代码了，导致，频率一下子就超了。</p>
-<h5 id="后果"><a href="#后果" class="headerlink" title="后果"></a>后果</h5><p>代码下载进去之后，就无法使用jflash和vs的debug功能了，就会显示芯片内存不可读取。</p>
-<h5 id="修复办法"><a href="#修复办法" class="headerlink" title="修复办法"></a>修复办法</h5><p>boot0设为1，boot1设为0.，此时就会进入系统存储器的空间，这里有一段引导程序，而且这段程<br>序本来就是不可读ROM从一开始就是ST公司写死的东西。然后就奇迹般的发现，flash可以读取了。<br>然后选择jflash里面的擦除功能把整个芯片删除干净，然后再把boot0设为0就可以了。这个时候代<br>码可以下载和debug了哦。</p>
-<h5 id="读保护和写保护"><a href="#读保护和写保护" class="headerlink" title="读保护和写保护"></a>读保护和写保护</h5><p>这个可以代码进行编写，也可以使用ST官方的link软件来进行保护，注意了不要随便使用最高级的都保护哦，一旦操作了就没有回头路了。还可以使用j-flash进行读保护，这个读保护等级是2的，可以多次使用哦。</p>
-<h5 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h5><p>链接: <a target="_blank" rel="noopener" href="https://blog.csdn.net/qq_33559992/article/details/105487168">https://blog.csdn.net/qq_33559992/article/details/105487168</a></p>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/2024/03/01/FristBlog-STM32%E8%B6%85%E9%A2%91%E8%BF%87%E5%A4%B4%E8%8A%AF%E7%89%87%E9%94%81%E6%AD%BB/#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
 
   
   <nav class="pagination">
-    <a class="extend prev" rel="prev" href="/page/11/"><i class="fa fa-angle-left" aria-label="上一页"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/11/">11</a><span class="page-number current">12</span>
+    <a class="extend prev" rel="prev" href="/page/11/"><i class="fa fa-angle-left" aria-label="上一页"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/11/">11</a><span class="page-number current">12</span><a class="page-number" href="/page/13/">13</a><a class="extend next" rel="next" href="/page/13/"><i class="fa fa-angle-right" aria-label="下一页"></i></a>
   </nav>
 
 
@@ -1111,7 +1114,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">120</span>
+          <span class="site-state-item-count">121</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -1186,7 +1189,7 @@
 
  <div class="theme-info">
   <div class="powered-by"></div>
-  <span class="post-count">博客全站共76.7k字</span>
+  <span class="post-count">博客全站共78.4k字</span>
 </div>
 
         

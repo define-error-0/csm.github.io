@@ -30,7 +30,7 @@
 <meta property="og:description" content="设备驱动类型学习linux驱动的时候，肯定就知道三大设备，字符、块、网络了，但是，随着学习了研究，就看到了平台设备，总线设备，其实一开始我还是有点懵逼了，后面就慢慢能够理解了。 就使用mcu的开发作为例子，不论是gpio、usb、iic、spi等外设，其实都是需要配置和编写驱动，这个就是对寄存器进行编程了，这些驱动就是linux中那些总线驱动了，写好之后，那三个设备就能调用这些总线设备实现对外操作">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2024-09-18T06:36:28.000Z">
-<meta property="article:modified_time" content="2024-09-18T15:53:29.724Z">
+<meta property="article:modified_time" content="2024-10-08T09:41:34.593Z">
 <meta property="article:author" content="CSM">
 <meta property="article:tag" content="Linux">
 <meta name="twitter:card" content="summary">
@@ -137,7 +137,7 @@
   </li>
         <li class="menu-item menu-item-archives">
 
-    <a href="/archives/" rel="section"><i class="archive fa-fw"></i>归档<span class="badge">120</span></a>
+    <a href="/archives/" rel="section"><i class="archive fa-fw"></i>归档<span class="badge">121</span></a>
 
   </li>
         <li class="menu-item menu-item-resources">
@@ -200,10 +200,16 @@
                 <i class="far fa-calendar"></i>
               </span>
               <span class="post-meta-item-text">发表于</span>
-              
 
-              <time title="创建时间：2024-09-18 14:36:28 / 修改时间：23:53:29" itemprop="dateCreated datePublished" datetime="2024-09-18T14:36:28+08:00">2024-09-18</time>
+              <time title="创建时间：2024-09-18 14:36:28" itemprop="dateCreated datePublished" datetime="2024-09-18T14:36:28+08:00">2024-09-18</time>
             </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2024-10-08 17:41:34" itemprop="dateModified" datetime="2024-10-08T17:41:34+08:00">2024-10-08</time>
+              </span>
 
           
 
@@ -218,7 +224,31 @@
       
         <h5 id="设备驱动类型"><a href="#设备驱动类型" class="headerlink" title="设备驱动类型"></a>设备驱动类型</h5><p>学习linux驱动的时候，肯定就知道三大设备，字符、块、网络了，但是，随着学习了研究，就看到了平台设备，总线设备，其实一开始我还是有点懵逼了，后面就慢慢能够理解了。</p>
 <p>就使用mcu的开发作为例子，不论是gpio、usb、iic、spi等外设，其实都是需要配置和编写驱动，这个就是对寄存器进行编程了，这些驱动就是linux中那些总线驱动了，写好之后，那三个设备就能调用这些总线设备实现对外操作了。因为我们编写的驱动，一个是硬件驱动驱动，一个是设备驱动。想要对设备进行驱动，就一定要有通信手段，所以就一定要一个硬件外设来作为通信操作。假设，soc本身有3个串口在kconfig中只有两个，新增了一个之后，利用这个串口来进行通信，就可能想要编写这个串口的驱动，然后根据这个串口驱动框架来编写对应设备驱动。</p>
-<h5 id="驱动框架"><a href="#驱动框架" class="headerlink" title="驱动框架"></a>驱动框架</h5><h5 id="常见的框架"><a href="#常见的框架" class="headerlink" title="常见的框架"></a>常见的框架</h5><h5 id="为什么会有框架"><a href="#为什么会有框架" class="headerlink" title="为什么会有框架"></a>为什么会有框架</h5><h5 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h5>
+<h5 id="驱动框架"><a href="#驱动框架" class="headerlink" title="驱动框架"></a>驱动框架</h5><p>学习mcu的时候，也就是裸机开发的时候，我们总是自己去配置系统终端，自己通过cubeMx或者keil来配置引脚功能，然后初始化代码就可以把这个外设注册到ARM内核中，此时就可以重写回调和中断，这个就非常简单和随意。如果玩过车载mcu，就知道代码是matlab生成的嵌入式代码，这种代码是很规范的，想要改的地方很少，而且很少出问题，也就是说，这样的设计是可以很大程度的避免由于人带来的错误。其实使用人写也是可以的，不过这个都是简单mcu，而不是复杂的处理器，对于处理器的设计和开发就不适合一个人来操作了，所以，就必须有框架，有开发流程，有特定的位置和回调。</p>
+<p>处理器和SOC，使用rtos确实是可以运行的，但是太浪费资源了，不合适的。所以，只能上linux和类unix系统了，自然就少不了mmu，裸机开发完全就不方便了。此时就得是通过内核来识别到有这些外设，内核去绑定这些外设，这个操作该怎么处理呢？这个就是设备树的功能，设备树编写好各个引脚的功能和外设，内核加载的过程中就会读取设备树内容，此时就会把外设加载到内核中，就可以在 &#x2F;dev&#x2F;中看到对应的外设了，这个实现原理就是底层soc根据linux提供的接口来进行绑定，不过一般都是厂商负责的。(如果缺失，比如少了iic，此时就要自己通过平台设备驱动框架来编写iic，这里就需要自己向内核申请正确的物理寄存器地址，来配置iic属性和回调函数，封装成一个总线驱动)</p>
+<h5 id="为什么会有框架"><a href="#为什么会有框架" class="headerlink" title="为什么会有框架"></a>为什么会有框架</h5><p>就是规范和方便开发者开发，很多外设的操作，都被内核操控了，但是终究是因为地址和设备差异，肯定是需要重新编写和指向的。系统不断封装和抽象多层，但是一定会留给开发者接口，这个接口就得负责对这些物理层面的进行修正。也就是说，我们编写的回调函数，是内核运行过程中调用的，也就是和内核对外接口，这个接口可以绑定实际物理地址，比如修改总线设备就需要用户去指向和寄存器配置。非总线和平台设备，大概率都是调用和申请资源，比如申请中断，申请iic，申请gpio等操作，因为总线设备已经写好了。所以，编程的时候向内核申请就可以使用了。有了这些框架，虽然增加了入门难度，但是一旦理解了系统运行裸机和规范，就会明白，内核干了好多复杂配置和抽象处理，但是终究是因为硬件问题，物理地址、外设地址、寄存器、属性肯定是有差异的。有了框架，就有了规范的开发流程，也极大简化了开发操作，只需要对特定的文件和函数进行修改就可以兼容不同的设备了，至于内核的操作，就是大大的简化了开发者开发流程。</p>
+<h5 id="常见的框架"><a href="#常见的框架" class="headerlink" title="常见的框架"></a>常见的框架</h5><h6 id="应用层框架"><a href="#应用层框架" class="headerlink" title="应用层框架"></a>应用层框架</h6><p>这个框架就是为了去配合应用层开发，也就是说，也可以认为是三大设备开发框架，我留给应用层的ioctl的操作方法就是满足这个框架的。</p>
+<ul>
+<li>V4L2架构，摄像头架构</li>
+<li>ALSA架构，音频设备</li>
+<li>SCSI架构，这个是硬盘光驱的</li>
+</ul>
+<h6 id="驱动层框架"><a href="#驱动层框架" class="headerlink" title="驱动层框架"></a>驱动层框架</h6><p>这个是外设的控制总线</p>
+<ul>
+<li><p>总线框架，常见的IIC、SPI 、GPIO等，一般都是厂商写好的.</p>
+</li>
+<li><p>平台框架，是一种设备驱动框架，用于处理那些没有标准总线（如 PCIe、USB 等）的嵌入式设备。</p>
+</li>
+</ul>
+<h6 id="三大设备框架"><a href="#三大设备框架" class="headerlink" title="三大设备框架"></a>三大设备框架</h6><p>调用总线来实现对外设的处理操作</p>
+<ul>
+<li>字符设备, 控制  声卡 、摄像头 、屏幕等设备</li>
+<li>块设备，控制 emmc 、eepore 、固态、机械等</li>
+<li>网络设备，控制 usb网卡，rj45、wifi等</li>
+</ul>
+<h5 id="框架使用"><a href="#框架使用" class="headerlink" title="框架使用"></a>框架使用</h5><p>内核就得到了这些总线，也就是可以编写设备了。块设备，网络设备，字符设备，这三个设备都是很多时候都是基于总线来进行输入输出操作的。比如字符设备，我调用一个ov5640摄像头，就是一个iic来配置摄像头属性寄存器，通过一个DCMI来传输数据，也就是说这个字符设备，需要申请两个总线，一个IIC，一个是DCMI，首先创建一个平台设备，通过平台设备来进行字符设备的创建，然后编写驱动，至于IIC和DCMI，我们只需要调用它们的中断和收发函数就完事了，至于它们的总线驱动框架都是内核处理的，这个就和平台设备非常相似，也就是调用probe和remove那些回调操作。</p>
+<h5 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h5><p>这个有点协议的味道了，大家都是这样开发和使用，其实就是极大简化了开发流程。以前可能要改很多文件，但是抽象之后，只要我编写的回调函数完成兼容，就可以让整个框架顺利进行，就是说我只需要改几个文件，这确实是极大的简化操作，但是，对于刚入门来说，就是灾难来得，都不知道要在哪里改，为什么这样改就能运行，甚至文件操作集对应参数都对不上，这一切都是因为开发框架，而我们写的驱动只是框架运行过程中调用函数，而不是对外操作和给外部使用的函数。rt-thread的文件操作集是直接给外部调用的，也就是说它是没有驱动框架，只是类似于一个结构体里面一堆函数指针罢了。</p>
+
     </div>
 
     
@@ -328,7 +358,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-5"><a class="nav-link" href="#%E8%AE%BE%E5%A4%87%E9%A9%B1%E5%8A%A8%E7%B1%BB%E5%9E%8B"><span class="nav-number">1.</span> <span class="nav-text">设备驱动类型</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E9%A9%B1%E5%8A%A8%E6%A1%86%E6%9E%B6"><span class="nav-number">2.</span> <span class="nav-text">驱动框架</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E5%B8%B8%E8%A7%81%E7%9A%84%E6%A1%86%E6%9E%B6"><span class="nav-number">3.</span> <span class="nav-text">常见的框架</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E4%B8%BA%E4%BB%80%E4%B9%88%E4%BC%9A%E6%9C%89%E6%A1%86%E6%9E%B6"><span class="nav-number">4.</span> <span class="nav-text">为什么会有框架</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E6%80%BB%E7%BB%93"><span class="nav-number">5.</span> <span class="nav-text">总结</span></a></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-5"><a class="nav-link" href="#%E8%AE%BE%E5%A4%87%E9%A9%B1%E5%8A%A8%E7%B1%BB%E5%9E%8B"><span class="nav-number">1.</span> <span class="nav-text">设备驱动类型</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E9%A9%B1%E5%8A%A8%E6%A1%86%E6%9E%B6"><span class="nav-number">2.</span> <span class="nav-text">驱动框架</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E4%B8%BA%E4%BB%80%E4%B9%88%E4%BC%9A%E6%9C%89%E6%A1%86%E6%9E%B6"><span class="nav-number">3.</span> <span class="nav-text">为什么会有框架</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E5%B8%B8%E8%A7%81%E7%9A%84%E6%A1%86%E6%9E%B6"><span class="nav-number">4.</span> <span class="nav-text">常见的框架</span></a><ol class="nav-child"><li class="nav-item nav-level-6"><a class="nav-link" href="#%E5%BA%94%E7%94%A8%E5%B1%82%E6%A1%86%E6%9E%B6"><span class="nav-number">4.1.</span> <span class="nav-text">应用层框架</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#%E9%A9%B1%E5%8A%A8%E5%B1%82%E6%A1%86%E6%9E%B6"><span class="nav-number">4.2.</span> <span class="nav-text">驱动层框架</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#%E4%B8%89%E5%A4%A7%E8%AE%BE%E5%A4%87%E6%A1%86%E6%9E%B6"><span class="nav-number">4.3.</span> <span class="nav-text">三大设备框架</span></a></li></ol></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E6%A1%86%E6%9E%B6%E4%BD%BF%E7%94%A8"><span class="nav-number">5.</span> <span class="nav-text">框架使用</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E6%80%BB%E7%BB%93"><span class="nav-number">6.</span> <span class="nav-text">总结</span></a></li></ol></div>
       </div>
       <!--/noindex-->
 
@@ -344,7 +374,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">120</span>
+          <span class="site-state-item-count">121</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -419,7 +449,7 @@
 
  <div class="theme-info">
   <div class="powered-by"></div>
-  <span class="post-count">博客全站共76.7k字</span>
+  <span class="post-count">博客全站共78.4k字</span>
 </div>
 
         
