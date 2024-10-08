@@ -197,10 +197,16 @@
                 <i class="far fa-calendar"></i>
               </span>
               <span class="post-meta-item-text">发表于</span>
-              
 
-              <time title="创建时间：2024-10-08 15:58:49 / 修改时间：19:28:02" itemprop="dateCreated datePublished" datetime="2024-10-08T15:58:49+08:00">2024-10-08</time>
+              <time title="创建时间：2024-10-08 15:58:49" itemprop="dateCreated datePublished" datetime="2024-10-08T15:58:49+08:00">2024-10-08</time>
             </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2024-10-09 00:34:34" itemprop="dateModified" datetime="2024-10-09T00:34:34+08:00">2024-10-09</time>
+              </span>
 
           
 
@@ -217,6 +223,9 @@
 <h5 id="它与一般nano-Flash的异同"><a href="#它与一般nano-Flash的异同" class="headerlink" title="它与一般nano Flash的异同"></a>它与一般nano Flash的异同</h5><p>相同</p>
 <p>一般我们使用nano flash只能用于存储而不能运行代码，运行代码的flash是nor flash。我们一般都是通过spi或者qspi来进行通信也就是说，我们开发nano flash其实也是对它的驱动ic来进行通信操作。</p>
 <p>差异</p>
+<p>与NAND Flash不同的是，eMMC通常具有较小的存储容量，通常在几十GB或几百GB的级别。eMMC可以作为内置存储器使用，并且由于其内置控制器的作用，可以实现快速的读写操作。因此，eMMC适合于移动设备、嵌入式系统和一些消费电子产品等领域的应用。而与SSD相比，SSD的存储容量可以达到数TB，更适用于需要大容量、高速存储的场景，例如用于企业服务器、工作站、高端游戏电脑等。</p>
+<h5 id="用途"><a href="#用途" class="headerlink" title="用途"></a>用途</h5><p>常见的就是用于 手机内存、一些移动的嵌入式内存。不过mcu和小型的soc就别想了，都是一整块flash搞定的事情。一般开发安卓的时候才能用到这些东西，使用方法也是根据手册，或者厂商写好了块设备添加到文件系统中。</p>
+<p>note：还有一点就是千万别把内存和存储空间搞混了，这两个不是一个东西啊，而且要知道一件事情，函数不是运行在ram中，函数是固定不动，ram中是存放变量得哦。常见得固态，机械硬盘、U盘这些都是存储空间。内存条、nor flash、ddr技术这些才是内存哦。</p>
 
       
     </div>
@@ -1026,7 +1035,7 @@
 
  <div class="theme-info">
   <div class="powered-by"></div>
-  <span class="post-count">博客全站共78.4k字</span>
+  <span class="post-count">博客全站共78.7k字</span>
 </div>
 
         
