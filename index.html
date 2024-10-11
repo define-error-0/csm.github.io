@@ -134,7 +134,7 @@
   </li>
         <li class="menu-item menu-item-archives">
 
-    <a href="/archives/" rel="section"><i class="archive fa-fw"></i>归档<span class="badge">121</span></a>
+    <a href="/archives/" rel="section"><i class="archive fa-fw"></i>归档<span class="badge">122</span></a>
 
   </li>
         <li class="menu-item menu-item-resources">
@@ -174,6 +174,65 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2024/10/11/%E5%B5%8C%E5%85%A5%E5%BC%8Fweb/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/csm.png">
+      <meta itemprop="name" content="CSM">
+      <meta itemprop="description" content="应用是应用，驱动是驱动！你要是偏要应用干驱动，哥们，你怎么不直接薪资翻倍啊！[🦀]">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="我要成为嵌入式高手[doge]">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2024/10/11/%E5%B5%8C%E5%85%A5%E5%BC%8Fweb/" class="post-title-link" itemprop="url">嵌入式web</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2024-10-11 08:22:03" itemprop="dateCreated datePublished" datetime="2024-10-11T08:22:03+08:00">2024-10-11</time>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          
+      
+    </div>
+
+    
+    
+    
+
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
     <link itemprop="mainEntityOfPage" href="http://example.com/2024/10/08/eMMC/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -205,7 +264,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2024-10-09 00:34:34" itemprop="dateModified" datetime="2024-10-09T00:34:34+08:00">2024-10-09</time>
+                <time title="修改时间：2024-10-11 08:46:04" itemprop="dateModified" datetime="2024-10-11T08:46:04+08:00">2024-10-11</time>
               </span>
 
           
@@ -221,9 +280,18 @@
       
           <h5 id="eMMC"><a href="#eMMC" class="headerlink" title="eMMC"></a>eMMC</h5><p>首先，我们要知道eMMC是什么？本质就是nano Flash+ic驱动芯片。说白了，它就是一个flash。</p>
 <h5 id="它与一般nano-Flash的异同"><a href="#它与一般nano-Flash的异同" class="headerlink" title="它与一般nano Flash的异同"></a>它与一般nano Flash的异同</h5><p>相同</p>
-<p>一般我们使用nano flash只能用于存储而不能运行代码，运行代码的flash是nor flash。我们一般都是通过spi或者qspi来进行通信也就是说，我们开发nano flash其实也是对它的驱动ic来进行通信操作。</p>
+<p>一般我们使用nano flash只能用于存储而不能运行代码，运行代码的flash是nor flash。我们一般都是通过协议来进行通信也就是说，我们开发nano flash其实也是对它的驱动ic来进行通信操作。</p>
 <p>差异</p>
 <p>与NAND Flash不同的是，eMMC通常具有较小的存储容量，通常在几十GB或几百GB的级别。eMMC可以作为内置存储器使用，并且由于其内置控制器的作用，可以实现快速的读写操作。因此，eMMC适合于移动设备、嵌入式系统和一些消费电子产品等领域的应用。而与SSD相比，SSD的存储容量可以达到数TB，更适用于需要大容量、高速存储的场景，例如用于企业服务器、工作站、高端游戏电脑等。</p>
+<h5 id="eMMC驱动ic引脚"><a href="#eMMC驱动ic引脚" class="headerlink" title="eMMC驱动ic引脚"></a>eMMC驱动ic引脚</h5><p>CLK: 用于同步的时钟信号</p>
+<p>Data Strobe:  此信号是从Device端输出的时钟信号，频率和CLK相同，用于同步从Device端输出的数据。</p>
+<p>CMD:此信号用于发送Host 的command和Device的response。</p>
+<p>DAT0-7:用于传输数据的8bit总线</p>
+<p>根据驱动ic来选数据位模式。</p>
+<p><img src="/../Blogas_images/eMMC.png"></p>
+<h5 id="通信过程"><a href="#通信过程" class="headerlink" title="通信过程"></a>通信过程</h5><p>flash，一般是nor flash直接扩容，直接FSMC把flash加入可用地址中；或者驱动ic来增加空间，也就是使用spi来进行通信。</p>
+<p>不过emmc的话，就是纯靠硬件外设去通信了。比如可以使用mcu，通过cube来配置emmc的外设寄存器，可以是1、4、8数据位模式，对应驱动ic的引脚，有的1、4、8位的并行数据线；设置为host的设备，速度模式自行选择。如下博客所示：</p>
+<p><a target="_blank" rel="noopener" href="https://blog.csdn.net/morphohelena6/article/details/141859887">【经验分享】STM32使用HAL库驱动emmc存储芯片读写_stm32 emmc-CSDN博客</a></p>
 <h5 id="用途"><a href="#用途" class="headerlink" title="用途"></a>用途</h5><p>常见的就是用于 手机内存、一些移动的嵌入式内存。不过mcu和小型的soc就别想了，都是一整块flash搞定的事情。一般开发安卓的时候才能用到这些东西，使用方法也是根据手册，或者厂商写好了块设备添加到文件系统中。</p>
 <p>note：还有一点就是千万别把内存和存储空间搞混了，这两个不是一个东西啊，而且要知道一件事情，函数不是运行在ram中，函数是固定不动，ram中是存放变量得哦。常见得固态，机械硬盘、U盘这些都是存储空间。内存条、nor flash、ddr技术这些才是内存哦。</p>
 
@@ -813,82 +881,6 @@
   
   
 
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2024/09/05/%E8%BD%AF%E8%B7%AF%E7%94%B1VPN%E6%96%B9%E6%A1%88/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/csm.png">
-      <meta itemprop="name" content="CSM">
-      <meta itemprop="description" content="应用是应用，驱动是驱动！你要是偏要应用干驱动，哥们，你怎么不直接薪资翻倍啊！[🦀]">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="我要成为嵌入式高手[doge]">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2024/09/05/%E8%BD%AF%E8%B7%AF%E7%94%B1VPN%E6%96%B9%E6%A1%88/" class="post-title-link" itemprop="url">软路由VPN方案</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              <time title="创建时间：2024-09-05 23:42:35" itemprop="dateCreated datePublished" datetime="2024-09-05T23:42:35+08:00">2024-09-05</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2024-09-06 00:02:53" itemprop="dateModified" datetime="2024-09-06T00:02:53+08:00">2024-09-06</time>
-              </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <h5 id="软路由"><a href="#软路由" class="headerlink" title="软路由"></a>软路由</h5><p>现在的路由器基本都是无线路由器了，集成wifi和网线于一体。</p>
-<p><a target="_blank" rel="noopener" href="https://zhida.zhihu.com/search?q=%E8%BD%AF%E8%B7%AF%E7%94%B1%E5%99%A8&zhida_source=entity&is_preview=1">软路由器</a>其实是在电脑主机的基础上配合软件组合成的路由解决方案，路由的参数通过软件控制和设置。简单的说就是在电脑的硬件基础上加上<a target="_blank" rel="noopener" href="https://zhida.zhihu.com/search?q=%E8%B7%AF%E7%94%B1%E7%B3%BB%E7%BB%9F&zhida_source=entity&is_preview=1">路由系统</a>来实现路由器的所有功能。硬路由就是我们普遍使用的路由器，由厂家提供整体的解决方案，包括路由器的硬件和软件。</p>
-<p>反正软路由就是可以使用第三方软件呢。</p>
-<h5 id="路由器VPN"><a href="#路由器VPN" class="headerlink" title="路由器VPN"></a>路由器VPN</h5><p>很多时候，连上wifi了，又打开梯子是吧，这个过程有点繁琐，不舒服是吧，这个没得说的，麻烦呢。所以，从路由器着手，就可以实现连上即可vpn。</p>
-<h5 id="第三方固件"><a href="#第三方固件" class="headerlink" title="第三方固件"></a>第三方固件</h5><p>我的路由器刚好就是TP-Link的，是ok的，直接按照流程，安装clash即可</p>
-<p><a target="_blank" rel="noopener" href="https://clashv2ray.com/19332.html">TP-Link路由器Clash翻墙完全指南 | Clash中文教程网 (clashv2ray.com)</a></p>
-<h5 id="openwrt"><a href="#openwrt" class="headerlink" title="openwrt"></a>openwrt</h5><p>现在的路由器基本都是这个了，其实就是像配置我们的windows的静态IP一样，也是配置一个节点的一样的操作的。这个难度就有点高了。</p>
-<p><a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/362389529">https://zhuanlan.zhihu.com/p/362389529</a></p>
-<p>这个一般是开发人员来搞得，甚至可以编写脚本实现，需要vpn访问特殊ip的时候才使用。</p>
-<h5 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h5><p>这个是一个好技巧，一劳永逸，注意了。出去了别乱说话和干事哦。</p>
-
-      
-    </div>
-
-    
-    
-    
-
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
 
   
   <nav class="pagination">
@@ -960,7 +952,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">121</span>
+          <span class="site-state-item-count">122</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -1035,7 +1027,7 @@
 
  <div class="theme-info">
   <div class="powered-by"></div>
-  <span class="post-count">博客全站共78.7k字</span>
+  <span class="post-count">博客全站共79k字</span>
 </div>
 
         
