@@ -134,7 +134,7 @@
   </li>
         <li class="menu-item menu-item-archives">
 
-    <a href="/archives/" rel="section"><i class="archive fa-fw"></i>归档<span class="badge">123</span></a>
+    <a href="/archives/" rel="section"><i class="archive fa-fw"></i>归档<span class="badge">124</span></a>
 
   </li>
         <li class="menu-item menu-item-resources">
@@ -170,6 +170,80 @@
 
           <div class="content index posts-expand">
             
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2024/08/14/uboot/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/csm.png">
+      <meta itemprop="name" content="CSM">
+      <meta itemprop="description" content="应用是应用，驱动是驱动！你要是偏要应用干驱动，哥们，你怎么不直接薪资翻倍啊！[🦀]">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="我要成为嵌入式高手[doge]">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2024/08/14/uboot/" class="post-title-link" itemprop="url">uboot</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2024-08-14 23:24:20" itemprop="dateCreated datePublished" datetime="2024-08-14T23:24:20+08:00">2024-08-14</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2024-09-08 00:41:27" itemprop="dateModified" datetime="2024-09-08T00:41:27+08:00">2024-09-08</time>
+              </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h5 id="linux设备启动过程"><a href="#linux设备启动过程" class="headerlink" title="linux设备启动过程"></a>linux设备启动过程</h5><p>一开始就是芯片厂商的引导程序了，然后就到uboot，接着加载内核和驱动，挂载根文件系统，加载虚拟文件系统，加载tty中断，自启动开机脚本和软件。</p>
+<h5 id="uboot"><a href="#uboot" class="headerlink" title="uboot"></a>uboot</h5><p>uboot 属于<a target="_blank" rel="noopener" href="https://www.baidu.com/s?wd=bootloader&tn=24004469_oem_dg&rsv_dl=gh_pl_sl_csd">bootloader</a>的一种，是用来引导启动内核的，它的最终目的就是，从flash中读出内核，放到内存中，启动内核</p>
+<p>所以，由上面描述的，就知道，UBOOT需要具有读写flash的能力。</p>
+<h5 id="uboot使用"><a href="#uboot使用" class="headerlink" title="uboot使用"></a>uboot使用</h5><p>uboot刚开始被放到flash中，板子上电后，会自动把其中的一部分代码拷到内存中执行，这部分代码负责把剩余的uboot代码拷到内存中，然后uboot代码再把<a target="_blank" rel="noopener" href="https://www.baidu.com/s?wd=kernel&tn=24004469_oem_dg&rsv_dl=gh_pl_sl_csd">kernel</a>部分代码也拷到内存中，并且启动，内核启动后，挂着根文件系统，执行应用程序。</p>
+<h5 id="为什么要uboot"><a href="#为什么要uboot" class="headerlink" title="为什么要uboot"></a>为什么要uboot</h5><p>1)uboot主要作用是用来启动<a target="_blank" rel="noopener" href="https://www.baidu.com/s?wd=%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E5%86%85%E6%A0%B8&tn=24004469_oem_dg&rsv_dl=gh_pl_sl_csd">操作系统内核</a>。体现在uboot最后一句代码就是启动内核。<br>2)uboot还要负责部署整个计算机系统。体现在uboot最后的传参。3)uboot中还有操作Flash等板子上硬件的驱动。例如串口要打印，ping网络成功，擦除、烧写flash是否成功等。<br>4)uboot还得提供一个命令行界面供人来操作。很简单，至少你能看到。</p>
+<p>计算机系统的组成部件非常多，不同的计算机系统组成部件也不同。但是所有的计算机系统运行时需要的主要核心部件都是3个东西：CPU + 外部存储器（Flash&#x2F;硬盘） + 内部存储器（DDR SDRAM&#x2F;SDRAM&#x2F;SRAM）。而一般的PC机启动过程为：PC上电后先执行BIOS程序（实际上PC的BIOS就是NorFlash），BIOS程序负责初始化DDR内存，负责初始化硬盘，然后从硬盘上将OS镜像读取到DDR中，然后跳转到DDR中去执行OS直到启动（OS启动后BIOS就无用了）。</p>
+<h5 id="uboot环境变量"><a href="#uboot环境变量" class="headerlink" title="uboot环境变量"></a>uboot环境变量</h5><h5 id="uboot修改"><a href="#uboot修改" class="headerlink" title="uboot修改"></a>uboot修改</h5><h5 id="uboot烧写"><a href="#uboot烧写" class="headerlink" title="uboot烧写"></a>uboot烧写</h5><h5 id="uboot和裸机"><a href="#uboot和裸机" class="headerlink" title="uboot和裸机"></a>uboot和裸机</h5><p>一般uboot都是有一个开机时间，也就是倒计时，这个期间进行任意键输入就会取消加载内核，从而变成变成裸机开发。</p>
+<p>此时就是跟51的单片机开发一样了，对着手册看着寄存器进行编写，然后把代码编译完毕，ftp传到特定地址，然后去运行那个地址的代码，就是裸机运行了，不过这个一般只是用来测试硬件的而已，不会真的裸机开发的。</p>
+<h5 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h5>
+      
+    </div>
+
+    
+    
+    
+
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
       
   
   
@@ -874,81 +948,6 @@
   
   
 
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2024/07/15/ADC%E5%BC%82%E5%B8%B8/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/csm.png">
-      <meta itemprop="name" content="CSM">
-      <meta itemprop="description" content="应用是应用，驱动是驱动！你要是偏要应用干驱动，哥们，你怎么不直接薪资翻倍啊！[🦀]">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="我要成为嵌入式高手[doge]">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2024/07/15/ADC%E5%BC%82%E5%B8%B8/" class="post-title-link" itemprop="url">ADC异常</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-              
-
-              <time title="创建时间：2024-07-15 21:28:46 / 修改时间：22:27:01" itemprop="dateCreated datePublished" datetime="2024-07-15T21:28:46+08:00">2024-07-15</time>
-            </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <h5 id="起因"><a href="#起因" class="headerlink" title="起因"></a>起因</h5><p>我写好了协议层和应用层，但是我的同事也写了一个bootloader，但是他…所以，在我和他多次交流和协商下，他搞定了bootloader，但是出现问题了，就是adc不一样，他给的adc表格，不符合我实际读取的，所以就会出现偏差。</p>
-<h5 id="bug查找"><a href="#bug查找" class="headerlink" title="bug查找"></a>bug查找</h5><p>我一开始以为是采样问题，看了周期，看了转换速度，看了分频，都是正常，代码cube一键生成，也是启动adc了，因为使用的F1的MCU，所以是不能修改分辨率的，统一是12，F4的那些高级一点才能自己选择分辨率哦。</p>
-<p>最后，我让他把源码发给我了，我看了中断回调，看了函数处理，看了数据处理，都没问题，最后看到了，他没有校准ADC，这个我是早早的写了，我启动ADC就立刻校准了。</p>
-<h5 id="为什么要校准"><a href="#为什么要校准" class="headerlink" title="为什么要校准"></a>为什么要校准</h5><p>我还记得高中和初中的时候，我还是物理科代表呢，但是做啥实验第一步都是清零校准，才能保证统一和实验性。放在我们现在的工作之中就是，使用万用表和示波器肯定要先校验才能保证数据和波形是正确的啊。所以，在处理传感器和adc，dac等方面都要注意校验的问题，不是说光初始init就能解决一切bug的。</p>
-<p>那为什么会出现误差呢？</p>
-<p>STM32 的 ADC 校准一般有 参考电压校准 和 增益校准。</p>
-<p>参考电压校准：</p>
-<p>先测量 ADC 参考电压的实际值，然后将该值与预设的参考电压进行比较，得到参考电压的偏差，最终通过校准将其校正的方式叫做 参考电压校准 ，其目的是为了准确测量 ADC 的输入信号。</p>
-<p>叫做增益校准:</p>
-<p>通过测量内部基准电压和 ADC 输入信号的幅值之间的比例关系，校准 ADC 增益的方式 叫做增益校准，其目的是确保 ADC 输出的数值与输入信号的幅值之间具有良好的线性关系，为了准确的转换 ADC 输入信号。</p>
-<p>ADC 校准的目的是为了消除 ADC 的偏移误差和增益误差，从而提高测量精度。<br>原文链接：<a target="_blank" rel="noopener" href="https://blog.csdn.net/weixin_42328389/article/details/129518720">https://blog.csdn.net/weixin_42328389/article/details/129518720</a></p>
-<p>这个就像芯片生产过程制造中的差异化一样，ADC部分也存在一些差异化（虽然很小），其参考电压、偏置电压、增益等参数可能存在一些不确定性和漂移，这些参数的变化会导致 ADC 的测量结果产生误差。</p>
-<p>就想上面介绍什么是 ADC 校准最后说的，为了提高测量精度，消除 ADC 的偏移误差和增益误差，所以在使用 ADC 采样的时候都需要进行 ADC 校准。</p>
-<p>只要不改变adc设置就不会变化哦，修改通道是没事的，前提是别改属性，也就是可以关闭，但是寄存器别动，下次继续使用是没问题的。如果工作环境一直发生变化，噪声环境比较恶劣，温度啊，干扰，那就得用一次校准一次了。</p>
-<h5 id="解决办法"><a href="#解决办法" class="headerlink" title="解决办法"></a>解决办法</h5><p>就是启动ADC就立刻使用校准咯，这样就可以保证不同设备，或者同一个设备不同程序一样的adc啦。</p>
-
-      
-    </div>
-
-    
-    
-    
-
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
 
   
   <nav class="pagination">
@@ -1020,7 +1019,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">123</span>
+          <span class="site-state-item-count">124</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
