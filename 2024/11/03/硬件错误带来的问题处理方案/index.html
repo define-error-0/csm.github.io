@@ -22,16 +22,17 @@
     var CONFIG = {"hostname":"example.com","root":"/","scheme":"Pisces","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
   </script>
 
-  <meta name="description" content="应用是应用，驱动是驱动！你要是偏要应用干驱动，哥们，你怎么不直接薪资翻倍啊！[🦀]">
+  <meta name="description" content="硬件错误很多时候，就是硬件接口松了，现在的硬件都是挺耐用的，除了那些黑心商家的低温焊锡，廉价的元器件等。有的时候，是用户没安卓驱动，有的时候是用户没接上去，或者中途拔线等，都会导致来自硬件的bug。 在我们软件开发过程中，要分清楚有无系统。是嵌入式开发，还是app开发，还是小程序开发，其实小程序开发就是app的进一步封装来着，只要手机是可以正常使用设备的，小程序也是ok的。 MCU的硬件错误比如，">
 <meta property="og:type" content="article">
 <meta property="og:title" content="硬件错误带来的问题处理方案">
 <meta property="og:url" content="http://example.com/2024/11/03/%E7%A1%AC%E4%BB%B6%E9%94%99%E8%AF%AF%E5%B8%A6%E6%9D%A5%E7%9A%84%E9%97%AE%E9%A2%98%E5%A4%84%E7%90%86%E6%96%B9%E6%A1%88/index.html">
 <meta property="og:site_name" content="我要成为嵌入式高手[doge]">
-<meta property="og:description" content="应用是应用，驱动是驱动！你要是偏要应用干驱动，哥们，你怎么不直接薪资翻倍啊！[🦀]">
+<meta property="og:description" content="硬件错误很多时候，就是硬件接口松了，现在的硬件都是挺耐用的，除了那些黑心商家的低温焊锡，廉价的元器件等。有的时候，是用户没安卓驱动，有的时候是用户没接上去，或者中途拔线等，都会导致来自硬件的bug。 在我们软件开发过程中，要分清楚有无系统。是嵌入式开发，还是app开发，还是小程序开发，其实小程序开发就是app的进一步封装来着，只要手机是可以正常使用设备的，小程序也是ok的。 MCU的硬件错误比如，">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2024-11-03T15:43:09.000Z">
-<meta property="article:modified_time" content="2024-11-03T15:43:09.743Z">
+<meta property="article:modified_time" content="2024-11-04T15:38:24.600Z">
 <meta property="article:author" content="CSM">
+<meta property="article:tag" content="OS">
 <meta name="twitter:card" content="summary">
 
 <link rel="canonical" href="http://example.com/2024/11/03/%E7%A1%AC%E4%BB%B6%E9%94%99%E8%AF%AF%E5%B8%A6%E6%9D%A5%E7%9A%84%E9%97%AE%E9%A2%98%E5%A4%84%E7%90%86%E6%96%B9%E6%A1%88/">
@@ -202,6 +203,13 @@
 
               <time title="创建时间：2024-11-03 23:43:09" itemprop="dateCreated datePublished" datetime="2024-11-03T23:43:09+08:00">2024-11-03</time>
             </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2024-11-04 23:38:24" itemprop="dateModified" datetime="2024-11-04T23:38:24+08:00">2024-11-04</time>
+              </span>
 
           
 
@@ -214,7 +222,18 @@
     <div class="post-body" itemprop="articleBody">
 
       
-        
+        <h5 id="硬件错误"><a href="#硬件错误" class="headerlink" title="硬件错误"></a>硬件错误</h5><p>很多时候，就是硬件接口松了，现在的硬件都是挺耐用的，除了那些黑心商家的低温焊锡，廉价的元器件等。有的时候，是用户没安卓驱动，有的时候是用户没接上去，或者中途拔线等，都会导致来自硬件的bug。</p>
+<p>在我们软件开发过程中，要分清楚有无系统。是嵌入式开发，还是app开发，还是小程序开发，其实小程序开发就是app的进一步封装来着，只要手机是可以正常使用设备的，小程序也是ok的。</p>
+<h5 id="MCU的硬件错误"><a href="#MCU的硬件错误" class="headerlink" title="MCU的硬件错误"></a>MCU的硬件错误</h5><p>比如，写了一个USART重定向printf，做一个日志功能。其实就会发现一件事，我们写代码是非常自由的，非常非常爽的。因为我们不论有没有接上去外设总线，我们都能发送，至于读取这个事情，一般都是中断触发。所以，在程序运行过程中，不论总线有没有被插拔，其实都是不影响，mcu的收发的，你说对，mcu只要收发就完事了，而协议考虑的就多了。所以，此时就要有协议回传，就要校验来保证通信是没问题的，不是说，你发送完毕，接收完毕就是OK的，中间线松了也是可以正常通信的。</p>
+<h5 id="有系统的MCU"><a href="#有系统的MCU" class="headerlink" title="有系统的MCU"></a>有系统的MCU</h5><p>比如rt-thread的smart版本就有一个设备注册和设备查询的操作，这里就封装了文件操作集，open write read那些东西，此时，读写是由返回值的，开发过程中，要注意返回值是真的有用的，是必须要的。</p>
+<h5 id="linux系统"><a href="#linux系统" class="headerlink" title="linux系统"></a>linux系统</h5><p>千万不要神话系统了，系统就是为了管理资源和分配任务。有很多总线驱动，这个其实就是上面rt-thread干的事情咯，然后通过vfs来统一接口，所以，应用层开发，就是每次调用文件io的时候，都必须判断返回值是否正常，异常的话，就打印出来，错误是会直接输出出来的，注意咯，标准错误是没有缓冲区的。</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">FILE *fp;</span><br><span class="line"> </span><br><span class="line">fp = fopen(<span class="string">&quot;file.txt&quot;</span>, <span class="string">&quot;r&quot;</span>);</span><br><span class="line"><span class="keyword">if</span>( fp == <span class="literal">NULL</span> ) </span><br><span class="line">&#123;</span><br><span class="line">    <span class="built_in">fprintf</span>(<span class="built_in">stderr</span>, <span class="string">&quot;Value of errno: %d\n&quot;</span>, errno);</span><br><span class="line">    <span class="built_in">fprintf</span>(<span class="built_in">stderr</span>, <span class="string">&quot;Error opening file: %s\n&quot;</span>, strerror(errno));</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>这样就可以一定程度上解决来自硬件的错误，所以，我们编写驱动的时候，真的要返回有用的返回值和错误提示，不然应用层真的要爆炸。常见还有就是open成功了，但是读写那些出问题了，比如拔线，此时就得判断，然后fclose文件。</p>
+<h5 id="系统开发解决方案"><a href="#系统开发解决方案" class="headerlink" title="系统开发解决方案"></a>系统开发解决方案</h5><p>我们都上系统了，那么就肯定要上多线程和多进程的，可以在主线程进行人机交互，子线程进行通信和从机操作等，子线程发现硬件错误，就结束线程，返回给主线程或者修改标准位。此时，就可以在主线程中进行对应操作和反馈用户了，可以等待open成功，也可以结束进程。</p>
+<h5 id="代码检错机制"><a href="#代码检错机制" class="headerlink" title="代码检错机制"></a>代码检错机制</h5><p>我一开始以为python的异常抛出也就是try，是一个不能乱用的东西，是一个类似于debug固件的东西，不能在release版本存在的东西，后面我才知道，因为python是一个高度抽象的东西，它做不到正常通过代码来识别硬件错误。所以，使用try这种错误机制是可以的哦，不要把它当成一个坏东西，就好比python的一个串口，突然拔了，直接就是write错误，而且非常难处理，此时try抛出是一个非常简单好用的方法哦，尤其是开发上位机的时候。</p>
+<p>注意了，c中的断言是宏，作用预处理阶段哦，所以，后续程序运行过程是没用的，虽然它可以检测和判断，还能查找文件是否存在。</p>
+
     </div>
 
     
@@ -249,6 +268,9 @@
 
 
       <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/OS/" rel="tag"># OS</a>
+          </div>
 
         
 
@@ -318,6 +340,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-5"><a class="nav-link" href="#%E7%A1%AC%E4%BB%B6%E9%94%99%E8%AF%AF"><span class="nav-number">1.</span> <span class="nav-text">硬件错误</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#MCU%E7%9A%84%E7%A1%AC%E4%BB%B6%E9%94%99%E8%AF%AF"><span class="nav-number">2.</span> <span class="nav-text">MCU的硬件错误</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E6%9C%89%E7%B3%BB%E7%BB%9F%E7%9A%84MCU"><span class="nav-number">3.</span> <span class="nav-text">有系统的MCU</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#linux%E7%B3%BB%E7%BB%9F"><span class="nav-number">4.</span> <span class="nav-text">linux系统</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E7%B3%BB%E7%BB%9F%E5%BC%80%E5%8F%91%E8%A7%A3%E5%86%B3%E6%96%B9%E6%A1%88"><span class="nav-number">5.</span> <span class="nav-text">系统开发解决方案</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E4%BB%A3%E7%A0%81%E6%A3%80%E9%94%99%E6%9C%BA%E5%88%B6"><span class="nav-number">6.</span> <span class="nav-text">代码检错机制</span></a></li></ol></div>
       </div>
       <!--/noindex-->
 
@@ -408,7 +431,7 @@
 
  <div class="theme-info">
   <div class="powered-by"></div>
-  <span class="post-count">博客全站共79k字</span>
+  <span class="post-count">博客全站共80k字</span>
 </div>
 
         
