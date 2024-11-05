@@ -205,7 +205,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2024-11-04 23:38:24" itemprop="dateModified" datetime="2024-11-04T23:38:24+08:00">2024-11-04</time>
+                <time title="修改时间：2024-11-06 00:25:17" itemprop="dateModified" datetime="2024-11-06T00:25:17+08:00">2024-11-06</time>
               </span>
 
           
@@ -220,9 +220,9 @@
 
       
           <h5 id="硬件错误"><a href="#硬件错误" class="headerlink" title="硬件错误"></a>硬件错误</h5><p>很多时候，就是硬件接口松了，现在的硬件都是挺耐用的，除了那些黑心商家的低温焊锡，廉价的元器件等。有的时候，是用户没安卓驱动，有的时候是用户没接上去，或者中途拔线等，都会导致来自硬件的bug。</p>
-<p>在我们软件开发过程中，要分清楚有无系统。是嵌入式开发，还是app开发，还是小程序开发，其实小程序开发就是app的进一步封装来着，只要手机是可以正常使用设备的，小程序也是ok的。</p>
+<p>在我们软件开发过程中，要分清楚有无系统。是嵌入式开发，还是app开发，还是小程序开发，其实小程序开发就是app的进一步封装来着，只要手机是可以正常使用设备的，小程序也是ok的。这种硬件错误一般都是因为热插拔的问题，也就是pcie和usb等接口设备。</p>
 <h5 id="MCU的硬件错误"><a href="#MCU的硬件错误" class="headerlink" title="MCU的硬件错误"></a>MCU的硬件错误</h5><p>比如，写了一个USART重定向printf，做一个日志功能。其实就会发现一件事，我们写代码是非常自由的，非常非常爽的。因为我们不论有没有接上去外设总线，我们都能发送，至于读取这个事情，一般都是中断触发。所以，在程序运行过程中，不论总线有没有被插拔，其实都是不影响，mcu的收发的，你说对，mcu只要收发就完事了，而协议考虑的就多了。所以，此时就要有协议回传，就要校验来保证通信是没问题的，不是说，你发送完毕，接收完毕就是OK的，中间线松了也是可以正常通信的。</p>
-<h5 id="有系统的MCU"><a href="#有系统的MCU" class="headerlink" title="有系统的MCU"></a>有系统的MCU</h5><p>比如rt-thread的smart版本就有一个设备注册和设备查询的操作，这里就封装了文件操作集，open write read那些东西，此时，读写是由返回值的，开发过程中，要注意返回值是真的有用的，是必须要的。</p>
+<h5 id="有系统的MCU"><a href="#有系统的MCU" class="headerlink" title="有系统的MCU"></a>有系统的MCU</h5><p>比如rt-thread的smart版本就有一个设备注册和设备查询的操作，这里就封装了文件操作集，open write read那些东西，此时，读写是由返回值的，开发过程中，要注意返回值是真的有用的，是必须要的。对于这些返回状态，可以是一段时间没由回复就为异常，也可以是没有ack，没有片选等诸多方法来判断是否硬件异常。</p>
 <h5 id="linux系统"><a href="#linux系统" class="headerlink" title="linux系统"></a>linux系统</h5><p>千万不要神话系统了，系统就是为了管理资源和分配任务。有很多总线驱动，这个其实就是上面rt-thread干的事情咯，然后通过vfs来统一接口，所以，应用层开发，就是每次调用文件io的时候，都必须判断返回值是否正常，异常的话，就打印出来，错误是会直接输出出来的，注意咯，标准错误是没有缓冲区的。</p>
 <figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">FILE *fp;</span><br><span class="line"> </span><br><span class="line">fp = fopen(<span class="string">&quot;file.txt&quot;</span>, <span class="string">&quot;r&quot;</span>);</span><br><span class="line"><span class="keyword">if</span>( fp == <span class="literal">NULL</span> ) </span><br><span class="line">&#123;</span><br><span class="line">    <span class="built_in">fprintf</span>(<span class="built_in">stderr</span>, <span class="string">&quot;Value of errno: %d\n&quot;</span>, errno);</span><br><span class="line">    <span class="built_in">fprintf</span>(<span class="built_in">stderr</span>, <span class="string">&quot;Error opening file: %s\n&quot;</span>, strerror(errno));</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
@@ -1031,7 +1031,7 @@
 
  <div class="theme-info">
   <div class="powered-by"></div>
-  <span class="post-count">博客全站共80k字</span>
+  <span class="post-count">博客全站共80.1k字</span>
 </div>
 
         
