@@ -22,17 +22,21 @@
     var CONFIG = {"hostname":"example.com","root":"/","scheme":"Pisces","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
   </script>
 
-  <meta name="description" content="应用是应用，驱动是驱动！你要是偏要应用干驱动，哥们，你怎么不直接薪资翻倍啊！[🦀]">
+  <meta name="description" content="没事找事？为什么要这个呢？因为不论是win还是linux其实都只是一个平台罢了，这个平台想干嘛就干嘛，vscode的终端可以使用dir和ls就说明了，很多软件是可以同时兼容两个操作系统的。 而且很多大牛，逆向实现了win中dll，比如wine，这个团队就实现win中dll库。比如steam掌机是linux系统，也可以运行pc游戏了，非常神奇和高难度的工作哦。 所以说，其实就是一个开发环境罢了 需要">
 <meta property="og:type" content="article">
 <meta property="og:title" content="win使用makefile">
 <meta property="og:url" content="http://example.com/2024/10/19/win%E4%BD%BF%E7%94%A8makefile/index.html">
 <meta property="og:site_name" content="我要成为嵌入式高手[doge]">
-<meta property="og:description" content="应用是应用，驱动是驱动！你要是偏要应用干驱动，哥们，你怎么不直接薪资翻倍啊！[🦀]">
+<meta property="og:description" content="没事找事？为什么要这个呢？因为不论是win还是linux其实都只是一个平台罢了，这个平台想干嘛就干嘛，vscode的终端可以使用dir和ls就说明了，很多软件是可以同时兼容两个操作系统的。 而且很多大牛，逆向实现了win中dll，比如wine，这个团队就实现win中dll库。比如steam掌机是linux系统，也可以运行pc游戏了，非常神奇和高难度的工作哦。 所以说，其实就是一个开发环境罢了 需要">
 <meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="http://example.com/Blogas_images/gcc.png">
+<meta property="og:image" content="http://example.com/Blogas_images/gcc2.png">
+<meta property="og:image" content="http://example.com/Blogas_images/%E7%8E%AF%E5%A2%83%E5%8F%98%E9%87%8F.png">
 <meta property="article:published_time" content="2024-10-19T09:13:29.000Z">
-<meta property="article:modified_time" content="2024-10-19T09:13:29.924Z">
+<meta property="article:modified_time" content="2024-11-11T15:50:15.537Z">
 <meta property="article:author" content="CSM">
 <meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://example.com/Blogas_images/gcc.png">
 
 <link rel="canonical" href="http://example.com/2024/10/19/win%E4%BD%BF%E7%94%A8makefile/">
 
@@ -126,7 +130,7 @@
   </li>
         <li class="menu-item menu-item-tags">
 
-    <a href="/tags/" rel="section"><i class="tags fa-fw"></i>标签<span class="badge">40</span></a>
+    <a href="/tags/" rel="section"><i class="tags fa-fw"></i>标签<span class="badge">41</span></a>
 
   </li>
         <li class="menu-item menu-item-categories">
@@ -202,6 +206,13 @@
 
               <time title="创建时间：2024-10-19 17:13:29" itemprop="dateCreated datePublished" datetime="2024-10-19T17:13:29+08:00">2024-10-19</time>
             </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2024-11-11 23:50:15" itemprop="dateModified" datetime="2024-11-11T23:50:15+08:00">2024-11-11</time>
+              </span>
 
           
 
@@ -214,7 +225,32 @@
     <div class="post-body" itemprop="articleBody">
 
       
-        
+        <h5 id="没事找事？"><a href="#没事找事？" class="headerlink" title="没事找事？"></a>没事找事？</h5><p>为什么要这个呢？因为不论是win还是linux其实都只是一个平台罢了，这个平台想干嘛就干嘛，vscode的终端可以使用dir和ls就说明了，很多软件是可以同时兼容两个操作系统的。</p>
+<p>而且很多大牛，逆向实现了win中dll，比如wine，这个团队就实现win中dll库。比如steam掌机是linux系统，也可以运行pc游戏了，非常神奇和高难度的工作哦。</p>
+<p>所以说，其实就是一个开发环境罢了</p>
+<h5 id="需要安装的东西？"><a href="#需要安装的东西？" class="headerlink" title="需要安装的东西？"></a>需要安装的东西？</h5><p>肯定别想win里面有gcc啦！我们去网上下载的ubuntu都没有gcc，要自己安装，同理，也有win32的gcc。</p>
+<p><img src="/../Blogas_images/gcc.png"></p>
+<p>自然makefile也是win没有，有些项目是通过makefile来实现编译的，所以，这就很有必要咯。巧了下面这个MinGW同时有gcc g++等，而且还有makefile哦。但是名字是mingw32-make.exe,最好是复制一份改名字为makefile就好啦。</p>
+<p><a target="_blank" rel="noopener" href="https://sourceforge.net/projects/mingw-w64/">MinGW</a>下载并安装到自定义的存储中间咯，比如我的：</p>
+<p><img src="/../Blogas_images/gcc2.png"></p>
+<h5 id="环境变量"><a href="#环境变量" class="headerlink" title="环境变量"></a>环境变量</h5><p>这里，我就多提一嘴吧，毕竟环境变量这种东西，很多小白和工程师都懵懵懂懂的。</p>
+<p>其实环境变量顾名思义就是这个开发环境过程中的全局都能使用的变量，这些变量一般都是字符串，或者说是路径，我们脚本类的开发过程中，只有容器这个概念。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">csm = <span class="string">&quot;../../csm/csm1/csm2/bin&quot;</span></span><br></pre></td></tr></table></figure>
+
+<p>我可以在Path添加一个路径，此时就是一个字符串，不过脚本可以提取并使用出来，这样在文件系统的加持下，我们就能轻易得到这个文件夹中的文件和可执行指令等。</p>
+<p>因此我们把git.exe 、gcc.exe、g++.exe等可执行文件添加到对应路径环境变量中，我们在cmd终端就能直接使用git、gcc等来操作，这个有点调用动态库的味道了。</p>
+<p>环境变量在linux、win、mac等操作系统都有哦。还有就是win的多用户情况下的环境变量了。也就是分成系统变量和用户罢了。</p>
+<p>其实也非常好理解，一个win一个linux本身就不是一个用户，本身就支持多用户使用和操作的，所以，为了每个用户量身定做，也是非常合理的，常见的就是安装程序的时候，会弹出来是否为了本机所有用户安装，其实这就是系统环境变量了。</p>
+<p><img src="/../Blogas_images/%E7%8E%AF%E5%A2%83%E5%8F%98%E9%87%8F.png"></p>
+<h5 id="环境变量优先级和顺序"><a href="#环境变量优先级和顺序" class="headerlink" title="环境变量优先级和顺序"></a>环境变量优先级和顺序</h5><p>我们在用户变量和系统变量中创建同名变量，那么windows会将用户变量覆盖系统变量。</p>
+<p><a target="_blank" rel="noopener" href="https://blog.csdn.net/sj2050/article/details/114299599">windows下用户变量和系统变量的优先级_window 让用户环境变量 优先于 系统环境变量-CSDN博客</a></p>
+<p>同一个环境下，从前往后开始查询变量，所以，好巧不巧，我这里有一个minGW32的bin在后面，前面又有一个老版本的minGW32里面自然也有bin，我把它放在新版后面，就会导致系统和开发环境调用老版本的gcc、g++等东西，出现的结果可能就差强人意了。</p>
+<p><a target="_blank" rel="noopener" href="https://www.cnblogs.com/codingmengmeng/p/7253143.html">windows环境变量PATH顺序的重要性 - 阿玛尼迪迪 - 博客园</a></p>
+<h5 id="总结一下咯"><a href="#总结一下咯" class="headerlink" title="总结一下咯"></a>总结一下咯</h5><p>其实，不论win，还是mac，还是win等，其实都是一个操作系统环境，内部都有脚本的，都有文件系统和路径，有win的盘系统，有linux、unix的根系统，都是有路径来的，而环境变量就是最好路径描述。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#总不能前面加上一长串的地址然后执行一个git？</span></span><br><span class="line">CSM D:&gt; .\csm\csm1\csm2\csm3\git.exe</span><br><span class="line"><span class="comment">#而我们只需要git</span></span><br><span class="line">CSM D:&gt; git</span><br></pre></td></tr></table></figure>
+
+<p>所以，平台只是一个平台，只要满足他的开发环境就可以使用，巧了不是gcc、python那些编译链刚好有很多平台版本的，环境ok就可以用了。</p>
+
     </div>
 
     
@@ -321,6 +357,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-5"><a class="nav-link" href="#%E6%B2%A1%E4%BA%8B%E6%89%BE%E4%BA%8B%EF%BC%9F"><span class="nav-number">1.</span> <span class="nav-text">没事找事？</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E9%9C%80%E8%A6%81%E5%AE%89%E8%A3%85%E7%9A%84%E4%B8%9C%E8%A5%BF%EF%BC%9F"><span class="nav-number">2.</span> <span class="nav-text">需要安装的东西？</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E7%8E%AF%E5%A2%83%E5%8F%98%E9%87%8F"><span class="nav-number">3.</span> <span class="nav-text">环境变量</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E7%8E%AF%E5%A2%83%E5%8F%98%E9%87%8F%E4%BC%98%E5%85%88%E7%BA%A7%E5%92%8C%E9%A1%BA%E5%BA%8F"><span class="nav-number">4.</span> <span class="nav-text">环境变量优先级和顺序</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E6%80%BB%E7%BB%93%E4%B8%80%E4%B8%8B%E5%92%AF"><span class="nav-number">5.</span> <span class="nav-text">总结一下咯</span></a></li></ol></div>
       </div>
       <!--/noindex-->
 
@@ -349,7 +386,7 @@
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">40</span>
+        <span class="site-state-item-count">41</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>
@@ -411,7 +448,7 @@
 
  <div class="theme-info">
   <div class="powered-by"></div>
-  <span class="post-count">博客全站共80.1k字</span>
+  <span class="post-count">博客全站共84.4k字</span>
 </div>
 
         

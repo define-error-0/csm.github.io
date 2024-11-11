@@ -124,7 +124,7 @@
   </li>
         <li class="menu-item menu-item-tags">
 
-    <a href="/tags/" rel="section"><i class="tags fa-fw"></i>标签<span class="badge">40</span></a>
+    <a href="/tags/" rel="section"><i class="tags fa-fw"></i>标签<span class="badge">41</span></a>
 
   </li>
         <li class="menu-item menu-item-categories">
@@ -205,7 +205,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2024-11-06 00:25:17" itemprop="dateModified" datetime="2024-11-06T00:25:17+08:00">2024-11-06</time>
+                <time title="修改时间：2024-11-11 23:40:40" itemprop="dateModified" datetime="2024-11-11T23:40:40+08:00">2024-11-11</time>
               </span>
 
           
@@ -229,6 +229,7 @@
 <p>这样就可以一定程度上解决来自硬件的错误，所以，我们编写驱动的时候，真的要返回有用的返回值和错误提示，不然应用层真的要爆炸。常见还有就是open成功了，但是读写那些出问题了，比如拔线，此时就得判断，然后fclose文件。</p>
 <h5 id="系统开发解决方案"><a href="#系统开发解决方案" class="headerlink" title="系统开发解决方案"></a>系统开发解决方案</h5><p>我们都上系统了，那么就肯定要上多线程和多进程的，可以在主线程进行人机交互，子线程进行通信和从机操作等，子线程发现硬件错误，就结束线程，返回给主线程或者修改标准位。此时，就可以在主线程中进行对应操作和反馈用户了，可以等待open成功，也可以结束进程。</p>
 <h5 id="代码检错机制"><a href="#代码检错机制" class="headerlink" title="代码检错机制"></a>代码检错机制</h5><p>我一开始以为python的异常抛出也就是try，是一个不能乱用的东西，是一个类似于debug固件的东西，不能在release版本存在的东西，后面我才知道，因为python是一个高度抽象的东西，它做不到正常通过代码来识别硬件错误。所以，使用try这种错误机制是可以的哦，不要把它当成一个坏东西，就好比python的一个串口，突然拔了，直接就是write错误，而且非常难处理，此时try抛出是一个非常简单好用的方法哦，尤其是开发上位机的时候。</p>
+<p>try可以使用，但是建议少用，这个终究是在逃避，而不是真正的解决问题，而且会增加代码量，如果可以还是避免比较好。嵌入式项目中，用这个try简直就是要命了。因为try会带来新的库，生成文件之后体积明显变大了，尤其是开启了异常处理和堆栈追踪的情况下。</p>
 <p>注意了，c中的断言是宏，作用预处理阶段哦，所以，后续程序运行过程是没用的，虽然它可以检测和判断，还能查找文件是否存在。</p>
 
       
@@ -277,6 +278,13 @@
 
               <time title="创建时间：2024-10-19 17:13:29" itemprop="dateCreated datePublished" datetime="2024-10-19T17:13:29+08:00">2024-10-19</time>
             </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2024-11-11 23:50:15" itemprop="dateModified" datetime="2024-11-11T23:50:15+08:00">2024-11-11</time>
+              </span>
 
           
 
@@ -289,7 +297,32 @@
     <div class="post-body" itemprop="articleBody">
 
       
-          
+          <h5 id="没事找事？"><a href="#没事找事？" class="headerlink" title="没事找事？"></a>没事找事？</h5><p>为什么要这个呢？因为不论是win还是linux其实都只是一个平台罢了，这个平台想干嘛就干嘛，vscode的终端可以使用dir和ls就说明了，很多软件是可以同时兼容两个操作系统的。</p>
+<p>而且很多大牛，逆向实现了win中dll，比如wine，这个团队就实现win中dll库。比如steam掌机是linux系统，也可以运行pc游戏了，非常神奇和高难度的工作哦。</p>
+<p>所以说，其实就是一个开发环境罢了</p>
+<h5 id="需要安装的东西？"><a href="#需要安装的东西？" class="headerlink" title="需要安装的东西？"></a>需要安装的东西？</h5><p>肯定别想win里面有gcc啦！我们去网上下载的ubuntu都没有gcc，要自己安装，同理，也有win32的gcc。</p>
+<p><img src="/../Blogas_images/gcc.png"></p>
+<p>自然makefile也是win没有，有些项目是通过makefile来实现编译的，所以，这就很有必要咯。巧了下面这个MinGW同时有gcc g++等，而且还有makefile哦。但是名字是mingw32-make.exe,最好是复制一份改名字为makefile就好啦。</p>
+<p><a target="_blank" rel="noopener" href="https://sourceforge.net/projects/mingw-w64/">MinGW</a>下载并安装到自定义的存储中间咯，比如我的：</p>
+<p><img src="/../Blogas_images/gcc2.png"></p>
+<h5 id="环境变量"><a href="#环境变量" class="headerlink" title="环境变量"></a>环境变量</h5><p>这里，我就多提一嘴吧，毕竟环境变量这种东西，很多小白和工程师都懵懵懂懂的。</p>
+<p>其实环境变量顾名思义就是这个开发环境过程中的全局都能使用的变量，这些变量一般都是字符串，或者说是路径，我们脚本类的开发过程中，只有容器这个概念。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">csm = <span class="string">&quot;../../csm/csm1/csm2/bin&quot;</span></span><br></pre></td></tr></table></figure>
+
+<p>我可以在Path添加一个路径，此时就是一个字符串，不过脚本可以提取并使用出来，这样在文件系统的加持下，我们就能轻易得到这个文件夹中的文件和可执行指令等。</p>
+<p>因此我们把git.exe 、gcc.exe、g++.exe等可执行文件添加到对应路径环境变量中，我们在cmd终端就能直接使用git、gcc等来操作，这个有点调用动态库的味道了。</p>
+<p>环境变量在linux、win、mac等操作系统都有哦。还有就是win的多用户情况下的环境变量了。也就是分成系统变量和用户罢了。</p>
+<p>其实也非常好理解，一个win一个linux本身就不是一个用户，本身就支持多用户使用和操作的，所以，为了每个用户量身定做，也是非常合理的，常见的就是安装程序的时候，会弹出来是否为了本机所有用户安装，其实这就是系统环境变量了。</p>
+<p><img src="/../Blogas_images/%E7%8E%AF%E5%A2%83%E5%8F%98%E9%87%8F.png"></p>
+<h5 id="环境变量优先级和顺序"><a href="#环境变量优先级和顺序" class="headerlink" title="环境变量优先级和顺序"></a>环境变量优先级和顺序</h5><p>我们在用户变量和系统变量中创建同名变量，那么windows会将用户变量覆盖系统变量。</p>
+<p><a target="_blank" rel="noopener" href="https://blog.csdn.net/sj2050/article/details/114299599">windows下用户变量和系统变量的优先级_window 让用户环境变量 优先于 系统环境变量-CSDN博客</a></p>
+<p>同一个环境下，从前往后开始查询变量，所以，好巧不巧，我这里有一个minGW32的bin在后面，前面又有一个老版本的minGW32里面自然也有bin，我把它放在新版后面，就会导致系统和开发环境调用老版本的gcc、g++等东西，出现的结果可能就差强人意了。</p>
+<p><a target="_blank" rel="noopener" href="https://www.cnblogs.com/codingmengmeng/p/7253143.html">windows环境变量PATH顺序的重要性 - 阿玛尼迪迪 - 博客园</a></p>
+<h5 id="总结一下咯"><a href="#总结一下咯" class="headerlink" title="总结一下咯"></a>总结一下咯</h5><p>其实，不论win，还是mac，还是win等，其实都是一个操作系统环境，内部都有脚本的，都有文件系统和路径，有win的盘系统，有linux、unix的根系统，都是有路径来的，而环境变量就是最好路径描述。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#总不能前面加上一长串的地址然后执行一个git？</span></span><br><span class="line">CSM D:&gt; .\csm\csm1\csm2\csm3\git.exe</span><br><span class="line"><span class="comment">#而我们只需要git</span></span><br><span class="line">CSM D:&gt; git</span><br></pre></td></tr></table></figure>
+
+<p>所以，平台只是一个平台，只要满足他的开发环境就可以使用，巧了不是gcc、python那些编译链刚好有很多平台版本的，环境ok就可以用了。</p>
+
       
     </div>
 
@@ -336,6 +369,13 @@
 
               <time title="创建时间：2024-10-11 08:22:03" itemprop="dateCreated datePublished" datetime="2024-10-11T08:22:03+08:00">2024-10-11</time>
             </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2024-11-11 23:43:49" itemprop="dateModified" datetime="2024-11-11T23:43:49+08:00">2024-11-11</time>
+              </span>
 
           
 
@@ -348,7 +388,50 @@
     <div class="post-body" itemprop="articleBody">
 
       
-          
+          <h5 id="Web是什么呢？"><a href="#Web是什么呢？" class="headerlink" title="Web是什么呢？"></a>Web是什么呢？</h5><p>Web（World Wide Web）即全球<a target="_blank" rel="noopener" href="https://baike.baidu.com/item/%E5%B9%BF%E5%9F%9F%E7%BD%91/422004?fromModule=lemma_inlink">广域网</a>，也称为<a target="_blank" rel="noopener" href="https://baike.baidu.com/item/%E4%B8%87%E7%BB%B4%E7%BD%91/215515?fromModule=lemma_inlink">万维网</a>，它是一种基于<a target="_blank" rel="noopener" href="https://baike.baidu.com/item/%E8%B6%85%E6%96%87%E6%9C%AC/2832422?fromModule=lemma_inlink">超文本</a>和<a target="_blank" rel="noopener" href="https://baike.baidu.com/item/HTTP/243074?fromModule=lemma_inlink">HTTP</a>的、全球性的、动态交互的、<a target="_blank" rel="noopener" href="https://baike.baidu.com/item/%E8%B7%A8%E5%B9%B3%E5%8F%B0/8558902?fromModule=lemma_inlink">跨平台</a>的分布式图形信息系统。是建立在Internet上的一种<a target="_blank" rel="noopener" href="https://baike.baidu.com/item/%E7%BD%91%E7%BB%9C%E6%9C%8D%E5%8A%A1/9498645?fromModule=lemma_inlink">网络服务</a>，为浏览者在Internet上查找和浏览信息提供了图形化的、易于访问的直观界面，其中的文档及<a target="_blank" rel="noopener" href="https://baike.baidu.com/item/%E8%B6%85%E7%BA%A7%E9%93%BE%E6%8E%A5/313121?fromModule=lemma_inlink">超级链接</a>将Internet上的信息节点组织成一个互为关联的<a target="_blank" rel="noopener" href="https://baike.baidu.com/item/%E7%BD%91%E7%8A%B6%E7%BB%93%E6%9E%84/5106492?fromModule=lemma_inlink">网状结构</a>。</p>
+<p>自然咱们搞开发，肯定是能看懂一二？看懂给鬼啊？搞嵌入式哪里会这些东西。这些一看就是前端后端那些要完蛋的东西。但是，其实还是有些地方的前端工资有很高，就算在卷，一个项目最终要一个人，一个团队审核，所以说，肯定是要有人会的，这种级别的大佬，工资不低哦，不是说搞前端工资高，而是全栈，啥都会，cto，技术总监那种同时会前端，自然是香的。</p>
+<p>说白话，就是用户看不懂开发，连抓包都不会的，看状态，查bug就更不可能了，只有简洁好用的界面还差不多。那么有啥东西，通用又简单，而且不用下载软件，不吃设备呢？欸！我有一个点子，铁牛牛肉面(bushi)。开玩笑，那就是浏览器了。</p>
+<h5 id="浏览器和内核"><a href="#浏览器和内核" class="headerlink" title="浏览器和内核"></a>浏览器和内核</h5><p>首先，内核是浏览器的核心，这个操作系统是一样的，外部就是浏览器了，也就是这个内核的套壳。</p>
+<p>浏览器，这东西见怪不怪了。浏览器开发含金量有，但是不是很高，你觉得百度怎么样？我觉得是依托，但是它的开发难度确实不低。</p>
+<p>浏览器内核，这东西的含金量才高的吓人，真的非常非常非常非常牛逼，他的代码量非常大，而且现在国外基本都是Google的引擎，市场率好像是68%，至于bing的内核也是好东西，那是因为微软强行带它玩的，真正厉害的引擎还是google内核，不过这个优劣就不讨论了，总比国内的套壳百度好太多了。</p>
+<p>开发一个浏览器的内核难度，绝对不亚于开发一个操作系统，里面有多到骇人的协议栈，有非常多的标志位，是依托大大的屎山，但是没人敢乱动它。它可以做到所有平台下的兼容，这点真的真的太牛逼，确实是系统根据浏览器内核留下来的接口，进行对接才实现的。因此用户不用担心平台设备问题，可以随心所欲使用浏览器，虽然主要功能是显示和交互，但是难度真的不低，要兼容历史遗留，浏览器内核要兼容各个浏览器。自然咱们搞屌嵌入式的，这个自然是用用就好了，顶多抓个包，逆向一些东西捞点钱罢了。</p>
+<p>[为什么一直以来都没有国产浏览器内核，研发一个究竟有多难？_标准](<a target="_blank" rel="noopener" href="https://www.sohu.com/a/319299714_489987#:~:text=%E9%82%A3%E4%B9%88%EF%BC%8C%E4%B8%BA%E4%BB%80%E4%B9%88%E4%B8%80%E7%9B%B4%E4%BB%A5%E6%9D%A5%E9%83%BD%E6%B2%A1%E6%9C%89%E5%9B%BD%E4%BA%A7%E6%B5%8F%E8%A7%88%E5%99%A8%E5%86%85%E6%A0%B8%EF%BC%8C%E7%A0%94%E5%8F%91%E4%B8%80%E4%B8%AA%E7%A9%B6%E7%AB%9F%E6%9C%89%E5%A4%9A%E9%9A%BE%EF%BC%9F">https://www.sohu.com/a/319299714_489987#:~:text=那么，为什么一直以来都没有国产浏览器内核，研发一个究竟有多难？</a> 一方面、我们国家互联网发展较晚，错过HTML4制定标准的时代，很多标准在99年以前就已经定下来，而浏览器又是一个特别需要大家遵守公开开放标准的一个产品，大家想入局，就得基于已有的技术和标准去做事情，在通迅行业的2G%2F3G标准也是这样，这是既定事实造成的第一个门槛。,另一方面、自主研发浏览器内核成本高、难度大。 如今一个浏览器代码接近2400万行，从项目规模来说，已经接近半个操作系统了。 以目前市场占有率最大的谷歌Chromium内核为例子，Google最多时候调动超过1000个硅谷的程序员集中力量去开发出Chromium内核的浏览，从2008年算，至今也花了10年。)</p>
+<p><a target="_blank" rel="noopener" href="https://www.zhihu.com/question/290564335">(5 封私信) 自主研发一款浏览器内核的难度到底有多大？ - 知乎</a></p>
+<h5 id="嵌入式Web用途呢？"><a href="#嵌入式Web用途呢？" class="headerlink" title="嵌入式Web用途呢？"></a>嵌入式Web用途呢？</h5><p>这个啥意思呢？我们大部分使用Web都是在电脑上，也就是PC(Personal Computer)上面，使用浏览器查看的，但是嵌入式设备不是电脑，嵌入式就是一个垃圾电子，它贯彻够用就行，所以，很多时候都不能二次开发，系统裁剪，内存裁剪，存储裁剪，所以，它是一个方向的极致设备了，不同电脑是可以执行多种操作，想干嘛就干嘛，只要有资源和条件。</p>
+<p>note: 我只是要控制USB的一个灯泡，总不能买一个mac电脑，对usb进行一个代码编写，然后就为了控制这个灯泡吧。那其他硬件不都浪费，所以，嵌入式就是这种”剪身成蝶”的设备了，剪出来一个合适的大小，满足需求即可咯。</p>
+<p>用途：Web肯定是联网的，但是可以是广域网，也可以是局域网咯。</p>
+<ul>
+<li><p>最最最常用就是配置无线路由器了，这个是通过手机浏览器或者电脑浏览器去访问特定浏览器地址，然后就能进入一个Web界面，这个界面其实就是为了帮助用户来进行修改属性的，用户肯定是不可能看得懂这些代码和开发的，但是开关和设备那些，输入账号密码，还是有可能会的。也就是说，Web就是为了防呆，就是为了让用户可以低成本实现对硬件配置，<strong>用户通过交互让本地的路由器得到数据，然后路由器把本地的页面传给用户端，也就是类似软件一样的交互和操作了，不过这一切都是发生在Web上的。</strong>但是还有用很多用户不知道怎么操作和设置属性，建议多去网上搜一下视频和教程吧，低成本快速入手，不意味着啥也不用操作，等着饭送到嘴边，不想动脑就得花钱请人，就是那么简单。咱们嵌入式工程师都来写前端了，你还想让我们怎么样啊，呜呜呜。</p>
+</li>
+<li><p>我们知道了，其实就是通过了网络来进行通信，自然就可以远程控制和修改属性，比如我家里面有一个智能管家，我要远程去修改他的参数，我是用户啊，我肯定看不懂，只有相对合理的配置界面还差不多，让用户输入命令行，等着退货和差评吧。此时需要哪个智能管家连上网络，对接到厂商提供的服务器。我们打开app，然后app就会去访问服务器，我们发送查询请求，服务器就会去查询我们绑定的嵌入式设备，然后把它的Web数据发送给服务器，服务器再转发给我们app上面，此时我们就知道嵌入式设备的属性和状态啦，我们修改一下，再确定上传就完成对设备的操作咯。这里服务器可以选择解析Web数据，然后再发送给我们app，也可以作为一个透传功能。</p>
+</li>
+</ul>
+<p>有人要问了，为什么不用mqtt协议啊？我只能说，孩子，你高估用户的编程开发水平了，他们要是看得懂数据和拆包，我们可以下岗了。http、https和mqtt都是基于tcp\ip的封装，mqtt确实高效实时，但是用户看不懂，除非你在app层面对这些数据进行处理，也是可以的，Web就是为了交互和不限设备、以及安全性。想那种智能家居，估计用就是mqtt了，但是一开始配置联网的过程很可能用到了Web；</p>
+<p>一句话总结：</p>
+<p>首先要有网络，现在一般都是无线网络；其次要配置网络连接、网络属性或者参数；有无远程访问寻求；裁剪程度和设备复杂度；有无app开发，需不需要；给谁用，受众是谁。</p>
+<h5 id="嵌入式Web的主要组成部分"><a href="#嵌入式Web的主要组成部分" class="headerlink" title="嵌入式Web的主要组成部分"></a>嵌入式Web的主要组成部分</h5><h6 id="1-Web服务器："><a href="#1-Web服务器：" class="headerlink" title="1.Web服务器："></a><strong>1.Web服务器</strong>：</h6><ul>
+<li>嵌入式Web服务器是运行在嵌入式设备上的Web应用服务器，它负责处理HTTP请求、返回网页内容，并与设备的硬件或操作系统进行交互。</li>
+<li>常见的嵌入式Web服务器包括：<strong>uHTTPd</strong>、<strong>lighttpd</strong>、<strong>Nginx</strong>、<strong>Apache</strong>（虽然主要用于PC，也可以在某些嵌入式设备上运行），以及专为嵌入式设计的<strong>mongoose</strong>、<strong>libmicrohttpd</strong>等。</li>
+</ul>
+<h6 id="2-Web前端："><a href="#2-Web前端：" class="headerlink" title="2.Web前端："></a><strong>2.Web前端</strong>：</h6><ul>
+<li>前端界面是通过Web浏览器访问的HTML、CSS和JavaScript组成的网页。用户通过这些网页与嵌入式设备进行交互。</li>
+<li>在嵌入式设备中，前端界面往往需要精简，以适应低资源的硬件环境。通常会使用轻量级的前端框架，如<strong>Bootstrap</strong>、<strong>jQuery</strong>，甚至定制的前端代码来减小资源消耗。</li>
+</ul>
+<h6 id="3-Web后端："><a href="#3-Web后端：" class="headerlink" title="3.Web后端："></a><strong>3.Web后端</strong>：</h6><ul>
+<li>后端通常由嵌入式设备中的应用程序或控制器提供，处理前端请求、控制设备硬件、管理数据等。</li>
+<li>后端编程语言有很多选择，可以使用嵌入式开发语言（如<strong>C&#x2F;C++<strong>、</strong>Python</strong>）或嵌入式操作系统提供的API（如<strong>RTOS</strong>）进行开发。</li>
+</ul>
+<h6 id="4-协议和接口："><a href="#4-协议和接口：" class="headerlink" title="4.协议和接口："></a><strong>4.协议和接口</strong>：</h6><ul>
+<li>嵌入式Web通常通过HTTP协议进行通信，也可以使用WebSocket进行双向通信，尤其适用于实时数据交互。</li>
+<li>数据通常采用JSON或XML格式进行传输，以便在Web客户端和嵌入式设备之间交换信息。</li>
+</ul>
+<h5 id="LWIP"><a href="#LWIP" class="headerlink" title="LWIP"></a>LWIP</h5><p>这个是为了实现最最最基础的网络通信咯，也就是tcp\ip或者utp通信，我们开发者可以通过socket在嵌入式上面运行咯，甚至mcu都能使用这个socket，非常非常牛逼，从网上下载对应的库，然后查看手册进行编程吧，这里是需要一些网络编程基础的，可以先去学一下linux的网编再来从事这个lwip库吧。</p>
+<p>也可以查考下面这个博客，搭建一个嵌入式web服务器操作哦。</p>
+<p><a target="_blank" rel="noopener" href="https://blog.csdn.net/ybhuangfugui/article/details/119258383">手把手教你在开发板中搭建一个嵌入式web服务器-CSDN博客</a></p>
+<h5 id="需要掌握的网络协议"><a href="#需要掌握的网络协议" class="headerlink" title="需要掌握的网络协议"></a>需要掌握的网络协议</h5><p>ICMP、TCP\IP、UDP、Http、Https、CoAP、Mqtt、WebSocket、REST、SOAP、UPnP、FTP&#x2F;SFTP、SNMP、BASIC&#x2F;Modbus TCP(这个了解就好了)等，还有非常非常多协议。建议找一个开源项目尝试一下哦。</p>
+<h5 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h5><p>就是为了让用户看懂和快速上手操作的交互界面，嵌入式设备内部存放这web页面数据，通过连接之后，用户通过浏览器进入对应ip，就会向嵌入式设备发送web请求得到，然后就会发送web页面到用户浏览器中，就可以进行交互操作了，嵌入式设备就可以因此得到想要的数据了。</p>
+<p>note：不是只有linux嵌入式设备才能有所谓的web功能，只是因为大部分嵌入式设备，都是物联网设备，直接mqtt就ok了，用不着web，也不需要用户来交互，一个app控制网络就好了。如果你想要，用mcu也可以实现web功能，看需求咯。</p>
+
       
     </div>
 
@@ -969,7 +1052,7 @@
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">40</span>
+        <span class="site-state-item-count">41</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>
@@ -1031,7 +1114,7 @@
 
  <div class="theme-info">
   <div class="powered-by"></div>
-  <span class="post-count">博客全站共80.1k字</span>
+  <span class="post-count">博客全站共84.4k字</span>
 </div>
 
         
