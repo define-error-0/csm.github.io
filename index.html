@@ -124,7 +124,7 @@
   </li>
         <li class="menu-item menu-item-tags">
 
-    <a href="/tags/" rel="section"><i class="tags fa-fw"></i>标签<span class="badge">42</span></a>
+    <a href="/tags/" rel="section"><i class="tags fa-fw"></i>标签<span class="badge">43</span></a>
 
   </li>
         <li class="menu-item menu-item-categories">
@@ -134,7 +134,7 @@
   </li>
         <li class="menu-item menu-item-archives">
 
-    <a href="/archives/" rel="section"><i class="archive fa-fw"></i>归档<span class="badge">124</span></a>
+    <a href="/archives/" rel="section"><i class="archive fa-fw"></i>归档<span class="badge">125</span></a>
 
   </li>
         <li class="menu-item menu-item-resources">
@@ -170,6 +170,75 @@
 
           <div class="content index posts-expand">
             
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2024/11/13/Qt%E4%B8%8A%E4%BD%8D%E6%9C%BA%E5%92%8C%E5%B5%8C%E5%85%A5%E5%BC%8F%E4%BA%A4%E4%BA%92UI%E7%9A%84%E5%8C%BA%E5%88%AB/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/csm.png">
+      <meta itemprop="name" content="CSM">
+      <meta itemprop="description" content="应用是应用，驱动是驱动！你要是偏要应用干驱动，哥们，你怎么不直接薪资翻倍啊！[🦀]">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="我要成为嵌入式高手[doge]">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2024/11/13/Qt%E4%B8%8A%E4%BD%8D%E6%9C%BA%E5%92%8C%E5%B5%8C%E5%85%A5%E5%BC%8F%E4%BA%A4%E4%BA%92UI%E7%9A%84%E5%8C%BA%E5%88%AB/" class="post-title-link" itemprop="url">Qt上位机和嵌入式交互UI的区别</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+              
+
+              <time title="创建时间：2024-11-13 00:15:24 / 修改时间：01:14:46" itemprop="dateCreated datePublished" datetime="2024-11-13T00:15:24+08:00">2024-11-13</time>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h5 id="Qt"><a href="#Qt" class="headerlink" title="Qt"></a>Qt</h5><p>这个搞嵌入式的，应该到一定程度，就会接触到了，其实就是一个UI+交互的开发软件。我们可以使用Qt来开发安卓，linux，mac等多个平台的软件，尤其是使用PyQt，这个跨平台能力更加夸张，可以一套代码，随意打包成不同平台的可执行软件。</p>
+<h5 id="嵌入式平台"><a href="#嵌入式平台" class="headerlink" title="嵌入式平台"></a>嵌入式平台</h5><p>我们可以选择在linux或者win等系统上面进行Qt软件的开发，然后通过提供的qmake＋交叉编译链，实现对设备的，触摸屏+显示屏的控制，此时就可以实现交互，这种软件，一般都是固定大小的，也不需要缩放，进行点击和操作就行了，帧率也不高。说到底，大小不变，也不用兼容多个设备，只要自己这个屏幕可以健康使用就好了。本质上就是一个linux软件开发，只要设备驱动存在，就没啥问题的。</p>
+<p>而且，现在qt都是mcu版本的了，其实也是一样的，就是留个接口，开发人员自己写一个屏幕驱动加进去而已。</p>
+<h5 id="上位机"><a href="#上位机" class="headerlink" title="上位机"></a>上位机</h5><p>上位机，就可能要玩的花一点了，难一点了咯，要考虑的也更多，不过上位机更多是串口、usb、网络调试等通信接口。</p>
+<p>比如隐藏标题栏自定义一个标题栏，注意了隐藏标题栏会导致原本的鼠标缩放功能缺少，需要重新编写鼠标事件才能实现鼠标的拖动缩放。</p>
+<p>而且要注意一点就是，控件都是像素大小，而不是屏幕实际大小，但是字体是实际大小，所以，在这个电脑上是正常显示的，但是换一个电脑，换一个屏幕缩放比，甚至只是一个副屏都可能直接出现异常，比如字体现实不全，字体覆盖，字体重叠等诸多问题。开发的时候，要注意时不时的获取一下当前屏幕的像素，重新刷新控件位置和触点、图画等。</p>
+<p>有的时候，可能需要手动等比例缩放，可以选择布局，也可以自己根据情况和需求进行修改，果然还是固定大小好啊，不过就算固定代下，也会收到我的分辨率和缩放影响，比我的华为电脑3k 14寸 200%的缩放是异常的，但是公司1080p 24寸 100%缩放是正常的，主要还是因为字体问题，字体大小是实际物理的、是自动跟随系统的，而不是像素大小。</p>
+<p>其次就是打包实现跨平台问题，这个是PyQt才能实现的，如果使用C++的打包是非常麻烦的，但是python的打包就非常轻松，不过python开发qt是我非常不看好的，还是c++万岁，虽然确实快。</p>
+<h5 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h5><p>其实，都是使用控件，然后进行编译，来生成对应平台可执行文件，也都是调用现有的设备，不参与驱动设计，而是纯应用层开发。不过嵌入式软件，一般都是简单，而且屏幕的大小和触摸交互点的位置、大小等固定的，而我们开发的上位机是要兼容多平台，多屏幕，多设备的，交互其实是不难的，而是多多利用状态返回来判断设备和释放设备。</p>
+
+      
+    </div>
+
+    
+    
+    
+
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
       
   
   
@@ -908,66 +977,6 @@
   
   
 
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2024/09/18/OpenGL%E5%92%8CDirectX/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/csm.png">
-      <meta itemprop="name" content="CSM">
-      <meta itemprop="description" content="应用是应用，驱动是驱动！你要是偏要应用干驱动，哥们，你怎么不直接薪资翻倍啊！[🦀]">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="我要成为嵌入式高手[doge]">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2024/09/18/OpenGL%E5%92%8CDirectX/" class="post-title-link" itemprop="url">OpenGL和DirectX</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-              
-
-              <time title="创建时间：2024-09-18 14:29:35 / 修改时间：23:55:19" itemprop="dateCreated datePublished" datetime="2024-09-18T14:29:35+08:00">2024-09-18</time>
-            </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <h5 id="GPU"><a href="#GPU" class="headerlink" title="GPU"></a>GPU</h5><h5 id="GPU管线"><a href="#GPU管线" class="headerlink" title="GPU管线"></a>GPU管线</h5><h5 id="GPU编程"><a href="#GPU编程" class="headerlink" title="GPU编程"></a>GPU编程</h5><h5 id="OpenGL"><a href="#OpenGL" class="headerlink" title="OpenGL"></a>OpenGL</h5><h5 id="DirectX"><a href="#DirectX" class="headerlink" title="DirectX"></a>DirectX</h5><h5 id="两者区别和优劣"><a href="#两者区别和优劣" class="headerlink" title="两者区别和优劣"></a>两者区别和优劣</h5><h5 id="嵌入式中OpenGL"><a href="#嵌入式中OpenGL" class="headerlink" title="嵌入式中OpenGL"></a>嵌入式中OpenGL</h5><h5 id="移动设备中OpenGL-ES"><a href="#移动设备中OpenGL-ES" class="headerlink" title="移动设备中OpenGL ES"></a>移动设备中OpenGL ES</h5><h5 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h5>
-      
-    </div>
-
-    
-    
-    
-
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
 
   
   <nav class="pagination">
@@ -1039,7 +1048,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">124</span>
+          <span class="site-state-item-count">125</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -1052,7 +1061,7 @@
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">42</span>
+        <span class="site-state-item-count">43</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>
@@ -1114,7 +1123,7 @@
 
  <div class="theme-info">
   <div class="powered-by"></div>
-  <span class="post-count">博客全站共84.4k字</span>
+  <span class="post-count">博客全站共85.3k字</span>
 </div>
 
         
