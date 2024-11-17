@@ -124,7 +124,7 @@
   </li>
         <li class="menu-item menu-item-tags">
 
-    <a href="/tags/" rel="section"><i class="tags fa-fw"></i>标签<span class="badge">43</span></a>
+    <a href="/tags/" rel="section"><i class="tags fa-fw"></i>标签<span class="badge">44</span></a>
 
   </li>
         <li class="menu-item menu-item-categories">
@@ -134,7 +134,7 @@
   </li>
         <li class="menu-item menu-item-archives">
 
-    <a href="/archives/" rel="section"><i class="archive fa-fw"></i>归档<span class="badge">125</span></a>
+    <a href="/archives/" rel="section"><i class="archive fa-fw"></i>归档<span class="badge">126</span></a>
 
   </li>
         <li class="menu-item menu-item-resources">
@@ -170,6 +170,79 @@
 
           <div class="content index posts-expand">
             
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2024/11/17/%E6%89%8B%E6%9C%BA%E5%BC%80%E5%90%AFadb/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/csm.png">
+      <meta itemprop="name" content="CSM">
+      <meta itemprop="description" content="应用是应用，驱动是驱动！你要是偏要应用干驱动，哥们，你怎么不直接薪资翻倍啊！[🦀]">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="我要成为嵌入式高手[doge]">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2024/11/17/%E6%89%8B%E6%9C%BA%E5%BC%80%E5%90%AFadb/" class="post-title-link" itemprop="url">手机开启adb</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+              
+
+              <time title="创建时间：2024-11-17 23:42:14 / 修改时间：23:58:19" itemprop="dateCreated datePublished" datetime="2024-11-17T23:42:14+08:00">2024-11-17</time>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h5 id="adb"><a href="#adb" class="headerlink" title="adb"></a>adb</h5><p>这个就是cli操作了，就是命令行操作，本质上还是终端那一套来的，ADB 全称为 Android Debug Bridge，起到调试桥的作用，是一个客户端-服务器端程序。其中客户端是用来操作的电脑，服务端是 Android 设备。ADB 也是 Android SDK 中的一个工具，可以直接操作管理 Android 模拟器或者真实的 Android 设备。</p>
+<h5 id="adb的下载"><a href="#adb的下载" class="headerlink" title="adb的下载"></a>adb的下载</h5><p>不要认为只有linux系统才能搞abd，abd也可以在win上面运行的。</p>
+<p>Windows版本：<a target="_blank" rel="noopener" href="https://dl.google.com/android/repository/platform-tools-latest-windows.zip">https://dl.google.com/android/repository/platform-tools-latest-windows.zip</a><br>Mac版本：<a target="_blank" rel="noopener" href="https://dl.google.com/android/repository/platform-tools-latest-darwin.zip">https://dl.google.com/android/repository/platform-tools-latest-darwin.zip</a><br>Linux版本：<a target="_blank" rel="noopener" href="https://dl.google.com/android/repository/platform-tools-latest-linux.zip%E3%80%81">https://dl.google.com/android/repository/platform-tools-latest-linux.zip、</a></p>
+<p>根据平台进行选择咯，下载反正都是终端命令行操作的。</p>
+<h5 id="adb的环境变量配置"><a href="#adb的环境变量配置" class="headerlink" title="adb的环境变量配置"></a>adb的环境变量配置</h5><p>把可执行文件的路径添加到环境变量中，也就是安装包里面的bin文件夹</p>
+<h5 id="adb的常用指令和功能"><a href="#adb的常用指令和功能" class="headerlink" title="adb的常用指令和功能"></a>adb的常用指令和功能</h5><p>abd就是一个大大的调试工具集合，查看文件、查看ip、查看配置、root、刷机、调用手机功能等操作，来测试或者调试此时设备和系统的可靠性、稳定性、参数等。</p>
+<p><a target="_blank" rel="noopener" href="https://blog.csdn.net/lb245557472/article/details/84068519">ADB 操作命令详解及用法大全-CSDN博客</a></p>
+<h5 id="手机怎么进入adb模式"><a href="#手机怎么进入adb模式" class="headerlink" title="手机怎么进入adb模式"></a>手机怎么进入adb模式</h5><p>进入开发者模式，开启开发者调试功能，开usb的adb调试，确认密钥，就可以进行adb调试。如下的博客，我的也刚好是vivo手机，其他也是差不多的。</p>
+<p><a target="_blank" rel="noopener" href="https://blog.csdn.net/weixin_40883833/article/details/131258378">adb详细教程（二）-开启手机开发者模式、通过adb连接安卓设备_手机如何进入adb模式-CSDN博客</a></p>
+<h5 id="手机退出安全模式"><a href="#手机退出安全模式" class="headerlink" title="手机退出安全模式"></a>手机退出安全模式</h5><p>直接关闭开发者调试模式，这个时候应该还会显示为开发者模式，这个就是内部缓存还没释放，等一会儿，或者重启了，这个时候应该不能使用开发者模式功能，其实也无所谓的。</p>
+<h5 id="手机usb实现虚拟网卡测试"><a href="#手机usb实现虚拟网卡测试" class="headerlink" title="手机usb实现虚拟网卡测试"></a>手机usb实现虚拟网卡测试</h5><p>此时，我们可以打开，一个终端咯，一个运行一个cmd，操作就和git一样，前面要加git。所以，我们就要使用adb shell ifconfig，就可以查到此时手机的所有ip了。</p>
+<p>之前也是好奇，手机是怎么通过usb给电脑提供网络的，此时就可以通过adb终端和电脑自身的ipconfig终端来比较，就会发现，此时是手机开启了一个虚拟网卡给电脑使用，这个是通过芯片的BP模块功能实现。这个有点net网络的功能，此时，就是把手机当成一个路由器一样的功能。</p>
+<p>我也是很好奇，这个usb设备此时算什么设备呢？usb本身是一个otg通信总线，此时插入之后就被当成网络设备使用了，此时开启了一个虚拟网卡设备，这个就有点意思了蛤。哪天再去仔细研究一下，今天就水了。</p>
+
+      
+    </div>
+
+    
+    
+    
+
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
       
   
   
@@ -918,65 +991,6 @@
   
   
 
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2024/09/18/win%E6%B8%B8%E6%88%8F%E8%BF%90%E8%A1%8C%E5%9C%A8linux%E7%9A%84%E6%96%B9%E6%B3%95/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/csm.png">
-      <meta itemprop="name" content="CSM">
-      <meta itemprop="description" content="应用是应用，驱动是驱动！你要是偏要应用干驱动，哥们，你怎么不直接薪资翻倍啊！[🦀]">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="我要成为嵌入式高手[doge]">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2024/09/18/win%E6%B8%B8%E6%88%8F%E8%BF%90%E8%A1%8C%E5%9C%A8linux%E7%9A%84%E6%96%B9%E6%B3%95/" class="post-title-link" itemprop="url">win游戏运行在linux的方法</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              <time title="创建时间：2024-09-18 14:30:07" itemprop="dateCreated datePublished" datetime="2024-09-18T14:30:07+08:00">2024-09-18</time>
-            </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          
-      
-    </div>
-
-    
-    
-    
-
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
 
   
   <nav class="pagination">
@@ -1048,7 +1062,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">125</span>
+          <span class="site-state-item-count">126</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -1061,7 +1075,7 @@
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">43</span>
+        <span class="site-state-item-count">44</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>
@@ -1123,7 +1137,7 @@
 
  <div class="theme-info">
   <div class="powered-by"></div>
-  <span class="post-count">博客全站共85.3k字</span>
+  <span class="post-count">博客全站共86k字</span>
 </div>
 
         
