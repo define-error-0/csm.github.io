@@ -124,7 +124,7 @@
   </li>
         <li class="menu-item menu-item-tags">
 
-    <a href="/tags/" rel="section"><i class="tags fa-fw"></i>标签<span class="badge">44</span></a>
+    <a href="/tags/" rel="section"><i class="tags fa-fw"></i>标签<span class="badge">45</span></a>
 
   </li>
         <li class="menu-item menu-item-categories">
@@ -200,6 +200,13 @@
 
               <time title="创建时间：2024-12-28 23:37:50" itemprop="dateCreated datePublished" datetime="2024-12-28T23:37:50+08:00">2024-12-28</time>
             </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2024-12-30 00:10:13" itemprop="dateModified" datetime="2024-12-30T00:10:13+08:00">2024-12-30</time>
+              </span>
 
           
 
@@ -212,7 +219,16 @@
     <div class="post-body" itemprop="articleBody">
 
       
-          
+          <h5 id="脚本"><a href="#脚本" class="headerlink" title="脚本"></a>脚本</h5><p>常见就是lua，python，shell脚本了，这些脚本可以实现很多系统级别的操作，非常神奇，甚至可以开发上位机，开发游戏等。问题来了，脚本究竟是什么？我们写的代码究竟是什么？其实就是调用系统资源+逻辑+内存。</p>
+<h5 id="c语言"><a href="#c语言" class="headerlink" title="c语言"></a>c语言</h5><p>相信大部分人，都是c语言开始的，helloworld。但是，为什么会显示出来呢？为什么printf可以打印出来呢？这个大家想过吗？当时肯定是没想过，反正它能打印出字出来，非常好用。</p>
+<p>使用这个函数就得有一个头文件，stdio，这个，为什么这个库函数可以使用printf，因为这个函数会调用系统的打印io，从而使得数据得以打印出来，说白了，真正的C语言，如果只是纯粹的语法的话，是不会调用任何系统资源的，完完全全的逻辑和内存代码。</p>
+<p>note：我们就会发现为什么c语言移植性那么差啊？因为不同平台的库函数是不一样的，mac，win，linux都是不一样的库函数，所以，同样的c代码，很可能无法公用，必须修改。所以嵌入式设备，无法二次编译，因为，这些系统资源是不必要，而且消耗资源的。</p>
+<h5 id="对比"><a href="#对比" class="headerlink" title="对比"></a>对比</h5><p>其实会发现，不论脚本还是c语言其实都是调用系统资源，但是本质是不一样的，因为脚本是调用c语言写好的驱动，而c语言是调用系统的驱动。</p>
+<p>想要更加直接的理解区别，我们可以直接尝试使用MCU去动态解析lua代码，对没错mcu动态解析，虽然lua可以编译成luac，但是动态解析就会发现一个事情，其实这个的本质就是c语言的函数指针加上索引实现的，也就是lua解释器生成之后，动态解析时会去检索对应函数指针进行操作处理。也就是说，如果lua语言不对外输入输出，它本质就是一个无意义的行为，一个孤立的代码，不用考虑任何平台和资源的代码，但是一旦要对外输入输出就绝对了，它必须有接口，这个接口就是最好用的键值对了，找到名字调用对应函数即可。</p>
+<p>可以参考如下博客：</p>
+<p><a target="_blank" rel="noopener" href="https://blog.csdn.net/ai5945fei/article/details/107410019">lua移植到STM32F4全过程-CSDN博客</a></p>
+<h5 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h5><p>大家觉得我可能再说废话，其实，不是的，我们要明白一件事，脚本只是调用现有已经实现了的驱动、可执行文件、指令等操作，c语言是可以做到驱动，可执行文件，指令的编写。我们都说c语言是静态语言，其实不完全是的，c语言只是在编译的时候选择了静态编译，不代表它的语言不是动态的，函数指针、内存访问、内核指令操作等，这些就是c语言最大的王牌，这些可以直接控制cpu完完全全可以做到动态去解析其他语言，所以才说脚本语言是动态语言，因为有c语言牺牲了自己来给脚本提供了动态平台，所以，脚本这个层面，一般是不参与底层驱动，而是调用驱动+逻辑处理+文件操作+内存操作等，这些操作都是基于现有存在了才能执行，它们的动态解析器会在动态解析运行时候去检索是否存在调用的行为。</p>
+
       
     </div>
 
@@ -1037,7 +1053,7 @@
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">44</span>
+        <span class="site-state-item-count">45</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>
@@ -1099,7 +1115,7 @@
 
  <div class="theme-info">
   <div class="powered-by"></div>
-  <span class="post-count">博客全站共86.5k字</span>
+  <span class="post-count">博客全站共87.4k字</span>
 </div>
 
         
