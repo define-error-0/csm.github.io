@@ -134,7 +134,7 @@
   </li>
         <li class="menu-item menu-item-archives">
 
-    <a href="/archives/" rel="section"><i class="archive fa-fw"></i>归档<span class="badge">128</span></a>
+    <a href="/archives/" rel="section"><i class="archive fa-fw"></i>归档<span class="badge">131</span></a>
 
   </li>
         <li class="menu-item menu-item-resources">
@@ -170,6 +170,299 @@
 
           <div class="content index posts-expand">
             
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2024/07/16/tty%E7%BB%88%E7%AB%AF/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/csm.png">
+      <meta itemprop="name" content="CSM">
+      <meta itemprop="description" content="应用是应用，驱动是驱动！你要是偏要应用干驱动，哥们，你怎么不直接薪资翻倍啊！[🦀]">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="我要成为嵌入式高手[doge]">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2024/07/16/tty%E7%BB%88%E7%AB%AF/" class="post-title-link" itemprop="url">tty终端</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+              
+
+              <time title="创建时间：2024-07-16 22:53:49 / 修改时间：23:39:59" itemprop="dateCreated datePublished" datetime="2024-07-16T22:53:49+08:00">2024-07-16</time>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h5 id="起因"><a href="#起因" class="headerlink" title="起因"></a>起因</h5><p>无聊摸鱼，突然看到一个进度条一样。我就想到了这个进度条是怎么实现的呢？我们下载软件，下载插件，下载东西，编译的时候都可能会出现tty终端的进度条。我就好奇了，cmd和shell那些终端这个命令行不应该是输出一行的吗？就像我串口打印出来的东西，不可能把我已经输出的东西，在显示端删掉啊，在重新打印一边的，肯定就是换行处理了，这个不换行又覆盖打印是怎么做到的呢？</p>
+<h5 id="区别"><a href="#区别" class="headerlink" title="区别"></a>区别</h5><p>我们一般进行调试，有232也有串口进行对MCU、MPU、ARM-A板子的串口调试，这个时候，处理器是直接使用串口打印的，就是把串口缓冲区立马的数据输出出来，发送给我，而我在把他显示出来，因为，显示肯定是不能丢失接收数据和信息，所以，就会全部打印，换行打印。所以来一条打印一下，显示一条符合要求和调试。</p>
+<p>这里就有一个误区了，因为我们使用tty的时候，还没输出出去哦！</p>
+<p>这个什么意思呢？意思就是我们这个系统还没对外输出而是内部操作，此时tty不是一个串口输出的过程，而是，直接读取一个缓冲区内部的数据。没错，tty就是一个缓冲区，它不是日志系统，不会记录所有操作，记录操作是其他功能做的，它就是一个缓冲区，也就是说，我们做的一大堆操作，其实都是在缓冲区里进行的操作，此时都没对外输出，当然可以覆盖自己缓冲区数据，然后tty显示这个缓冲区数据。当然，其他的打印和日志系统就会把每个操作，每个情况，每个数据都记录下来啊。</p>
+<h5 id="实现"><a href="#实现" class="headerlink" title="实现"></a>实现</h5><p>此时直接使用回车就可以，清空本行，重新覆盖输出了，就可以实现进度条的操作了。<br>这里还有一点就是回车和换行，回车是\r  换行是\n;<br>我们在学c语言的时候，肯定打印函数和输入函数也即是scanf和printf这两里面用了很多换行，也经常会发现他们两个的效果是很相似。这是因为发送完毕，换行会直接清空缓冲区，而回车是回到首行开头，这个就有点文件io的光标的味道了，缓冲区清空了，这个时候回车肯定就是原地蹦一下而已嘛。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#!/bin/bash</span></span><br><span class="line"></span><br><span class="line">mark=<span class="string">&#x27;&#x27;</span></span><br><span class="line"><span class="keyword">for</span> ((ratio=<span class="number">0</span>;<span class="variable">$&#123;ratio&#125;</span>&lt;=<span class="number">100</span>;ratio+=<span class="number">5</span>))</span><br><span class="line"><span class="keyword">do</span></span><br><span class="line">        <span class="built_in">sleep</span> 0.2</span><br><span class="line">        <span class="built_in">printf</span> <span class="string">&quot;progress:[%-40s]%d%%\r&quot;</span> <span class="string">&quot;<span class="variable">$&#123;mark&#125;</span>&quot;</span> <span class="string">&quot;<span class="variable">$&#123;ratio&#125;</span>&quot;</span></span><br><span class="line">        mark=<span class="string">&quot;##<span class="variable">$&#123;mark&#125;</span>&quot;</span></span><br><span class="line"><span class="keyword">done</span></span><br><span class="line"><span class="built_in">echo</span></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<h5 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h5><p>tty终端不是日志系统，它是一个收发缓冲区，它显示的内容是它缓冲区的内容，此时都没对外输出，所以它不会显示所有情况、数据、消息，只会显示缓冲区里有东西。此时，想要覆盖上一次的结果，echo就不要换行 -ne 此时直接回车到开头，然后清空本行，输出就好了，这个是只能在终端才能实现的哦。如果使用那种rt-thread那种FinSH控制台，这个就是串口输出啦，就是对外输出了，此时修改缓冲区是亡羊补牢了，因为缓冲区的数据已经被打印出来了，自然在显示端就会出现换行，而且无法覆盖上一行的操作，也无法实现进度条了捏，呜呜呜。</p>
+
+      
+    </div>
+
+    
+    
+    
+
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2024/07/15/%E9%9D%A2%E5%90%91%E7%94%9F%E4%BA%A7/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/csm.png">
+      <meta itemprop="name" content="CSM">
+      <meta itemprop="description" content="应用是应用，驱动是驱动！你要是偏要应用干驱动，哥们，你怎么不直接薪资翻倍啊！[🦀]">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="我要成为嵌入式高手[doge]">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2024/07/15/%E9%9D%A2%E5%90%91%E7%94%9F%E4%BA%A7/" class="post-title-link" itemprop="url">面向生产</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2024-07-15 22:49:13" itemprop="dateCreated datePublished" datetime="2024-07-15T22:49:13+08:00">2024-07-15</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2024-11-20 00:23:04" itemprop="dateModified" datetime="2024-11-20T00:23:04+08:00">2024-11-20</time>
+              </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h5 id="电源问题"><a href="#电源问题" class="headerlink" title="电源问题"></a>电源问题</h5><p>这个问题，非常容易忽略，也就是，目标设备是否有外部电源或者内部电源。这个问题会影响到生产中的一些措施，设置连开发过程都会影响。</p>
+<ul>
+<li><p>一直使用swdio进行debug，却没注意到，这个swdio的vcc已经承担了供电的职责，可能会忽略没有供电的时候出现的异常bug。其实，内部线路，可能是有问题的，但是供电有了反而一切都是正常的，很可能硬件握手失败都开不了机呢。常见于热插拔设备上面。</p>
+</li>
+<li><p>外部电源，这个电源是多大的，这个电源太大了怎么办，工人进行装配的会不会出现需要外部供电才能进行处理的操作，如何升级，如何操作等。</p>
+</li>
+<li><p>内部电源，这个常见就是低功耗问题了，要知道一个设备的寿命，可以用多久，一般都是按照几年来处理的，一些物联网设备，或者可以外接电源的时候随便充电的策略。</p>
+</li>
+<li><p>发热问题，这个其实很多时候也是会影响设备运行的，cpu和gpu那些都是要散热的，同理，你的温度可能会到值金属变形，可能导致电机行程异常，主控宕机，硬件损毁等诸多问题</p>
+</li>
+</ul>
+<h5 id="生产顺序"><a href="#生产顺序" class="headerlink" title="生产顺序"></a>生产顺序</h5><p>这个问题，还是在电子件、模块、结构之间的顺序问题。</p>
+<ul>
+<li>后配置电子件，然后通过外部来进行标定和升级，这个常见于传感器和adc上面，因为只有结构装备完毕才能保证数据是正确无误的。</li>
+<li>先配置电子件，就是比如序列号啥的的，一些协议，数据，功能啥的，都不需要外部结构，而是可以通过模块来实现操作的，这个就不用担心外部的结构了，所以可以先配置好电子件，然后在安装。</li>
+<li>模块和结构，这个可以认为模块和结构合二为一，又或者说只有结构，模块就是普通的引脚电平啥的，这个时候就看是否是传感器类型的了，只是电平开关的话，就非常好处理了。</li>
+</ul>
+<h5 id="标准治具"><a href="#标准治具" class="headerlink" title="标准治具"></a>标准治具</h5><p>也是一个生产规格的问题了，电机、adc、大小、孔径等，这些一系列的东西都是需要一个标准来检测和处理，这个时候就需要治具了</p>
+<ul>
+<li><p>电机治具，这个就是检测在行程之内的速度、电流、行程等处理，也可以在电机上面添加霍尔传感器来知道此时电机位置等方法，来确保电机是正常的，这样就组装了</p>
+</li>
+<li><p>孔径治具，可以直接发射光束来作为标准，上面发送，下面接收，就知道误差范围了，这个治具设计就非常复杂和严谨，还得注意考虑灯丝温度和治具措施，一般都是购买国外进口的专门测试工具</p>
+</li>
+<li><p>通信治具，写好一个设备，肯定需要快速检测，一般用于测试从机，因为工人是不懂代码的，只想快速验证。所以，一个比较简单，比较快速验证产品正常的东西是利于生产和检测的。</p>
+</li>
+<li><p>老化治具，就是专门用来跑的，超频，提速，升温，升压，低温等处理，这个就是为了检测寿命的，一般是老化柜那样的东西，不过，想要自己做一个快速测试，也不难的。</p>
+</li>
+<li><p>长度治具，这个就是尺子了，没啥好说的了。最多是来规定一些电机的运行行程，来保证统一。</p>
+<p>还有很多奇奇怪怪的治具。</p>
+</li>
+</ul>
+<h5 id="测试日志"><a href="#测试日志" class="headerlink" title="测试日志"></a>测试日志</h5><p>测试的时候，最好有记录和日志，这样方便bug复现和审查。</p>
+<p>所以，串口数据，如果可以还是保留一下，linux的话，就是echo打印出来，重定向输出到专门的日志文件。这个就是看个人习惯了。运维的肯定就非常熟悉了，这个肯定是必不可失的部分，如果连复现都无法做到，这个bug也是根本不可能修复的。</p>
+<h5 id="电气规则"><a href="#电气规则" class="headerlink" title="电气规则"></a>电气规则</h5><p>常见的ttl 232 485 can等那些电气特性，还有usb pcie m.2 等特有热插拔电气特性。</p>
+<ul>
+<li><p>就需要在生产的时候，注意设计防呆口，防止正负电源问题，还有设计一连串固定，唯一的组装流程，减少带来的外部干扰，还有带上静电环，人体静电还是有影响。</p>
+</li>
+<li><p>还有就是开发中，可能开发板的电气规则可以工作，但是pcb板子就不能工作，很可能是电平范围错误，导致的通信异常，此时程序是可以运行的，但是因为外部缺少上下拉、电容、电阻、甚至是相位差等问题，导致的无法通信，需要和硬件协商，找到合适的方法实现通信。</p>
+</li>
+</ul>
+<h5 id="产品生产环境"><a href="#产品生产环境" class="headerlink" title="产品生产环境"></a>产品生产环境</h5><p>这个，实验室环境、无尘、温度、压强、电源等问题，都可能会导致传感器的误差，这些都是可以避免的，不过很多时候应该影响不大的，注意强磁强电、大噪声等环境问题、灰尘如果进入电路板很可能导致一些未知bug，最好也是杜绝为好。</p>
+<h5 id="设备寿命和老化"><a href="#设备寿命和老化" class="headerlink" title="设备寿命和老化"></a>设备寿命和老化</h5><p>这个上面有一个老化治具的设计思路，其本质还是担心设备的耐久度，这个就非常值得考虑了，不能说，一个产品用两天就坏了，那谁还买啊，差评如潮。</p>
+<p>但是，设备不是永久的，是一定有寿命的，一般是越是大型设备，寿命越长，越是消费电子，寿命越短，物联网设备，一般是几年左右，所以，这里就有内外电池的考虑，太阳能的考虑等</p>
+<h5 id="工作环境差异"><a href="#工作环境差异" class="headerlink" title="工作环境差异"></a>工作环境差异</h5><p>设备工作区域，多热，外壳会不会化了，内部会不会积热，会不会进水，会不会受到干扰导致起振失败，导致内部emp，共振、振动环境导致螺丝和接口等松动、温度差异带来的传感器误差，电池寿命，电池电量这些都是非常大的问题，都是需要考虑进去的</p>
+<h5 id="焊接和贴片机"><a href="#焊接和贴片机" class="headerlink" title="焊接和贴片机"></a>焊接和贴片机</h5><p>这个常常发生在pcb生产中，因为国产贴片机的问题太多了，抛料都是正常的现象，后续硬件工程师虚焊也是正常的东西，所以，就非常有必要治具了，确保电子件安装到产品设备之前是正常的。</p>
+<h5 id="安全和高效检测设计"><a href="#安全和高效检测设计" class="headerlink" title="安全和高效检测设计"></a>安全和高效检测设计</h5><p>这个就是比如，安装空调外机，安装复杂大型设备，不方便拆卸等情况，就需要留一个专门的接口给外部，外部调试线连接测试，就可以立刻知道设备当前状态如何，是否可以确保正常运行，这个高效，同时也一定程度上增加了安全性。这样可以高效抽查，极大程度缩短检测时间，提高现场检测的能力。</p>
+<p>自然安全性这个就是要单独拿出来分析的，产品外壳毒性，电路板毒性，任天堂以前的卡带上面就有一些化学物质，非常非常苦，就是为了防止人去舔以及误食，这个也是一个出于安全的设计。外部结构设计是否安全，电路内部电容，电路线，电源线，dc-dc模块等问题。不能像机革那样，自己电脑炸了，还怪用户，至少得保证自己产品不得爆炸吧，三星爆炸手机可是深得人心。</p>
+<h5 id="运输结构设计"><a href="#运输结构设计" class="headerlink" title="运输结构设计"></a>运输结构设计</h5><p>不能说一个设备长的和刀子一样吧，也就是说，运输的时候，要么就是有配套的外壳和箱子，要么就是设计成方便运行的结构，这个都是机械佬考虑的了，主要还是以应用场景和大小为主。</p>
+<h5 id="产品差异补偿"><a href="#产品差异补偿" class="headerlink" title="产品差异补偿"></a>产品差异补偿</h5><p>没人敢打包票说每个设备都是ok的，都是一模一样的，一定有残次品，这就是良品率了。优化生产过程，减少外界干扰，多用治具来保证产品的正常，增减检测工序，这个注定是没有最好，只有最适合了。</p>
+<p>华为甚至更加过分，屏幕抽奖，一个手机的屏幕，几家厂商提供的产品，每个手机都想抽奖一样，这就导致了产品差异是非常大，如何软件进行调教，硬件去弥补，去做误差补偿，如色域、光亮、帧率等。这个问题是永远没有最佳方案的，都是就事论事，根据实际情况去分析和处理。</p>
+<h5 id="生产安全"><a href="#生产安全" class="headerlink" title="生产安全"></a>生产安全</h5><p><strong>这个是重中之重，想都不要想，只要出了一条人命和残疾，那不得了，不只是赔钱的问题，而是生产线都可能出现大问题，带来连锁反应，带来的负面影响都是不可估量的。</strong></p>
+<p>用电安全，设备摆放，工具摆放，特殊化学品处理区和存储区，禁止明火，不要堵路，地面防滑，尖锐突出，禁止打闹追逐，防夹，注意生产车间的机床注意实现，注意远离机床，不要为了效率而增加风险，一切高危都要做安全措施，不要靠近大型设备等诸多安全问题。</p>
+<h5 id="代码设计和能力需求"><a href="#代码设计和能力需求" class="headerlink" title="代码设计和能力需求"></a>代码设计和能力需求</h5><p>作为公司项目，肯定不是做着玩的，也肯定不会只有一个，所以，不同的设备就有不同的序列号和参数属性了。同时就要求有可以使用、可以修改的接口。至于使用c cpp rust python 还是什么，只要能实现功能就是好语言，qt可以用python和cpp啊，EPS32和mcu开发也可以实现cpp和python，linux的话，建议还是c开发，也可以使用rust，还可以使用luna，有需求就可以去学习。语言知识一个工具，只要能实现功能就好了。</p>
+<ul>
+<li><p>引导程序</p>
+</li>
+<li><p>生产中特定flash读写序列号和特殊属性</p>
+</li>
+<li><p>多层引导设计思路</p>
+</li>
+<li><p>api接口和sdk设计</p>
+</li>
+<li><p>模块化编程思路</p>
+</li>
+<li><p>HAL、BSP、驱动等</p>
+</li>
+<li><p>模块调用</p>
+</li>
+<li><p>内外flash读取 和 特定地址读写</p>
+</li>
+<li><p>扩容预备 空间预留</p>
+</li>
+<li><p>section数据  attribute对齐规则</p>
+</li>
+<li><p>代码框架 (这个看公司的设计特点了)</p>
+</li>
+<li><p>外留接口来实现对外的通信，增加兼容性</p>
+</li>
+<li><p>技术栈 web、 后端 、app  、mcu 、mpu 、ui 、hmi、算法、运维、其他专业技术、代码和项目管理如gitee github、</p>
+</li>
+<li><p>静态库和动态库 linux和win的</p>
+</li>
+</ul>
+<h5 id="产品代码加密"><a href="#产品代码加密" class="headerlink" title="产品代码加密"></a>产品代码加密</h5><p>要想办法做密钥之类的，东西，加密自己的程序，比如使用section这些来对重要函数进行加密，然后再写回flash，这个是一个很好的加密手段。</p>
+<h5 id="上位机"><a href="#上位机" class="headerlink" title="上位机"></a>上位机</h5><p>一般产品尤其是控制，遥控，定位的设备，一般都是出异常后需要用户自行矫正的，这个时候，上位机就很有存在的必要，它往往需要跨平台，需要满足多设备，多屏幕。本质就是数据收发而已，不同产品需要校准和设计的上位机是不同的。其实有的时候，会考虑，为什么不用上位机，为什么用上位机呢？我感觉是要分场景的，比如我这里是生产工厂，生产工厂需要电脑吗？自然是除了烧录代码可能需要，测试，也是装机之后才能测试，所以，不存在一边烧录一边测试的太少了。</p>
+<p>如果我们是直接面向工厂的，此时，开发一个上位机要考虑的东西，有很多的，电脑本身其实是一个不稳定，环境差异大，不实用的生产平台。而且员工很多都不会用电脑，电脑也容易误触。所以，一个生产治具是最好的了，可以先把代码烧录到治具中，在治具中进行烧录其他设备的操作，这样员工只要操作治具就好了，一个治具是比电脑稳定很多的，而且也不存在环境差异问题。</p>
+<p>做过linux开发就知道了，linux难就难在环境配置，系统配置上，真的天差地别，时不时就是我这里运行正常，你那边就跑不了的bug，非常痛苦，如果我直接寄一个硬件治具过来，作为烧录、测试、标定的设备，那么一下子我们就成功同步了，对于直面工厂，生产来说，这个确实是比上位机可靠好用的。上位机更适合代码烧录，固件更新，用户自定义和调节，不适合生产，也不利于生产，治具效率高，体积小，速度快，上位机一般都是一对一，这就比不上治具可以一下子插上去一堆。</p>
+<p>上位机的优势：适合客户自定义操作，更新，微调，这个算是售后，一般都是一对一进行操作，也可以用于给用户进行检修等操作。</p>
+<p>治具的优势：对接工厂，同步环境和标准，增加生产效率，降低员工要求，设备可靠，可以实现一对多的高效生产需求和测试需求。</p>
+<h5 id="统一标准"><a href="#统一标准" class="headerlink" title="统一标准"></a>统一标准</h5><p>这个怎么理解呢？不单单是产品的规格，还有就是产品的标准尺度，就像卷尺一样，施工场地的单位长度都不一样呢。</p>
+<p>统一标准，就是啥都是一样的，所以，很简单，只要所有车间和工厂都是用一样的标准，就可以做到规范和误差容许。</p>
+<p>还有一种就是目标是标准，但是初始配置是不一样的。比如，电机此时速度是100，另一个是200，一样的最大加速度，但是我都要跑2000米，使用pid进行调制之后，就要定位，这个就是需要一个标准。而且两个因为初始速度不一样，所以最后pid调制停下来的位置是不一样的，不过误差可以接受就行了，此时就可以进行一个数据定位，只要电机复位+运行时间，就可以运行到2000米，但是如果你把100的电机速度得到的运行时间给到了200的电机速度的电机时间，就会导致，误差增加，此时，就是违反了统一标准的规则，他们应该都是对其统一标准才对。</p>
+
+      
+    </div>
+
+    
+    
+    
+
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2024/07/15/%E6%B5%81%E5%BC%8F%E4%BC%A0%E8%BE%93%E5%92%8C%E6%B5%81%E5%AA%92%E4%BD%93/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/csm.png">
+      <meta itemprop="name" content="CSM">
+      <meta itemprop="description" content="应用是应用，驱动是驱动！你要是偏要应用干驱动，哥们，你怎么不直接薪资翻倍啊！[🦀]">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="我要成为嵌入式高手[doge]">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2024/07/15/%E6%B5%81%E5%BC%8F%E4%BC%A0%E8%BE%93%E5%92%8C%E6%B5%81%E5%AA%92%E4%BD%93/" class="post-title-link" itemprop="url">流式传输和流媒体</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2024-07-15 21:32:14" itemprop="dateCreated datePublished" datetime="2024-07-15T21:32:14+08:00">2024-07-15</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2024-07-16 23:53:47" itemprop="dateModified" datetime="2024-07-16T23:53:47+08:00">2024-07-16</time>
+              </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h5 id="流"><a href="#流" class="headerlink" title="流"></a>流</h5><p>看名字就是知道了—猫是液体[doge]。我们根据日常习惯也知道液体这些东西，它会自己去钻缝，会流动，接触面积更大，可以适应很多结构，把液体倒入圆锥体里面，它就变成圆锥体的形态啦。</p>
+<h5 id="文件IO和数据流"><a href="#文件IO和数据流" class="headerlink" title="文件IO和数据流"></a>文件IO和数据流</h5><h5 id="一切都是数据流"><a href="#一切都是数据流" class="headerlink" title="一切都是数据流"></a>一切都是数据流</h5><h5 id="流式传输"><a href="#流式传输" class="headerlink" title="流式传输"></a>流式传输</h5><h5 id="流媒体"><a href="#流媒体" class="headerlink" title="流媒体"></a>流媒体</h5><h5 id="TCP是一种流式协议"><a href="#TCP是一种流式协议" class="headerlink" title="TCP是一种流式协议"></a>TCP是一种流式协议</h5><h5 id="流带来了什么"><a href="#流带来了什么" class="headerlink" title="流带来了什么"></a>流带来了什么</h5><h5 id="流的缺点？"><a href="#流的缺点？" class="headerlink" title="流的缺点？"></a>流的缺点？</h5><h5 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h5>
+      
+    </div>
+
+    
+    
+    
+
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
       
   
   
@@ -728,271 +1021,10 @@
   
   
 
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2024/06/12/%E7%A5%9B%E9%AD%85%E2%80%94%E2%80%94%E6%8A%80%E6%9C%AF%E7%9A%84%E9%99%B7%E9%98%B1/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/csm.png">
-      <meta itemprop="name" content="CSM">
-      <meta itemprop="description" content="应用是应用，驱动是驱动！你要是偏要应用干驱动，哥们，你怎么不直接薪资翻倍啊！[🦀]">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="我要成为嵌入式高手[doge]">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2024/06/12/%E7%A5%9B%E9%AD%85%E2%80%94%E2%80%94%E6%8A%80%E6%9C%AF%E7%9A%84%E9%99%B7%E9%98%B1/" class="post-title-link" itemprop="url">祛魅——技术的陷阱</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              <time title="创建时间：2024-06-12 23:22:50" itemprop="dateCreated datePublished" datetime="2024-06-12T23:22:50+08:00">2024-06-12</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2024-07-01 23:52:40" itemprop="dateModified" datetime="2024-07-01T23:52:40+08:00">2024-07-01</time>
-              </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <h2 align = "center">祛魅</h2>
-
-<pre><code>    这篇博客，是一个自我认知和自我醒悟的过程和思考的记录。脱离技术包袱，逃离思想束缚。		
-</code></pre>
-<p>​		首先，我们要知道祛魅是什么？我的理解就是将一个被神话的东西理解透彻。这个是什么意思呢？很多东西被大家吹的太夸张了，但是，如果愿意花上最多100+小时的学习，就能入门，而不是大家所说高不可攀。因为，对于这些事物的不断逃避，我们不断道听途说那些被神话的技术和知识，所以，就盲目以为那些非常难做，非常牛逼，觉得自己不行，觉得它好厉害，狂拽酷霸吊炸天。但是，一旦入行，我们就会明白，其实就是那样，没啥了不起的。</p>
-<p>​		技术就是大家不断试错和大家统一的约定，比如协议，这个就是大家都是这样约定的，所以就有通信技术和通信协议；比如尺寸，也是大家经过不断试错，发现这个是最合适，所以就定这个了；比如开发流程，也是一样的，为什么要开发模型，为什么要架构，为什么要设备树，为什么要驱动平台，为什么要统一驱动写法，为什么要meunconfig？这些不都是大家一起约定俗称的东西，就是入门太难了，所以，给人一种高级感，一种神奇的魅力。<strong>但是，它的本质就是大家的约定俗成的协议和流程。</strong>科研的话，那个没涉及，不过，我感觉科研方面也有很多人深深陷入神话的传说之中了。牛顿晚年都信神学了。</p>
-<p>​      之前，我就陷入这种对于技术的崇拜，疯狂学习，疯狂思考。但是，我有一整子休息了一下，看了一些管理和资本家视频我才醒悟过来。编码技术再牛逼又如何？会的编程语言再多再熟练又如何？项目开发又快又多又如何？我们在不断钻研技术，却是陷入了资本家的陷阱。大家都说工匠精神，但是，资本家喜欢的就是这种只知道听话和干事的牛马。他们天天只喜欢技术，对于技术有一种莫名其妙的优越感。但是，在老板眼里，就是牛马，只不过是厉害的牛马。所以，大家对于技术千万不要过度崇拜，而是要学会管理和统筹规划。任何一个刚毕业的大学生都可以使用C语言在一定时期内完成一个功能，但是怎么把功能整合起来，怎么去管理，怎么去维护，怎么去分配任务，这个才是最重要的，才是最可能在未来实现独立和创业的。</p>
-<p>​      肯定要反驳我，说不会技术怎么创业啊？首先，要知道技术是一定要会的，因为我们很多人都是没有资本的，所以，只能靠技术来给自己建造城墙，但是会编程，会应用是真的没用的。会带队，会分配，会管理，会思考，会统筹。你会想这是cto的事情啊，所以，我们就要去学习去有目的的思考，系统的去思考。在日常工作中，把眼界跳出自己的目前的工作，去想想如果这个项目给到自己，自己该干什么？不要总是钻研技术，技术是最难赚钱，最难实现自由的，尤其是大厂，越大分的越细，虽然整体很美观很规范。</p>
-<p>​     想起来一个段子，一个老板问程序员还要多久完成项目。程序员说一个月左右。老板说再加一个人呢？那就要两个月了。再加一个人呢？那就不知道了。</p>
-<p>​    这个段子，其实就是说了一件事情，人越多它的效率其实是越低的，但是好处就是它可以可重复使用和相互配合，可以摆脱因为员工离职导致的问题。</p>
-<p>​    对了，大家写代码和和钻研技术的时候，一定要学会模块化，一定要想办法做可重复使用的事情，做一些关联的事情。比如一个模拟spi，这个代码，只需要改引脚(还有位带、输入输出模式、反正就是电平变化的函数等)，就可以实现快速移植和反复使用了，这里就有一个就是规划了，你未来想要干嘛，你现在做的事情对于未来有帮助吗？就像未来想搞linux驱动，但是现在在搞前端开发，那有用吗？完全没有一点可重复使用性。</p>
-<p>​     有点偏题了，祛魅只是一个引子，主要是告诉大家，不要对技术有莫名其妙的崇拜和神话，我们要站在更高的角度和看待项目的过程。去思考一个人的时候怎么完成，去想想现在干的事情对于未来有没有用。不要今天学了modbus，明天就学can，然后洋洋得意，觉得我今天又学到了新的技术。</p>
-<p>​     这有用吗？肯定有用啊，老板最喜欢这样的牛马了，35岁之后直接踢了，脑子只有技术的人，怎么带队啊，后面还不听管教，自以为有技术了不起的人多的是。</p>
-<p>​    我们其实不需要太多太牛逼的技术，很多东西，都是有库的啊，有人写好的驱动的啊，为什么还要去干这些事情呢？我们只要有中等水平的编程能力，有高级水平的思考和架构能力就够了啊。具体实现，真的只要会c语言，啥功能都能实现的。只是效率和大小的问题，这个丢给大学生最好了，他们最喜欢干这种事情了。</p>
-<p>​     然后，肯定就有人想问，怎么站在高处看待这些东西呢？我这里就给出一个简单的模型吧。归纳、思考、用途、设计、诞生因素、解决了什么、整体思路、行为定性等。</p>
-<h5 id="1-学习归纳、整体思路、思考。"><a href="#1-学习归纳、整体思路、思考。" class="headerlink" title="1.学习归纳、整体思路、思考。"></a>1.学习归纳、整体思路、思考。</h5><p>​		我们用MCU举例子，MCU就是主控，好了，完了。那些DMA，USART、CAN、IIC、SPI、是不是就是为了和主从机通信？TIM 、VNIC、Callback是不是为了实现内部事件处理？内核指令需要吗？那些关中断、关事件、汇编代码，需要吗？系统一定是刚需吗？上系统带来什么好处？上系统解决那些多任务？那些是实现啊，给一个嵌入式毕业的会mcu的他自己会去实现的啊。</p>
-<p>​       是不是每一个MCU都是这样的操作，不同的就是有一些HAL，有一些标准库，有些自己的库，但是。他们的实现都是一样的，实现开启时钟，然后结构体进行初始化，绑定和复用功能，配置复用和绑定功能的配置，初始化复用和绑定功能，开启功能完事，有中断写中断回调。</p>
-<p>​      那我们学会了每一种MCU，看了一堆的数据手册。是不是我们就变得抢手？有用吗？CH32、GD32、AT32、STM32、瑞昱、TI、APT32、HC32够吗，孩子？学完了然后学thread-x 、freertos、ucos、rt-thread等够吗？他们是不是都是一样的思路，所以，我们学习的时候就要归纳去思考，去站在高处看待他们的流程和相似之处。</p>
-<h5 id="2-学习设计、解决问题。"><a href="#2-学习设计、解决问题。" class="headerlink" title="2.学习设计、解决问题。"></a>2.学习设计、解决问题。</h5><p>​       我问一下，是怎么看待协议的，比如spi、https、dns、iic、modbus、udp、tcp等。是不是有点懵，因为，你只是见一个协议就用一个协议，你知道这个从机是这个协议通信，但是，那个从机设计的工程师为什么选择这个协议，因为好玩吗？我们要打开iso那个7层协议啦，别怀疑，就是这个。我们使用pcie举例子，我们要知道pcie是占据3层的，是物理层、数据链路层、事务层。三层，前面物理层和数据链路层，我们就看到是接口就完事了。pcie是多个物理接口，而且还有电平需求，然后上面还有版本需求，不同版本之间可能还要向下兼容。但是我们可以完全只是用物理层和数据链路层，就是写自己的pcie接口，电路自己设计，这样就利用了pcie的防呆口设计了一个好的电路，至于内部的走线就可以完全使用自己的协议了。所以，协议不是死的，是有目的的使用。</p>
-<p>​       所以，就可以把协议分一下，有纯软件上位的，比如https、dns、pop、tfpt、fpt、mqtt等；还可以分成纯硬件的iic、 spi、485；接着就是软硬件结合的，can  modbus，Lin、PCIE 、USB等。</p>
-<p>​      然后就是不同协议之间的电气特性，传输距离，传输成本，传输速率，传输可靠性，这些很多时候，大家开发软件的时候都不会去在意的。这有点硬件工程师的味道了，但是软件要跳出软件的范畴，要去理解硬件的工作原理，知道所有流程，知道代码怎么走的，知道代码是否能够顺利执行任务。我们要想想为什么要这个，这个可以带来什么，换掉会怎么样。所以，这个设计不但是设计，还是整个项目的统筹。我们也可以系统的学习，去明白这些设计的本质，设计的意义和为什么这样设计。</p>
-<h5 id="3-用途和诞生因素"><a href="#3-用途和诞生因素" class="headerlink" title="3.用途和诞生因素"></a>3.用途和诞生因素</h5><p>​       这个就比较杂了，你可以说我项目的用途，可以是技术的用途。但是要明白一点，你做的所有事情都是为了它的诞生因素，就是它存在的意义是什么？这话怎么理解？周鸿祎在他的视频里说过一句话，就是开发者很容易陷入疯狂的自嗨。这句话我是比较认可的，开发者总是因为自己搞出来一些牛逼的东西就很高兴很了不起，但是你干的这些事情真的有用吗？自然，自己干着玩当然没问题。但是在项目和未来创业上面，是千万不可以的，用户是不知道你为什么自嗨的，这样只会增加成本和无意义的开发浪费，这个不是预研而是自嗨，就是一堆人脱离实际的自嗨，到头来一事无成，市场根本不鸟自己，然后就乌拉（无啦）。</p>
-<p>​        不要，天天写代码，知道现在世界上的科技走向，看看人们需要什么，预测未来的可能有的风口，而不是傻乎乎的写代码，要知道自己的做的这些事情有没有诞生的因素，再说一遍做着玩是完全没问题的，但是想要创业和工作室，就千万不要随随便便搞这些，严格按照市场调研和开发计划做才是最合理的。</p>
-<p>​    所以，这里就有一个调研和思考，数据等诸多问题，这个才是一个工作室一个创业是否能成功的重要因素，就是一句话，有没有人买账！你的代码值不值钱？你的代码用途是什么？它诞生的意义是什么？是玩，还是赚钱？</p>
-<h5 id="4-行为定性"><a href="#4-行为定性" class="headerlink" title="4.行为定性"></a>4.行为定性</h5><p>   你要知道你做的事情，是为了什么，你做这个动作，这个行为是为了什么，不要感性的认识，更不要过度理性看待。你能控制自己的行为，知道自己行为可以带来什么，可以提供什么。说人话就是知道自己在干嘛。</p>
-<p>   注意了，有一点非常重要，<strong>就是千万不要用自己的标准去要求别人</strong>，尤其是，<strong>”为什么我可以你不可以“</strong>这种话，千万不要说，因为人与人之间本就是不对等的。知道自己说了什么，知道自己做了什么，做事情之前，问一下自己为什么要做？下决定之前，换一种语言来再次确认一篇，比如在心中用英语问自己一遍是否真的可以做这个决定。</p>
-<p>   还有就是别活得太束缚了，人不是理性的动物，人是感性的，人们喜欢骗自己是理性的，但是一切都是因为感性而发生剧变。我们要学会说废话，学会接触无用社交(不是狐朋狗友，而是可能不会带来利益的社交，但是不要过度损伤自身利益、合法的社交)，给自己释放压力，不要把商业机密告诉任何非合作伙伴，因为外人是不会在乎你的利益的，只会在乎快乐，而合作伙伴之间是有利益链的。</p>
-<p>​    这个就是你要对自己的行为下定义，为了社交，为了娱乐，为了效率，为了工作，为了生活，为了金钱，为了家人，为了事业等。千万不要活的迷迷糊糊，到最后，很多东西都会因为自己的无心之过而丢失哦。找几个好兄弟，在一个大排档喝上一顿吃上一餐，真的很快乐哦。可能会很累，但是，无权无利，真的很尴尬，一切都要以自己为重中之重，一切都要以家人整体利益为先，好兄弟，肯定可以两刃插刀。</p>
-<p>​       说白了，是愿意成为自己人生的主导者，还是任劳任怨的牛马，其实都是一种活法，自然两个角度的思考、所承担的风险、难度也都是不一样的。活着累，是一种活法，活着轻松也是一种活法，因为我们都只有那么点时间和寿命的。及时行乐也是一种美丽的人生。</p>
-<hr>
-<p>​		上面都是一些我个人的观点，肯定是有错误和偏见的，所以，大家千万不要带入去看，更不要看完就有啥大情绪和思想的波动，而是换位思考，批判思考，对自己的当前状态的考量，年龄，资本，技术，人脉等诸多情况。</p>
-<p>​		这里，再阐述一下我的观点：<strong>千万不要陷入技术的黑窟窿之中，技术是学不完的，更加不要指望老板会养自己一辈子。</strong>人是活的，不是死的。如果宁愿当一潭死水，我是劝不动，但是，愿意走向大海的人，一定会有自己的行动。崇拜技术是大部分人、初出茅庐、老一辈的思想，千万千万千万千万不要只会写代码，写代码真的是在未来是人人具备的能力，因为AI已经开始可以根据上下文自动补全代码了，真的只会写代码，是真牛马。但是，所有代码都要有人审核、管理、运维。</p>
-<p>​      所以，大家要么冲着CTO出发，那可以多学一点技术，但是一定要学管理和分配，还要跟对公司和老板，多关注市场和调研；要么就是自行创业、接单(咸鱼、小红书等商单私单)、外包(是你以工作室的名义去接单)、设计、方案提供等，这个时候就要多了解市场和未来了，这个肯定是赚的更多的，亏得也更多，更不确定的事情也多，很可能是独立开发者，也可能是一个小团队，这样的日子，可能会孤独，可能会快乐，可能会到头来一无所有。</p>
-<p>​        如果，真的只是赚了最多10年的钱，就去卖炒饭，开个小店，做那些完全没涉及的行业，你觉得你能成功的话，你就继续给老板打工，做原始积累吧。其实打工也是有技巧的，打工也是有未来的，但是一定要公司有未来才行，然后深耕，一定一定一定要得到股份，一定要有分红，没有的话，立刻走，自己找后路。因为，在老板眼里，就是35岁立刻开除的牛马。<strong>未来是自己的，每一个人都是不一样的，这个没有老师，只有现实会不断教你做人。</strong></p>
-<p>​        所以，千万千万千万千万不要陷入只知道技术，得到技术就高高在上了，你会发现一下子就到了35岁了，但是自己都不知道该怎么办了。如果你能刚毕业就有一个规划，比如去那些公司学什么技术，然后去哪一家，或者深耕变成管理等都是可以的哦。<strong>别傻乎乎的只知道写代码和学技术，多思考，多想想未来，不要被当前的美好和高工资迷惑了双眼。</strong>读书和学习的过程就是一个祛魅的过程！不要高高在上了。</p>
-<p>​		<strong>美好的童年快乐一下就没了，小学也是，初中，高中大学都是，虽然当时的我是一个彻头彻尾的屌丝和逗逼，但那些都是最真实的我啊。现在的我，一定会被儿时的自己所讨厌吧！</strong></p>
-
-      
-    </div>
-
-    
-    
-    
-
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2024/06/12/%E8%84%9A%E6%9C%AC%E5%B0%8F%E5%AD%90/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/csm.png">
-      <meta itemprop="name" content="CSM">
-      <meta itemprop="description" content="应用是应用，驱动是驱动！你要是偏要应用干驱动，哥们，你怎么不直接薪资翻倍啊！[🦀]">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="我要成为嵌入式高手[doge]">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2024/06/12/%E8%84%9A%E6%9C%AC%E5%B0%8F%E5%AD%90/" class="post-title-link" itemprop="url">脚本小子</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              <time title="创建时间：2024-06-12 23:22:17" itemprop="dateCreated datePublished" datetime="2024-06-12T23:22:17+08:00">2024-06-12</time>
-            </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          
-      
-    </div>
-
-    
-    
-    
-
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2024/06/12/%E6%9C%8D%E5%8A%A1%E5%99%A8%E8%BF%9C%E7%A8%8B%E5%8A%9E%E5%85%AC/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/csm.png">
-      <meta itemprop="name" content="CSM">
-      <meta itemprop="description" content="应用是应用，驱动是驱动！你要是偏要应用干驱动，哥们，你怎么不直接薪资翻倍啊！[🦀]">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="我要成为嵌入式高手[doge]">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2024/06/12/%E6%9C%8D%E5%8A%A1%E5%99%A8%E8%BF%9C%E7%A8%8B%E5%8A%9E%E5%85%AC/" class="post-title-link" itemprop="url">服务器远程办公</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              <time title="创建时间：2024-06-12 23:21:45" itemprop="dateCreated datePublished" datetime="2024-06-12T23:21:45+08:00">2024-06-12</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2024-09-03 00:25:44" itemprop="dateModified" datetime="2024-09-03T00:25:44+08:00">2024-09-03</time>
-              </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <h5 id="用途"><a href="#用途" class="headerlink" title="用途"></a>用途</h5><p>很多时候，公司电脑都是用于开发的，当中自然有很多数据和配置好的环境，操作起来非常方便，但是，我们不可能天天在屏幕前啊，一定会离开岗位的，我之前就因为要去工厂实地查看电机生产，现场改测试，现场测试，现场编程，还好我有个笔记本，可以直接远程办公快速实现，这个功能，确实不错的。还有就是编译内核的时候，几个小时都常态，所以，ssh登录挂着就好了，编译完就走了，虽然应该都是服务器去编译的。</p>
-<h5 id="SSH登录"><a href="#SSH登录" class="headerlink" title="SSH登录"></a>SSH登录</h5><p>说到ssh，肯定都熟悉了，毕竟搞linux，搞git都或多或少用过，这个稳定可靠安全的通信协议。Secure Shell(SSH) 是由 IETF(The Internet Engineering Task Force) 制定的建立在应用层基础上的安全网络通信，它是专为远程登录会话(甚至可以用Windows远程登录Linux服务器进行文件互传)和其他网络服务提供安全性的协议，可有效弥补网络中的漏洞。通过SSH，可以把所有传输的数据进行加密，也能够防止DNS欺骗和IP欺骗。还有一个额外的好处就是传输的数据是经过压缩的，所以可以加快传输的速度。</p>
-<p>实现原理就是非对称加密RSA了。所以私钥千万不要随便给别人，公钥可以公开哦。</p>
-<p>ssh登录是干嘛，因为linux这种服务器系统，或者换个名称，应该是批处理系统，因为它是有多个用户的，所以每次ssh登录其实就是开辟了一个tty终端，这个终端给到我这个用户而已。ssh就干了这件事。</p>
-<p>登录方法1：</p>
-<p>指令行咯，前提就是双方都要ssh这个功能，都得提前安装ssh服务器。而且都启动了才行</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">//ssh 客户端用户名@服务器ip地址</span><br><span class="line">ssh csm@192.168.1.1</span><br></pre></td></tr></table></figure>
-
-<p>这个最好固定ip比较好。</p>
-<p>登录方法2：</p>
-<p>公钥登录</p>
-<p>本地生成ssh，然后把公钥发给远程主机，自己保留私钥，通过这个私钥来解密登录。</p>
-<p><strong>其实用过github就知道了，其实就是github里面的令牌登录和ssh公私钥匙而已。</strong></p>
-<h5 id="远程主机控制"><a href="#远程主机控制" class="headerlink" title="远程主机控制"></a>远程主机控制</h5><p>其实，看到上面这个发现了端倪，上面的其实是生成一个伪tty终端，一个终端是不能代表这个主机，现在网上有非常多维修电脑的工程师都是远程控制电脑的，对的，这就是区别，别人远程控制是整个电脑啊。</p>
-<p>这里我就来给大家提供一个好东西，向日葵远程控制，这个确实不错的。如下图所示，这个远程协助的时候就是从机啦，下面那个设备列表就是主机，同一时刻只能有一个主机，它可以控制其他从机，注意设备从机密码。还可以通过识别码和验证码实现远程协助办公哦。</p>
-<p><img src="/../Blogas_images/%E6%9C%8D%E5%8A%A1%E5%99%A8%E8%BF%9C%E7%A8%8B%E5%8A%9E%E5%85%AC.png"></p>
-<h5 id="远程开机"><a href="#远程开机" class="headerlink" title="远程开机"></a>远程开机</h5><p>这个就是是一个非常麻烦的东西了，现在的方案有很多。</p>
-<ul>
-<li><p>有智能云开关</p>
-</li>
-<li><p>有智能云排插</p>
-</li>
-<li><p>有调用windows本身实现网络唤醒，也就是利用了wake-on-LAN技术</p>
-<p><a target="_blank" rel="noopener" href="https://blog.csdn.net/dazhisir/article/details/124871469">【超详细】Windows设置远程唤醒WOL+远程连接（远程开机）-CSDN博客</a></p>
-</li>
-<li><p>短接开关，实现远程控制关机</p>
-</li>
-<li><p><a target="_blank" rel="noopener" href="https://blog.51cto.com/u_9843231/5080380">5个远程开机的方案（无线唤醒电脑保姆教程）_51CTO博客_电脑远程开机和唤醒</a></p>
-</li>
-<li><p>有些不愿意捣鼓，想快速实现就可以使用 “ToDesk”这个软件就是可以直接满足一键配置，一键开机的功能啦，和向日葵很相似，都是运维常用的工具。</p>
-</li>
-</ul>
-<p>想玩的，可以自己去尝试一下，确实挺不错的。</p>
-<h5 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h5><p>这个就是为了方便自己搭建服务器，方便自己远程控制和出差在外，却需要一台电脑进行开发测试，都可以选择这个好方法，远程就让有了很多方法和手段，你也可以不用跑到别人公司去实地了解情况，说不定简单线上测试就能解决呢。</p>
-
-      
-    </div>
-
-    
-    
-    
-
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
 
   
   <nav class="pagination">
-    <a class="extend prev" rel="prev" href="/page/6/"><i class="fa fa-angle-left" aria-label="上一页"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/6/">6</a><span class="page-number current">7</span><a class="page-number" href="/page/8/">8</a><span class="space">&hellip;</span><a class="page-number" href="/page/13/">13</a><a class="extend next" rel="next" href="/page/8/"><i class="fa fa-angle-right" aria-label="下一页"></i></a>
+    <a class="extend prev" rel="prev" href="/page/6/"><i class="fa fa-angle-left" aria-label="上一页"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/6/">6</a><span class="page-number current">7</span><a class="page-number" href="/page/8/">8</a><span class="space">&hellip;</span><a class="page-number" href="/page/14/">14</a><a class="extend next" rel="next" href="/page/8/"><i class="fa fa-angle-right" aria-label="下一页"></i></a>
   </nav>
 
 
@@ -1060,7 +1092,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">128</span>
+          <span class="site-state-item-count">131</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>

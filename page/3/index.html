@@ -134,7 +134,7 @@
   </li>
         <li class="menu-item menu-item-archives">
 
-    <a href="/archives/" rel="section"><i class="archive fa-fw"></i>归档<span class="badge">128</span></a>
+    <a href="/archives/" rel="section"><i class="archive fa-fw"></i>归档<span class="badge">131</span></a>
 
   </li>
         <li class="menu-item menu-item-resources">
@@ -170,6 +170,240 @@
 
           <div class="content index posts-expand">
             
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2024/09/04/%E7%AB%AF%E5%8F%A3/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/csm.png">
+      <meta itemprop="name" content="CSM">
+      <meta itemprop="description" content="应用是应用，驱动是驱动！你要是偏要应用干驱动，哥们，你怎么不直接薪资翻倍啊！[🦀]">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="我要成为嵌入式高手[doge]">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2024/09/04/%E7%AB%AF%E5%8F%A3/" class="post-title-link" itemprop="url">端口</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+              
+
+              <time title="创建时间：2024-09-04 23:34:02 / 修改时间：23:52:42" itemprop="dateCreated datePublished" datetime="2024-09-04T23:34:02+08:00">2024-09-04</time>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h5 id="端口port"><a href="#端口port" class="headerlink" title="端口port"></a>端口port</h5><p>在<a target="_blank" rel="noopener" href="https://baike.baidu.com/item/%E7%BD%91%E7%BB%9C%E6%8A%80%E6%9C%AF/480927?fromModule=lemma_inlink">网络技术</a>中，端口(Port)大致有两种意思：一是物理意义上的端口，比如，ADSL Modem、<a target="_blank" rel="noopener" href="https://baike.baidu.com/item/%E9%9B%86%E7%BA%BF%E5%99%A8/214614?fromModule=lemma_inlink">集线器</a>、<a target="_blank" rel="noopener" href="https://baike.baidu.com/item/%E4%BA%A4%E6%8D%A2%E6%9C%BA/103532?fromModule=lemma_inlink">交换机</a>、<a target="_blank" rel="noopener" href="https://baike.baidu.com/item/%E8%B7%AF%E7%94%B1%E5%99%A8/108294?fromModule=lemma_inlink">路由器</a>用于连接其他网络设备的接口，如<a target="_blank" rel="noopener" href="https://baike.baidu.com/item/RJ-45%E7%AB%AF%E5%8F%A3/0?fromModule=lemma_inlink">RJ-45端口</a>、SC端口等等；二是逻辑意义上的端口，一般是指<a target="_blank" rel="noopener" href="https://baike.baidu.com/item/TCP%2FIP%E5%8D%8F%E8%AE%AE/0?fromModule=lemma_inlink">TCP&#x2F;IP协议</a>中的端口，<a target="_blank" rel="noopener" href="https://baike.baidu.com/item/%E7%AB%AF%E5%8F%A3%E5%8F%B7/10883658?fromModule=lemma_inlink">端口号</a>的范围从0到65535，比如用于浏览网页服务的80端口，用于FTP服务的21端口等等。计算机“端口” 是英文port的义译，可以认为是计算机与外界通讯交流的出口。</p>
+<h5 id="常见端口"><a href="#常见端口" class="headerlink" title="常见端口"></a>常见端口</h5><p>常见就是http80，https443，ssh22，FPT21，SSL465.</p>
+<p>邮箱发送25或者587，使用SSL加密465</p>
+<p>邮箱接收110，SSL加密995.</p>
+<p>更多可以查考下面的博客</p>
+<p><a target="_blank" rel="noopener" href="https://blog.csdn.net/qq_21989927/article/details/109812089">【计算机网络】端口详解【概念、作用、分类、常见端口】_计算机网络端口的作用-CSDN博客</a></p>
+<p>一般用到的是1到65535,其中0不使用。 1-1023为知名端口（Well-Known Ports）。 <strong>1024-49151</strong>为用户端口（Registered ports）。 49152-65535称为动态端口（Dynamic Ports）。</p>
+<h5 id="端口的实际意义"><a href="#端口的实际意义" class="headerlink" title="端口的实际意义"></a>端口的实际意义</h5><p>端口号是用来标识同一台计算机上运行的不同网络应用或服务的标识符。IP地址标识的是一台计算机（或者说一个网络接口），而端口号则标识的是该计算机上具体的应用程序或服务。</p>
+<p>当你有一个应用使用了12345端口去访问网络时，回传的数据确实会通过这个端口号返回到你的应用。更具体地说，操作系统会根据IP地址找到相应的计算机，然后根据端口号将数据交给在这个端口上监听的应用程序。</p>
+<p>总结一下：</p>
+<ol>
+<li><strong>IP地址</strong>：定位到具体的设备。</li>
+<li><strong>端口号</strong>：定位到设备上运行的具体应用程序或服务。</li>
+</ol>
+<p>当你在某个端口（如12345）上启动一个应用程序时，操作系统会确保网络数据包中带有该端口号的数据能够正确传递到这个应用程序中。</p>
+<h5 id="修改端口"><a href="#修改端口" class="headerlink" title="修改端口"></a>修改端口</h5><p>这个一般分为编程和应用，编程期间，就是可以选择没用到的端口或者多路复用来选择端口，这个是开发层面的了。</p>
+<p>应用层，一般就是开应用怎么处理和设计，windows也是可以选择静态网络ip和端口。举个例子咯，我们使用git访问github，总是访问不了，然后显示443错误，这个就是https连接超时了，解决办法，把本地vpn设为静态的本地ip和端口，然后修改git的https也为本地地址和ip</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">git config --global http.proxy 127.0.0.1:&lt;你的端口号&gt;</span><br><span class="line">git config --global https.proxy 127.0.0.1:&lt;你的端口号&gt;</span><br></pre></td></tr></table></figure>
+
+
+      
+    </div>
+
+    
+    
+    
+
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2024/09/02/LCD%E7%BC%93%E5%86%B2%E8%AE%BE%E8%AE%A1/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/csm.png">
+      <meta itemprop="name" content="CSM">
+      <meta itemprop="description" content="应用是应用，驱动是驱动！你要是偏要应用干驱动，哥们，你怎么不直接薪资翻倍啊！[🦀]">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="我要成为嵌入式高手[doge]">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2024/09/02/LCD%E7%BC%93%E5%86%B2%E8%AE%BE%E8%AE%A1/" class="post-title-link" itemprop="url">LCD缓冲设计</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2024-09-02 22:55:59" itemprop="dateCreated datePublished" datetime="2024-09-02T22:55:59+08:00">2024-09-02</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2024-09-03 00:57:19" itemprop="dateModified" datetime="2024-09-03T00:57:19+08:00">2024-09-03</time>
+              </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h5 id="LCD"><a href="#LCD" class="headerlink" title="LCD"></a>LCD</h5><p>这个不论是MCU还是linux软件开发，都是一个非常常用的输出功能，还有就是LCD+电阻组合成触摸显示屏，LCD的原本名称是液晶显示屏，所以博客就说显示功能了。</p>
+<h5 id="LCD显示"><a href="#LCD显示" class="headerlink" title="LCD显示"></a>LCD显示</h5><p>不论是MCU还是linux，都是调用厂商提供好的lcd代码进行二次开发，也是把项目添加进去，mcu就把源码加入项目编译即可。linux就是添加lcd设备，写好驱动和设备号，等待上层应用调用，这个调用一般都是直接内存映射过去的，这样可以减少毛刺和传输速度慢的问题。</p>
+<p>LCD得到数据之后，显示是要一段时间的。所以，主控在发送数据之前，得确保LCD出于空闲状态，此时就会去查询状态，空闲之后才发送数据，lcd接收数据就开始显示，显示完毕之后再回复设置为空闲状态，进行下一轮。</p>
+<h5 id="阻塞问题"><a href="#阻塞问题" class="headerlink" title="阻塞问题"></a>阻塞问题</h5><p>根据上面这个流程，就可以知道传输是一个问题，但是等待LCD空闲，这个过程导致主控阻塞等待这也是一个重要因素，为了解决这个问题，就可以利用CPU里面得概念了，就是流水线。</p>
+<h5 id="双缓冲"><a href="#双缓冲" class="headerlink" title="双缓冲"></a>双缓冲</h5><p>问题就出在，显示的过程中，是无法发送数据的，如果，有两个缓冲区是不是就可以一个用于显示一个用于缓冲呢，这样再显示的过程中，就可以立刻发送空闲，让主控去发数据过来，从而节省阻塞时间。</p>
+<h5 id="为什么这样节约时间呢？"><a href="#为什么这样节约时间呢？" class="headerlink" title="为什么这样节约时间呢？"></a>为什么这样节约时间呢？</h5><p>原因是，主从设备之间处理速度，一般都是比不过设备自身内部处理速度的。主从通信是要握手，是要双方都就绪才是有效的，而设备内部切换和操作就是瞬间的，就是一个顺手的事情。对于LCD来说就是一个切换指针指向的操作，一下子就可以执行完毕了，但是传输过程是需要确认双方状态的，所以，这个过程才是真正卡脖子的过程。</p>
+<h5 id="三缓存"><a href="#三缓存" class="headerlink" title="三缓存"></a>三缓存</h5><p>就是在双缓冲的基础上面，再加一个缓冲区，进步增加效果和帧率，三缓存就真的真的够用了，再多就有些多余了，这就像电脑玩游戏一样，cpu到了8核之后，继续添加核心基本没有提升的，就是到了瓶颈了。</p>
+<h5 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h5><p>缓冲区就是利用类似流水线的思想，把本应当下一帧做的事情，在当前时刻进行并行处理实现对下一个帧的部分事务，让下一帧可以更加快速高效执行，这其实是一个非常非常好的设计思路。</p>
+
+      
+    </div>
+
+    
+    
+    
+
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2024/08/30/%E7%89%A9%E8%81%94%E7%BD%91%E5%BC%80%E5%8F%91%E5%B8%B8%E8%A7%81ip/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/csm.png">
+      <meta itemprop="name" content="CSM">
+      <meta itemprop="description" content="应用是应用，驱动是驱动！你要是偏要应用干驱动，哥们，你怎么不直接薪资翻倍啊！[🦀]">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="我要成为嵌入式高手[doge]">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2024/08/30/%E7%89%A9%E8%81%94%E7%BD%91%E5%BC%80%E5%8F%91%E5%B8%B8%E8%A7%81ip/" class="post-title-link" itemprop="url">物联网开发常见ip</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2024-08-30 00:48:52" itemprop="dateCreated datePublished" datetime="2024-08-30T00:48:52+08:00">2024-08-30</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2024-09-05 00:20:08" itemprop="dateModified" datetime="2024-09-05T00:20:08+08:00">2024-09-05</time>
+              </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <p>本机地址</p>
+<p>换回地址</p>
+<p>DNS地址</p>
+<p>阿帕网</p>
+<p>A类 B 类 C类 D类 E类</p>
+<p>公网和本地ip的区别</p>
+<p>内网穿透的ip变化</p>
+<p>路由器的IP分配</p>
+<p>域名</p>
+<p>阿里云 &amp; ONENET &amp; 腾讯云 &amp; 亚马逊云</p>
+<p>组播</p>
+<p>广播</p>
+<p>NAT</p>
+<p>主机网络</p>
+<p><a target="_blank" rel="noopener" href="https://www.cnblogs.com/lizhuming/p/16859723.html">【lwip】09-IPv4协议&amp;超全源码实现分析 - 李柱明 - 博客园 (cnblogs.com)</a></p>
+
+      
+    </div>
+
+    
+    
+    
+
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
       
   
   
@@ -672,196 +906,10 @@
   
   
 
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2024/08/19/cookie%E6%9B%B2%E5%A5%87/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/csm.png">
-      <meta itemprop="name" content="CSM">
-      <meta itemprop="description" content="应用是应用，驱动是驱动！你要是偏要应用干驱动，哥们，你怎么不直接薪资翻倍啊！[🦀]">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="我要成为嵌入式高手[doge]">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2024/08/19/cookie%E6%9B%B2%E5%A5%87/" class="post-title-link" itemprop="url">cookie曲奇?</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              <time title="创建时间：2024-08-19 21:50:04" itemprop="dateCreated datePublished" datetime="2024-08-19T21:50:04+08:00">2024-08-19</time>
-            </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          
-      
-    </div>
-
-    
-    
-    
-
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2024/08/19/IEEE/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/csm.png">
-      <meta itemprop="name" content="CSM">
-      <meta itemprop="description" content="应用是应用，驱动是驱动！你要是偏要应用干驱动，哥们，你怎么不直接薪资翻倍啊！[🦀]">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="我要成为嵌入式高手[doge]">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2024/08/19/IEEE/" class="post-title-link" itemprop="url">IEEE</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              <time title="创建时间：2024-08-19 21:46:03" itemprop="dateCreated datePublished" datetime="2024-08-19T21:46:03+08:00">2024-08-19</time>
-            </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          
-      
-    </div>
-
-    
-    
-    
-
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2024/08/19/%E6%A0%B9%E6%96%87%E4%BB%B6%E7%B3%BB%E7%BB%9Frootfs/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/csm.png">
-      <meta itemprop="name" content="CSM">
-      <meta itemprop="description" content="应用是应用，驱动是驱动！你要是偏要应用干驱动，哥们，你怎么不直接薪资翻倍啊！[🦀]">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="我要成为嵌入式高手[doge]">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2024/08/19/%E6%A0%B9%E6%96%87%E4%BB%B6%E7%B3%BB%E7%BB%9Frootfs/" class="post-title-link" itemprop="url">根文件系统rootfs</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              <time title="创建时间：2024-08-19 21:45:37" itemprop="dateCreated datePublished" datetime="2024-08-19T21:45:37+08:00">2024-08-19</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2024-09-04 00:16:19" itemprop="dateModified" datetime="2024-09-04T00:16:19+08:00">2024-09-04</time>
-              </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <h5 id="RootFS"><a href="#RootFS" class="headerlink" title="RootFS"></a>RootFS</h5><p>根文件系统首先是内核启动时所mount的第一个文件系统，内核代码映像文件保存在根文件系统中，而系统引导启动程序会在根文件系统挂载之后从中把一些基本的初始化脚本和服务等加载到内存中去运行。</p>
-<p>系统引导启动程序会在根文件系统挂载之后从中把一些初始化脚本（如rcS,inittab）和服务加载到内存中去运行。</p>
-<h5 id="RootFS作用和限制"><a href="#RootFS作用和限制" class="headerlink" title="RootFS作用和限制"></a>RootFS作用和限制</h5><h5 id="RootFS添加应用程序"><a href="#RootFS添加应用程序" class="headerlink" title="RootFS添加应用程序"></a>RootFS添加应用程序</h5><h5 id="BulidRoot"><a href="#BulidRoot" class="headerlink" title="BulidRoot"></a>BulidRoot</h5><h5 id="RootFS与VFS"><a href="#RootFS与VFS" class="headerlink" title="RootFS与VFS"></a>RootFS与VFS</h5><h5 id="RootFS使用"><a href="#RootFS使用" class="headerlink" title="RootFS使用"></a>RootFS使用</h5><h5 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h5>
-      
-    </div>
-
-    
-    
-    
-
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
 
   
   <nav class="pagination">
-    <a class="extend prev" rel="prev" href="/page/2/"><i class="fa fa-angle-left" aria-label="上一页"></i></a><a class="page-number" href="/">1</a><a class="page-number" href="/page/2/">2</a><span class="page-number current">3</span><a class="page-number" href="/page/4/">4</a><span class="space">&hellip;</span><a class="page-number" href="/page/13/">13</a><a class="extend next" rel="next" href="/page/4/"><i class="fa fa-angle-right" aria-label="下一页"></i></a>
+    <a class="extend prev" rel="prev" href="/page/2/"><i class="fa fa-angle-left" aria-label="上一页"></i></a><a class="page-number" href="/">1</a><a class="page-number" href="/page/2/">2</a><span class="page-number current">3</span><a class="page-number" href="/page/4/">4</a><span class="space">&hellip;</span><a class="page-number" href="/page/14/">14</a><a class="extend next" rel="next" href="/page/4/"><i class="fa fa-angle-right" aria-label="下一页"></i></a>
   </nav>
 
 
@@ -929,7 +977,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">128</span>
+          <span class="site-state-item-count">131</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
